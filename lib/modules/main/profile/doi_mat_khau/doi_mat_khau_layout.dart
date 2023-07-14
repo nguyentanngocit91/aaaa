@@ -55,6 +55,7 @@ class _FormDoiMatKhau extends ConsumerWidget {
                       onPressed: () {
                         context.pop();
                         ref.read(authProvider.notifier).signOut();
+                        print('xxx');
                       },
                       child: Text('Đã hiểu'))
                 ],
