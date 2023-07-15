@@ -20,7 +20,7 @@ class HeaderLayout extends ConsumerWidget {
         children: [
           GestureDetector(
             onTap: (){
-              MainLayout.toggle();
+
             },
             child: const Icon(Icons.menu),
           ),
