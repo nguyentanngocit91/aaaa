@@ -11,6 +11,7 @@ class MenuLayout extends ConsumerWidget {
 
   final Color _textColor = Colors.grey;
   final Color _iconColor = Colors.grey;
+  final FaIcon _faIcon = const FaIcon(FontAwesomeIcons.fileContract);
   static const double _fontSize = 14;
 
   @override
@@ -24,157 +25,107 @@ class MenuLayout extends ConsumerWidget {
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 40),
-                child: Image.asset('assets/images/logo_nina.png', height: 80, fit: BoxFit.fitHeight,),
+                child: Image.asset(
+                  'assets/images/logo_nina.png',
+                  height: 80,
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
             ListView(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: [
-                ListTile(
-                  leading: const Icon(Icons.dashboard),
-                  title: const Text('Dashboard', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  icon: const Icon(Icons.dashboard),
+                  title: 'Dashboard',
+                  onTap: () {
                     context.go('/${DashboardLayout.pathName}');
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Cấp mã HĐ trước', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
-                    context.go('/${CapMaHDLayout.pathName}');
+                itemMenu(
+                  title: 'Cấp mã HĐ trước',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Danh sách mã đã cấp', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Danh sách mã đã cấp',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Khách hàng mới', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Khách hàng mới',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Danh sách hợp đồng', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Danh sách hợp đồng',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Nâng cấp Website', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Nâng cấp Website',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Nâng cấp App', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Nâng cấp App',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Nâng cấp Hosting', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Nâng cấp Hosting',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Cập nhật Domain', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Cập nhật Domain',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('DS mới cập nhật & Pendding', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'DS mới cập nhật & Pendding',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Phiếu thu', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Phiếu thu',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Nhân viên kế toán', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Nhân viên kế toán',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Sửa đổi thông tin', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Sửa đổi thông tin',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Blacklist', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Blacklist',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Tìm kiếm thông tin 2015-2019', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Tìm kiếm thông tin 2015-2019',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Import data NVKD', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Import data NVKD',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Bàn giao', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Bàn giao',
+                  onTap: () {
                   },
                 ),
-                ListTile(
-                  leading: const FaIcon(FontAwesomeIcons.fileContract),
-                  title: const Text('Thống kê in bàn giao', style: TextStyle(fontSize: _fontSize),),
-                  textColor: _textColor,
-                  iconColor: _iconColor,
-                  onTap: (){
+                itemMenu(
+                  title: 'Thống kê in bàn giao',
+                  onTap: () {
                   },
                 ),
               ],
@@ -182,6 +133,24 @@ class MenuLayout extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget itemMenu(
+      {String? title,
+      Widget? icon,
+      Color? textColor,
+      Color? iconColor,
+      required Function() onTap}) {
+    return ListTile(
+      leading: icon ?? _faIcon,
+      title: Text(
+        title.toString(),
+        style: const TextStyle(fontSize: _fontSize),
+      ),
+      textColor: textColor ?? _textColor,
+      iconColor: iconColor ?? _iconColor,
+      onTap: onTap,
     );
   }
 }
