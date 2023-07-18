@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CapMaHDLayout extends StatelessWidget {
-  const CapMaHDLayout() : super(key: const Key(pathName));
+class UpgradeWebListLayout extends StatelessWidget {
+  const UpgradeWebListLayout() : super(key: const Key(pathName));
 
-  static const String pathName = 'cap-ma-hd';
+  static const String pathName = 'nang-cap-website';
 
   @override
   Widget build(BuildContext context) {

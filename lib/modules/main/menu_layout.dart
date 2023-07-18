@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'dashboard/dashboard_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
+import 'upgrade_website/cap_ma_hd_layout.dart';
 
 class MenuLayout extends ConsumerWidget {
   const MenuLayout({super.key});
@@ -66,6 +67,13 @@ class MenuLayout extends ConsumerWidget {
                 itemMenu(
                   title: 'Nâng cấp Website',
                   onTap: () {
+
+
+
+
+
+
+                    context.go('/${UpgradeWebListLayout.pathName}');
                   },
                 ),
                 itemMenu(

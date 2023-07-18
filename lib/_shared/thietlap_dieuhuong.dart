@@ -10,6 +10,7 @@ import '../modules/main/dashboard/dashboard_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
 import '../modules/main/main_layout.dart';
 import '../modules/main/profile/doi_mat_khau/doi_mat_khau_layout.dart';
+import '../modules/main/upgrade_website/cap_ma_hd_layout.dart';
 import '../modules/offline/offline_screen.dart';
 import '../modules/onboarding/onboarding_layout.dart';
 import '../modules/setting/setting_layout.dart';
@@ -41,6 +42,8 @@ List<RouteBase> danhsachRoute = [
   addGoRouter(const SplashLayout(), isSubModule: false),
   addGoRouter(const OnboardingLayout(), isSubModule: false),
   addGoRouter(const SignInLayout(), isSubModule: false),
+
+
   addShellRouterMain('main'),
   addGoRouter(const SettingLayout(), isSubModule: false),
 ];
@@ -69,6 +72,7 @@ ShellRoute addShellRouterMain(String strKey) {
         addGoRouter(const DashboardLayout(), isSubModule: false),
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
+        addGoRouter(const UpgradeWebListLayout(), isSubModule: false),
       ]);
 }
 
