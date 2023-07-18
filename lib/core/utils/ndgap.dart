@@ -159,3 +159,16 @@ Widget ndGapH64() {
     height: 64,
   );
 }
+Widget heading1(String string){
+
+  return Text(string,style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500),);
+}
+Widget textForm(String title){
+  return TextFormField(
+    decoration: InputDecoration(
+        hintText: title,
+        contentPadding: EdgeInsets.only(top: 1.0,left:10.0,right:10.0,bottom: 1.0)
+    ),
+    style: TextStyle(fontSize: 13),
+  );
+}

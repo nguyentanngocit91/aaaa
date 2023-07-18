@@ -17,6 +17,8 @@ class AuthNotifier extends Notifier<AuthState> {
     return AuthState();
   }
 
+  String? get token => _authRepository.token;
+
   Future<Map> signIn({required Map<String,dynamic> data}) async {
     final Map result = await _authRepository.signIn(data: data);
     if(result['userSignIn']!=null){
@@ -33,10 +35,14 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   Future<UserModel?> getInfoUser() async {
-    final UserModel? user = await _authRepository.getInfoUser();
-    if(user!=null) startTokenCheck();
-    print('token: ${_authRepository.token}');
-    return user;
+    try{
+      final UserModel? user = await _authRepository.getInfoUser();
+      if(user!=null) startTokenCheck();
+      print('token: ${_authRepository.token}');
+      return user;
+    }catch(e){
+      return null;
+    }
   }
 
   checkSignIn() async {
