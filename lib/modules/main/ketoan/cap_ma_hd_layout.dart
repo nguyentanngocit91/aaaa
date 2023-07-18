@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class CapMaHDLayout extends StatelessWidget {
   const CapMaHDLayout() : super(key: const Key(pathName));
 
-  static const String pathName = 'cap-ma-hd';
+  static const String pathName = 'cap-ma-hd11';
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +17,28 @@ class CapMaHDLayout extends StatelessWidget {
         children: [
           Row(
             children: [
+
+             /* Radio<typeHD>(
+                value: typeHD.web, groupValue: _typeHD, onChanged: (value) {
+                setState(() {
+                  _typeHD = value;
+                });
+
+              },
+
+
+              ),
+              // Text("HĐ Web"),
+
+              Radio<typeHD>(
+                value: typeHD.app, groupValue: _typeHD, onChanged: (value) {
+                setState(() {
+                  _typeHD=value;
+                });
+              }, ),*/
+
+
+
               Radio(
                 value: 'web', groupValue: typeHD, onChanged: (value) {
 
@@ -32,7 +55,7 @@ class CapMaHDLayout extends StatelessWidget {
                 child: Wrap(
                   runSpacing: 10,
                   children: [
-                    Text('Mã hợp đồng', style: Theme
+                    Text('Mã hợp đồng 12', style: Theme
                         .of(context)
                         .textTheme
                         .titleMedium,),
@@ -49,7 +72,14 @@ class CapMaHDLayout extends StatelessWidget {
                         .of(context)
                         .textTheme
                         .titleMedium,),
-                    TextFormField(),
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      autovalidateMode: AutovalidateMode.always,
+                      validator:FormBuilderValidators.compose([
+
+                        FormBuilderValidators.required(errorText: "Không được để trống!"),
+                      ]),
+                    ),
                   ],
                 ),
               ),
@@ -97,5 +127,7 @@ class CapMaHDLayout extends StatelessWidget {
         ],
       ),
     );
+
+
   }
 }

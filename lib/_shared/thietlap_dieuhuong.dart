@@ -8,6 +8,7 @@ import '../modules/error/error404.dart';
 import '../modules/error/error_nointernet.dart';
 import '../modules/main/dashboard/dashboard_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
+import '../modules/main/ketoan/cap_ma_hd_layout_new.dart';
 import '../modules/main/main_layout.dart';
 import '../modules/main/profile/doi_mat_khau/doi_mat_khau_layout.dart';
 import '../modules/offline/offline_screen.dart';
@@ -67,7 +68,8 @@ ShellRoute addShellRouterMain(String strKey) {
       },
       routes: [
         addGoRouter(const DashboardLayout(), isSubModule: false),
-        addGoRouter(const CapMaHDLayout(), isSubModule: false),
+       // addGoRouter(const CapMaHDLayout(), isSubModule: false),
+        addGoRouter(const CapMaHDLayoutNew(),isSubModule: false),
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
       ]);
 }

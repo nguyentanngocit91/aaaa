@@ -4,7 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'dashboard/dashboard_layout.dart';
-import 'ketoan/cap_ma_hd_layout.dart';
+import 'ketoan/cap_ma_hd_layout_new.dart';
+
 
 class MenuLayout extends ConsumerWidget {
   const MenuLayout({super.key});
@@ -44,8 +45,9 @@ class MenuLayout extends ConsumerWidget {
                   },
                 ),
                 itemMenu(
-                  title: 'Cấp mã HĐ trước',
+                  title: 'Cấp mã HĐ trước ',
                   onTap: () {
+                    context.go('/${CapMaHDLayoutNew.pathName}');
                   },
                 ),
                 itemMenu(
