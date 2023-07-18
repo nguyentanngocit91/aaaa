@@ -12,10 +12,10 @@ class App{
 
   static setup() async{
     await DataBox().khoiTaoDuLieu();
-    await _initData();
+    await _setUpAuth();
   }
 
-  static _initData() async{
+  static _setUpAuth() async{
     final String? token = await providerContainer.read(authRepositoryProvider).setup();
     dioClient.initOptions();
     await providerContainer.read(authProvider.notifier).checkSignIn();
