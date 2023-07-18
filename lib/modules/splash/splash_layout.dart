@@ -2,13 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../_shared/thietlap_dieuhuong.dart';
 import '../../_shared/thietlap_ngonngu.dart';
-import '../main/dashboard/dashboard_layout.dart';
-import '../main/main_layout.dart';
-import '../setting/setting_layout.dart';
 
 class SplashLayout extends StatefulWidget {
   const SplashLayout({Key? key}) : super(key: const Key(pathName));
