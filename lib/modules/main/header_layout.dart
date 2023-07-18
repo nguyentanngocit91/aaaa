@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/auth/providers/auth_provider.dart';
-import 'main_layout.dart';
 import 'profile/doi_mat_khau/doi_mat_khau_layout.dart';
 
 class HeaderLayout extends ConsumerWidget {
@@ -60,7 +59,7 @@ class HeaderLayout extends ConsumerWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Text("Đăng xất")
+                    Text("Đăng xuất")
                   ],
                 ),
               ),

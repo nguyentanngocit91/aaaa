@@ -39,7 +39,7 @@ class AuthNotifier extends Notifier<AuthState> {
     return user;
   }
 
-  void checkSignIn() async {
+  checkSignIn() async {
     if(_authRepository.token != null){
       bool tokenIsValid = await _authRepository.tokenIsValid();
       UserModel? user = await getInfoUser();

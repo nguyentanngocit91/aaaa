@@ -7,18 +7,17 @@ import '../../core/services/dio_client.dart';
 import 'data_box.dart';
 
 class App{
-  static late final ProviderContainer providerContainer;
+  static final ProviderContainer providerContainer = ProviderContainer();
   static DioClient dioClient = DioClient(Dio());
 
   static setup() async{
-    providerContainer = ProviderContainer();
     await DataBox().khoiTaoDuLieu();
-    await _setUpAuth();
+    await _initData();
   }
 
-  static _setUpAuth() async{
+  static _initData() async{
     final String? token = await providerContainer.read(authRepositoryProvider).setup();
     dioClient.initOptions();
-    providerContainer.read(authProvider.notifier).checkSignIn();
+    await providerContainer.read(authProvider.notifier).checkSignIn();
   }
 }
