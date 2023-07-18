@@ -36,6 +36,7 @@ class MenuLayout extends ConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: [
+
                 itemMenu(
                   icon: const Icon(Icons.dashboard),
                   title: 'Dashboard',
@@ -46,6 +47,7 @@ class MenuLayout extends ConsumerWidget {
                 itemMenu(
                   title: 'Cấp mã HĐ trước',
                   onTap: () {
+                    context.go('/${CapMaHDLayout.pathName}');
                   },
                 ),
                 itemMenu(
