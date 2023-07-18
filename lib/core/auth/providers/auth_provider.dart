@@ -33,10 +33,14 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   Future<UserModel?> getInfoUser() async {
-    final UserModel? user = await _authRepository.getInfoUser();
-    if(user!=null) startTokenCheck();
-    print('token: ${_authRepository.token}');
-    return user;
+    try{
+      final UserModel? user = await _authRepository.getInfoUser();
+      if(user!=null) startTokenCheck();
+      print('token: ${_authRepository.token}');
+      return user;
+    }catch(e){
+      return null;
+    }
   }
 
   checkSignIn() async {
