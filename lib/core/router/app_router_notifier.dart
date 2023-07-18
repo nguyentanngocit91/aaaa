@@ -48,6 +48,7 @@ class AppRouterNotifier extends AsyncNotifier<void> implements Listenable {
       return thoiGianChoSplashScreen();
     }
 
+
     final isOnBoarding = state.location == pathOnboarding;
     if (isOnBoarding) {
       if (DataBox.appDataBox.values.first.onboardingLoaded == true) {
@@ -71,7 +72,7 @@ class AppRouterNotifier extends AsyncNotifier<void> implements Listenable {
 
   /// Định tuyên
   Future<String?> thoiGianChoSplashScreen() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3),() async {});
     return pathOnboarding;
   }
 
