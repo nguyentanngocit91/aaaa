@@ -7,6 +7,7 @@ import '../modules/account/signin/signin_layout.dart';
 import '../modules/error/error404.dart';
 import '../modules/error/error_nointernet.dart';
 import '../modules/main/dashboard/dashboard_layout.dart';
+import '../modules/main/ketoan/bangiao/ban_giao_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
 import '../modules/main/ketoan/phieuthu/phieuthu_layout.dart';
 import '../modules/main/main_layout.dart';
@@ -74,6 +75,8 @@ ShellRoute addShellRouterMain(String strKey) {
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
         //PHIEU THU
         addGoRouter( PhieuThuLayout(), isSubModule: false),
+        //BAN GIAO
+        addGoRouter( BanGiaoLayout(), isSubModule: false),
 
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),

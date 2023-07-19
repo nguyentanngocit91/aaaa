@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nn_phanmem/modules/main/ketoan/phieuthu/widgets/pt_button.dart';
+import 'screen/update_phieuthu_screen.dart';
+import 'widgets/pt_button.dart';
 
 class PhieuThuLayout extends StatelessWidget {
   PhieuThuLayout({Key? key}) : super(key: const Key(pathName));
@@ -13,11 +16,15 @@ class PhieuThuLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(10),
-          color: Colors.grey,
+          decoration: BoxDecoration(
+            color: const Color(0xFFf5f5f5),
+            border: Border.all(color: const Color(0xFFdcdbdb)),
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -133,94 +140,115 @@ class PhieuThuLayout extends StatelessWidget {
             ],
           ),
         ),
-        
+        const SizedBox(height: 20,),
         Expanded(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: DataTable2(
-                  columnSpacing: 12,
-                  horizontalMargin: 12,
-                  minWidth: 600,
-                  columns: const [
-                    DataColumn2(
-                      label: Text('#'),
-                      size: ColumnSize.L,
-                    ),
-                    DataColumn(
-                      label: Text('Ngày tháng'),
-                    ),
-                    DataColumn(
-                      label: Text('Mã KH'),
-                    ),
-                    DataColumn(
-                      label: Text('Mã HĐ'),
-                    ),
-                    DataColumn(
-                      label: Text('Số PT'),
-                    ),
-                    DataColumn(
-                      label: Text('Mã NV'),
-                    ),
-                    DataColumn(
-                      label: Text('Tên NV'),
-                    ),
-                    DataColumn(
-                      label: Text('Phòng'),
-                    ),
-                    DataColumn(
-                      label: Text('Khu vực'),
-                    ),
-                    DataColumn(
-                      label: Text('HTTT'),
-                    ),
-                    DataColumn(
-                      label: Text('Tổng thu'),
-                    ),
-                    DataColumn(
-                      label: Text('Phí web'),
-                    ),
-                    DataColumn(
-                      label: Text('Phí NC web'),
-                    ),
-                    DataColumn(
-                      label: Text('Phí hosting'),
-                    ),
-                    DataColumn(
-                      label: Text('Phí NC hosting'),
-                    ),
-                    DataColumn(
-                      label: Text('Phí domain'),
-                    ),
-                    DataColumn(
-                      label: Text('Thao tác'),
-                    ),
-                  ],
-                  rows: List<DataRow>.generate(
-                      100,
-                      (index) => DataRow(cells: [
-                        DataCell(Text((index+1).toString())),
-                        DataCell(Text('B' * (10 - (index + 5) % 10))),
-                        DataCell(Text('C' * (15 - (index + 5) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text('D' * (15 - (index + 10) % 10))),
-                        DataCell(Text(((index + 0.1) * 25.4).toString()))
-                          ]))),
-            ),
-          ),
+          child: DataTable2(
+              columnSpacing: 12,
+              horizontalMargin: 12,
+              minWidth: 600,
+              headingRowColor: MaterialStateProperty.all(const Color(0xFF105A6C)),
+              headingTextStyle: const TextStyle(color: Colors.white),
+              columns: const [
+                DataColumn2(
+                  label: Text('#'),
+                  fixedWidth: 30,
+                ),
+                DataColumn(
+                  label: Text('Ngày tháng'),
+                ),
+                DataColumn(
+                  label: Text('Mã KH'),
+                ),
+                DataColumn(
+                  label: Text('Mã HĐ'),
+                ),
+                DataColumn(
+                  label: Text('Số PT'),
+                ),
+                DataColumn(
+                  label: Text('Mã NV'),
+                ),
+                DataColumn(
+                  label: Text('Tên NV'),
+                ),
+                DataColumn(
+                  label: Text('Phòng'),
+                ),
+                DataColumn(
+                  label: Text('Khu vực'),
+                ),
+                DataColumn(
+                  label: Text('HTTT'),
+                ),
+                DataColumn(
+                  label: Text('Tổng thu'),
+                ),
+                DataColumn(
+                  label: Text('Phí web'),
+                ),
+                DataColumn(
+                  label: Text('Phí NC web'),
+                ),
+                DataColumn(
+                  label: Text('Phí hosting'),
+                ),
+                DataColumn(
+                  label: Text('Phí NC hosting'),
+                ),
+                DataColumn(
+                  label: Text('Phí domain'),
+                ),
+                DataColumn(
+                  label: Text('Thao tác'),
+                ),
+              ],
+              rows: List<DataRow>.generate(
+                  100,
+                  (index) => DataRow(cells: [
+                    DataCell(Text((index+1).toString())),
+                    DataCell(Text('19-07-2023')),
+                    DataCell(Text('NN0979423$index')),
+                    DataCell(Text('118${Random().nextInt(99-10)}23')),
+                    DataCell(Text('23722$index' )),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Text('D' * (15 - (index + 10) % 10))),
+                    DataCell(Row(children: [
+                      Tooltip(
+                      message :"Pending",
+                        child: IconButton(onPressed: (){
+
+                        }, icon: Icon(Icons.pause)),
+                      ),
+
+                      Tooltip(
+                        verticalOffset: -50,
+                        message :"Cập nhật phiếu thu",
+                        child: IconButton(onPressed: (){
+                           showDialog<void>(
+                            context: context,
+                            barrierDismissible: false, // user must tap button!
+                            builder: (BuildContext context) {
+                              return UpdatePhieuThuScreen();
+                            },
+                          );
+                        }, icon: Icon(Icons.edit_outlined)),
+                      ),
+
+                    ],))
+                      ]))),
         )
       ],
     );
   }
 }
+
+
