@@ -59,7 +59,9 @@ class CapMaHDLayout extends StatelessWidget {
                         .of(context)
                         .textTheme
                         .titleMedium,),
-                    TextFormField(),
+                    TextFormField(
+
+                    ),
                   ],
                 ),
               ),
