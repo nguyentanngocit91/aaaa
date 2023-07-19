@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'dashboard/dashboard_layout.dart';
+import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
 import 'upgrade_website/list.dart';
 
@@ -112,6 +113,7 @@ class MenuLayout extends ConsumerWidget {
                 itemMenu(
                   title: 'Blacklist',
                   onTap: () {
+                    context.go('/${DanhSachBlacklistLayout.pathName}');
                   },
                 ),
                 itemMenu(
