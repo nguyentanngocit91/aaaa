@@ -9,6 +9,8 @@ import '../modules/error/error_nointernet.dart';
 import '../modules/main/dashboard/dashboard_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout_new.dart';
+import '../modules/main/ketoan/danhsachHD/danh_sach_hd_layout.dart';
+import '../modules/main/ketoan/danhsachHD/ds_HD_RP.dart';
 import '../modules/main/main_layout.dart';
 import '../modules/main/profile/doi_mat_khau/doi_mat_khau_layout.dart';
 import '../modules/main/upgrade_website/list.dart';
@@ -72,6 +74,8 @@ ShellRoute addShellRouterMain(String strKey) {
       routes: [
         addGoRouter(const DashboardLayout(), isSubModule: false),
        // addGoRouter(const CapMaHDLayout(), isSubModule: false),
+        addGoRouter(const MyAppRP(),isSubModule: false),
+        addGoRouter(const DanhSachHDLayout(),isSubModule: false),
         addGoRouter(const CapMaHDLayoutNew(),isSubModule: false),
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),

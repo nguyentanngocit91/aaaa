@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import '../../_shared/thietlap_media.dart';
 import 'dashboard/dashboard_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
+import 'ketoan/danhsachHD/danh_sach_hd_layout.dart';
+import 'ketoan/danhsachHD/ds_HD_RP.dart';
 import 'upgrade_website/list.dart';
 
 class MenuLayout extends ConsumerWidget {
@@ -67,11 +69,25 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Danh sách hợp đồng',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${DanhSachHDLayout.pathName}');
+                },
               ),
+
+
               itemMenuGroup(
+                title: 'DEMO RP',
+                onTap: () {
+                  context.go('/${MyAppRP.pathName}');
+                },
+              ),
+
+              itemMenu(
                 title: 'Nâng cấp Website',
-                onTap: () {},
+                onTap: () {
+
+                  context.go('/${UpgradeWebListLayout.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Nâng cấp App',
