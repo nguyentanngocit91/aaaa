@@ -27,7 +27,7 @@ class _MainLayoutState extends State<MainLayout> {
               width: 280,
               height: MediaQuery.of(context).size.height,
               color: Theme.of(context).primaryColor,
-              child: const MenuLayout(),
+              child: MenuLayout(),
             ),
           ),
           Expanded(
