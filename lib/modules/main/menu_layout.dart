@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../_shared/thietlap_media.dart';
 import 'dashboard/dashboard_layout.dart';
+import 'ketoan/bangiao/ban_giao_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
+import 'ketoan/phieuthu/phieuthu_layout.dart';
 import 'upgrade_website/list.dart';
 
 class MenuLayout extends ConsumerWidget {
@@ -71,7 +73,8 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Nâng cấp Website',
-                onTap: () {},
+                onTap: () {
+                },
               ),
               itemMenuGroup(
                 title: 'Nâng cấp App',
@@ -91,7 +94,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Phiếu thu',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${PhieuThuLayout.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Nhân viên kế toán',
@@ -115,7 +120,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Bàn giao',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${BanGiaoLayout.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Thống kê in bàn giao',
