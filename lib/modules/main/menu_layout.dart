@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../_shared/thietlap_media.dart';
 import 'dashboard/dashboard_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
 
@@ -37,7 +38,7 @@ class MenuLayout extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 40),
                 child: Image.asset(
-                  'assets/images/logo_nina.png',
+                  MediaAssets.logoMenuLeft,
                   height: 80,
                   fit: BoxFit.fitHeight,
                 ),
