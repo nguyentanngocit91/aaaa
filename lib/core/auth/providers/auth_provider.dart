@@ -17,6 +17,8 @@ class AuthNotifier extends Notifier<AuthState> {
     return AuthState();
   }
 
+  String? get token => _authRepository.token;
+
   Future<Map> signIn({required Map<String,dynamic> data}) async {
     final Map result = await _authRepository.signIn(data: data);
     if(result['userSignIn']!=null){
