@@ -22,7 +22,7 @@ class PtButton extends StatelessWidget {
             children: [
               icon,
               const SizedBox(width: 5,),
-              Text(title),
+              Text(title,style: TextStyle(color: Colors.white),),
             ],
           )),
     );
