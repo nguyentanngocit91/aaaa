@@ -69,7 +69,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã khách hàng'),
+                      // textForm('Mã khách hàng'),
                     ],
                   ),
                 ),
@@ -81,7 +81,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã hợp đồng'),
+                      // textForm('Mã hợp đồng'),
                     ],
                   ),
                 ),
@@ -93,7 +93,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Tên hợp đồng'),
+                      // textForm('Tên hợp đồng'),
                     ],
                   ),
                 ),
@@ -105,7 +105,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Email'),
+                      // textForm('Email'),
                     ],
                   ),
                 ),
