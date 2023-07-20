@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../_shared/thietlap_media.dart';
 import 'dashboard/dashboard_layout.dart';
+import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import 'ketoan/bangiao/ban_giao_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
 
@@ -90,10 +91,7 @@ class MenuLayout extends ConsumerWidget {
               itemMenu(
                 title: 'Nâng cấp Website',
                 onTap: () {
-
-
                   context.go('/${UpgradeWebListLayout.pathName}');
-
                 },
               ),
               itemMenuGroup(
@@ -128,7 +126,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Blacklist',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${DanhSachBlacklistLayout.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Tìm kiếm thông tin 2015-2019',

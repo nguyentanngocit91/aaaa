@@ -7,6 +7,7 @@ import '../modules/account/signin/signin_layout.dart';
 import '../modules/error/error404.dart';
 import '../modules/error/error_nointernet.dart';
 import '../modules/main/dashboard/dashboard_layout.dart';
+import '../modules/main/ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import '../modules/main/ketoan/bangiao/ban_giao_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
 
@@ -40,6 +41,8 @@ String pathOffline = '/${OfflineScreen.pathName}';
 String pathSignIn = '/${SignInLayout.pathName}';
 
 
+
+
 /// Đây là Danh sách các module chính sử dụng trong ứng dụng ///
 List<RouteBase> danhsachRoute = [
   addGoRouter(const Error404Layout(), isSubModule: false),
@@ -48,6 +51,8 @@ List<RouteBase> danhsachRoute = [
   addGoRouter(const SplashLayout(), isSubModule: false),
   addGoRouter(const OnboardingLayout(), isSubModule: false),
   addGoRouter(const SignInLayout(), isSubModule: false),
+
+
 
 
   addShellRouterMain('main'),
@@ -90,6 +95,7 @@ ShellRoute addShellRouterMain(String strKey) {
 
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),
+        addGoRouter(const DanhSachBlacklistLayout(), isSubModule: false),
       ]);
 }
 
