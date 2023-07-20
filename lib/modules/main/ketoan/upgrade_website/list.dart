@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 
-import '../../../core/utils/ndgap.dart';
+
+import '../../../../core/utils/ndgap.dart';
 import 'datatable/datatable2.dart';
 
 class UpgradeWebListLayout extends StatelessWidget {
@@ -29,8 +30,9 @@ class UpgradeWebListLayout extends StatelessWidget {
           filter(),
           ndGapH8(),
           heading1('TÌM KIẾM WEBSITE'),
+          ndGapH8(),
           SizedBox(
-            height: 500,
+            height: 700,
             child: AsyncPaginatedDataTable2Demo(),
           )
 
@@ -45,8 +47,6 @@ class UpgradeWebListLayout extends StatelessWidget {
 }
 
 Widget filter() {
-  TextEditingController controller = TextEditingController();
-  String _searchResult = '';
   return Container(
     padding: EdgeInsets.all(10.0),
     decoration: BoxDecoration(
@@ -69,7 +69,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã khách hàng',controller),
+                      textForm('Mã khách hàng'),
                     ],
                   ),
                 ),
@@ -81,7 +81,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã hợp đồng',controller),
+                      textForm('Mã hợp đồng'),
                     ],
                   ),
                 ),
@@ -93,7 +93,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Tên hợp đồng',controller),
+                      textForm('Tên hợp đồng'),
                     ],
                   ),
                 ),
@@ -105,7 +105,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Email',controller),
+                      textForm('Email'),
                     ],
                   ),
                 ),
@@ -120,23 +120,26 @@ Widget filter() {
               const SizedBox(
                 width: 20,
               ),
-              GestureDetector(
-                  child: Container(
-                padding: EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                  color: Colors.blue,
-                ),
-                child: Icon(
-                  Icons.refresh,
-                  color: Colors.white,
-                ),
-              )),
+              // GestureDetector(
+              //    child: Container(
+              //   padding: EdgeInsets.all(3.0),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.all(Radius.circular(3.0)),
+              //     color: Colors.blue,
+              //   ),
+              //   child: Icon(
+              //     Icons.refresh,
+              //     color: Colors.white,
+              //   ),
+              // )),
               const SizedBox(
                 width: 10,
               ),
               GestureDetector(
-                  child: Container(
+                onTap: () {
+                  
+                },
+                child: Container(
                 padding: EdgeInsets.all(3.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(3.0)),
