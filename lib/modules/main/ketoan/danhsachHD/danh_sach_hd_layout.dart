@@ -293,7 +293,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã KH',maKHController),
+                      // textForm('Mã KH',maKHController),
                     ],
                   ),
                 ),
@@ -305,7 +305,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã HĐ',maHDController),
+                      // textForm('Mã HĐ',maHDController),
                     ],
                   ),
                 ),
@@ -317,7 +317,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Tên HĐ',tenHDController),
+                      // textForm('Tên HĐ',tenHDController),
                     ],
                   ),
                 ),
@@ -331,7 +331,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Điện thoại',phoneController),
+                      // textForm('Điện thoại',phoneController),
                     ],
                   ),
                 ),
@@ -345,7 +345,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Email',emailController),
+                      // textForm('Email',emailController),
                     ],
                   ),
                 ),

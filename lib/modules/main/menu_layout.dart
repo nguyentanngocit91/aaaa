@@ -9,8 +9,9 @@ import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import 'ketoan/bangiao/ban_giao_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
 import 'ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
-import 'ketoan/upgrade_website/list.dart';
 
+
+import 'ketoan/capnhat/list.dart';
 import 'ketoan/danhsachHD/danh_sach_hd_layout.dart';
 import 'ketoan/danhsachHD/ds_HD_RP.dart';
 

@@ -166,17 +166,16 @@ Widget heading1(String string){
     leading: Icon(Icons.filter_alt_rounded,color: Color(0xFFF29596a)),
   );
 }
-Widget textForm(String title, TextEditingController controller){
+Widget textForm({required String title, required onchange}){
   return TextFormField(
     /*decoration: InputDecoration(
         hintText: title,
         contentPadding: EdgeInsets.only(top: 1.0,left:10.0,right:10.0,bottom: 1.0)
     ),*/
+    onChanged: onchange,
 
-    controller:controller,
     cursorColor: Colors.black,
     decoration: InputDecoration(
-
       label: Text(title),
       fillColor: Colors.white,
       filled: true,
