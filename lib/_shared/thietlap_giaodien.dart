@@ -60,6 +60,16 @@ ThemeData get lightTheme {
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
     hoverColor: Colors.transparent,
+    inputDecorationTheme: const InputDecorationTheme(
+      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
+      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 1)),
+      errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
+      focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
+      border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
+      filled: true,
+      fillColor: Colors.white,
+    ),
   );
 }
 
@@ -107,9 +117,19 @@ ThemeData get darkTheme {
 // To use the Playground font, add GoogleFonts package and uncomment
 // fontFamily: GoogleFonts.notoSans().fontFamily,
   ).copyWith(
-    splashFactory: NoSplash.splashFactory,
-    splashColor: Colors.transparent,
-    highlightColor: Colors.transparent,
-    hoverColor: Colors.transparent,
+      splashFactory: NoSplash.splashFactory,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      inputDecorationTheme: const InputDecorationTheme(
+        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
+        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 1)),
+        errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
+        focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
+        border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
+        filled: true,
+        fillColor: Colors.white,
+      )
   );
 }

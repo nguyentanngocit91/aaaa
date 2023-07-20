@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../_shared/app_config/data_box.dart';
 import '../../../../_shared/thietlap_ngonngu.dart';
-import '../../../../core/utils/ndgap.dart';
+import '../../../../_shared/utils/ndgap.dart';
 import '../providers/setting_provider_option_darkmode.dart';
 
 Row settingWidgetRowThemeMode(

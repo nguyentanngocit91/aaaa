@@ -5,15 +5,16 @@ import 'package:go_router/go_router.dart';
 
 import '../../_shared/thietlap_media.dart';
 import 'dashboard/dashboard_layout.dart';
+import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import 'ketoan/bangiao/ban_giao_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
+import 'ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
+import 'ketoan/upgrade_website/list.dart';
 
 import 'ketoan/danhsachHD/danh_sach_hd_layout.dart';
 import 'ketoan/danhsachHD/ds_HD_RP.dart';
 
 import 'ketoan/phieuthu/phieuthu_layout.dart';
-
-import 'upgrade_website/list.dart';
 
 class MenuLayout extends ConsumerWidget {
   const MenuLayout({super.key});
@@ -24,7 +25,7 @@ class MenuLayout extends ConsumerWidget {
     FontAwesomeIcons.circleArrowRight,
     size: 18,
   );
-  static const double _fontSizeGroup = 16;
+  static const double _fontSizeGroup = 15;
 
   final Color _textColor = Colors.grey;
   final Color _iconColor = Colors.grey;
@@ -52,99 +53,97 @@ class MenuLayout extends ConsumerWidget {
                 ),
               ),
             ),
-            itemMenu(
+            itemMenuGroup(
                 title: 'Dashboard',
                 onTap: () {
                   context.go('/${DashboardLayout.pathName}');
                 }),
             showMenuGroup(title: 'Kế Toán', children: [
-              itemMenuGroup(
+              itemMenu(
                 title: 'Cấp mã HĐ trước',
                 onTap: () {
                   context.go('/${CapMaHDLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Danh sách mã đã cấp',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Khách hàng mới',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${KhachHangMoi.pathName}');
+                },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Danh sách hợp đồng',
                 onTap: () {
                   context.go('/${DanhSachHDLayout.pathName}');
                 },
               ),
-
-
-              itemMenuGroup(
+              itemMenu(
                 title: 'DEMO RP',
                 onTap: () {
                   context.go('/${MyAppRP.pathName}');
                 },
               ),
-
               itemMenu(
                 title: 'Nâng cấp Website',
                 onTap: () {
-
-
                   context.go('/${UpgradeWebListLayout.pathName}');
-
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Nâng cấp App',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Nâng cấp Hosting',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Cập nhật Domain',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'DS mới cập nhật & Pendding',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Phiếu thu',
                 onTap: () {
                   context.go('/${PhieuThuLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Nhân viên kế toán',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Sửa đổi thông tin',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Blacklist',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${DanhSachBlacklistLayout.pathName}');
+                },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Tìm kiếm thông tin 2015-2019',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Import data NVKD',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Bàn giao',
                 onTap: () {
                   context.go('/${BanGiaoLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Thống kê in bàn giao',
                 onTap: () {},
               ),
@@ -169,7 +168,8 @@ class MenuLayout extends ConsumerWidget {
         collapsedIconColor: iconColor ?? _iconGroupColor,
         title: Text(
           title,
-          style: TextStyle(color: textColor ?? _textGroupColor, fontSize: 15),
+          style: TextStyle(
+              color: textColor ?? _textGroupColor, fontSize: _fontSizeGroup),
         ),
         childrenPadding: const EdgeInsets.only(left: 14, bottom: 20),
         shape: const Border.symmetric(
@@ -179,7 +179,7 @@ class MenuLayout extends ConsumerWidget {
         children: children);
   }
 
-  Widget itemMenu(
+  Widget itemMenuGroup(
       {String? title,
       Widget? icon,
       Color? textColor,
@@ -198,7 +198,7 @@ class MenuLayout extends ConsumerWidget {
     );
   }
 
-  Widget itemMenuGroup(
+  Widget itemMenu(
       {String? title,
       Widget? icon,
       Color? textColor,

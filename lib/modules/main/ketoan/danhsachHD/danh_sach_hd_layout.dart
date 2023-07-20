@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/update_thongtin_kh_screen.dart';
 
-import '../../../../core/utils/ndgap.dart';
-import '../../upgrade_website/datatable/datatable2.dart';
+import '../../../../_shared/utils/ndgap.dart';
+
 
 class DanhSachHDLayout extends StatelessWidget {
   const DanhSachHDLayout():super(key:const Key(pathName));

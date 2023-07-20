@@ -24,7 +24,7 @@ class HeaderLayout extends ConsumerWidget {
             child: const Icon(Icons.menu),
           ),
           const SizedBox(width: 20,),
-          Expanded(child: Text('Cấp mã Hợp đồng trước'.toUpperCase(), style: Theme.of(context).textTheme.titleSmall),),
+          Expanded(child: Text('Welcome'.toUpperCase(), style: Theme.of(context).textTheme.titleSmall),),
           PopupMenuButton<int>(
             tooltip: '',
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
