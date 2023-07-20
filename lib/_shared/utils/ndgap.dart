@@ -161,14 +161,31 @@ Widget ndGapH64() {
 }
 Widget heading1(String string){
 
-  return Text(string,style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500),);
+  return ListTile(
+    title:Text(string,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color:Color(0xFFF29596a) ),),
+    leading: Icon(Icons.filter_alt_rounded,color: Color(0xFFF29596a)),
+  );
 }
-Widget textForm(String title){
+Widget textForm(String title, TextEditingController controller){
   return TextFormField(
-    decoration: InputDecoration(
+    /*decoration: InputDecoration(
         hintText: title,
         contentPadding: EdgeInsets.only(top: 1.0,left:10.0,right:10.0,bottom: 1.0)
-    ),
-    style: TextStyle(fontSize: 13),
+    ),*/
+
+    controller:controller,
+    cursorColor: Colors.black,
+    decoration: InputDecoration(
+
+      label: Text(title),
+      fillColor: Colors.white,
+      filled: true,
+      border: InputBorder.none,
+      hoverColor: Colors.white,
+      hintStyle: const TextStyle(fontSize: 15),
+      contentPadding:
+      const EdgeInsets.only(left: 15, bottom: 5, top: 5, right: 15),
+      hintText: title,),
+    style: const TextStyle(fontSize: 13),
   );
 }

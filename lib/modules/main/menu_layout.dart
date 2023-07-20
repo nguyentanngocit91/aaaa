@@ -5,8 +5,16 @@ import 'package:go_router/go_router.dart';
 
 import '../../_shared/thietlap_media.dart';
 import 'dashboard/dashboard_layout.dart';
+import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
+import 'ketoan/bangiao/ban_giao_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
-import 'upgrade_website/list.dart';
+import 'ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
+import 'ketoan/upgrade_website/list.dart';
+
+import 'ketoan/danhsachHD/danh_sach_hd_layout.dart';
+import 'ketoan/danhsachHD/ds_HD_RP.dart';
+
+import 'ketoan/phieuthu/phieuthu_layout.dart';
 
 class MenuLayout extends ConsumerWidget {
   const MenuLayout({super.key});
@@ -17,7 +25,7 @@ class MenuLayout extends ConsumerWidget {
     FontAwesomeIcons.circleArrowRight,
     size: 18,
   );
-  static const double _fontSizeGroup = 16;
+  static const double _fontSizeGroup = 15;
 
   final Color _textColor = Colors.grey;
   final Color _iconColor = Colors.grey;
@@ -63,15 +71,27 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Khách hàng mới',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${KhachHangMoi.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Danh sách hợp đồng',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${DanhSachHDLayout.pathName}');
+                },
               ),
               itemMenuGroup(
+                title: 'DEMO RP',
+                onTap: () {
+                  context.go('/${MyAppRP.pathName}');
+                },
+              ),
+              itemMenu(
                 title: 'Nâng cấp Website',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${UpgradeWebListLayout.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Nâng cấp App',
@@ -91,7 +111,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Phiếu thu',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${PhieuThuLayout.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Nhân viên kế toán',
@@ -103,7 +125,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Blacklist',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${DanhSachBlacklistLayout.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Tìm kiếm thông tin 2015-2019',
@@ -115,7 +139,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Bàn giao',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${BanGiaoLayout.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Thống kê in bàn giao',
@@ -142,7 +168,8 @@ class MenuLayout extends ConsumerWidget {
         collapsedIconColor: iconColor ?? _iconGroupColor,
         title: Text(
           title,
-          style: TextStyle(color: textColor ?? _textGroupColor, fontSize: 15),
+          style: TextStyle(
+              color: textColor ?? _textGroupColor, fontSize: _fontSizeGroup),
         ),
         childrenPadding: const EdgeInsets.only(left: 14, bottom: 20),
         shape: const Border.symmetric(

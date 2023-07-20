@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../core/utils/form_status.dart';
+import '../../../../../_shared/utils/form_status.dart';
 import '../repositories/doi_mat_khau_repository.dart';
 import 'doi_mat_khau_state.dart';
 

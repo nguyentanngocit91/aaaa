@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../core/auth/providers/auth_provider.dart';
-import '../../../../../../core/utils/form_status.dart';
+import '../../../../../../_shared/utils/form_status.dart';
 part 'signin_state.dart';
 
 final signInProvider = NotifierProvider<SignInNotifier, SignInState>(() {

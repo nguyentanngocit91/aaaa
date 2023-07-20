@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../_shared/app_config/data_box.dart';
 import '../../_shared/thietlap_dieuhuong.dart';
-import '../../core/utils/ndgap.dart';
+import '../../_shared/utils/ndgap.dart';
 
 class OnboardingLayout extends StatefulWidget {
   const OnboardingLayout({Key? key}) : super(key: const Key(pathName));
