@@ -1,8 +1,7 @@
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 
 import '../../../_shared/utils/ndgap.dart';
+import 'datatable/datatable2.dart';
 
 class UpgradeWebListLayout extends StatelessWidget {
   const UpgradeWebListLayout() : super(key: const Key(pathName));
