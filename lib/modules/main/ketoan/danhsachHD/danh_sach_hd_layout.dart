@@ -185,7 +185,7 @@ Widget filter() {
                     padding: EdgeInsets.all(3.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                      color: Color(0xFFF3a819f),
+                      color: Color(0xFF3a819f),
                     ),
                     child: Icon(
                       Icons.refresh,

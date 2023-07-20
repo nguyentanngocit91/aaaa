@@ -11,14 +11,15 @@ class PtButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: TextButton.styleFrom(
-            padding: const EdgeInsets.all(10)
+            padding: const EdgeInsets.all(10),
+          backgroundColor: Color(0xFF3a819f),
         ),
         onPressed: onPressed,
         child: Row(
           children: [
             icon,
             const SizedBox(width: 5,),
-            Text(title),
+            Text(title,style: TextStyle(color: Colors.white),),
           ],
         ));
   }
