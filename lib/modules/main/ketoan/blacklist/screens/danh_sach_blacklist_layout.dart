@@ -1,5 +1,9 @@
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 
 class DanhSachBlacklistLayout extends StatefulWidget {
   const DanhSachBlacklistLayout({Key? key}) : super(key: const Key(pathName));
@@ -138,19 +142,41 @@ class _DanhSachBlacklistLayoutState extends State<DanhSachBlacklistLayout> {
                             DataCell(Text('A11220'+index.toString())),
                             DataCell(Text('28/6/2023 ký biên bản cho tặng source cho 1029023W CÔNG TY TNHH THƯƠNG MẠI SẢN XUẤT CAO NGUYÊN MỚI' )),
                             DataCell(
-                              Container(
-                                width:150,
-                                color:Colors.blue,
-                                child:TextButton(
-                                  onPressed: () {
-                                    print("row" + index.toString());
-                                  },
-                                  child: Container(
+                              TextButton(
+                                onPressed: () {
 
-                                    child: Icon(Icons.close),
-                                  ),
+                                   showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) => AlertDialog(
+                                      title: const Text('AlertDialog Title'),
+                                      content: const Text('AlertDialog description'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: ()
+                                           {
+                                             print("Cancel");
+                                            return Navigator.pop(context, 'Cancel');
+                                           },
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: ()
+                                          {
+                                            print("OK");
+                                            return Navigator.pop(context, 'OK');
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+
+                                },
+                                child: Container(
+
+                                  child: Icon(Icons.close),
                                 ),
-                              )
+                              ),
                             ),
 
 
@@ -161,4 +187,36 @@ class _DanhSachBlacklistLayoutState extends State<DanhSachBlacklistLayout> {
       ),
     );
   }
+}
+
+
+showAlertDialog(BuildContext context) {
+
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("Cancel"),
+    onPressed:  () {},
+  );
+  Widget continueButton = TextButton(
+    child: Text("Continue"),
+    onPressed:  () {},
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("AlertDialog"),
+    content: Text("Would you like to continue learning how to use Flutter alerts?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

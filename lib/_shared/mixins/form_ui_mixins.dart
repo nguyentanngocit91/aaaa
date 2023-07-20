@@ -23,11 +23,11 @@ mixin FormUIMixins{
     );
   }
 
-  Widget bodyForm({required Widget child}){
+  Widget bodyForm({required Widget child, Color? backgroundColor}){
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: backgroundColor ?? Colors.grey.shade100,
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: child,
