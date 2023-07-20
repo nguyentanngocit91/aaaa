@@ -1,4 +1,4 @@
-import '../../../../../core/utils/form_status.dart';
+import '../../../../../_shared/utils/form_status.dart';
 
 class DoiMatKhauState{
   final String? matKhauCu;

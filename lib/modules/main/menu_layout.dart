@@ -8,7 +8,8 @@ import 'dashboard/dashboard_layout.dart';
 import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import 'ketoan/bangiao/ban_giao_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
-
+import 'ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
+import 'ketoan/upgrade_website/list.dart';
 
 import 'ketoan/capnhat/list.dart';
 import 'ketoan/danhsachHD/danh_sach_hd_layout.dart';
@@ -25,7 +26,7 @@ class MenuLayout extends ConsumerWidget {
     FontAwesomeIcons.circleArrowRight,
     size: 18,
   );
-  static const double _fontSizeGroup = 16;
+  static const double _fontSizeGroup = 15;
 
   final Color _textColor = Colors.grey;
   final Color _iconColor = Colors.grey;
@@ -71,7 +72,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenuGroup(
                 title: 'Khách hàng mới',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${KhachHangMoi.pathName}');
+                },
               ),
               itemMenuGroup(
                 title: 'Danh sách hợp đồng',
@@ -166,7 +169,8 @@ class MenuLayout extends ConsumerWidget {
         collapsedIconColor: iconColor ?? _iconGroupColor,
         title: Text(
           title,
-          style: TextStyle(color: textColor ?? _textGroupColor, fontSize: 15),
+          style: TextStyle(
+              color: textColor ?? _textGroupColor, fontSize: _fontSizeGroup),
         ),
         childrenPadding: const EdgeInsets.only(left: 14, bottom: 20),
         shape: const Border.symmetric(

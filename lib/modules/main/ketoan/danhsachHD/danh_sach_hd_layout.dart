@@ -2,8 +2,8 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/ndgap.dart';
-import '../../upgrade_website/datatable/datatable2.dart';
+import '../../../../_shared/utils/ndgap.dart';
+
 
 class DanhSachHDLayout extends StatelessWidget {
   const DanhSachHDLayout():super(key:const Key(pathName));
