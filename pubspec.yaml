@@ -51,6 +51,7 @@ dependencies:
   data_table_2: ^2.5.4
   responsive_ui: ^3.0.1
   url_launcher: ^6.1.12
+  material_dialogs: ^1.1.4
 
 dev_dependencies:
   flutter_test:

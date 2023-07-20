@@ -9,6 +9,8 @@ import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import 'ketoan/bangiao/ban_giao_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
 import 'ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
+import 'ketoan/thongkebangiao/screens/thong_ke_ban_giao_layout.dart';
+import 'ketoan/upgrade_website/list.dart';
 
 
 import 'ketoan/capnhat/list.dart';
@@ -146,7 +148,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenu(
                 title: 'Thống kê in bàn giao',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${ThongKeBanGiao.pathName}');
+                },
               ),
             ]),
           ],
