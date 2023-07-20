@@ -110,7 +110,7 @@ class PhieuThuLayout extends StatelessWidget {
               ),
               PtButton(
                 title: 'Tìm kiếm',
-                icon: const Icon(Icons.search),
+                icon: const Icon(Icons.search,color: Colors.white,),
                 onPressed: () {},
               ),
               const SizedBox(
@@ -118,7 +118,7 @@ class PhieuThuLayout extends StatelessWidget {
               ),
               PtButton(
                 title: 'Export DS Phiếu Thu',
-                icon: const Icon(Icons.download),
+                icon: const Icon(Icons.download,color: Colors.white,),
                 onPressed: () {},
               ),
               const SizedBox(
@@ -126,7 +126,7 @@ class PhieuThuLayout extends StatelessWidget {
               ),
               PtButton(
                 title: 'Export DS Pending',
-                icon: const Icon(Icons.download),
+                icon: const Icon(Icons.download,color: Colors.white,),
                 onPressed: () {},
               ),
               const SizedBox(
@@ -134,7 +134,7 @@ class PhieuThuLayout extends StatelessWidget {
               ),
               PtButton(
                 title: 'Reset',
-                icon: const Icon(Icons.close),
+                icon: const Icon(Icons.refresh,color: Colors.white,),
                 onPressed: () {},
               ),
             ],
