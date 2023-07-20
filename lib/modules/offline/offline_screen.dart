@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../core/utils/ndgap.dart';
+import '../../_shared/utils/ndgap.dart';
 
 class OfflineScreen extends StatefulWidget {
   const OfflineScreen({Key? key}) : super(key: const Key(pathName));

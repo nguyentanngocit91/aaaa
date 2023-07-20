@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../_shared/thietlap_dieuhuong.dart';
 import '../../_shared/thietlap_ngonngu.dart';
-import '../../core/utils/ndgap.dart';
+import '../../_shared/utils/ndgap.dart';
 
 class ErrorNoInternetLayout extends StatefulWidget {
   const ErrorNoInternetLayout({Key? key}) : super(key: const Key(pathName));

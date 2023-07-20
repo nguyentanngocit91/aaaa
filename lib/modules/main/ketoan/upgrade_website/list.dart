@@ -1,10 +1,7 @@
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 
+import '../../../_shared/utils/ndgap.dart';
 
-
-import '../../../../core/utils/ndgap.dart';
 import 'datatable/datatable2.dart';
 
 class UpgradeWebListLayout extends StatelessWidget {
@@ -19,12 +16,8 @@ class UpgradeWebListLayout extends StatelessWidget {
     String typeHD = 'web';
 
     return Scaffold(
-      body:
-
-      ListView(
-
+      body: ListView(
         children: [
-
           heading1('TÌM KIẾM THÔNG TIN'),
           ndGapH8(),
           filter(),
@@ -35,11 +28,6 @@ class UpgradeWebListLayout extends StatelessWidget {
             height: 700,
             child: AsyncPaginatedDataTable2Demo(),
           )
-
-
-
-
-
         ],
       ),
     );
@@ -69,7 +57,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã khách hàng'),
+                      textForm('Mã khách hàng', controller),
                     ],
                   ),
                 ),
@@ -81,7 +69,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã hợp đồng'),
+                      textForm('Mã hợp đồng', controller),
                     ],
                   ),
                 ),
@@ -93,7 +81,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Tên hợp đồng'),
+                      textForm('Tên hợp đồng', controller),
                     ],
                   ),
                 ),
@@ -105,7 +93,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Email'),
+                      textForm('Email', controller),
                     ],
                   ),
                 ),
@@ -136,20 +124,18 @@ Widget filter() {
                 width: 10,
               ),
               GestureDetector(
-                onTap: () {
-                  
-                },
-                child: Container(
-                padding: EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                  color: Colors.blue,
-                ),
-                child: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-              ))
+                  onTap: () {},
+                  child: Container(
+                    padding: EdgeInsets.all(3.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                      color: Colors.blue,
+                    ),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                  ))
             ],
           ),
         ),

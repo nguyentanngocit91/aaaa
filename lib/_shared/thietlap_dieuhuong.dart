@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../core/utils/helper.dart';
+import '../_shared/utils/helper.dart';
 import '../modules/account/signin/signin_layout.dart';
 import '../modules/error/error404.dart';
 import '../modules/error/error_nointernet.dart';
@@ -10,6 +10,7 @@ import '../modules/main/dashboard/dashboard_layout.dart';
 import '../modules/main/ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import '../modules/main/ketoan/bangiao/ban_giao_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
+import '../modules/main/ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
 import '../modules/main/ketoan/upgrade_website/list.dart';
 
 import '../modules/main/ketoan/cap_ma_hd_layout_new.dart';
@@ -90,6 +91,7 @@ ShellRoute addShellRouterMain(String strKey) {
 
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),
+        addGoRouter(const KhachHangMoi(), isSubModule: false),
         addGoRouter(const DanhSachBlacklistLayout(), isSubModule: false),
       ]);
 }
