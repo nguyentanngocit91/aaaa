@@ -41,7 +41,7 @@ class BanGiaoLayout extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 130,
                 child: TextField(
                   decoration: InputDecoration(
@@ -53,7 +53,7 @@ class BanGiaoLayout extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 130,
                 child: TextField(
 
@@ -63,10 +63,9 @@ class BanGiaoLayout extends StatelessWidget {
 
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 130,
                 child: TextField(
-
                   decoration: InputDecoration(
                     hintText: 'Domain',
                   ),
