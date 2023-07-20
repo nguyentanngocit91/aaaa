@@ -7,9 +7,11 @@ import '../modules/account/signin/signin_layout.dart';
 import '../modules/error/error404.dart';
 import '../modules/error/error_nointernet.dart';
 import '../modules/main/dashboard/dashboard_layout.dart';
+import '../modules/main/ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import '../modules/main/ketoan/bangiao/ban_giao_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
 import '../modules/main/ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
+import '../modules/main/ketoan/upgrade_website/list.dart';
 
 import '../modules/main/ketoan/cap_ma_hd_layout_new.dart';
 import '../modules/main/ketoan/danhsachHD/danh_sach_hd_layout.dart';
@@ -17,7 +19,7 @@ import '../modules/main/ketoan/danhsachHD/ds_HD_RP.dart';
 import '../modules/main/ketoan/phieuthu/phieuthu_layout.dart';
 import '../modules/main/main_layout.dart';
 import '../modules/main/profile/doi_mat_khau/doi_mat_khau_layout.dart';
-import '../modules/main/upgrade_website/list.dart';
+
 import '../modules/offline/offline_screen.dart';
 import '../modules/onboarding/onboarding_layout.dart';
 import '../modules/setting/setting_layout.dart';
@@ -90,6 +92,7 @@ ShellRoute addShellRouterMain(String strKey) {
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),
         addGoRouter(const KhachHangMoi(), isSubModule: false),
+        addGoRouter(const DanhSachBlacklistLayout(), isSubModule: false),
       ]);
 }
 
