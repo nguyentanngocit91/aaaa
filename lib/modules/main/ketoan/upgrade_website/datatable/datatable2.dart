@@ -2,12 +2,10 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:data_table_2/data_table_2.dart';
 
-import 'helper.dart';
-import 'nav_helper.dart';
+
 import 'custom_pager.dart';
 import 'data_sources.dart';
 
@@ -32,6 +30,27 @@ class AsyncPaginatedDataTable2DemoState
 
   @override
   void didChangeDependencies() {
+  //
+  //   _dessertsDataSource ??= getCurrentRouteOption(context) == noData
+  //       ? DessertDataSourceAsync.empty()
+  //       : getCurrentRouteOption(context) == asyncErrors
+  //       ? DessertDataSourceAsync.error()
+  //       : DessertDataSourceAsync();
+  //
+  //   _dataSourceLoading = true;
+  //
+  //    if (getCurrentRouteOption(context) == goToLast) {
+  //     _dataSourceLoading = true;
+  //     _dessertsDataSource!.getTotalRecords().then((count) => setState(() {
+  //       print("77777");
+  //       _initialRow = count - _rowsPerPage;
+  //       _dataSourceLoading = false;
+  //     }));
+  // }
+  //   print(_dessertsDataSource);
+  //   super.didChangeDependencies();
+
+
     // initState is to early to access route options, context is invalid at that stage
     _dessertsDataSource ??= getCurrentRouteOption(context) == noData
         ? DessertDataSourceAsync.empty()
@@ -44,9 +63,12 @@ class AsyncPaginatedDataTable2DemoState
       _dessertsDataSource!.getTotalRecords().then((count) => setState(() {
         _initialRow = count - _rowsPerPage;
         _dataSourceLoading = false;
+        print("{deser odata : ${_dessertsDataSource}");
       }));
     }
     super.didChangeDependencies();
+
+
   }
 
   void sort(
@@ -92,47 +114,61 @@ class AsyncPaginatedDataTable2DemoState
 
   List<DataColumn> get _columns {
     return [
-      DataColumn(
-        label: const Text('#'),
+
+      DataColumn2(
+        label: const Text('#',style: TextStyle(color: Colors.white),),
+
+        fixedWidth: 70,
 
       ),
-      DataColumn(
-        label: const Text('Mã KH'),
+      DataColumn2(
+        label: const Text('Mã KH',style: TextStyle(color: Colors.white),),
         onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
+
+        fixedWidth: 150,
+
       ),
-      DataColumn(
-        label: const Text('Mã HĐ'),
-        numeric: true,
+      DataColumn2(
+        label: const Text('Mã HĐ',textAlign: TextAlign.left, style: TextStyle(color: Colors.white),),
+
         onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
+        size: ColumnSize.S
       ),
-      DataColumn(
-        label: const Text('Tên HĐ'),
-        numeric: true,
+      DataColumn2(
+        label: const Text('Tên HĐ',style: TextStyle(color: Colors.white),),
+
         onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
+          size: ColumnSize.L
       ),
-      DataColumn(
-        label: const Text('Email'),
-        numeric: true,
+      DataColumn2(
+        label: const Text('Email',style: TextStyle(color: Colors.white),),
+
         onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
+          size: ColumnSize.S
       ),
-      DataColumn(
-        label: const Text('Ngày ký'),
-        numeric: true,
+      DataColumn2(
+        label: const Text('Ngày ký',style: TextStyle(color: Colors.white),),
+
         onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
+          size: ColumnSize.S
       ),
-      DataColumn(
-        label: const Text('Chức năng'),
-        numeric: true,
+      DataColumn2(
+        label: const Text('Chức năng',style: TextStyle(color: Colors.white),),
+
         onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
+          size: ColumnSize.L
       ),
-      DataColumn(
-        label: const Text('Ghi chú'),
-        numeric: true,
+      DataColumn2(
+        label: const Text('Ghi chú',style: TextStyle(color: Colors.white),),
+
         onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
+          size: ColumnSize.L
       ),
-      DataColumn(
-        label: const Text('Thao tác'),
-        numeric: true,
+      DataColumn2(
+        label: const Text('Thao tác',style: TextStyle(color: Colors.white),),
+
+          size: ColumnSize.L,
+        fixedWidth: 150,
         //onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
       ),
     ];
@@ -144,14 +180,19 @@ class AsyncPaginatedDataTable2DemoState
 
   @override
   Widget build(BuildContext context) {
+    print("Xx");
     // Last ppage example uses extra API call to get the number of items in datasource
-    if (_dataSourceLoading) return const SizedBox();
+    if (_dataSourceLoading) return  CircularProgressIndicator();
 
     return Stack(alignment: Alignment.bottomCenter, children: [
       AsyncPaginatedDataTable2(
+          headingRowColor:
+          MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
+
           horizontalMargin: 20,
+
           checkboxHorizontalMargin: 12,
-          columnSpacing: 0,
+          columnSpacing: 2,
           wrapInCard: false,
           // header: Row(
           //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -181,13 +222,13 @@ class AsyncPaginatedDataTable2DemoState
           //         PageNumber(controller: _controller)
           //     ]),
           rowsPerPage: _rowsPerPage,
-          autoRowsToHeight: getCurrentRouteOption(context) == autoRows,
+
           // Default - do nothing, autoRows - goToLast, other - goToFirst
-          pageSyncApproach: getCurrentRouteOption(context) == dflt
-              ? PageSyncApproach.doNothing
-              : getCurrentRouteOption(context) == autoRows
-              ? PageSyncApproach.goToLast
-              : PageSyncApproach.goToFirst,
+          // pageSyncApproach: getCurrentRouteOption(context) == dflt
+          //     ? PageSyncApproach.doNothing
+          //     : getCurrentRouteOption(context) == autoRows
+          //     ? PageSyncApproach.goToLast
+          //     : PageSyncApproach.goToFirst,
           minWidth: 800,
           fit: FlexFit.tight,
 
@@ -207,15 +248,19 @@ class AsyncPaginatedDataTable2DemoState
           sortAscending: _sortAscending,
           sortArrowIcon: Icons.keyboard_arrow_up,
           sortArrowAnimationDuration: const Duration(milliseconds: 0),
-          onSelectAll: (select) => select != null && select
-              ? (getCurrentRouteOption(context) != selectAllPage
-              ? _dessertsDataSource!.selectAll()
-              : _dessertsDataSource!.selectAllOnThePage())
-              : (getCurrentRouteOption(context) != selectAllPage
-              ? _dessertsDataSource!.deselectAll()
-              : _dessertsDataSource!.deselectAllOnThePage()),
+          //
+          // when select all
+          //
+          // onSelectAll: (select) => select != null && select
+          //     ? (getCurrentRouteOption(context) != selectAllPage
+          //     ? _dessertsDataSource!.selectAll()
+          //     : _dessertsDataSource!.selectAllOnThePage())
+          //     : (getCurrentRouteOption(context) != selectAllPage
+          //     ? _dessertsDataSource!.deselectAll()
+          //     : _dessertsDataSource!.deselectAllOnThePage()),
           controller: _controller,
-          hidePaginator: getCurrentRouteOption(context) == custPager,
+          // hidePaginator: getCurrentRouteOption(context) == custPager,
+          hidePaginator: false,
           columns: _columns,
           empty: Center(
               child: Container(
@@ -228,6 +273,8 @@ class AsyncPaginatedDataTable2DemoState
               e.toString(), () => _dessertsDataSource!.refreshDatasource()),
           source: _dessertsDataSource!
       ),
+
+
       if (getCurrentRouteOption(context) == custPager)
         Positioned(bottom: 16, child: CustomPager(_controller))
     ]);
@@ -301,96 +348,113 @@ class __LoadingState extends State<_Loading> {
             }));
   }
 }
+//
+// class _TitledRangeSelector extends StatefulWidget {
+//   const _TitledRangeSelector(
+//       {super.key,
+//         required this.onChanged,
+//         this.title = "",
+//         this.caption = "",
+//         this.range = const RangeValues(0, 100)});
+//
+//   final String title;
+//   final String caption;
+//   final Duration titleToSelectorSwitch = const Duration(seconds: 2);
+//   final RangeValues range;
+//   final Function(RangeValues) onChanged;
+//
+//   @override
+//   State<_TitledRangeSelector> createState() => _TitledRangeSelectorState();
+// }
+//
+// class _TitledRangeSelectorState extends State<_TitledRangeSelector> {
+//   bool _titleVisible = true;
+//   RangeValues _values = const RangeValues(0, 100);
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//
+//     _values = widget.range;
+//
+//     Timer(
+//         widget.titleToSelectorSwitch,
+//             () => setState(() {
+//           _titleVisible = false;
+//         }));
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Stack(alignment: Alignment.centerLeft, children: [
+//       AnimatedOpacity(
+//           opacity: _titleVisible ? 1 : 0,
+//           duration: const Duration(milliseconds: 1000),
+//           child: Align(
+//               alignment: Alignment.centerLeft, child: Text(widget.title))),
+//       AnimatedOpacity(
+//           opacity: _titleVisible ? 0 : 1,
+//           duration: const Duration(milliseconds: 1000),
+//           child: SizedBox(
+//               width: 340,
+//               child: Theme(
+//                   data: blackSlider(context),
+//                   child: Column(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       mainAxisSize: MainAxisSize.max,
+//                       children: [
+//                         DefaultTextStyle(
+//                             style: const TextStyle(
+//                                 fontSize: 15, color: Colors.black),
+//                             child: Padding(
+//                                 padding:
+//                                 const EdgeInsets.symmetric(horizontal: 20),
+//                                 child: Row(
+//                                     mainAxisAlignment:
+//                                     MainAxisAlignment.spaceBetween,
+//                                     children: [
+//                                       Text(
+//                                         _values.start.toStringAsFixed(0),
+//                                       ),
+//                                       Text(
+//                                         widget.caption,
+//                                       ),
+//                                       Text(
+//                                         _values.end.toStringAsFixed(0),
+//                                       )
+//                                     ]))),
+//                         SizedBox(
+//                             height: 24,
+//                             child: RangeSlider(
+//                               values: _values,
+//                               divisions: 9,
+//                               min: widget.range.start,
+//                               max: widget.range.end,
+//                               onChanged: (v) {
+//                                 setState(() {
+//                                   _values = v;
+//                                 });
+//                                 widget.onChanged(v);
+//                               },
+//                             ))
+//                       ]))))
+//     ]);
+//   }
+// }
+//
+//
 
-class _TitledRangeSelector extends StatefulWidget {
-  const _TitledRangeSelector(
-      {super.key,
-        required this.onChanged,
-        this.title = "",
-        this.caption = "",
-        this.range = const RangeValues(0, 100)});
 
-  final String title;
-  final String caption;
-  final Duration titleToSelectorSwitch = const Duration(seconds: 2);
-  final RangeValues range;
-  final Function(RangeValues) onChanged;
+String getCurrentRouteOption(BuildContext context) {
+  var isEmpty = ModalRoute.of(context) != null &&
+      ModalRoute.of(context)!.settings.arguments != null &&
+      ModalRoute.of(context)!.settings.arguments is String
+      ? ModalRoute.of(context)!.settings.arguments as String
+      : '';
 
-  @override
-  State<_TitledRangeSelector> createState() => _TitledRangeSelectorState();
+  return isEmpty;
 }
-
-class _TitledRangeSelectorState extends State<_TitledRangeSelector> {
-  bool _titleVisible = true;
-  RangeValues _values = const RangeValues(0, 100);
-
-  @override
-  void initState() {
-    super.initState();
-
-    _values = widget.range;
-
-    Timer(
-        widget.titleToSelectorSwitch,
-            () => setState(() {
-          _titleVisible = false;
-        }));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(alignment: Alignment.centerLeft, children: [
-      AnimatedOpacity(
-          opacity: _titleVisible ? 1 : 0,
-          duration: const Duration(milliseconds: 1000),
-          child: Align(
-              alignment: Alignment.centerLeft, child: Text(widget.title))),
-      AnimatedOpacity(
-          opacity: _titleVisible ? 0 : 1,
-          duration: const Duration(milliseconds: 1000),
-          child: SizedBox(
-              width: 340,
-              child: Theme(
-                  data: blackSlider(context),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        DefaultTextStyle(
-                            style: const TextStyle(
-                                fontSize: 15, color: Colors.black),
-                            child: Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 20),
-                                child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        _values.start.toStringAsFixed(0),
-                                      ),
-                                      Text(
-                                        widget.caption,
-                                      ),
-                                      Text(
-                                        _values.end.toStringAsFixed(0),
-                                      )
-                                    ]))),
-                        SizedBox(
-                            height: 24,
-                            child: RangeSlider(
-                              values: _values,
-                              divisions: 9,
-                              min: widget.range.start,
-                              max: widget.range.end,
-                              onChanged: (v) {
-                                setState(() {
-                                  _values = v;
-                                });
-                                widget.onChanged(v);
-                              },
-                            ))
-                      ]))))
-    ]);
-  }
-}
+const noData = 'No data';
+const asyncErrors = "Errors/Retries";
+const goToLast = "Start at last page";
+const custPager = 'Custom pager';

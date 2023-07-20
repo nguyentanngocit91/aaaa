@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:data_table_2/data_table_2.dart';
 
@@ -161,24 +162,8 @@ class DessertDataSource extends DataTableSource {
           notifyListeners();
         }
       },
-      onTap: hasRowTaps
-          ? () => _showSnackbar(context, 'Tapped on row ${dessert.name}')
-          : null,
-      onDoubleTap: hasRowTaps
-          ? () => _showSnackbar(context, 'Double Tapped on row ${dessert.name}')
-          : null,
-      onLongPress: hasRowTaps
-          ? () => _showSnackbar(context, 'Long pressed on row ${dessert.name}')
-          : null,
-      onSecondaryTap: hasRowTaps
-          ? () => _showSnackbar(context, 'Right clicked on row ${dessert.name}')
-          : null,
-      onSecondaryTapDown: hasRowTaps
-          ? (d) =>
-              _showSnackbar(context, 'Right button down on row ${dessert.name}')
-          : null,
-      specificRowHeight:
-          hasRowHeightOverrides && dessert.fat >= 25 ? 100 : null,
+
+      specificRowHeight: 20,
       cells: [
         DataCell(Text('1')),
         DataCell(Text(dessert.name)),
@@ -297,7 +282,9 @@ class DessertDataSourceAsync extends AsyncDataTableSource {
             //   }
             // },
             cells: [
-              DataCell(Text(stt.toString())),
+              DataCell(Container(
+                  child: Text(stt.toString(),softWrap: false,))  ),
+
               DataCell(Text(dessert.name)),
               DataCell(Text('${dessert.calories}')),
               DataCell(Text(dessert.fat.toStringAsFixed(1))),
@@ -305,7 +292,36 @@ class DessertDataSourceAsync extends AsyncDataTableSource {
               DataCell(Text(dessert.protein.toStringAsFixed(1))),
               DataCell(Text('${dessert.sodium}')),
               DataCell(Text(format.format(dessert.calcium / 100))),
-              DataCell(Text(format.format(dessert.iron / 100))),
+              DataCell(
+                  Row(
+                    children: [
+                      GestureDetector(
+                        child:Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                          ),
+                          padding: EdgeInsets.all(3.0),
+
+                          child: Text('Nâng cấp',style: TextStyle(color: Colors.white),),
+                        )
+                      ),
+                      SizedBox(width: 5.0,),
+                      GestureDetector(
+                          child:Container(
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                            ),
+                            padding: EdgeInsets.all(3.0),
+
+                            child: Text('Cập nhật',style: TextStyle(color: Colors.white),),
+                          )
+                      ),
+
+                    ],
+                  )
+              ),
             ],
           );
         }).toList());
@@ -353,6 +369,7 @@ class DesertsFakeWebService {
 
   Future<DesertsFakeWebServiceResponse> getData(int startingAt, int count,
       RangeValues? caloriesFilter, String sortedBy, bool sortedAsc) async {
+    print("rESTURN");
     return Future.delayed(
         Duration(
             milliseconds: startingAt == 0
