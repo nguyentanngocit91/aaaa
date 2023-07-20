@@ -1,5 +1,5 @@
 class ApiUrl{
-  static const String protocol = 'http://116.193.76.26';
+  static const String protocol = 'http://192.168.1.58';
   static const String port = ':1988';
   static const String baseUrl = '$protocol$port/api/v1';
 

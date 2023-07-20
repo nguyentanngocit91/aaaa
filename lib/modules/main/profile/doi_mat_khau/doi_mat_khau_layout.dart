@@ -4,8 +4,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/auth/providers/auth_provider.dart';
-import '../../../../core/utils/form_status.dart';
-import '../../../../core/utils/helper.dart';
+import '../../../../_shared/utils/form_status.dart';
+import '../../../../_shared/utils/helper.dart';
 import 'providers/doi_mat_khau_provider.dart';
 
 final GlobalKey<FormState> _keyForm = GlobalKey();

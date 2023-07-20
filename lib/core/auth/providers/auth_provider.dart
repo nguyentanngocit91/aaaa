@@ -66,7 +66,7 @@ class AuthNotifier extends Notifier<AuthState> {
 
   void startTokenCheck() {
     if(_authRepository.token!=null){
-      Future.delayed(const Duration(seconds: 7), () async {
+      Future.delayed(const Duration(seconds: 20), () async {
         bool tokenIsValid = await _authRepository.tokenIsValid();
         if (tokenIsValid) {
           // Token hợp lệ, tiếp tục kiểm tra

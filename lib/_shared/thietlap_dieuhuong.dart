@@ -2,12 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../core/utils/helper.dart';
+import '../_shared/utils/helper.dart';
 import '../modules/account/signin/signin_layout.dart';
 import '../modules/error/error404.dart';
 import '../modules/error/error_nointernet.dart';
 import '../modules/main/dashboard/dashboard_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
+import '../modules/main/ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
 import '../modules/main/main_layout.dart';
 import '../modules/main/profile/doi_mat_khau/doi_mat_khau_layout.dart';
 import '../modules/main/upgrade_website/list.dart';
@@ -73,6 +74,7 @@ ShellRoute addShellRouterMain(String strKey) {
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),
+        addGoRouter(const KhachHangMoi(), isSubModule: false),
       ]);
 }
 
