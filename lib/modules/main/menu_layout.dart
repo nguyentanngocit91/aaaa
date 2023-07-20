@@ -53,35 +53,35 @@ class MenuLayout extends ConsumerWidget {
                 ),
               ),
             ),
-            itemMenu(
+            itemMenuGroup(
                 title: 'Dashboard',
                 onTap: () {
                   context.go('/${DashboardLayout.pathName}');
                 }),
             showMenuGroup(title: 'Kế Toán', children: [
-              itemMenuGroup(
+              itemMenu(
                 title: 'Cấp mã HĐ trước',
                 onTap: () {
                   context.go('/${CapMaHDLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Danh sách mã đã cấp',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Khách hàng mới',
                 onTap: () {
                   context.go('/${KhachHangMoi.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Danh sách hợp đồng',
                 onTap: () {
                   context.go('/${DanhSachHDLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'DEMO RP',
                 onTap: () {
                   context.go('/${MyAppRP.pathName}');
@@ -93,57 +93,57 @@ class MenuLayout extends ConsumerWidget {
                   context.go('/${UpgradeWebListLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Nâng cấp App',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Nâng cấp Hosting',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Cập nhật Domain',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'DS mới cập nhật & Pendding',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Phiếu thu',
                 onTap: () {
                   context.go('/${PhieuThuLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Nhân viên kế toán',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Sửa đổi thông tin',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Blacklist',
                 onTap: () {
                   context.go('/${DanhSachBlacklistLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Tìm kiếm thông tin 2015-2019',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Import data NVKD',
                 onTap: () {},
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Bàn giao',
                 onTap: () {
                   context.go('/${BanGiaoLayout.pathName}');
                 },
               ),
-              itemMenuGroup(
+              itemMenu(
                 title: 'Thống kê in bàn giao',
                 onTap: () {},
               ),
@@ -179,7 +179,7 @@ class MenuLayout extends ConsumerWidget {
         children: children);
   }
 
-  Widget itemMenu(
+  Widget itemMenuGroup(
       {String? title,
       Widget? icon,
       Color? textColor,
@@ -198,7 +198,7 @@ class MenuLayout extends ConsumerWidget {
     );
   }
 
-  Widget itemMenuGroup(
+  Widget itemMenu(
       {String? title,
       Widget? icon,
       Color? textColor,

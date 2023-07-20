@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../_shared/utils/ndgap.dart';
+import '../../../../_shared/utils/ndgap.dart';
 
 import 'datatable/datatable2.dart';
 
@@ -57,7 +57,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã khách hàng', controller),
+                      // textForm('Mã khách hàng', controller),
                     ],
                   ),
                 ),
@@ -69,7 +69,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Mã hợp đồng', controller),
+                      // textForm('Mã hợp đồng', controller),
                     ],
                   ),
                 ),
@@ -81,7 +81,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Tên hợp đồng', controller),
+                      // textForm('Tên hợp đồng', controller),
                     ],
                   ),
                 ),
@@ -93,7 +93,7 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      textForm('Email', controller),
+                      // textForm('Email', controller),
                     ],
                   ),
                 ),

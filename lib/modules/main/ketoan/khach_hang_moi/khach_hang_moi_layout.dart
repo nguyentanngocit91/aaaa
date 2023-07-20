@@ -1,7 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../_shared/utils/ndgap.dart';
+
+part 'widgets/ma_khach_hang_widget.dart';
+
+part 'widgets/ten_khach_hang_widget.dart';
+
+part 'widgets/dien_thoai_di_dong_widget.dart';
+
+part 'widgets/email_khach_hang_widget.dart';
+
+part 'widgets/email_khach_hang_phu_widget.dart';
+
+part 'widgets/ten_cong_ty_ca_nhan_widget.dart';
+
+part 'widgets/nguoi_dai_dien_moi_widget.dart';
+
+part 'widgets/dien_thoai_co_quan_widget.dart';
+
+part 'widgets/ma_so_thue_widget.dart';
+
+part 'widgets/cccd_widget.dart';
+
+part 'widgets/dia_chi_widget.dart';
+
+part 'widgets/ghi_chu_widget.dart';
+
+part 'widgets/ma_hop_dong_widget.dart';
+
+part 'widgets/ten_hop_dong_widget.dart';
+
+part 'widgets/email_hop_dong_widget.dart';
+
+part 'widgets/tong_gia_tri_widget.dart';
+
+part 'widgets/tong_gia_tri_thu_widget.dart';
+
+part 'widgets/tong_no_widget.dart';
+part 'widgets/phuong_thuc_thanh_toan_widget.dart';
+part 'widgets/loai_phieu_thu_widget.dart';
 
 GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -18,140 +57,110 @@ class _KhachHangMoiState extends State<KhachHangMoi> with FormUIMixins {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          titleForm(context, title: 'Thông tin khách hàng'),
-          bodyForm(
-            child: Form(
-              key: _formKey,
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          children: [
+            titleForm(context, title: 'Thông tin khách hàng'),
+            bodyForm(
               child: Wrap(
                 runSpacing: 25,
                 children: [
                   Row(
                     children: [
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Mã khách hàng'),
-                            TextFormField(
-                              enabled: true,
-                              onChanged: (value) {},
-                              validator: (value) {
-                                if (value == '') return 'Không bỏ trống  ';
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                      const MaKhachHangWidget(),
                       ndGapW16(),
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Tên khách hàng'),
-                            TextFormField(),
-                          ],
-                        ),
-                      ),
+                      const TenKhachHangWidget(),
                       ndGapW16(),
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Điện thoại di động'),
-                            TextFormField(),
-                          ],
-                        ),
-                      ),
+                      const DienThoaiDiDongWidget(),
                       ndGapW16(),
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Email khách hàng'),
-                            TextFormField(),
-                          ],
-                        ),
-                      ),
+                      const EmailKhachHangWidget(),
                     ],
                   ),
                   Row(
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Email khách hàng (email phụ)'),
-                            TextFormField(
-                              enabled: true,
-                              onChanged: (value) {},
-                              validator: (value) {
-                                if (value == '') return 'Không bỏ trống  ';
-                                return null;
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                      const EmailKhachHangPhuWidget(),
                       ndGapW16(),
-                      Expanded(
-                        flex: 3,
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Tên khách hàng'),
-                            TextFormField(),
-                          ],
-                        ),
-                      ),
+                      const TenCongTyCaNhanWidget(),
                     ],
                   ),
                   Row(
                     children: [
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Người đại diện mới'),
-                            TextFormField(
-                              enabled: true,
-                              onChanged: (value) {},
-                              validator: (value) {
-                                if (value == '') return 'Không bỏ trống  ';
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                      const NguoiDaiDienMoiWidget(),
                       ndGapW16(),
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Tên khách hàng'),
-                            TextFormField(),
-                          ],
-                        ),
-                      ),
+                      const DienThoaiCoQuanWidget(),
                       ndGapW16(),
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Điện thoại di động'),
-                            TextFormField(),
-                          ],
-                        ),
-                      ),
+                      const MaSoThueWidget(),
                       ndGapW16(),
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            lableTextForm('Email khách hàng'),
-                            TextFormField(),
-                          ],
-                        ),
-                      ),
+                      const CccdWidget(),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const DiaChiWidget(),
+                      ndGapW16(),
+                      const GhiChuWidget(),
                     ],
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+            ndGapH40(),
+            titleForm(context, title: 'Thông tin hợp đồng'),
+            bodyForm(
+              child: Wrap(
+                runSpacing: 25,
+                children: [
+                  Row(
+                    children: [
+                      const MaHopDongWidget(),
+                      ndGapW16(),
+                      const EmailHopDongWidget(),
+                      ndGapW16(),
+                      const TongGiaTriWidget(),
+                      ndGapW16(),
+                      const TongGiaTriThuWidget(),
+                      ndGapW16(),
+                      const TongNoWidget(),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            ndGapH40(),
+            titleForm(context, title: 'Thông tin phiếu thu'),
+            bodyForm(
+              child: Wrap(
+                runSpacing: 25,
+                children: [
+                  bodyForm(
+                    backgroundColor: Colors.grey.shade300,
+                    child: Row(
+                      children: [
+                        const PhuongThucThanhToanWidget(),
+                        ndGapW48(),
+                        const LoaiPhieuThuWidget(),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const MaHopDongWidget(),
+                      ndGapW16(),
+                      const EmailHopDongWidget(),
+                      ndGapW16(),
+                      const TongGiaTriWidget(),
+                      ndGapW16(),
+                      const TongGiaTriThuWidget(),
+                      ndGapW16(),
+                      const TongNoWidget(),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
