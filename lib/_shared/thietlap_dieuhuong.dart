@@ -7,8 +7,14 @@ import '../modules/account/signin/signin_layout.dart';
 import '../modules/error/error404.dart';
 import '../modules/error/error_nointernet.dart';
 import '../modules/main/dashboard/dashboard_layout.dart';
+import '../modules/main/ketoan/bangiao/ban_giao_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
 import '../modules/main/ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
+
+import '../modules/main/ketoan/cap_ma_hd_layout_new.dart';
+import '../modules/main/ketoan/danhsachHD/danh_sach_hd_layout.dart';
+import '../modules/main/ketoan/danhsachHD/ds_HD_RP.dart';
+import '../modules/main/ketoan/phieuthu/phieuthu_layout.dart';
 import '../modules/main/main_layout.dart';
 import '../modules/main/profile/doi_mat_khau/doi_mat_khau_layout.dart';
 import '../modules/main/upgrade_website/list.dart';
@@ -34,7 +40,6 @@ String patherrorNoInternet = '/${ErrorNoInternetLayout.pathName}';
 String pathOffline = '/${OfflineScreen.pathName}';
 String pathSignIn = '/${SignInLayout.pathName}';
 
-
 /// Đây là Danh sách các module chính sử dụng trong ứng dụng ///
 List<RouteBase> danhsachRoute = [
   addGoRouter(const Error404Layout(), isSubModule: false),
@@ -43,8 +48,6 @@ List<RouteBase> danhsachRoute = [
   addGoRouter(const SplashLayout(), isSubModule: false),
   addGoRouter(const OnboardingLayout(), isSubModule: false),
   addGoRouter(const SignInLayout(), isSubModule: false),
-
-
   addShellRouterMain('main'),
   addGoRouter(const SettingLayout(), isSubModule: false),
 ];
@@ -58,7 +61,8 @@ GoRoute addGoRouter(Widget modules,
   return GoRoute(
     name: strName,
     path: strPath,
-    pageBuilder: (context, state) => effectTransitionFade(context, state, modules),
+    pageBuilder: (context, state) =>
+        effectTransitionFade(context, state, modules),
   );
 }
 
@@ -71,14 +75,26 @@ ShellRoute addShellRouterMain(String strKey) {
       },
       routes: [
         addGoRouter(const DashboardLayout(), isSubModule: false),
+
+        // addGoRouter(const CapMaHDLayout(), isSubModule: false),
+        addGoRouter(const MyAppRP(), isSubModule: false),
+        addGoRouter(const DanhSachHDLayout(), isSubModule: false),
+        addGoRouter(const CapMaHDLayoutNew(), isSubModule: false),
+
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
+        //PHIEU THU
+        addGoRouter(PhieuThuLayout(), isSubModule: false),
+        //BAN GIAO
+        addGoRouter(BanGiaoLayout(), isSubModule: false),
+
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),
         addGoRouter(const KhachHangMoi(), isSubModule: false),
       ]);
 }
 
-CustomTransitionPage effectTransitionFade(BuildContext context,GoRouterState state, Widget child) {
+CustomTransitionPage effectTransitionFade(
+    BuildContext context, GoRouterState state, Widget child) {
   return CustomTransitionPage(
     key: state.pageKey,
     child: child,
