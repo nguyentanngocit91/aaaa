@@ -10,6 +10,7 @@ import '../modules/main/dashboard/dashboard_layout.dart';
 import '../modules/main/ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import '../modules/main/ketoan/bangiao/ban_giao_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
+import '../modules/main/ketoan/capnhat/list.dart';
 import '../modules/main/ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
 import '../modules/main/ketoan/thongkebangiao/screens/thong_ke_ban_giao_layout.dart';
 import '../modules/main/ketoan/upgrade_website/list.dart';
