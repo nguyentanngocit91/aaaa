@@ -8,6 +8,7 @@ import 'dashboard/dashboard_layout.dart';
 import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import 'ketoan/bangiao/ban_giao_layout.dart';
 import 'ketoan/cap_ma_hd_layout.dart';
+import 'ketoan/data20152019/screens/data_2015_2019_layout.dart';
 import 'ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
 import 'ketoan/thongkebangiao/screens/thong_ke_ban_giao_layout.dart';
 
@@ -133,7 +134,9 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenu(
                 title: 'Tìm kiếm thông tin 2015-2019',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${Data20152019.pathName}');
+                },
               ),
               itemMenu(
                 title: 'Import data NVKD',
