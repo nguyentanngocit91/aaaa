@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,14 +13,24 @@ part 'widgets/form_thong_tin_khach_hang_widget.dart';
 part 'widgets/form_thong_tin_hop_dong_widget.dart';
 
 part 'widgets/form_thong_tin_phieu_thu_widget.dart';
+part 'widgets/form_thong_tin_website_widget.dart';
+part 'widgets/form_thong_tin_domain_widget.dart';
+part 'widgets/form_thong_tin_hosting_widget.dart';
+part 'widgets/form_thong_tin_app_widget.dart';
+part 'widgets/upload_file_hd_widget.dart';
 
 GlobalKey<FormState> _formKey = GlobalKey();
 
 enum HinhThucThanhToan { cod, bank }
 enum LoaiPhieuThu { phieuthu, phieuthuBG, phieuthuApp, phieuthuBGApp }
+enum TrangThaiHosting { kyMoi, phucHoi, nangCap, chuyenDoi }
+enum LoaiFileHD { hopDong, chungTuKhac }
+
 
 HinhThucThanhToan _httt = HinhThucThanhToan.cod;
 LoaiPhieuThu _loaiPhieuThu = LoaiPhieuThu.phieuthu;
+TrangThaiHosting _trangThaiHosting = TrangThaiHosting.kyMoi;
+LoaiFileHD _loaiFileHD = LoaiFileHD.hopDong;
 
 class KhachHangMoi extends StatefulWidget {
   const KhachHangMoi({Key? key}) : super(key: const Key(pathName));
@@ -52,22 +63,14 @@ class _KhachHangMoiState extends State<KhachHangMoi> with FormUIMixins {
             bodyForm(
               child: const FormThongTinPhieuThuWidget(),
             ),
+            const FormThongTinWebsiteWidget(),
+            const FormThongTinDomainWidget(),
+            const FormThongTinHostingWidget(),
+            const FormThongTinAppWidget(),
             ndGapH40(),
-            Consumer(
-              builder: (context, ref, child) {
-                final formState = ref.watch(formKhachHangMoiProvider);
-                return Visibility(
-                  visible: formState.isHopDongWebsite,
-                  child: Wrap(
-                    children: [
-                      titleForm(context, title: 'Thông tin Website'),
-                      bodyForm(
-                        child: Text('Form thông tin website'),
-                      ),
-                    ],
-                  ),
-                );
-              },
+            titleForm(context, title: 'Upload file HĐ'),
+            bodyForm(
+              child: const UploadFileHDWidget(),
             ),
             ndGapH40(),
             const _BtnSubmit(),
@@ -95,7 +98,9 @@ class _BtnSubmit extends ConsumerWidget {
         ),
         ndGapW16(),
         FilledButton.icon(
-          onPressed: () {},
+          onPressed: () {
+            _formKey.currentState?.reset();
+          },
           icon: const FaIcon(FontAwesomeIcons.rotate),
           label: const Text('Nhập lại'),
         ),
