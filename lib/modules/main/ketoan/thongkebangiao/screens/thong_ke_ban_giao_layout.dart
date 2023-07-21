@@ -129,7 +129,7 @@ class _ThongKeBanGiaoState extends State<ThongKeBanGiao> {
                       children: [
                         Container(
                           margin:EdgeInsets.only(top:20),
-                          child: PtButton(width:150,icon:Icon(Icons.cloud_download),title:"Export file", onPressed: (){
+                          child: PtButton(width:150,icon:Icon(Icons.cloud_download,color:Colors.white,),title:"Export file", onPressed: (){
                             print("Export");
                           },),
                         )
@@ -147,7 +147,7 @@ class _ThongKeBanGiaoState extends State<ThongKeBanGiao> {
                       children: [
                         Container(
                           margin:EdgeInsets.only(top:20),
-                          child: PtButton(icon:Icon(Icons.refresh),title:"Reset", onPressed: (){
+                          child: PtButton(icon:Icon(Icons.refresh,color:Colors.white,),title:"Reset", onPressed: (){
                             print("Reset");
                           },),
                         )

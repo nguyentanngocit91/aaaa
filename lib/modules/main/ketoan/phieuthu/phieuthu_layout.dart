@@ -119,6 +119,7 @@ class PhieuThuLayout extends StatelessWidget {
               PtButton(
                 title: 'Export DS Phiếu Thu',
                 icon: const Icon(Icons.download,color: Colors.white,),
+                width:200,
                 onPressed: () {},
               ),
               const SizedBox(
@@ -127,6 +128,7 @@ class PhieuThuLayout extends StatelessWidget {
               PtButton(
                 title: 'Export DS Pending',
                 icon: const Icon(Icons.download,color: Colors.white,),
+                width:200,
                 onPressed: () {},
               ),
               const SizedBox(
