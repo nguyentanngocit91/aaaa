@@ -143,6 +143,7 @@ class DessertDataSource extends DataTableSource {
       locale: 'en',
       decimalDigits: 0,
     );
+    print("zzzz");
     assert(index >= 0);
     if (index >= desserts.length) throw 'index > _desserts.length';
     final dessert = desserts[index];
@@ -165,17 +166,7 @@ class DessertDataSource extends DataTableSource {
 
       specificRowHeight: 20,
       cells: [
-        DataCell(Text('1')),
-        DataCell(Text(dessert.name)),
-        DataCell(Text('${dessert.calories}'),
-            onTap: () => _showSnackbar(context,
-                'Tapped on a cell with "${dessert.calories}"', Colors.red)),
-        DataCell(Text(dessert.fat.toStringAsFixed(1))),
-        DataCell(Text('${dessert.carbs}')),
-        DataCell(Text(dessert.protein.toStringAsFixed(1))),
-        DataCell(Text('${dessert.sodium}')),
-        DataCell(Text(format.format(dessert.calcium / 100))),
-        DataCell(Text(format.format(dessert.iron / 100))),
+
       ],
     );
   }
@@ -369,7 +360,7 @@ class DesertsFakeWebService {
 
   Future<DesertsFakeWebServiceResponse> getData(int startingAt, int count,
       RangeValues? caloriesFilter, String sortedBy, bool sortedAsc) async {
-    print("rESTURN");
+
     return Future.delayed(
         Duration(
             milliseconds: startingAt == 0

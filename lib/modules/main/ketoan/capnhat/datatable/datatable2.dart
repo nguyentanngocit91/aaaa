@@ -10,8 +10,8 @@ import 'custom_pager.dart';
 import 'data_sources.dart';
 
 class AsyncPaginatedDataTable2Demo extends StatefulWidget {
-  const AsyncPaginatedDataTable2Demo({super.key});
-
+   AsyncPaginatedDataTable2Demo({super.key, required this.data});
+  final Map<String,dynamic>? data;
   @override
   AsyncPaginatedDataTable2DemoState createState() =>
       AsyncPaginatedDataTable2DemoState();
@@ -52,6 +52,7 @@ class AsyncPaginatedDataTable2DemoState
 
 
     // initState is to early to access route options, context is invalid at that stage
+    print("_dessertsDataSource $_dessertsDataSource");
     _dessertsDataSource ??= getCurrentRouteOption(context) == noData
         ? DessertDataSourceAsync.empty()
         : getCurrentRouteOption(context) == asyncErrors
@@ -60,12 +61,14 @@ class AsyncPaginatedDataTable2DemoState
 
     if (getCurrentRouteOption(context) == goToLast) {
       _dataSourceLoading = true;
+
       _dessertsDataSource!.getTotalRecords().then((count) => setState(() {
         _initialRow = count - _rowsPerPage;
         _dataSourceLoading = false;
-        print("{deser odata : ${_dessertsDataSource}");
+
       }));
     }
+    print("_dessertsDataSource ${_dessertsDataSource.toString()}");
     super.didChangeDependencies();
 
 
@@ -180,10 +183,8 @@ class AsyncPaginatedDataTable2DemoState
 
   @override
   Widget build(BuildContext context) {
-    print("Xx");
     // Last ppage example uses extra API call to get the number of items in datasource
     if (_dataSourceLoading) return  CircularProgressIndicator();
-
     return Stack(alignment: Alignment.bottomCenter, children: [
       AsyncPaginatedDataTable2(
           headingRowColor:
