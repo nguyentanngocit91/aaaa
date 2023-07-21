@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../phieuthu/widgets/pt_button.dart';
+import 'widgets/header_list_hop_dong.dart';
+import 'widgets/box_info_customer.dart';
+import 'widgets/row_hop_dong.dart';
+import 'widgets/box_search.dart';
 
 class BanGiaoLayout extends StatelessWidget {
   const BanGiaoLayout({Key? key}) : super(key: const Key(pathName));
@@ -8,94 +10,59 @@ class BanGiaoLayout extends StatelessWidget {
   static const String pathName = 'bangiao';
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: const Color(0xFFf5f5f5),
-            border: Border.all(color: const Color(0xFFdcdbdb)),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const BoxSearchBanGiao(),
+          const SizedBox(
+            height: 20,
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                width: 200,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Mã HĐ',
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const SizedBox(
-                width: 130,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Tên HĐ',
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const SizedBox(
-                width: 130,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Điện thoại',
-                  ),
-
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const SizedBox(
-                width: 130,
-                child: TextField(
-
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                  ),
-
-                ),
-              ),
-              const SizedBox(
-                width: 130,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Domain',
-                  ),
-
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              PtButton(
-                title: 'Tìm kiếm',
-                icon: const Icon(Icons.search),
-                onPressed: () {},
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              PtButton(
-                title: 'Reset',
-                icon: const Icon(Icons.close),
-                onPressed: () {},
-              ),
-            ],
+          Text(
+            'Thông tin khách hàng'.toUpperCase(),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-        ),
-        const SizedBox(height: 20,),
-      ],
+          const SizedBox(
+            height: 20,
+          ),
+          const BoxInfoCustomer(
+            tenHD: 'Nguyễn Văn Lộc',
+            maKH: 'NN1088523',
+            nguoiDaiDien: 'Nguyễn Văn Lộc',
+            dienThoaiDiDong: '0935937789',
+            dienThoaiCoQuan: '',
+            email: 'nguyenvanloc031098@gmail.com',
+            emailPhu: '',
+            daiDienMoi: '',
+            maSoThue: '',
+            cmnd: '241745980',
+            diaChi:
+                '62/2 Trương Văn Thành, Phường Hiệp Phú, Thành phố Thủ Đức, Thành phố Hồ Chí Minh',
+            ghiChu: '',
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Thông tin hợp đồng'.toUpperCase(),
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            color: const Color(0xFFfbdfdf),
+            child: const Column(
+              children: [
+                HeaderListHopDong(),
+                RowHopDong(),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
+
+
