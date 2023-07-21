@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../_shared/thietlap_ngonngu.dart';
 
@@ -9,6 +10,12 @@ class Helper {
     strReturn = strReturn.replaceAll("[<'", "");
     strReturn = strReturn.replaceAll("'>]", "");
     return strReturn;
+  }
+
+  static String numberFormat(double num){
+    var numFormat = NumberFormat.currency(locale: "vi_VN",
+        symbol: "đ");
+    return numFormat.format(num);
   }
 }
 
