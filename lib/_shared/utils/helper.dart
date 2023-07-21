@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,7 +12,14 @@ class Helper {
     strReturn = strReturn.replaceAll("'>]", "");
     return strReturn;
   }
+  static print2(json){
+    JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+    String prettyprint = encoder.convert(json);
+    print(prettyprint);
+  }
 }
+
+
 
 class Loading {
   late BuildContext context;

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../_shared/utils/form_status.dart';
+import '../../../../../_shared/utils/helper.dart';
 import '../../../../../core/auth/providers/auth_provider.dart';
 import '../repositories/capnhat_repository.dart';
 part 'capnhat_state.dart';
@@ -30,19 +31,12 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
       'email': (data!=null && data['EMAIL']!='')?data['EMAIL']:'',
       'loaihopdong': type,
     };
-    print("params: ${params}");
+
     final jsonResult = await _capNhatRepository.searchInfo(data: params);
-    // final jsonResult = await ref.read(searchProvider.notifier).search(data: params);
-    // if (jsonResult['userSignIn'] != null) {
-    //   state = state.copyWith(
-    //     status: FormStatus.submissionSuccess,
-    //     errorMessage: '',
-    //   );
-    // } else {
-    //   state = state.copyWith(
-    //     status: FormStatus.submissionFailure,
-    //     errorMessage: jsonResult['message'],
-    //   );
-    // }
+
+    state = state.copyWith(
+      result: jsonResult
+    );
+
   }
 }
