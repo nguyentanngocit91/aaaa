@@ -10,4 +10,7 @@ class ApiUrl{
   static const String changePassword = '$baseUrl/users/change-password';
   static const String searchContract = '$baseUrl/hop-dong';
 
+
+  // Khách hàng
+  static const String danhSachKhachHang = '$baseUrl/khach-hang';
 }

@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../_shared/mixins/form_ui_mixins.dart';
+import '../../../../_shared/utils/debouncer.dart';
 import '../../../../_shared/utils/ndgap.dart';
 import 'providers/form_khach_hang_moi_provider.dart';
+import 'providers/kiem_tra_khach_hang_provider.dart';
 
 part 'widgets/form_thong_tin_khach_hang_widget.dart';
 
@@ -47,34 +50,36 @@ class _KhachHangMoiState extends State<KhachHangMoi> with FormUIMixins {
     return Scaffold(
       body: Form(
         key: _formKey,
-        child: ListView(
-          children: [
-            titleForm(context, title: 'Thông tin khách hàng'),
-            bodyForm(
-              child: const FormThongTinKhachHangWidget(),
-            ),
-            ndGapH40(),
-            titleForm(context, title: 'Thông tin hợp đồng'),
-            bodyForm(
-              child: const FormThongTinHopDongWidget(),
-            ),
-            ndGapH40(),
-            titleForm(context, title: 'Thông tin phiếu thu'),
-            bodyForm(
-              child: const FormThongTinPhieuThuWidget(),
-            ),
-            const FormThongTinWebsiteWidget(),
-            const FormThongTinDomainWidget(),
-            const FormThongTinHostingWidget(),
-            const FormThongTinAppWidget(),
-            ndGapH40(),
-            titleForm(context, title: 'Upload file HĐ'),
-            bodyForm(
-              child: const UploadFileHDWidget(),
-            ),
-            ndGapH40(),
-            const _BtnSubmit(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              titleForm(context, title: 'Thông tin khách hàng'),
+              bodyForm(
+                child: const FormThongTinKhachHangWidget(),
+              ),
+              ndGapH40(),
+              titleForm(context, title: 'Thông tin hợp đồng'),
+              bodyForm(
+                child: const FormThongTinHopDongWidget(),
+              ),
+              ndGapH40(),
+              titleForm(context, title: 'Thông tin phiếu thu'),
+              bodyForm(
+                child: const FormThongTinPhieuThuWidget(),
+              ),
+              const FormThongTinWebsiteWidget(),
+              const FormThongTinDomainWidget(),
+              const FormThongTinHostingWidget(),
+              const FormThongTinAppWidget(),
+              ndGapH40(),
+              titleForm(context, title: 'Upload file HĐ'),
+              bodyForm(
+                child: const UploadFileHDWidget(),
+              ),
+              ndGapH40(),
+              const _BtnSubmit(),
+            ],
+          ),
         ),
       ),
     );
@@ -107,11 +112,11 @@ class _BtnSubmit extends ConsumerWidget {
       ],
     );
   }
+}
 
-  _submitForm(WidgetRef ref) {
-    if (_formKey.currentState!.validate()) {
-      print('bắt đầu submit...');
-      ref.read(formKhachHangMoiProvider.notifier).saveForm();
-    }
+_submitForm(WidgetRef ref) {
+  if (_formKey.currentState!.validate()) {
+    print('bắt đầu submit...');
+    ref.read(formKhachHangMoiProvider.notifier).saveForm();
   }
 }

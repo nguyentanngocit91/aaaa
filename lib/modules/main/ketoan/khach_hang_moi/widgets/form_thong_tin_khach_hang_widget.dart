@@ -7,9 +7,21 @@ class FormThongTinKhachHangWidget extends ConsumerStatefulWidget {
   ConsumerState createState() => _FormThongTinKhachHangWidgetState();
 }
 
-class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachHangWidget> with FormUIMixins {
+class _FormThongTinKhachHangWidgetState
+    extends ConsumerState<FormThongTinKhachHangWidget> with FormUIMixins {
+
+  final Debouncer onSearchDebouncer =
+      Debouncer(delay: const Duration(seconds: 1));
+
+  @override
+  dispose(){
+    super.dispose();
+    ref.invalidate(kiemTraKhachHangProvider);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final Map thongTinKhachHang = ref.watch(kiemTraKhachHangProvider) ?? {};
     return Wrap(
       runSpacing: 25,
       children: [
@@ -21,12 +33,16 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
                 children: [
                   lableTextForm('Mã khách hàng'),
                   TextFormField(
+                    controller: TextEditingController(text: thongTinKhachHang['makhachhang'] ?? ''),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(key: 'makhachhang', value: value);
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'makhachhang', value: value);
                     },
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(errorText: 'Không bỏ trống'),
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống'),
                     ]),
                   ),
                 ],
@@ -38,12 +54,16 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
                 children: [
                   lableTextForm('Tên khách hàng'),
                   TextFormField(
+                    controller: TextEditingController(text: thongTinKhachHang['hoten'] ?? ''),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(key: 'hoten', value: value);
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'hoten', value: value);
                     },
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(errorText: 'Không bỏ trống'),
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
                     ]),
                   ),
                 ],
@@ -54,7 +74,19 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
               child: Wrap(
                 children: [
                   lableTextForm('Điện thoại di động'),
-                  TextFormField(),
+                  TextFormField(
+                    controller: TextEditingController(text: thongTinKhachHang['phone'] ?? ''),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'phone', value: value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -63,7 +95,27 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
               child: Wrap(
                 children: [
                   lableTextForm('Email khách hàng'),
-                  TextFormField(),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                      FormBuilderValidators.email(
+                          errorText: 'Email không đúng định dạng.')
+                    ]),
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'email', value: value);
+                      if (value.isEmail()) {
+                        onSearchDebouncer.debounce(
+                          () {
+                            ref.read(kiemTraKhachHangProvider.notifier).kiemTraThongTinKhachHang(email: value);
+                          },
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
@@ -78,12 +130,18 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
                 children: [
                   lableTextForm('Email khách hàng (email phụ)'),
                   TextFormField(
-                    enabled: true,
-                    onChanged: (value) {},
-                    validator: (value) {
-                      if (value == '') return 'Không bỏ trống  ';
-                      return null;
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'info', value: {"email2": value});
                     },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                      FormBuilderValidators.email(
+                          errorText: 'Email không đúng định dạng.')
+                    ]),
                   ),
                 ],
               ),
@@ -94,7 +152,19 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
               child: Wrap(
                 children: [
                   lableTextForm('Tên Công ty /  Cá Nhân'),
-                  TextFormField(),
+                  TextFormField(
+                    controller: TextEditingController(text: thongTinKhachHang['congty']),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'congty', value: value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -108,11 +178,15 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
                 children: [
                   lableTextForm('Người đại diện mới'),
                   TextFormField(
-                    enabled: true,
-                    onChanged: (value) {},
-                    validator: (value) {
-                      if (value == '') return 'Không bỏ trống  ';
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          key: 'info', value: {"nguoidaidienmoi": value});
                     },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
                   ),
                 ],
               ),
@@ -122,7 +196,17 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
               child: Wrap(
                 children: [
                   lableTextForm('Điện thoại cơ quan'),
-                  TextFormField(),
+                  TextFormField(
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          key: 'info', value: {"dienthoaicoquan": value});
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                  ),
                 ],
               ),
             ),
@@ -131,7 +215,19 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
               child: Wrap(
                 children: [
                   lableTextForm('Mã số thuế'),
-                  TextFormField(),
+                  TextFormField(
+                    controller: TextEditingController(text: thongTinKhachHang['masothue']),
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'masothue', value: value);
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                  ),
                 ],
               ),
             ),
@@ -140,7 +236,19 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
               child: Wrap(
                 children: [
                   lableTextForm('CCCD / CMND'),
-                  TextFormField(),
+                  TextFormField(
+                    controller: TextEditingController(text: thongTinKhachHang['cccd']),
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'cccd', value: value);
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                  ),
                 ],
               ),
             ),
@@ -156,6 +264,16 @@ class _FormThongTinKhachHangWidgetState extends ConsumerState<FormThongTinKhachH
                   TextFormField(
                     minLines: 3,
                     maxLines: 3,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(key: 'info', value: {"diachi": value});
+                    },
                   ),
                 ],
               ),
