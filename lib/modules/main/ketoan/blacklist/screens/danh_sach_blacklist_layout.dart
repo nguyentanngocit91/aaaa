@@ -1,23 +1,25 @@
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_dialogs/dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 
-class DanhSachBlacklistLayout extends StatefulWidget {
-  const DanhSachBlacklistLayout({Key? key}) : super(key: const Key(pathName));
+import '../providers/danh_sach_blacklist_provider.dart';
 
+class DanhSachBlacklistLayout extends ConsumerWidget{
+  const DanhSachBlacklistLayout({Key? key}) : super(key: const Key(pathName));
   static const String pathName = 'danh-sach-blacklist';
 
   @override
-  State<DanhSachBlacklistLayout> createState() =>
-      _DanhSachBlacklistLayoutState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _DanhSachBlacklistLayoutState extends State<DanhSachBlacklistLayout> {
-  @override
-  Widget build(BuildContext context) {
+
+  // List<Map> listData = ref.watch(DanhSachBlacklistProvider as ProviderListenable<List<Map>>);
+
+
+    // TODO: implement build
     return Scaffold(
       body: Container(
         child: Column(
@@ -46,7 +48,7 @@ class _DanhSachBlacklistLayoutState extends State<DanhSachBlacklistLayout> {
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.only(left: 10, right: 10),
+                              EdgeInsets.only(left: 10, right: 10),
                             ),
                           ),
                         ),
@@ -71,7 +73,7 @@ class _DanhSachBlacklistLayoutState extends State<DanhSachBlacklistLayout> {
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.only(left: 10, right: 10),
+                              EdgeInsets.only(left: 10, right: 10),
                             ),
                           ),
                         ),
@@ -117,76 +119,77 @@ class _DanhSachBlacklistLayoutState extends State<DanhSachBlacklistLayout> {
 
                   columns: const [
                     DataColumn2(
-                      label: Text('#'),
-                      fixedWidth: 50
+                        label: Text('#'),
+                        fixedWidth: 50
 
                     ),
                     DataColumn2(
                       label: Text('Mã HĐ'),
-                        fixedWidth:150,
+                      fixedWidth:150,
 
                     ),
                     DataColumn(
                       label: Text('Ghi chú'),
                     ),
                     DataColumn2(
-                      label: Text('Thao tác'),
-                      fixedWidth:150
+                        label: Text('Thao tác'),
+                        fixedWidth:150
                     ),
 
                   ],
                   rows: List<DataRow>.generate(
                       1000,
-                      (index) => DataRow(cells: [
-                            DataCell(Container(width:50,child:Text((index + 1).toString()),)),
-                            DataCell(Text('A11220'+index.toString())),
-                            DataCell(Text('28/6/2023 ký biên bản cho tặng source cho 1029023W CÔNG TY TNHH THƯƠNG MẠI SẢN XUẤT CAO NGUYÊN MỚI' )),
-                            DataCell(
-                              TextButton(
-                                onPressed: () {
+                          (index) => DataRow(cells: [
+                        DataCell(Container(width:50,child:Text((index + 1).toString()),)),
+                        DataCell(Text('A11220'+index.toString())),
+                        DataCell(Text('28/6/2023 ký biên bản cho tặng source cho 1029023W CÔNG TY TNHH THƯƠNG MẠI SẢN XUẤT CAO NGUYÊN MỚI' )),
+                        DataCell(
+                          TextButton(
+                            onPressed: () {
 
-                                   showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) => AlertDialog(
-                                      title: const Text('AlertDialog Title'),
-                                      content: const Text('AlertDialog description'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: ()
-                                           {
-                                             print("Cancel");
-                                            return Navigator.pop(context, 'Cancel');
-                                           },
-                                          child: const Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: ()
-                                          {
-                                            print("OK");
-                                            return Navigator.pop(context, 'OK');
-                                          },
-                                          child: const Text('OK'),
-                                        ),
-                                      ],
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('AlertDialog Title'),
+                                  content: const Text('AlertDialog description'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: ()
+                                      {
+                                        print("Cancel");
+                                        return Navigator.pop(context, 'Cancel');
+                                      },
+                                      child: const Text('Cancel'),
                                     ),
-                                  );
-
-                                },
-                                child: Container(
-
-                                  child: Icon(Icons.close),
+                                    TextButton(
+                                      onPressed: ()
+                                      {
+                                        print("OK");
+                                        return Navigator.pop(context, 'OK');
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              );
+
+                            },
+                            child: Container(
+
+                              child: Icon(Icons.close),
                             ),
+                          ),
+                        ),
 
 
-                          ]))),
+                      ]))),
             )
           ],
         ),
       ),
     );
   }
+
 }
 
 
