@@ -66,6 +66,7 @@ ThemeData get lightTheme {
       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 1)),
       errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
       focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
+      disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
       border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
       filled: true,
       fillColor: Colors.white,

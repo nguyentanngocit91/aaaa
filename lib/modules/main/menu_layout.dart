@@ -1,23 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../_shared/thietlap_media.dart';
-import 'dashboard/dashboard_layout.dart';
-import 'ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
-import 'ketoan/bangiao/ban_giao_layout.dart';
-import 'ketoan/cap_ma_hd_layout.dart';
-import 'ketoan/data20152019/screens/data_2015_2019_layout.dart';
-import 'ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
-import 'ketoan/thongkebangiao/screens/thong_ke_ban_giao_layout.dart';
-
-
-import 'ketoan/capnhat/list.dart';
-import 'ketoan/danhsachHD/danh_sach_hd_layout.dart';
-import 'ketoan/danhsachHD/ds_HD_RP.dart';
-
-import 'ketoan/phieuthu/phieuthu_layout.dart';
+part of '../../../_shared/thietlap_dieuhuong.dart';
 
 class MenuLayout extends ConsumerWidget {
   const MenuLayout({super.key});

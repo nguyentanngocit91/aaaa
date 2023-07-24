@@ -13,6 +13,7 @@ class _FormThongTinPhieuThuWidgetState
   @override
   Widget build(BuildContext context) {
     FormKhachHangMoiState formKhachHangMoiState = ref.watch(formKhachHangMoiProvider);
+
     return Wrap(
       runSpacing: 25,
       children: [
@@ -116,7 +117,25 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Ngày nộp'),
-                  TextFormField(),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'dd-mm-yyyy',
+                    ),
+                    inputFormatters: [
+                      MaskInputFormatter(mask: '##-##-####'),
+                    ],
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    initialValue: DateTime.now().formatDateTime('dd-MM-yyyy'),
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(type: 'phieuthu' ,key: 'ngaynop', value: value);
+                    },
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                  ),
                 ],
               ),
             ),

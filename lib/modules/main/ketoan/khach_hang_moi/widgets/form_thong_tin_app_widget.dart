@@ -73,9 +73,12 @@ class _FormThongTinAppWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Tìm chọn file'),
-                          inputUploadFile(
-                              context,
-                              onTap: () {}
+                          SizedBox(
+                            width: double.infinity,
+                            height: 45,
+                            child: FilledButton(
+                                onPressed: () {},
+                                child: const Text('Tìm chọn File')),
                           ),
                         ],
                       ),

@@ -23,6 +23,7 @@ class _FormThongTinWebsiteWidgetState
               runSpacing: 25,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
@@ -30,7 +31,13 @@ class _FormThongTinWebsiteWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Mã hợp đồng'),
-                          TextFormField(),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              filled: true,
+                              fillColor: Colors.black12,
+                            ),
+                            readOnly: true,
+                          ),
                         ],
                       ),
                     ),
@@ -40,7 +47,18 @@ class _FormThongTinWebsiteWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Chức năng'),
-                          TextFormField(),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(type: 'website' ,key: 'chucnang', value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
@@ -50,7 +68,18 @@ class _FormThongTinWebsiteWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Ngày ký'),
-                          TextFormField(),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(type: 'website' ,key: 'ngayky', value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
@@ -60,7 +89,18 @@ class _FormThongTinWebsiteWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Ngày bàn giao'),
-                          TextFormField(),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(type: 'website' ,key: 'ngaybangiao', value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
@@ -73,9 +113,12 @@ class _FormThongTinWebsiteWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Tìm chọn file'),
-                          inputUploadFile(
-                              context,
-                              onTap: () {}
+                          SizedBox(
+                            width: double.infinity,
+                            height: 45,
+                            child: FilledButton(
+                                onPressed: () {},
+                                child: const Text('Tìm chọn File')),
                           ),
                         ],
                       ),
@@ -86,7 +129,9 @@ class _FormThongTinWebsiteWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Nhập từ khoá cần tìm'),
-                          TextFormField(),
+                          TextFormField(
+
+                          ),
                         ],
                       ),
                     ),
