@@ -1,6 +1,9 @@
 /// Lưu ý : Import đường dẫn các module theo Relative
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'thietlap_media.dart';
 
 import '../_shared/utils/helper.dart';
 import '../modules/account/signin/signin_layout.dart';
@@ -26,6 +29,8 @@ import '../modules/offline/offline_screen.dart';
 import '../modules/onboarding/onboarding_layout.dart';
 import '../modules/setting/setting_layout.dart';
 import '../modules/splash/splash_layout.dart';
+
+part '../modules/main/menu_layout.dart';
 
 /// Đây là module mặc định sẽ được load sau khi ứng dụng được khởi chạy
 String routeMacDinh = pathSplash;

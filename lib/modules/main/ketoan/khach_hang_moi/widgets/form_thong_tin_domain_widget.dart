@@ -26,7 +26,7 @@ class _FormThongTinDomainWidgetState
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 1,
                       child: Wrap(
                         children: [
                           lableTextForm('Mã hợp đồng'),
@@ -36,27 +36,20 @@ class _FormThongTinDomainWidgetState
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 3,
-                      child: Wrap(
-                        children: [
-                          lableTextForm('Ghi chú'),
-                          TextFormField(),
-                        ],
-                      ),
-                    ),
-                    ndGapW16(),
-                    Expanded(
-                      flex: 1,
+                      flex: 5,
                       child: Wrap(
                         children: [
                           lableTextForm(' '),
-                          FilledButton.icon(
-                              icon: const FaIcon(
-                                FontAwesomeIcons.plus,
-                                size: 15,
-                              ),
-                              onPressed: () {},
-                              label: const Text('Thêm Dmain')),
+                          SizedBox(
+                            height: 45,
+                            child: FilledButton.icon(
+                                icon: const FaIcon(
+                                  FontAwesomeIcons.plus,
+                                  size: 15,
+                                ),
+                                onPressed: () {},
+                                label: const Text('Thêm Domain')),
+                          ),
                         ],
                       ),
                     ),
@@ -64,8 +57,8 @@ class _FormThongTinDomainWidgetState
                 ),
                 Row(
                   children: [
-                    Expanded(
-                      flex: 2,
+                    Container(
+                      width: 250,
                       child: Wrap(
                         children: [
                           lableTextForm('Domain name'),
@@ -75,7 +68,7 @@ class _FormThongTinDomainWidgetState
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Wrap(
                         children: [
                           lableTextForm('Ngày đăng ký'),
@@ -85,7 +78,7 @@ class _FormThongTinDomainWidgetState
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Wrap(
                         children: [
                           lableTextForm('Ngày hết hạn'),
@@ -93,22 +86,13 @@ class _FormThongTinDomainWidgetState
                         ],
                       ),
                     ),
+                    ndGapW16(),
                     Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
+                      flex: 5,
                       child: Wrap(
                         children: [
                           lableTextForm('Ghi chú'),
-                          TextFormField(
-                            minLines: 3,
-                            maxLines: 3,
-                          ),
+                          TextFormField(),
                         ],
                       ),
                     ),
