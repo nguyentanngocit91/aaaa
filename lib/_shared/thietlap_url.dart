@@ -13,4 +13,10 @@ class ApiUrl{
 
   // Khách hàng
   static const String danhSachKhachHang = '$baseUrl/khach-hang';
+
+
+  // blacklist
+
+  static const String danhsachBlackList = '$baseUrl/black-list';
+
 }
