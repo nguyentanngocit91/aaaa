@@ -18,6 +18,7 @@ class _FormThongTinHopDongWidgetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
+              flex: 1,
               child: Wrap(
                 children: [
                   lableTextForm('Mã hợp đồng Web/App'),
@@ -27,6 +28,7 @@ class _FormThongTinHopDongWidgetState
             ),
             ndGapW16(),
             Expanded(
+              flex: 2,
               child: Wrap(
                 children: [
                   lableTextForm('Tên hợp đồng'),
@@ -36,15 +38,7 @@ class _FormThongTinHopDongWidgetState
             ),
             ndGapW16(),
             Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Email hợp đồng'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
+              flex: 1,
               child: Wrap(
                 children: [
                   lableTextForm('Tổng giá trị'),
@@ -54,6 +48,7 @@ class _FormThongTinHopDongWidgetState
             ),
             ndGapW16(),
             Expanded(
+              flex: 1,
               child: Wrap(
                 children: [
                   lableTextForm('Tổng giá trị thu'),
@@ -63,6 +58,7 @@ class _FormThongTinHopDongWidgetState
             ),
             ndGapW16(),
             Expanded(
+              flex: 1,
               child: Wrap(
                 children: [
                   lableTextForm('Tổng nợ'),

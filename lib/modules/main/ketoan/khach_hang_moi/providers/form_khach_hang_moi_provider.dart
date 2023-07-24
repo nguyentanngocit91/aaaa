@@ -37,8 +37,9 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   saveForm() {
     if (state.data != null) {
       state.data!.forEach((key, value) {
-        print('{"$key":"$value"}');
+        print('{$key:$value}');
       });
+      print('submit done!');
     }
   }
 }
