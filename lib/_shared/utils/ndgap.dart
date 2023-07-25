@@ -160,10 +160,9 @@ Widget ndGapH64() {
   );
 }
 Widget heading1(String string){
-
   return ListTile(
-    title:Text(string,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color:Color(0xFFF29596a) ),),
-    leading: Icon(Icons.filter_alt_rounded,color: Color(0xFFF29596a)),
+    title:Text(string,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color:Color(0xff930000) ),),
+    leading: Icon(Icons.filter_alt_rounded,color: Color(0xff930000)),
   );
 }
 Widget textForm({required String title, required onchange}){
@@ -173,7 +172,6 @@ Widget textForm({required String title, required onchange}){
         contentPadding: EdgeInsets.only(top: 1.0,left:10.0,right:10.0,bottom: 1.0)
     ),*/
     onChanged: onchange,
-
     cursorColor: Colors.black,
     decoration: InputDecoration(
       label: Text(title),

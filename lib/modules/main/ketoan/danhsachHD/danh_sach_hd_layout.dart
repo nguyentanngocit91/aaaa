@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/update_thongtin_kh_screen.dart';
 
 import '../../../../_shared/utils/ndgap.dart';
+import 'providers/ds_hd_provider.dart';
 
 
 class DanhSachHDLayout extends StatelessWidget {
@@ -292,7 +293,10 @@ class FilterHD extends ConsumerWidget {
 
                       textForm(
                           title: 'Mã KH',
-                          onchange: (value) { }),
+                          onchange: (value) {
+                            ref.read(dshdProvider.notifier).onChangeValue("MAKH", value);
+
+                          }),
                     ],
                   ),
                 ),
@@ -306,7 +310,10 @@ class FilterHD extends ConsumerWidget {
                     children: [
                       textForm(
                           title: 'Mã HĐ',
-                          onchange: (value) { }),
+                          onchange: (value) {
+                            ref.read(dshdProvider.notifier).onChangeValue("MAHD", value);
+
+                          }),
 
                     ],
                   ),
@@ -322,7 +329,9 @@ class FilterHD extends ConsumerWidget {
 
                       textForm(
                           title: 'Tên HĐ',
-                          onchange: (value) { }),
+                          onchange: (value) {
+                            ref.read(dshdProvider.notifier).onChangeValue("TENHD", value);
+                          }),
                     ],
                   ),
                 ),
@@ -339,7 +348,11 @@ class FilterHD extends ConsumerWidget {
 
                       textForm(
                           title: 'Điện thoại',
-                          onchange: (value) { }),
+                          onchange: (value) {
+
+                            ref.read(dshdProvider.notifier).onChangeValue("DIENTHOAI", value);
+
+                          }),
 
                     ],
                   ),
@@ -357,7 +370,11 @@ class FilterHD extends ConsumerWidget {
 
                       textForm(
                           title: 'Email',
-                          onchange: (value) { }),
+                          onchange: (value) {
+
+                            ref.read(dshdProvider.notifier).onChangeValue("EMAIL", value);
+
+                          }),
 
 
                     ],
@@ -381,7 +398,7 @@ class FilterHD extends ConsumerWidget {
                       padding: EdgeInsets.all(3.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                        color: Color(0xFF3a819f),
+                        color: Color(0xff930000),
                       ),
                       child: Icon(
                         Icons.refresh,
@@ -393,13 +410,14 @@ class FilterHD extends ConsumerWidget {
                 ),
                 GestureDetector(
                     onTap: () {
+                      ref.read(dshdProvider.notifier).onSearch("web");
                       print("Submit Tìm kiếm ");
                     },
                     child: Container(
                       padding: EdgeInsets.all(3.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                        color: Color(0xFFF3a819f),
+                        color: Color(0xff930000),
                       ),
                       child: Icon(
                         Icons.search,

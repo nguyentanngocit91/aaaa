@@ -22,6 +22,7 @@ class CapNhatRepository{
     };
     if (response.statusCode == 200) {
       final res = response.data;
+
       if(res['success']==false){
         result['status'] = true;
         result['message'] = "Không tìm thấy dữ liệu";
@@ -35,6 +36,7 @@ class CapNhatRepository{
         result['data'] = list;
       }
     }
+    print(result);
     return result;
   }
 }
