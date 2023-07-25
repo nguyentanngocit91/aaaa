@@ -66,12 +66,7 @@ class MenuLayout extends ConsumerWidget {
                   context.go('/${DanhSachHDLayout.pathName}');
                 },
               ),
-              itemMenu(
-                title: 'DEMO RP',
-                onTap: () {
-                  context.go('/${MyAppRP.pathName}');
-                },
-              ),
+
               itemMenu(
                 title: 'Nâng cấp Website',
                 onTap: () {
