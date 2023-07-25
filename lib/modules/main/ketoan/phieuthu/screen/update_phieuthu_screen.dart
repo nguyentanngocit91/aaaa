@@ -609,6 +609,5 @@ class _UpdatePhieuThuScreenState extends State<UpdatePhieuThuScreen> {
         ),
       ],
     );
-    ;
   }
 }

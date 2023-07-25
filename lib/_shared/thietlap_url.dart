@@ -22,6 +22,10 @@ class ApiUrl{
   //PHIẾU THU
   static const String danhSachPhieuThu = '$baseUrl/phieu-thu';
 
+  //BÀN GIAO
+  static const String danhSachHDTheoSoHD = '$baseUrl/hop-dong';
+
+
   // blacklist
 
   static const String danhsachBlackList = '$baseUrl/black-list';
