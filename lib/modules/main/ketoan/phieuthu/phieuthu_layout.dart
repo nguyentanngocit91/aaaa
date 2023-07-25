@@ -268,12 +268,42 @@ class PhieuThuLayout extends ConsumerWidget {
 }
 
 class RowInfoPhieuThu extends StatelessWidget{
-  const RowInfoPhieuThu({Key? key, required this.item, required this.index,}) : super(key: key);
+  RowInfoPhieuThu({Key? key, required this.item, required this.index,}) : super(key: key);
 
   final PhieuThuModel item;
   final int index;
+
+
   @override
   Widget build(BuildContext context) {
+
+    double? phiWeb;
+    double? phiNCWeb;
+    double? phiHosting = null;
+    double? phiNCHosting = null;
+    double? phiDomain = null;
+    var listHD = item.hopdong;
+    if(listHD != null) {
+      for (var item in listHD) {
+        if(item.loaihopdong != null && item.loaihopdong == 'web' ) {
+          phiWeb = item.tongtien;
+        }
+        if(item.loaihopdong != null && item.loaihopdong == 'ncweb' ) {
+          phiNCWeb = item.tongtien;
+        }
+        if(item.loaihopdong != null && item.loaihopdong == 'hosting' ) {
+          phiHosting = item.tongtien;
+        }
+        if(item.loaihopdong != null && item.loaihopdong == 'nchosting' ) {
+          phiNCHosting = item.tongtien;
+        }
+        if(item.loaihopdong != null && item.loaihopdong == 'domain' ) {
+          phiDomain = item.tongtien;
+        }
+      }
+    }
+
+
     return Column(
       children: [
         Row(
@@ -292,7 +322,7 @@ class RowInfoPhieuThu extends StatelessWidget{
             ),
             Expanded(
               flex:5,
-              child: Text((item.hopdong![0].mahopdong!).replaceAll(new RegExp(r'[^0-9]'),'')),
+              child: Text((item.hopdong![0].mahopdong!).replaceAll(RegExp(r'[^0-9]'),'')),
             ),
             Expanded(
               flex:5,
@@ -320,34 +350,45 @@ class RowInfoPhieuThu extends StatelessWidget{
             ),
             Expanded(
               flex:5,
-              child: Text('${item.tongtien}'),
+              child: Text(Helper.numberFormat(item.tongtien!)),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text( 'Phí web'),
+              child: (phiWeb!=null)?Text(Helper.numberFormat(phiWeb!)):Text('0 đ'),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text('Phí NC web'),
+              child: (phiNCWeb!=null)?Text(Helper.numberFormat(phiNCWeb!)):Text('0 đ'),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text('Phí hosting'),
+              child: (phiHosting!=null)?Text(Helper.numberFormat(phiHosting!)):Text('0 đ'),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text('Phí NC hosting'),
+              child: (phiNCHosting!=null)?Text(Helper.numberFormat(phiNCHosting!)):Text('0 đ'),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text('Phí domain'),
+              child: (phiDomain!=null)?Text(Helper.numberFormat(phiDomain!)):Text('0 đ'),
             ),
             Expanded(
               flex:14,
               child: Row(
                 children: [
                   TextButton(onPressed: (){}, child: Text('Pending'),),
-                  TextButton(onPressed: (){}, child: Text('Cập nhật phiếu thu'),),
+                  TextButton(onPressed: (){
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: false, // user must tap button!
+                      builder: (BuildContext context) {
+                        return const UpdatePhieuThuScreen();
+                      },
+                    );
+
+                  }, child: Text('Cập nhật phiếu thu'),),
+
+
                 ],
               ),
             ),
