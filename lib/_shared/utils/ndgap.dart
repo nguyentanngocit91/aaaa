@@ -171,6 +171,7 @@ Widget textForm({required String title, required onchange}){
         hintText: title,
         contentPadding: EdgeInsets.only(top: 1.0,left:10.0,right:10.0,bottom: 1.0)
     ),*/
+
     onChanged: onchange,
     cursorColor: Colors.black,
     decoration: InputDecoration(

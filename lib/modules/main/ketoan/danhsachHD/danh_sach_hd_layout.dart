@@ -2,7 +2,8 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/update_thongtin_kh_screen.dart';
+import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/capnhat_hopdong_screen.dart';
+import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/capnhat_thongtin_kh_screen.dart';
 
 import '../../../../_shared/utils/ndgap.dart';
 import 'providers/ds_hd_provider.dart';
@@ -235,7 +236,7 @@ class DanhSachHDLayout extends StatelessWidget {
                                           context: context,
                                           barrierDismissible: false, // user must tap button!
                                           builder: (BuildContext context) {
-                                            return UpdateThongTinKHScreen();
+                                            return const UpdateThongTinHopDongWidget();
                                           },
                                         );
                                       },
@@ -269,6 +270,13 @@ class FilterHD extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final controllerMAKH = TextEditingController();
+    final controllerMAHD = TextEditingController();
+    final controllerTenHD = TextEditingController();
+    final controllerDienThoai = TextEditingController();
+    final controllerEmail = TextEditingController();
+
     return Container(
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
@@ -296,7 +304,11 @@ class FilterHD extends ConsumerWidget {
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAKH", value);
 
-                          }),
+                          },
+                        controller: controllerMAKH,
+
+
+                          ),
                     ],
                   ),
                 ),
@@ -313,7 +325,10 @@ class FilterHD extends ConsumerWidget {
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAHD", value);
 
-                          }),
+                          },
+                          controller: controllerMAHD,),
+
+
 
                     ],
                   ),
@@ -331,7 +346,9 @@ class FilterHD extends ConsumerWidget {
                           title: 'Tên HĐ',
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("TENHD", value);
-                          }),
+                          },
+                      controller: controllerTenHD,
+                      ),
                     ],
                   ),
                 ),
@@ -352,7 +369,10 @@ class FilterHD extends ConsumerWidget {
 
                             ref.read(dshdProvider.notifier).onChangeValue("DIENTHOAI", value);
 
-                          }),
+                          },
+                        controller: controllerDienThoai,
+
+                      ),
 
                     ],
                   ),
@@ -374,7 +394,10 @@ class FilterHD extends ConsumerWidget {
 
                             ref.read(dshdProvider.notifier).onChangeValue("EMAIL", value);
 
-                          }),
+                          },
+                        controller: controllerEmail,
+
+                      ),
 
 
                     ],
@@ -393,6 +416,13 @@ class FilterHD extends ConsumerWidget {
                 GestureDetector(
                     onTap: () {
                       print("Reset load tìm kiếm");
+                      controllerMAKH.clear();
+                      controllerEmail.clear();
+                      controllerDienThoai.clear();
+                      controllerMAHD.clear();
+                      controllerTenHD.clear();
+                      ref.refresh(dshdProvider.notifier).onSearch("web");
+
                     },
                     child: Container(
                       padding: EdgeInsets.all(3.0),
@@ -431,4 +461,23 @@ class FilterHD extends ConsumerWidget {
       ),
     );
   }
+}
+Widget textForm({required String title, required onchange,required controller}){
+  return TextFormField(
+
+    controller: controller,
+    onChanged: onchange,
+    cursorColor: Colors.black,
+    decoration: InputDecoration(
+      label: Text(title),
+      fillColor: Colors.white,
+      filled: true,
+      border: InputBorder.none,
+      hoverColor: Colors.white,
+      hintStyle: const TextStyle(fontSize: 15),
+      contentPadding:
+      const EdgeInsets.only(left: 15, bottom: 5, top: 5, right: 15),
+      hintText: title,),
+    style: const TextStyle(fontSize: 13),
+  );
 }

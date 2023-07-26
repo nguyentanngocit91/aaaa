@@ -12,6 +12,11 @@ StateNotifierProvider<DSHDNotifier, DSHDState>(
   },
 );
 
+
+final controllerProvider = StateProvider<String>((ref) {
+  return "";
+});
+
 class DSHDNotifier extends StateNotifier<DSHDState> {
   final DSHDRepository _dsHDRepository = DSHDRepository();
   DSHDNotifier() : super(const DSHDState());
@@ -38,6 +43,8 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     state = state.copyWith(
         result: jsonResult
     );
+
+   // print("${state.result}+000000");
 
   }
 }
