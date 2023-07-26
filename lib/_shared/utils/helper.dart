@@ -14,11 +14,16 @@ class Helper {
     return strReturn;
   }
 
-  static print2(json){
+  static dateFormat(var data){
+    DateTime date = DateTime.parse(data);
+    return  "${date.day}-${date.month}-${date.year}";
+  }
+
+  static print2(json) {
     JsonEncoder encoder = new JsonEncoder.withIndent('  ');
     String prettyprint = encoder.convert(json);
     print(prettyprint);
-
+  }
 
   static String numberFormat(double num){
     var numFormat = NumberFormat.currency(locale: "vi_VN",

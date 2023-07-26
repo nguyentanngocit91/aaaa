@@ -92,13 +92,13 @@ class DanhSachHDLayout extends StatelessWidget {
 
                              GestureDetector(
                                onTap: () {
-                                 showDialog<void>(
-                                   context: context,
-                                   barrierDismissible: false, // user must tap button!
-                                   builder: (BuildContext context) {
-                                     return UpdateThongTinKHScreen();
-                                   },
-                                 );
+                                   showDialog<void>(
+                                     context: context,
+                                     barrierDismissible: false, // user must tap button!
+                                     builder: (BuildContext context) {
+                                       return UpdateThongTinKHScreen();
+                                     },
+                                   );
                                },
                                child: Container(
                                  padding: EdgeInsets.all(5),

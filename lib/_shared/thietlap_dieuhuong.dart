@@ -10,7 +10,8 @@ import '../modules/main/dashboard/dashboard_layout.dart';
 import '../modules/main/ketoan/blacklist/screens/danh_sach_blacklist_layout.dart';
 import '../modules/main/ketoan/bangiao/ban_giao_layout.dart';
 import '../modules/main/ketoan/cap_ma_hd_layout.dart';
-import '../modules/main/ketoan/capnhat/list.dart';
+import '../modules/main/ketoan/capnhat/screens/website/list.dart';
+import '../modules/main/ketoan/capnhat/screens/website/update.dart';
 import '../modules/main/ketoan/data20152019/screens/data_2015_2019_layout.dart';
 import '../modules/main/ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
 import '../modules/main/ketoan/thongkebangiao/screens/thong_ke_ban_giao_layout.dart';
@@ -93,6 +94,8 @@ ShellRoute addShellRouterMain(String strKey) {
 
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),
+
+
         addGoRouter(const KhachHangMoi(), isSubModule: false),
         addGoRouter(const DanhSachBlacklistLayout(), isSubModule: false),
         addGoRouter(const ThongKeBanGiao(), isSubModule: false),

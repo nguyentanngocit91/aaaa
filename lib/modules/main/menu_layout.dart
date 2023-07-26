@@ -13,7 +13,7 @@ import 'ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
 import 'ketoan/thongkebangiao/screens/thong_ke_ban_giao_layout.dart';
 
 
-import 'ketoan/capnhat/list.dart';
+import 'ketoan/capnhat/screens/website/list.dart';
 import 'ketoan/danhsachHD/danh_sach_hd_layout.dart';
 import 'ketoan/danhsachHD/ds_HD_RP.dart';
 

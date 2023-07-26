@@ -6,11 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../_shared/utils/ndgap.dart';
-import 'datatable/datatable2.dart';
-import 'models/inforesponse_model.dart';
-import 'models/item_search_result_model.dart';
-import 'providers/capnhat_provider.dart';
+import '../../../../../../_shared/utils/helper.dart';
+import '../../../../../../_shared/utils/ndgap.dart';
+import '../../datatable/datatable2.dart';
+import '../../models/inforesponse_model.dart';
+import '../../models/item_search_result_model.dart';
+import '../../providers/capnhat_provider.dart';
+import 'update.dart';
+
+int _rowsPerPage = 10;
+bool _sortAscending = true;
+String searchType = 'web';
+int? _sortColumnIndex;
+DessertDataSourceAsync? _dessertsDataSource;
 
 class UpgradeWebListLayout extends ConsumerWidget {
   const UpgradeWebListLayout() : super(key: const Key(pathName));
@@ -22,8 +30,9 @@ class UpgradeWebListLayout extends ConsumerWidget {
     double hozSpacingWrap = 30;
     double verSpacingWrap = 20;
     String typeHD = 'web';
-    var data = ref.watch(capnhatProvider.select((value) => value.result));
 
+
+    print("_rowsPerPage $_rowsPerPage");
     return Scaffold(
       body: ListView(
         children: [
@@ -33,10 +42,10 @@ class UpgradeWebListLayout extends ConsumerWidget {
           ndGapH8(),
           heading1('TÌM KIẾM WEBSITE'),
           ndGapH8(),
-          SizedBox(
-            height: 700,
-            child: AsynData(data: data),
-          )
+
+
+            AsynData(),
+
         ],
       ),
     );
@@ -74,74 +83,73 @@ class MyData extends DataTableSource {
   int get selectedRowCount => 0;
 }
 
-class AsynData extends StatefulWidget {
+class AsynData extends ConsumerStatefulWidget {
   AsynData({
     Key? key,
-    this.data,
   }) : super(key: key);
-
-  final Map<String, dynamic>? data;
-
   @override
-  State<AsynData> createState() => _AsynDataState();
+  ConsumerState<AsynData> createState() => _AsynDataState();
 }
 
-class _AsynDataState extends State<AsynData> {
-  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
-  bool _sortAscending = true;
-  int? _sortColumnIndex;
-  DessertDataSourceAsync? _dessertsDataSource;
-  final PaginatorController _controller = PaginatorController();
+class _AsynDataState extends ConsumerState<AsynData> {
 
   bool _dataSourceLoading = false;
   int _initialRow = 0;
+  bool _initialized = false;
 
-  //final  Map<String,dynamic>? data;
 
-  // void didChangeDependencies() {
-  //   //
-  //   //   _dessertsDataSource ??= getCurrentRouteOption(context) == noData
-  //   //       ? DessertDataSourceAsync.empty()
-  //   //       : getCurrentRouteOption(context) == asyncErrors
-  //   //       ? DessertDataSourceAsync.error()
-  //   //       : DessertDataSourceAsync();
-  //   //
-  //   //   _dataSourceLoading = true;
-  //   //
-  //   //    if (getCurrentRouteOption(context) == goToLast) {
-  //   //     _dataSourceLoading = true;
-  //   //     _dessertsDataSource!.getTotalRecords().then((count) => setState(() {
-  //   //       print("77777");
-  //   //       _initialRow = count - _rowsPerPage;
-  //   //       _dataSourceLoading = false;
-  //   //     }));
-  //   // }
-  //   //   print(_dessertsDataSource);
-  //   //   super.didChangeDependencies();
-  //
-  //
-  //   // initState is to early to access route options, context is invalid at that stage
-  //
-  //
-  //   if (getCurrentRouteOption(context) == goToLast) {
-  //     _dataSourceLoading = true;
-  //
-  //     _dessertsDataSource!.getTotalRecords().then((count) => setState(() {
-  //       _initialRow = count - _rowsPerPage;
-  //       _dataSourceLoading = false;
-  //
-  //     }));
-  //   }
-  //
-  //   super.didChangeDependencies();
-  //
-  //
-  // }
+  @override
+  void dispose() {
+    // TODO: implement dispose
 
+    super.dispose();
+
+  }
+
+  @override
+  initState() {
+    super.initState();
+
+
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    var data = ref.watch(capnhatProvider.select((value) => value.result));
+    _dataSourceLoading = true;
+    _initialRow = 0;
+    _dataSourceLoading = false;
+    _dessertsDataSource = DessertDataSourceAsync(data,context);
+    _initialized = true;
+    return Stack(children: [
+      SizedBox(
+        height: 500,
+        child: TestWidget(),
+      )
+
+    ]);
+  }
+}
+class TestWidget extends ConsumerStatefulWidget {
+  const TestWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  ConsumerState createState() => _TestWidgetState();
+}
+class _TestWidgetState extends ConsumerState<TestWidget> {
+  final PaginatorController _controller = PaginatorController();
   void sort(
-    int columnIndex,
-    bool ascending,
-  ) {
+      int columnIndex,
+      bool ascending,
+      ) {
     var columnName = "name";
     switch (columnIndex) {
       case 1:
@@ -200,7 +208,7 @@ class _AsynDataState extends State<AsynData> {
           size: ColumnSize.S),
       DataColumn2(
           label: const Text(
-            'Tên HĐ',
+            'Mã HĐ',
             style: TextStyle(color: Colors.white),
           ),
           onSort: (columnIndex, ascending) => sort(columnIndex, ascending),
@@ -245,126 +253,46 @@ class _AsynDataState extends State<AsynData> {
       ),
     ];
   }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    _dataSourceLoading = true;
-
-    setState(() {
-      if (widget.data == null) {
-        _dessertsDataSource = DessertDataSourceAsync.empty();
-      } else {
-        _initialRow = 1;
-        _dataSourceLoading = false;
-        _dessertsDataSource = DessertDataSourceAsync(widget.data);
-        print(_dessertsDataSource);
-      }
-    });
-    print("_initialRow $_initialRow");
     return AsyncPaginatedDataTable2(
       headingRowColor: MaterialStateColor.resolveWith(
-          (states) => Theme.of(context).primaryColor),
-      border: TableBorder(
-          top: const BorderSide(color: Colors.black),
-          bottom: BorderSide(color: Colors.grey[300]!),
-          left: BorderSide(color: Colors.grey[300]!),
-          right: BorderSide(color: Colors.grey[300]!),
-          verticalInside: BorderSide(color: Colors.grey[300]!),
-          horizontalInside: const BorderSide(color: Colors.grey, width: 1)),
+              (states) => Theme.of(context).primaryColor),
       horizontalMargin: 20,
-
       checkboxHorizontalMargin: 12,
       columnSpacing: 2,
       wrapInCard: false,
-      // header: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     mainAxisSize: MainAxisSize.max,
-      //     children: [
-      //       _TitledRangeSelector(
-      //           range: const RangeValues(150, 600),
-      //           onChanged: (v) {
-      //             // If the curren row/current page happens to be larger than
-      //             // the total rows/total number of pages what would happen is determined by
-      //             // [pageSyncApproach] field
-      //             _dessertsDataSource!.caloriesFilter = v;
-      //           },
-      //           key: _rangeSelectorKey,
-      //           title: 'AsyncPaginatedDataTable2',
-      //           caption: 'Calories'),
-      //       if (kDebugMode && getCurrentRouteOption(context) == custPager)
-      //         Row(children: [
-      //           OutlinedButton(
-      //               onPressed: () => _controller.goToPageWithRow(25),
-      //               child: const Text('Go to row 25')),
-      //           OutlinedButton(
-      //               onPressed: () => _controller.goToRow(5),
-      //               child: const Text('Go to row 5'))
-      //         ]),
-      //       if (getCurrentRouteOption(context) == custPager)
-      //         PageNumber(controller: _controller)
-      //     ]),
       rowsPerPage: _rowsPerPage,
-
-      // Default - do nothing, autoRows - goToLast, other - goToFirst
-      // pageSyncApproach: getCurrentRouteOption(context) == dflt
-      //     ? PageSyncApproach.doNothing
-      //     : getCurrentRouteOption(context) == autoRows
-      //     ? PageSyncApproach.goToLast
-      //     : PageSyncApproach.goToFirst,
       minWidth: 800,
       fit: FlexFit.tight,
 
       onRowsPerPageChanged: (value) {
-        // No need to wrap into setState, it will be called inside the widget
-        // and trigger rebuild
-        //setState(() {
-        print('Row per page changed to $value');
-        _rowsPerPage = value!;
-        //});
+        ref.read(capnhatProvider.notifier).setPerPage(value,searchType);
       },
-      initialFirstRowIndex: 3,
+      initialFirstRowIndex: 0,
       onPageChanged: (rowIndex) {
-        //print(rowIndex / _rowsPerPage);
+        _rowsPerPage = ref.read(capnhatProvider.notifier).perPage!;
+        int page = double.parse((rowIndex / _rowsPerPage).toString()).ceil();
+    print("rowIndex : $rowIndex page: $page");
+        ref.read(capnhatProvider.notifier).setPage(page,searchType);
       },
       sortColumnIndex: _sortColumnIndex,
       sortAscending: _sortAscending,
       sortArrowIcon: Icons.keyboard_arrow_up,
       sortArrowAnimationDuration: const Duration(milliseconds: 0),
-      //
-      // when select all
-      //
-      // onSelectAll: (select) => select != null && select
-      //     ? (getCurrentRouteOption(context) != selectAllPage
-      //     ? _dessertsDataSource!.selectAll()
-      //     : _dessertsDataSource!.selectAllOnThePage())
-      //     : (getCurrentRouteOption(context) != selectAllPage
-      //     ? _dessertsDataSource!.deselectAll()
-      //     : _dessertsDataSource!.deselectAllOnThePage()),
       controller: _controller,
-      // hidePaginator: getCurrentRouteOption(context) == custPager,
       hidePaginator: false,
       columns: _columns,
-      // empty: Center(
-      //     child: Container(
-      //         padding: const EdgeInsets.all(20),
-      //         color: Colors.grey[200],
-      //         child: const Text('No data'))
-      // ),
+      empty: Center(
+          child: Container(
+              padding: const EdgeInsets.all(20),
+              color: Colors.grey[200],
+              child: const Text('Không có dữ liệu'))),
       loading: _Loading(),
       errorBuilder: (e) => _ErrorAndRetry(
           e.toString(), () => _dessertsDataSource!.refreshDatasource()),
       source: _dessertsDataSource!,
     );
-
-    // if (getCurrentRouteOption(context) == custPager)
-    //   Positioned(bottom: 16, child: CustomPager(_controller))
-    // ]);
   }
 }
 
@@ -401,9 +329,10 @@ class _ErrorAndRetry extends StatelessWidget {
 
 class DessertDataSourceAsync extends AsyncDataTableSource {
   Map<String, dynamic>? data;
-
-  DessertDataSourceAsync(data) {
+  BuildContext? context;
+  DessertDataSourceAsync(data,context) {
     this.data = data;
+    this.context = context;
   }
 
   DessertDataSourceAsync.empty() {
@@ -437,15 +366,10 @@ class DessertDataSourceAsync extends AsyncDataTableSource {
     refreshDatasource();
   }
 
-  getTotalRecords() {
-    return 20;
-    // return Future<int>.delayed(
-    //     const Duration(milliseconds: 0), () => _empty ? 0 : _dessertsX3.length);
-  }
-
   @override
   Future<AsyncRowsResponse> getRows(int start, int end) async {
     print('getRows($start, $end)');
+
     if (_errorCounter != null) {
       _errorCounter = _errorCounter! + 1;
 
@@ -456,137 +380,87 @@ class DessertDataSourceAsync extends AsyncDataTableSource {
     }
 
     var index = start;
-    final format = NumberFormat.decimalPercentPattern(
-      locale: 'en',
-      decimalDigits: 0,
-    );
     assert(index >= 0);
     _empty = false;
-
     int i = 0;
-    List<DataRow> lis = [
-      for (ItemSearchResultModel dessert in data!['data'])
-        DataRow(
-          key: ValueKey<int>(i++),
-          //  key: ValueKey<int>(dessert.id as int),
-          //   selected: dessert.selected,
-          //    onSelectChanged: (value) {
-          //      if (value != null) {
-          //        setRowSelection(ValueKey<int>(dessert.id), value);
-          //      }
-          //    },
+    print(start);
+    List<DataRow> lis = [];
+    int total = 0;
+    if (data != null && data!['data'].length > 0) {
+      total = data!['info'].total;
+      lis = [
+        for (ItemSearchResultModel dessert in data!['data'])
+          DataRow(
+            key: ValueKey<int>(i++),
+            //  key: ValueKey<int>(dessert.id as int),
+            //   selected: dessert.selected,
+            //    onSelectChanged: (value) {
+            //      if (value != null) {
+            //        setRowSelection(ValueKey<int>(dessert.id), value);
+            //      }
+            //    },
 
-          cells: [
-            DataCell(Container(
-                child: Text(
-              'x',
-              softWrap: false,
-            ))),
-            DataCell(Text(dessert.l1_khachhangId!.makhachhang!.toString())),
-            DataCell(Text(dessert.mahopdong!.toString())),
-            DataCell(Text(dessert.tenhopdong!.toString())),
-            DataCell(Text(dessert.tenhopdong!.toString())),
-            DataCell(Text(dessert.tenhopdong!.toString())),
-            DataCell(Text(dessert.tenhopdong!.toString())),
-            DataCell(Text(dessert.tenhopdong!.toString())),
-            DataCell(Row(
-              children: [
-                GestureDetector(
-                    child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                  ),
-                  padding: EdgeInsets.all(3.0),
+            cells: [
+              DataCell(Container(
                   child: Text(
-                    'Nâng cấp',
-                    style: TextStyle(color: Colors.white),
+                    (i + start).toString(),
+                softWrap: false,
+              ))),
+              DataCell(Text(dessert.l1_khachhangId!.makhachhang!.toString())),
+              DataCell(Text(dessert.mahopdong!.toString())),
+              DataCell(Text(dessert.tenhopdong!.toString())),
+              DataCell(Text(dessert.l1_khachhangId!.email!.toString())),
+              DataCell(Text(Helper.dateFormat(dessert.namhopdong!.toString()))),
+              DataCell(Text(dessert.tenhopdong!.toString())),
+              DataCell(Text(dessert.tenhopdong!.toString())),
+              DataCell(Row(
+                children: [
+                  GestureDetector(
+                      child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                    ),
+                    padding: EdgeInsets.all(3.0),
+                    child: Text(
+                      'Nâng cấp',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )),
+                  SizedBox(
+                    width: 5.0,
                   ),
-                )),
-                SizedBox(
-                  width: 5.0,
-                ),
-                GestureDetector(
-                    child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                  ),
-                  padding: EdgeInsets.all(3.0),
-                  child: Text(
-                    'Cập nhật',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )),
-              ],
-            )),
-          ],
-        ),
-    ];
-
-    // List<DataRow> lis = data!['data'].map((ItemSearchResultModel dessert) {
-    //   return DataRow(
-    //     //key: ValueKey<int>(1),
-    //     //  key: ValueKey<int>(dessert.id as int),
-    //     //   selected: dessert.selected,
-    //     //    onSelectChanged: (value) {
-    //     //      if (value != null) {
-    //     //        setRowSelection(ValueKey<int>(dessert.id), value);
-    //     //      }
-    //     //    },
-    //
-    //     cells: [
-    //       DataCell(Container(
-    //           child: Text(
-    //             'x',
-    //             softWrap: false,
-    //           ))),
-    //       DataCell(Text(dessert.l1_khachhangId!.makhachhang!.toString())),
-    //       DataCell(Text(dessert.mahopdong!.toString())),
-    //       DataCell(Text(dessert.tenhopdong!.toString())),
-    //       DataCell(Text(dessert.tenhopdong!.toString())),
-    //       DataCell(Text(dessert.tenhopdong!.toString())),
-    //       DataCell(Text(dessert.tenhopdong!.toString())),
-    //       DataCell(Text(dessert.tenhopdong!.toString())),
-    //       DataCell(Row(
-    //         children: [
-    //           GestureDetector(
-    //               child: Container(
-    //                 decoration: BoxDecoration(
-    //                   color: Colors.blue,
-    //                   borderRadius: BorderRadius.all(Radius.circular(2.0)),
-    //                 ),
-    //                 padding: EdgeInsets.all(3.0),
-    //                 child: Text(
-    //                   'Nâng cấp',
-    //                   style: TextStyle(color: Colors.white),
-    //                 ),
-    //               )),
-    //           SizedBox(
-    //             width: 5.0,
-    //           ),
-    //           GestureDetector(
-    //               child: Container(
-    //                 decoration: BoxDecoration(
-    //                   color: Colors.green,
-    //                   borderRadius: BorderRadius.all(Radius.circular(2.0)),
-    //                 ),
-    //                 padding: EdgeInsets.all(3.0),
-    //                 child: Text(
-    //                   'Cập nhật',
-    //                   style: TextStyle(color: Colors.white),
-    //                 ),
-    //               )),
-    //         ],
-    //       )),
-    //     ],
-    //   );
-    // }).toList<DataRow>();
+                  GestureDetector(
+                    onTap: () {
+                      showDialog<void>(
+                        context: context!,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return UpdateWebsite(id: dessert.id!);
+                        },
+                      );
+                    },
+                      child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                    ),
+                    padding: EdgeInsets.all(3.0),
+                    child: Text(
+                      'Cập nhật',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )),
+                ],
+              )),
+            ],
+          ),
+      ];
+    }
     var r = AsyncRowsResponse(
-      20,
+      total,
       lis,
     );
-
     return r;
   }
 }
@@ -730,24 +604,25 @@ class filter extends ConsumerWidget {
                 const SizedBox(
                   width: 20,
                 ),
-                // GestureDetector(
-                //    child: Container(
-                //   padding: EdgeInsets.all(3.0),
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                //     color: Colors.blue,
-                //   ),
-                //   child: Icon(
-                //     Icons.refresh,
-                //     color: Colors.white,
-                //   ),
-                // )),
+                GestureDetector(
+                   child: Container(
+                  padding: EdgeInsets.all(3.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                    color: Colors.blue,
+                  ),
+                  child: Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                  ),
+                )),
                 const SizedBox(
                   width: 10,
                 ),
                 GestureDetector(
                     onTap: () {
-                      ref.read(capnhatProvider.notifier).onSearch('web');
+                      ref.read(capnhatProvider.notifier).setPage(1,null);
+                      ref.read(capnhatProvider.notifier).onSearch( searchType);
                     },
                     child: Container(
                       padding: EdgeInsets.all(3.0),
