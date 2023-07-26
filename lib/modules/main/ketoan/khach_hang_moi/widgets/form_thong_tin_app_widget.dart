@@ -9,6 +9,10 @@ class FormThongTinAppWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
     with FormUIMixins {
+  final String _typeData = 'app';
+  DateTime ngayDangKy = DateTime.now();
+  DateTime? ngayBanGiao;
+
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formKhachHangMoiProvider);
@@ -37,6 +41,8 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                               fillColor: Colors.black12,
                             ),
                             readOnly: true,
+                            controller: TextEditingController(
+                                text: '${formState.maHopDong}A'),
                           ),
                         ],
                       ),
@@ -54,7 +60,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                               ref
                                   .read(formKhachHangMoiProvider.notifier)
                                   .changeData(
-                                      type: 'app',
+                                      type: _typeData,
                                       key: 'chucnang',
                                       value: value);
                             },
@@ -73,26 +79,28 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                         children: [
                           lableTextForm('Ngày ký'),
                           TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'dd-mm-yyyy',
-                            ),
-                            inputFormatters: [
-                              MaskInputFormatter(mask: '##-##-####'),
-                            ],
-                            autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
-                            onChanged: (value) {
-                              // ref
-                              //     .read(formKhachHangMoiProvider.notifier)
-                              //     .changeData(
-                              //     type: 'app',
-                              //     key: 'ngayupstore',
-                              //     value: value);
+                            readOnly: true,
+                            controller: TextEditingController(
+                                text: ngayDangKy.formatDateTime('dd-MM-yyyy')),
+                            onTap: () async {
+                              final DateTime? selDate =
+                                  await Helper.onSelectDate(context,
+                                      initialDate: ngayDangKy);
+                              String txtDate =
+                                  DateTime.now().formatDateTime('dd-MM-yyyy');
+                              if (selDate != null) {
+                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                              }
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(
+                                      type: _typeData,
+                                      key: 'ngayky',
+                                      value: txtDate);
+                              setState(() {
+                                ngayDangKy = selDate ?? ngayDangKy;
+                              });
                             },
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                  errorText: 'Không bỏ trống.'),
-                            ]),
                           ),
                         ],
                       ),
@@ -104,27 +112,33 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                         children: [
                           lableTextForm('Ngày bàn giao'),
                           TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'dd-mm-yyyy',
-                            ),
-                            inputFormatters: [
-                              MaskInputFormatter(mask: '##-##-####'),
-                            ],
-                            autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
-                            onChanged: (value) {
-                              ref
-                                  .read(formKhachHangMoiProvider.notifier)
-                                  .changeData(
-                                  type: 'app',
-                                  key: 'ngaybangiao',
-                                  value: value);
-                            },
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                  errorText: 'Không bỏ trống.'),
-                            ]),
-                          ),
+                              decoration:
+                                  const InputDecoration(hintText: 'dd-mm-yyyy'),
+                              readOnly: true,
+                              controller: TextEditingController(
+                                  text: (ngayBanGiao != null)
+                                      ? ngayBanGiao!
+                                          .formatDateTime('dd-MM-yyyy')
+                                      : null),
+                              onTap: () async {
+                                final DateTime? selDate =
+                                    await Helper.onSelectDate(context,
+                                        initialDate: ngayBanGiao);
+                                String txtDate = '';
+                                if (selDate != null) {
+                                  txtDate =
+                                      selDate.formatDateTime('dd-MM-yyyy');
+                                }
+                                ref
+                                    .read(formKhachHangMoiProvider.notifier)
+                                    .changeData(
+                                        type: _typeData,
+                                        key: 'ngaybangiao',
+                                        value: txtDate);
+                                setState(() {
+                                  ngayBanGiao = selDate ?? ngayBanGiao;
+                                });
+                              }),
                         ],
                       ),
                     ),
@@ -174,9 +188,9 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                               ref
                                   .read(formKhachHangMoiProvider.notifier)
                                   .changeData(
-                                  type: 'app',
-                                  key: 'ghichu',
-                                  value: value);
+                                      type: _typeData,
+                                      key: 'ghichu',
+                                      value: value);
                             },
                           ),
                         ],

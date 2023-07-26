@@ -9,9 +9,15 @@ class FormThongTinWebsiteWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinWebsiteWidgetState
     extends ConsumerState<FormThongTinWebsiteWidget> with FormUIMixins {
+  
+  final String _typeData = 'website';
+  DateTime ngayDangKy = DateTime.now();
+  DateTime? ngayBanGiao = null;
+
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formKhachHangMoiProvider);
+
     return Visibility(
       visible: formState.isHopDongWebsite,
       child: Column(
@@ -37,6 +43,7 @@ class _FormThongTinWebsiteWidgetState
                               fillColor: Colors.black12,
                             ),
                             readOnly: true,
+                            controller: TextEditingController(text: '${formState.maHopDong}W'),
                           ),
                         ],
                       ),
@@ -52,7 +59,7 @@ class _FormThongTinWebsiteWidgetState
                             onChanged: (value) {
                               ref
                                   .read(formKhachHangMoiProvider.notifier)
-                                  .changeData(type: 'website' ,key: 'chucnang', value: value);
+                                  .changeData(type: _typeData ,key: 'chucnang', value: value);
                             },
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(
@@ -69,22 +76,20 @@ class _FormThongTinWebsiteWidgetState
                         children: [
                           lableTextForm('Ngày ký'),
                           TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'dd-mm-yyyy',
-                            ),
-                            inputFormatters: [
-                              MaskInputFormatter(mask: '##-##-####'),
-                            ],
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            onChanged: (value) {
-                              ref
-                                  .read(formKhachHangMoiProvider.notifier)
-                                  .changeData(type: 'website' ,key: 'ngayky', value: value);
+                            readOnly: true,
+                            controller: TextEditingController(text: ngayDangKy.formatDateTime('dd-MM-yyyy')),
+                            onTap: () async {
+                              final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayDangKy);
+                              String txtDate = DateTime.now().formatDateTime('dd-MM-yyyy');
+                              if(selDate!=null){
+                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                              }
+                              ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                  type: _typeData, key: 'ngayky', value: txtDate);
+                              setState(() {
+                                ngayDangKy = selDate ?? ngayDangKy;
+                              });
                             },
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                  errorText: 'Không bỏ trống.'),
-                            ]),
                           ),
                         ],
                       ),
@@ -96,22 +101,21 @@ class _FormThongTinWebsiteWidgetState
                         children: [
                           lableTextForm('Ngày bàn giao'),
                           TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'dd-mm-yyyy',
-                            ),
-                            inputFormatters: [
-                              MaskInputFormatter(mask: '##-##-####'),
-                            ],
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            onChanged: (value) {
-                              ref
-                                  .read(formKhachHangMoiProvider.notifier)
-                                  .changeData(type: 'website' ,key: 'ngaybangiao', value: value);
+                            decoration: const InputDecoration(hintText: 'dd-mm-yyyy'),
+                            readOnly: true,
+                            controller: TextEditingController(text: (ngayBanGiao!=null) ? ngayBanGiao!.formatDateTime('dd-MM-yyyy') : null),
+                            onTap: () async {
+                              final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayBanGiao);
+                              String txtDate = '';
+                              if(selDate!=null){
+                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                              }
+                              ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                  type: _typeData, key: 'ngaybangiao', value: txtDate);
+                              setState(() {
+                                ngayBanGiao = selDate ?? ngayBanGiao;
+                              });
                             },
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                  errorText: 'Không bỏ trống.'),
-                            ]),
                           ),
                         ],
                       ),
@@ -161,7 +165,7 @@ class _FormThongTinWebsiteWidgetState
                             onChanged: (value) {
                               ref
                                   .read(formKhachHangMoiProvider.notifier)
-                                  .changeData(type: 'website' ,key: 'ghichu', value: value);
+                                  .changeData(type: _typeData ,key: 'ghichu', value: value);
                             },
                           ),
                         ],

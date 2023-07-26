@@ -14,18 +14,29 @@ class Helper {
     return strReturn;
   }
 
-  static print2(json){
-    JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+  static print2(json) {
+    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
     String prettyprint = encoder.convert(json);
     print(prettyprint);
   }
 
-
-  static String numberFormat(double num){
-    var numFormat = NumberFormat.currency(locale: "vi_VN",
-        symbol: "đ");
+  static String numberFormat(double num) {
+    var numFormat = NumberFormat.currency(locale: "vi_VN", symbol: "đ");
     return numFormat.format(num);
+  }
 
+  static Future<DateTime?> onSelectDate(BuildContext context,
+      {bool Function(DateTime)? selectableDayPredicate,
+      DateTime? initialDate,
+      DateTime? firstDate}) async {
+    final now = DateTime.now();
+    return await showDatePicker(
+      context: context,
+      initialDate: initialDate ?? now,
+      selectableDayPredicate: selectableDayPredicate,
+      firstDate: firstDate ?? DateTime(now.year - 2),
+      lastDate: DateTime(now.year + 5),
+    );
   }
 }
 
@@ -42,14 +53,16 @@ class Loading {
         return Dialog(
           elevation: 0.0,
           backgroundColor:
-          Colors.transparent, // can change this to your prefered color
+              Colors.transparent, // can change this to your prefered color
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 // The loading indicator
-                const CircularProgressIndicator.adaptive(backgroundColor: Colors.white,),
+                const CircularProgressIndicator.adaptive(
+                  backgroundColor: Colors.white,
+                ),
                 const SizedBox(
                   height: 10,
                 ),

@@ -16,6 +16,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
 
   @override
   FormKhachHangMoiState build() {
+    init();
     return FormKhachHangMoiState();
   }
 
@@ -40,6 +41,17 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
       bool? isHopDongApp,
       bool? isHopDongDomain,
       bool? isHopDongHosting}) {
+
+    if(isHopDongApp==true){
+      isHopDongWebsite = false;
+      isHopDongDomain = false;
+      isHopDongHosting = false;
+    }
+
+    if(isHopDongWebsite==true || isHopDongDomain==true || isHopDongHosting==true){
+      isHopDongApp = false;
+    }
+
     state = state.copyWith(
       isHopDongApp: isHopDongApp ?? state.isHopDongApp,
       isHopDongHosting: isHopDongHosting ?? state.isHopDongHosting,

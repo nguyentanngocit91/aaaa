@@ -1,6 +1,7 @@
 part of '../khach_hang_moi_layout.dart';
 
 enum HinhThucThanhToan { cod, bank }
+
 enum LoaiPhieuThu { phieuthu, phieuthuBG, phieuthuApp, phieuthuBGApp }
 
 class FormThongTinPhieuThuWidget extends ConsumerStatefulWidget {
@@ -12,28 +13,34 @@ class FormThongTinPhieuThuWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinPhieuThuWidgetState
     extends ConsumerState<FormThongTinPhieuThuWidget> with FormUIMixins {
-
   final String _typeData = 'phieuthu';
   HinhThucThanhToan _httt = HinhThucThanhToan.cod;
   LoaiPhieuThu _loaiPhieuThu = LoaiPhieuThu.phieuthu;
   List<String> _listMaHD = [];
+  DateTime ngayNop = DateTime.now();
 
   @override
-  initState(){
+  initState() {
     super.initState();
     // set dữ liệu mặt định
-    Future.delayed(const Duration(milliseconds: 100),(){
-      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'mahopdong', value: null);
-      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'httt', value: 'cod');
-      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'loaiphieuthu', value: 'phieuthu');
-      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'is_pending', value: false);
+    Future.delayed(const Duration(milliseconds: 100), () {
+      ref
+          .read(formKhachHangMoiProvider.notifier)
+          .changeData(type: _typeData, key: 'mahopdong', value: null);
+      ref
+          .read(formKhachHangMoiProvider.notifier)
+          .changeData(type: _typeData, key: 'httt', value: 'cod');
+      ref
+          .read(formKhachHangMoiProvider.notifier)
+          .changeData(type: _typeData, key: 'loaiphieuthu', value: 'phieuthu');
+      ref
+          .read(formKhachHangMoiProvider.notifier)
+          .changeData(type: _typeData, key: 'is_pending', value: false);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    FormKhachHangMoiState formKhachHangMoiState = ref.watch(formKhachHangMoiProvider);
-
     return Wrap(
       runSpacing: 25,
       children: [
@@ -54,7 +61,8 @@ class _FormThongTinPhieuThuWidgetState
                     value: HinhThucThanhToan.cod,
                     groupValue: _httt,
                     onChanged: (HinhThucThanhToan? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'httt', value: 'cod');
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'httt', value: 'cod');
                       setState(() {
                         _httt = value!;
                       });
@@ -66,7 +74,8 @@ class _FormThongTinPhieuThuWidgetState
                     value: HinhThucThanhToan.bank,
                     groupValue: _httt,
                     onChanged: (HinhThucThanhToan? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'httt', value: 'bank');
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'httt', value: 'bank');
                       setState(() {
                         _httt = value!;
                       });
@@ -88,7 +97,10 @@ class _FormThongTinPhieuThuWidgetState
                     value: LoaiPhieuThu.phieuthu,
                     groupValue: _loaiPhieuThu,
                     onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'loaiphieuthu', value: _typeData);
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData,
+                          key: 'loaiphieuthu',
+                          value: _typeData);
                       setState(() {
                         _loaiPhieuThu = value!;
                       });
@@ -100,7 +112,10 @@ class _FormThongTinPhieuThuWidgetState
                     value: LoaiPhieuThu.phieuthuBG,
                     groupValue: _loaiPhieuThu,
                     onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'loaiphieuthu', value: 'phieuthubg');
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData,
+                          key: 'loaiphieuthu',
+                          value: 'phieuthubg');
                       setState(() {
                         _loaiPhieuThu = value!;
                       });
@@ -112,7 +127,10 @@ class _FormThongTinPhieuThuWidgetState
                     value: LoaiPhieuThu.phieuthuApp,
                     groupValue: _loaiPhieuThu,
                     onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'loaiphieuthu', value: 'phieuthuapp');
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData,
+                          key: 'loaiphieuthu',
+                          value: 'phieuthuapp');
                       setState(() {
                         _loaiPhieuThu = value!;
                       });
@@ -124,7 +142,10 @@ class _FormThongTinPhieuThuWidgetState
                     value: LoaiPhieuThu.phieuthuBGApp,
                     groupValue: _loaiPhieuThu,
                     onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData, key: 'loaiphieuthu', value: 'phieuthuappbg');
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData,
+                          key: 'loaiphieuthu',
+                          value: 'phieuthuappbg');
                       setState(() {
                         _loaiPhieuThu = value!;
                       });
@@ -144,23 +165,25 @@ class _FormThongTinPhieuThuWidgetState
                 children: [
                   lableTextForm('Ngày nộp'),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'dd-mm-yyyy',
-                    ),
-                    inputFormatters: [
-                      MaskInputFormatter(mask: '##-##-####'),
-                    ],
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    initialValue: DateTime.now().formatDateTime('dd-MM-yyyy'),
-                    onChanged: (value) {
-                      ref
-                          .read(formKhachHangMoiProvider.notifier)
-                          .changeData(type: _typeData ,key: 'ngaynop', value: value);
-                    },
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
                           errorText: 'Không bỏ trống.'),
                     ]),
+                    controller: TextEditingController(text: ngayNop.formatDateTime('dd-MM-yyyy')),
+                    readOnly: true,
+                    onTap: () async {
+                      final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayNop);
+                      String txtDate = ngayNop.formatDateTime('dd-MM-yyyy');
+                      if(selDate!=null){
+                        txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                      }
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'ngaynop', value: txtDate);
+                      setState(() {
+                        ngayNop = selDate ?? ngayNop;
+                      });
+                    },
                   ),
                 ],
               ),
@@ -170,7 +193,17 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Số phiếu thu / CK'),
-                  TextFormField(),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'maphieuthu', value: value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -179,7 +212,17 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Mã nhân viên'),
-                  TextFormField(),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'manhanvien', value: value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -219,7 +262,20 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Tổng tiền thu'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'manhanvien', value: value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -228,7 +284,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí web'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'manhanvien', value: value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -304,68 +368,86 @@ class _FormThongTinPhieuThuWidgetState
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text('Chọn loại hợp đồng:'),
-            ndGapW32(),
-            Wrap(
-              direction: Axis.horizontal,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Checkbox(
-                  value: formKhachHangMoiState.isHopDongWebsite,
-                  onChanged: (bool? value) {
-                    ref.read(formKhachHangMoiProvider.notifier).checkLoaiHopDong(isHopDongWebsite: value ?? false);
+        const LoaiHopDongWidget(),
+      ],
+    );
+  }
+}
 
-                  },
-                ),
-                const Text("Website"),
-              ],
+class LoaiHopDongWidget extends ConsumerWidget {
+  const LoaiHopDongWidget({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final FormKhachHangMoiState formKhachHangMoiState = ref.watch(formKhachHangMoiProvider);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text('Chọn loại hợp đồng:'),
+        ndGapW32(),
+        Wrap(
+          direction: Axis.horizontal,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Checkbox(
+              value: formKhachHangMoiState.isHopDongWebsite,
+              onChanged: (bool? value) {
+                ref
+                    .read(formKhachHangMoiProvider.notifier)
+                    .checkLoaiHopDong(isHopDongWebsite: value ?? false);
+              },
             ),
-            ndGapW16(),
-            Wrap(
-              direction: Axis.horizontal,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Checkbox(
-                  value: formKhachHangMoiState.isHopDongDomain,
-                  onChanged: (bool? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).checkLoaiHopDong(isHopDongDomain: value ?? false);
-                  },
-                ),
-                const Text("Domain"),
-              ],
+            const Text("Website"),
+          ],
+        ),
+        ndGapW16(),
+        Wrap(
+          direction: Axis.horizontal,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Checkbox(
+              value: formKhachHangMoiState.isHopDongDomain,
+              onChanged: (bool? value) {
+                ref
+                    .read(formKhachHangMoiProvider.notifier)
+                    .checkLoaiHopDong(isHopDongDomain: value ?? false);
+              },
             ),
-            ndGapW16(),
-            Wrap(
-              direction: Axis.horizontal,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Checkbox(
-                  value: formKhachHangMoiState.isHopDongHosting,
-                  onChanged: (bool? value) {
-                    ref.read(formKhachHangMoiProvider.notifier).checkLoaiHopDong(isHopDongHosting: value ?? false);
-                  },
-                ),
-                const Text("Hosting"),
-              ],
+            const Text("Domain"),
+          ],
+        ),
+        ndGapW16(),
+        Wrap(
+          direction: Axis.horizontal,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Checkbox(
+              value: formKhachHangMoiState.isHopDongHosting,
+              onChanged: (bool? value) {
+                ref
+                    .read(formKhachHangMoiProvider.notifier)
+                    .checkLoaiHopDong(isHopDongHosting: value ?? false);
+              },
             ),
-            ndGapW16(),
-            Wrap(
-              direction: Axis.horizontal,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Checkbox(
-                  value: formKhachHangMoiState.isHopDongApp,
-                  onChanged: (bool? value) {
-                    ref.read(formKhachHangMoiProvider.notifier).checkLoaiHopDong(isHopDongApp: value ?? false);
-                  },
-                ),
-                const Text("App"),
-              ],
+            const Text("Hosting"),
+          ],
+        ),
+        ndGapW16(),
+        Wrap(
+          direction: Axis.horizontal,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Checkbox(
+              value: formKhachHangMoiState.isHopDongApp,
+              onChanged: (bool? value) {
+                ref
+                    .read(formKhachHangMoiProvider.notifier)
+                    .checkLoaiHopDong(isHopDongApp: value ?? false);
+              },
             ),
+            const Text("App"),
           ],
         ),
       ],
