@@ -7,8 +7,8 @@ class FormThongTinAppWidget extends ConsumerStatefulWidget {
   ConsumerState createState() => _FormThongTinAppWidgetState();
 }
 
-class _FormThongTinAppWidgetState
-    extends ConsumerState<FormThongTinAppWidget> with FormUIMixins {
+class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
+    with FormUIMixins {
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formKhachHangMoiProvider);
@@ -23,6 +23,7 @@ class _FormThongTinAppWidgetState
               runSpacing: 25,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
@@ -30,7 +31,13 @@ class _FormThongTinAppWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Mã hợp đồng'),
-                          TextFormField(),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              filled: true,
+                              fillColor: Colors.black12,
+                            ),
+                            readOnly: true,
+                          ),
                         ],
                       ),
                     ),
@@ -40,7 +47,22 @@ class _FormThongTinAppWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Chức năng'),
-                          TextFormField(),
+                          TextFormField(
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(
+                                      type: 'app',
+                                      key: 'chucnang',
+                                      value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
@@ -50,7 +72,28 @@ class _FormThongTinAppWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Ngày ký'),
-                          TextFormField(),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'dd-mm-yyyy',
+                            ),
+                            inputFormatters: [
+                              MaskInputFormatter(mask: '##-##-####'),
+                            ],
+                            autovalidateMode:
+                            AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              // ref
+                              //     .read(formKhachHangMoiProvider.notifier)
+                              //     .changeData(
+                              //     type: 'app',
+                              //     key: 'ngayupstore',
+                              //     value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
@@ -60,13 +103,35 @@ class _FormThongTinAppWidgetState
                       child: Wrap(
                         children: [
                           lableTextForm('Ngày bàn giao'),
-                          TextFormField(),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'dd-mm-yyyy',
+                            ),
+                            inputFormatters: [
+                              MaskInputFormatter(mask: '##-##-####'),
+                            ],
+                            autovalidateMode:
+                            AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(
+                                  type: 'app',
+                                  key: 'ngaybangiao',
+                                  value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       flex: 1,
@@ -96,6 +161,7 @@ class _FormThongTinAppWidgetState
                   ],
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: Wrap(
@@ -104,6 +170,14 @@ class _FormThongTinAppWidgetState
                           TextFormField(
                             minLines: 3,
                             maxLines: 3,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(
+                                  type: 'app',
+                                  key: 'ghichu',
+                                  value: value);
+                            },
                           ),
                         ],
                       ),

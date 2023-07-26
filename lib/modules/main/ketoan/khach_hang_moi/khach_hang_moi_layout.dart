@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:intl/intl.dart';
 import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../_shared/utils/debouncer.dart';
+import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/mask_text_input_formatter.dart';
 import '../../../../_shared/utils/ndgap.dart';
 import 'providers/form_khach_hang_moi_provider.dart';
@@ -28,17 +28,6 @@ part 'widgets/upload_file_hd_widget.dart';
 
 GlobalKey<FormState> _formKey = GlobalKey();
 
-enum HinhThucThanhToan { cod, bank }
-enum LoaiPhieuThu { phieuthu, phieuthuBG, phieuthuApp, phieuthuBGApp }
-enum TrangThaiHosting { kyMoi, phucHoi, nangCap, chuyenDoi }
-enum LoaiFileHD { hopDong, chungTuKhac }
-
-
-HinhThucThanhToan _httt = HinhThucThanhToan.cod;
-LoaiPhieuThu _loaiPhieuThu = LoaiPhieuThu.phieuthu;
-TrangThaiHosting _trangThaiHosting = TrangThaiHosting.kyMoi;
-LoaiFileHD _loaiFileHD = LoaiFileHD.hopDong;
-
 class KhachHangMoi extends ConsumerStatefulWidget {
   const KhachHangMoi({Key? key}) : super(key: const Key(pathName));
 
@@ -51,9 +40,13 @@ class KhachHangMoi extends ConsumerStatefulWidget {
 class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins{
 
   @override
-  void initState() {
+  initState() {
     super.initState();
-    ref.read(formKhachHangMoiProvider.notifier).init();
+    _init();
+  }
+
+  _init() async {
+    await ref.read(formKhachHangMoiProvider.notifier).init();
   }
 
   @override
@@ -82,11 +75,11 @@ class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins{
               const FormThongTinDomainWidget(),
               const FormThongTinHostingWidget(),
               const FormThongTinAppWidget(),
-              // ndGapH40(),
-              // titleForm(context, title: 'Upload file HĐ'),
-              // bodyForm(
-              //   child: const UploadFileHDWidget(),
-              // ),
+              ndGapH40(),
+              titleForm(context, title: 'Upload file HĐ'),
+              bodyForm(
+                child: const UploadFileHDWidget(),
+              ),
               ndGapH40(),
               const _BtnSubmit(),
             ],

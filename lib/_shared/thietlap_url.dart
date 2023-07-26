@@ -11,6 +11,11 @@ class ApiUrl{
   static const String searchContract = '$baseUrl/hop-dong';
 
 
+  // Cấp mã HĐ, KH tự động
+  static const String capMaKhachHang = '$baseUrl/cap-ma/khach-hang';
+  static const String capMaHopDong = '$baseUrl/cap-ma/hop-dong';
+
+
   // Khách hàng
   static const String danhSachKhachHang = '$baseUrl/khach-hang';
 

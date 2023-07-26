@@ -1,8 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
+import '../repositories/khach_hang_moi_repository.dart';
 
 part 'form_khach_hang_moi_state.dart';
 
@@ -12,13 +12,27 @@ final formKhachHangMoiProvider =
 });
 
 class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
+  final KhachHangMoiRepository _khachHangMoiRepository = KhachHangMoiRepository();
+
   @override
   FormKhachHangMoiState build() {
     return FormKhachHangMoiState();
   }
 
-  init(){
+  init() async {
+    await taoMaKhachHang();
+    await taoMaHopDong();
+  }
 
+  Future<String?> taoMaKhachHang() async {
+    String? maKhachHang = await _khachHangMoiRepository.capMaKhachhang();
+    maKhachHang = 'NN$maKhachHang${DateTime.now().formatDateTime('yy')}';
+    state = state.copyWith(maKhachHang: maKhachHang);
+  }
+
+  Future<String?> taoMaHopDong() async {
+    final maHopDong = await _khachHangMoiRepository.capMaHopDong();
+    state = state.copyWith(maHopDong: maHopDong);
   }
 
   checkLoaiHopDong(
@@ -99,7 +113,11 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   savePhieuThu(){
-
+    if (state.dataPhieuThu != null) {
+      state.dataPhieuThu!.forEach((key, value) {
+        print('Phiếu thu {$key:$value}');
+      });
+    }
   }
 
   saveWebsite(){
@@ -111,14 +129,26 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   saveHosting(){
-
+    if (state.dataHosting != null) {
+      state.dataHosting!.forEach((key, value) {
+        print('Hosting {$key:$value}');
+      });
+    }
   }
 
   saveDomain(){
-
+    if (state.dataDomain != null) {
+      state.dataDomain!.forEach((key, value) {
+        print('Domain {$key:$value}');
+      });
+    }
   }
 
   saveApp(){
-
+    if (state.dataApp != null) {
+      state.dataApp!.forEach((key, value) {
+        print('App {$key:$value}');
+      });
+    }
   }
 }

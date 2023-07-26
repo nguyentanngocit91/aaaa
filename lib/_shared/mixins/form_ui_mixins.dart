@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 mixin FormUIMixins {
-  Widget lableTextForm(String title) {
+  Widget lableTextForm(String title, {Widget? child}) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 8),
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      child: Row(
+        mainAxisAlignment: (child!=null) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          if(child!=null)...[
+            child
+          ]
+        ],
       ),
     );
   }

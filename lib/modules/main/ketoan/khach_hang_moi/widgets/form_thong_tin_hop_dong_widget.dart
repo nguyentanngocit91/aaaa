@@ -9,6 +9,9 @@ class FormThongTinHopDongWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinHopDongWidgetState
     extends ConsumerState<FormThongTinHopDongWidget> with FormUIMixins {
+  
+  final String _typeData = 'hopdong';
+  
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -43,7 +46,7 @@ class _FormThongTinHopDongWidgetState
                     onChanged: (value) {
                       ref
                           .read(formKhachHangMoiProvider.notifier)
-                          .changeData(type: 'hopdong' ,key: 'tenhopdong', value: value);
+                          .changeData(type: _typeData ,key: 'tenhopdong', value: value);
                     },
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
@@ -67,7 +70,7 @@ class _FormThongTinHopDongWidgetState
                     onChanged: (value) {
                       ref
                           .read(formKhachHangMoiProvider.notifier)
-                          .changeData(type: 'hopdong' ,key: 'tongtien', value: value);
+                          .changeData(type: _typeData ,key: 'tongtien', value: value);
                     },
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
@@ -90,7 +93,7 @@ class _FormThongTinHopDongWidgetState
             //         onChanged: (value) {
             //           ref
             //               .read(formKhachHangMoiProvider.notifier)
-            //               .changeData(type: 'hopdong' ,key: 'tongtien', value: value);
+            //               .changeData(type: _typeData ,key: 'tongtien', value: value);
             //         },
             //       ),
             //     ],
@@ -109,7 +112,7 @@ class _FormThongTinHopDongWidgetState
             //         onChanged: (value) {
             //           ref
             //               .read(formKhachHangMoiProvider.notifier)
-            //               .changeData(type: 'hopdong' ,key: 'tongtien', value: value);
+            //               .changeData(type: _typeData ,key: 'tongtien', value: value);
             //         },
             //       ),
             //     ],
