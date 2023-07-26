@@ -1,6 +1,9 @@
 /// Lưu ý : Import đường dẫn các module theo Relative
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'thietlap_media.dart';
 
 import '../_shared/utils/helper.dart';
 import '../modules/account/signin/signin_layout.dart';
@@ -16,9 +19,9 @@ import '../modules/main/ketoan/data20152019/screens/data_2015_2019_layout.dart';
 import '../modules/main/ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
 import '../modules/main/ketoan/thongkebangiao/screens/thong_ke_ban_giao_layout.dart';
 
-import '../modules/main/ketoan/cap_ma_hd_layout_new.dart';
+
 import '../modules/main/ketoan/danhsachHD/danh_sach_hd_layout.dart';
-import '../modules/main/ketoan/danhsachHD/ds_HD_RP.dart';
+
 import '../modules/main/ketoan/phieuthu/phieuthu_layout.dart';
 import '../modules/main/main_layout.dart';
 import '../modules/main/profile/doi_mat_khau/doi_mat_khau_layout.dart';
@@ -27,6 +30,8 @@ import '../modules/offline/offline_screen.dart';
 import '../modules/onboarding/onboarding_layout.dart';
 import '../modules/setting/setting_layout.dart';
 import '../modules/splash/splash_layout.dart';
+
+part '../modules/main/menu_layout.dart';
 
 /// Đây là module mặc định sẽ được load sau khi ứng dụng được khởi chạy
 String routeMacDinh = pathSplash;
@@ -82,9 +87,11 @@ ShellRoute addShellRouterMain(String strKey) {
         addGoRouter(const DashboardLayout(), isSubModule: false),
 
         // addGoRouter(const CapMaHDLayout(), isSubModule: false),
-        addGoRouter(const MyAppRP(), isSubModule: false),
+
+
+        // DS HOP DONG
         addGoRouter(const DanhSachHDLayout(), isSubModule: false),
-        addGoRouter(const CapMaHDLayoutNew(), isSubModule: false),
+
 
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
         //PHIEU THU

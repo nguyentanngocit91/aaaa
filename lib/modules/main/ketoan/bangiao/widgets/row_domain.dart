@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 final List<Map<String, dynamic>> _domains = [
-  {
-    "domain": "nina.vn",
-    "ngaydangky": "07/06/2023",
-    "ngayhethan": '07/06/2024'
-  },
+  {"domain": "nina.vn", "ngaydangky": "07/06/2023", "ngayhethan": '07/06/2024'},
   {
     "domain": "nina.com.vn",
     "ngaydangky": "07/06/2023",
@@ -18,9 +14,14 @@ final List<Map<String, dynamic>> _domains = [
   },
 ];
 
-
 class RowDomain extends StatelessWidget {
-  const RowDomain({Key? key, required this.stt, required this.domain, required this.ngayDangKy, required this.ngayHetHan}) : super(key: key);
+  const RowDomain(
+      {Key? key,
+      required this.stt,
+      required this.domain,
+      required this.ngayDangKy,
+      required this.ngayHetHan})
+      : super(key: key);
   final int stt;
   final String domain;
   final String ngayDangKy;
@@ -66,14 +67,17 @@ class RowDomain extends StatelessWidget {
               ],
             ),
           ),
-    SizedBox(height: 100,
-      child: ListView.builder(
-
-      itemCount: _domains.length,
-      itemBuilder: (context, index) {
-        return RowInfoDomain(stt: index+1, domain: _domains[index]['domain'], ngayDangKy: _domains[index]['ngaydangky'], ngayHetHan: _domains[index]['ngayhethan']);
-      }),
-    ),
+          ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: _domains.length,
+              itemBuilder: (context, index) {
+                return RowInfoDomain(
+                    stt: index + 1,
+                    domain: _domains[index]['domain'],
+                    ngayDangKy: _domains[index]['ngaydangky'],
+                    ngayHetHan: _domains[index]['ngayhethan']);
+              }),
         ],
       ),
     );

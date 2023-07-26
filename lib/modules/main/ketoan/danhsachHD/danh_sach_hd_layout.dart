@@ -1,9 +1,11 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/update_thongtin_kh_screen.dart';
 
 import '../../../../_shared/utils/ndgap.dart';
+import 'providers/ds_hd_provider.dart';
 
 
 class DanhSachHDLayout extends StatelessWidget {
@@ -17,7 +19,7 @@ class DanhSachHDLayout extends StatelessWidget {
         children: [
           heading1('TÌM KIẾM THÔNG TIN'),
           ndGapH8(),
-          filter(),
+          FilterHD(),
           ndGapH8(),
           heading1('THÔNG TIN KHÁCH HÀNG'),
 
@@ -118,6 +120,141 @@ class DanhSachHDLayout extends StatelessWidget {
 
           heading1('THÔNG TIN HỢP ĐỒNG'),
 
+          SizedBox(
+            height: 500,
+            child:   Expanded(
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: DataTable2(
+                      dataRowHeight: 150,
+                      horizontalMargin: 12,
+                      columnSpacing: 10,
+                      minWidth: 600,
+                      headingRowColor: MaterialStateProperty.all(const Color(0xFFF29596a)),
+                      headingTextStyle: const TextStyle(color: Colors.white),
+                      columns: const [
+                        DataColumn2(
+                          label: Text('#'),
+                          size: ColumnSize.S,
+                        ),
+
+                        DataColumn(
+                          label: Text('Mã KH'),
+                        ),
+                        DataColumn(
+                          label: Text('Tên KH'),
+                        ),
+                        DataColumn(
+                          label: Text('Tên HĐ'),
+                        ),
+                        DataColumn(
+                          label: Text('Email'),
+                        ),
+                        DataColumn2(
+                          label: Text('Ghi chú'),
+                          size: ColumnSize.L,
+                        ),
+                        DataColumn(
+                          label: Text('Thao tác'),
+
+                        ),
+                      ],
+                      rows: List<DataRow>.generate(
+                          100,
+                              (index) => DataRow(cells: [
+                            DataCell(Text((index+1).toString())),
+                            DataCell(Text('82350$index')),
+                            DataCell(Text('Nguyen$index')),
+                            DataCell(Text('Tu Huy A $index')),
+                            DataCell(Text('abc$index@yahoo.com')),
+                            DataCell(Text('faker $index')),
+
+                            DataCell(
+
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                                  children: [
+
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        color: Color(0xFFF29596a),
+                                        child: Text("Mua thêm",style: TextStyle(color: Colors.white),),
+                                      ),
+                                    ),
+
+                                    SizedBox(height: 3,),
+
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return UpdateThongTinKHScreen();
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        color: Color(0xFFF29596a),
+                                        child: Text("Thêm PT",style: TextStyle(color: Colors.white),),
+                                      ),
+                                    ),
+
+
+                                    SizedBox(height: 3,),
+
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return UpdateThongTinKHScreen();
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        color: Color(0xFFF29596a),
+                                        child: Text("Ds phiếu thu",style: TextStyle(color: Colors.white),),
+                                      ),
+                                    ),
+
+
+                                    SizedBox(height: 3,),
+
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return UpdateThongTinKHScreen();
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        color: Color(0xFFF29596a),
+                                        child: Text("Cập nhật HĐ",style: TextStyle(color: Colors.white),),
+                                      ),
+                                    ),
+
+                                  ],)),
+
+
+                          ]))),
+                ),
+              ),
+            ),
+          ),
+
 
         ],
 
@@ -126,27 +263,24 @@ class DanhSachHDLayout extends StatelessWidget {
   }
 }
 
-Widget filter() {
-  TextEditingController maKHController = TextEditingController();
-  TextEditingController maHDController = TextEditingController();
-  TextEditingController tenHDController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController emailController =TextEditingController();
-  String _searchResult = '';
 
-  return Container(
-    padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-      color: Colors.black.withOpacity(0.1),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          child: Container(
+class FilterHD extends ConsumerWidget {
+  const FilterHD({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      padding: const EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        color: Colors.black.withOpacity(0.1),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,11 +290,17 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      // textForm('Mã KH',maKHController),
+
+                      textForm(
+                          title: 'Mã KH',
+                          onchange: (value) {
+                            ref.read(dshdProvider.notifier).onChangeValue("MAKH", value);
+
+                          }),
                     ],
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -168,11 +308,17 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      // textForm('Mã HĐ',maHDController),
+                      textForm(
+                          title: 'Mã HĐ',
+                          onchange: (value) {
+                            ref.read(dshdProvider.notifier).onChangeValue("MAHD", value);
+
+                          }),
+
                     ],
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -180,13 +326,18 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      // textForm('Tên HĐ',tenHDController),
+
+                      textForm(
+                          title: 'Tên HĐ',
+                          onchange: (value) {
+                            ref.read(dshdProvider.notifier).onChangeValue("TENHD", value);
+                          }),
                     ],
                   ),
                 ),
 
 
-                const SizedBox(
+                SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -194,13 +345,21 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      // textForm('Điện thoại',phoneController),
+
+                      textForm(
+                          title: 'Điện thoại',
+                          onchange: (value) {
+
+                            ref.read(dshdProvider.notifier).onChangeValue("DIENTHOAI", value);
+
+                          }),
+
                     ],
                   ),
                 ),
 
 
-                const SizedBox(
+                SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -208,58 +367,68 @@ Widget filter() {
                   child: Wrap(
                     runSpacing: 10,
                     children: [
-                      // textForm('Email',emailController),
+
+                      textForm(
+                          title: 'Email',
+                          onchange: (value) {
+
+                            ref.read(dshdProvider.notifier).onChangeValue("EMAIL", value);
+
+                          }),
+
+
                     ],
                   ),
                 ),
               ],
             ),
           ),
-        ),
-        Container(
-          child: Wrap(
-            runSpacing: 10,
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  print("Reset load tìm kiếm");
-                },
-                  child: Container(
-                    padding: EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                      color: Color(0xFF3a819f),
-                    ),
-                    child: Icon(
-                      Icons.refresh,
-                      color: Colors.white,
-                    ),
-                  )),
-              const SizedBox(
-                width: 10,
-              ),
-              GestureDetector(
-                onTap: () {
-                  print("Submit Tìm kiếm ${maKHController.text}");
-                },
-                  child: Container(
-                    padding: EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                      color: Color(0xFFF3a819f),
-                    ),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                  ))
-            ],
+          Container(
+            child: Wrap(
+              runSpacing: 10,
+              children: [
+                const SizedBox(
+                  width: 20,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      print("Reset load tìm kiếm");
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(3.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                        color: Color(0xff930000),
+                      ),
+                      child: Icon(
+                        Icons.refresh,
+                        color: Colors.white,
+                      ),
+                    )),
+                const SizedBox(
+                  width: 10,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      ref.read(dshdProvider.notifier).onSearch("web");
+                      print("Submit Tìm kiếm ");
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(3.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                        color: Color(0xff930000),
+                      ),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                    ))
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }

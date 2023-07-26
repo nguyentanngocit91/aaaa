@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 extension DateTimeExtension on DateTime {
   DateTime applied(TimeOfDay time) {
@@ -28,5 +29,10 @@ extension DateTimeExtension on DateTime {
       'December'
     ][month - 1];
     return short ? cMonth.substring(0, 3) : cMonth;
+  }
+
+  String formatDateTime(String formatString){
+    // 'dd-MM-yyyy' , 'dd-MM-yyyy H:m:s'
+    return DateFormat(formatString).format(this);
   }
 }

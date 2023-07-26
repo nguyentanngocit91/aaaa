@@ -25,6 +25,7 @@ class Helper {
     print(prettyprint);
   }
 
+
   static String numberFormat(double num){
     var numFormat = NumberFormat.currency(locale: "vi_VN",
         symbol: "đ");
@@ -32,8 +33,6 @@ class Helper {
 
   }
 }
-
-
 
 class Loading {
   late BuildContext context;

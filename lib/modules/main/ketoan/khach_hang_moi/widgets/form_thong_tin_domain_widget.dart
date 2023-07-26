@@ -23,91 +23,133 @@ class _FormThongTinDomainWidgetState
               runSpacing: 25,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 1,
                       child: Wrap(
                         children: [
                           lableTextForm('Mã hợp đồng'),
-                          TextFormField(),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              filled: true,
+                              fillColor: Colors.black12,
+                            ),
+                            readOnly: true,
+                          ),
                         ],
                       ),
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 3,
-                      child: Wrap(
-                        children: [
-                          lableTextForm('Ghi chú'),
-                          TextFormField(),
-                        ],
-                      ),
-                    ),
-                    ndGapW16(),
-                    Expanded(
-                      flex: 1,
+                      flex: 5,
                       child: Wrap(
                         children: [
                           lableTextForm(' '),
-                          FilledButton.icon(
-                              icon: const FaIcon(
-                                FontAwesomeIcons.plus,
-                                size: 15,
-                              ),
-                              onPressed: () {},
-                              label: const Text('Thêm Dmain')),
+                          SizedBox(
+                            height: 45,
+                            child: FilledButton.icon(
+                                icon: const FaIcon(
+                                  FontAwesomeIcons.plus,
+                                  size: 15,
+                                ),
+                                onPressed: () {},
+                                label: const Text('Thêm Domain')),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 2,
+                    SizedBox(
+                      width: 250,
                       child: Wrap(
                         children: [
                           lableTextForm('Domain name'),
-                          TextFormField(),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(type: 'domain' ,key: 'tenmien', value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Wrap(
                         children: [
                           lableTextForm('Ngày đăng ký'),
-                          TextFormField(),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'dd-mm-yyyy',
+                            ),
+                            inputFormatters: [
+                              MaskInputFormatter(mask: '##-##-####'),
+                            ],
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(type: 'domail' ,key: 'ngayky', value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Wrap(
                         children: [
                           lableTextForm('Ngày hết hạn'),
-                          TextFormField(),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'dd-mm-yyyy',
+                            ),
+                            inputFormatters: [
+                              MaskInputFormatter(mask: '##-##-####'),
+                            ],
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(type: 'domain' ,key: 'ngayhethan', value: value);
+                            },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
+                    ndGapW16(),
                     Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
+                      flex: 5,
                       child: Wrap(
                         children: [
                           lableTextForm('Ghi chú'),
                           TextFormField(
-                            minLines: 3,
-                            maxLines: 3,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(type: 'domain' ,key: 'ghichu', value: value);
+                            },
                           ),
                         ],
                       ),

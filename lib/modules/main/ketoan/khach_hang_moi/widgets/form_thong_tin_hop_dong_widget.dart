@@ -9,6 +9,9 @@ class FormThongTinHopDongWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinHopDongWidgetState
     extends ConsumerState<FormThongTinHopDongWidget> with FormUIMixins {
+  
+  final String _typeData = 'hopdong';
+  
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -18,58 +21,103 @@ class _FormThongTinHopDongWidgetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
+              flex: 1,
               child: Wrap(
                 children: [
                   lableTextForm('Mã hợp đồng Web/App'),
-                  TextFormField(),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.black12,
+                    ),
+                    readOnly: true,
+                  ),
                 ],
               ),
             ),
             ndGapW16(),
             Expanded(
+              flex: 3,
               child: Wrap(
                 children: [
                   lableTextForm('Tên hợp đồng'),
-                  TextFormField(),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(type: _typeData ,key: 'tenhopdong', value: value);
+                    },
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                  ),
                 ],
               ),
             ),
             ndGapW16(),
             Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Email hợp đồng'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
+              flex: 1,
               child: Wrap(
                 children: [
                   lableTextForm('Tổng giá trị'),
-                  TextFormField(),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref
+                          .read(formKhachHangMoiProvider.notifier)
+                          .changeData(type: _typeData ,key: 'tongtien', value: value);
+                    },
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Không bỏ trống.'),
+                    ]),
+                  ),
                 ],
               ),
             ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Tổng giá trị thu'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Tổng nợ'),
-                  TextFormField(),
-                ],
-              ),
-            ),
+            // ndGapW16(),
+            // Expanded(
+            //   flex: 1,
+            //   child: Wrap(
+            //     children: [
+            //       lableTextForm('Tổng giá trị thu'),
+            //       TextFormField(
+            //         inputFormatters: [
+            //           CurrencyTextInputFormatter(symbol: ''),
+            //         ],
+            //         onChanged: (value) {
+            //           ref
+            //               .read(formKhachHangMoiProvider.notifier)
+            //               .changeData(type: _typeData ,key: 'tongtien', value: value);
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // ndGapW16(),
+            // Expanded(
+            //   flex: 1,
+            //   child: Wrap(
+            //     children: [
+            //       lableTextForm('Tổng nợ'),
+            //       TextFormField(
+            //         inputFormatters: [
+            //           CurrencyTextInputFormatter(symbol: ''),
+            //         ],
+            //         onChanged: (value) {
+            //           ref
+            //               .read(formKhachHangMoiProvider.notifier)
+            //               .changeData(type: _typeData ,key: 'tongtien', value: value);
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         )
       ],

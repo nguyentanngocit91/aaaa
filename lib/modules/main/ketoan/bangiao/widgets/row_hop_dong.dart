@@ -136,6 +136,7 @@ class RowHopDong extends StatelessWidget {
                       onPressed: () {},
                       style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFF018e07),
+                          padding: const EdgeInsets.all(10)
                       ),
                       child: Text(
                         'Đã In BGC'.toUpperCase(),
@@ -147,17 +148,22 @@ class RowHopDong extends StatelessWidget {
                       onPressed: () {},
                       style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFF018e07),
+                          padding: const EdgeInsets.all(10)
                       ),
                       child: Text(
                         'Đã In BGW'.toUpperCase(),
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+
+                      },
                       style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFFff9800),
+                          padding: const EdgeInsets.all(10)
                       ),
                       child: Text(
                         'In phiếu'.toUpperCase(),

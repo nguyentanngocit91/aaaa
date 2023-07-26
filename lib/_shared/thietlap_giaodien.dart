@@ -61,11 +61,13 @@ ThemeData get lightTheme {
     highlightColor: Colors.transparent,
     hoverColor: Colors.transparent,
     inputDecorationTheme: const InputDecorationTheme(
+      hintStyle: TextStyle(color: Colors.black26),
       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 1)),
       errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
       focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
+      disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
       border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
       filled: true,
       fillColor: Colors.white,
@@ -122,6 +124,7 @@ ThemeData get darkTheme {
       highlightColor: Colors.transparent,
       hoverColor: Colors.transparent,
       inputDecorationTheme: const InputDecorationTheme(
+        hintStyle: TextStyle(color: Colors.black26),
         contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 0.5)),
         focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 1)),

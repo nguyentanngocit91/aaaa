@@ -1,5 +1,8 @@
 part of '../khach_hang_moi_layout.dart';
 
+enum LoaiFileHD { hopDong, chungTuKhac }
+
+
 class UploadFileHDWidget extends ConsumerStatefulWidget {
   const UploadFileHDWidget({super.key});
 
@@ -9,7 +12,10 @@ class UploadFileHDWidget extends ConsumerStatefulWidget {
 
 class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
     with FormUIMixins {
+
   final TextEditingController textEditingController = TextEditingController();
+
+  LoaiFileHD _loaiFileHD = LoaiFileHD.hopDong;
 
   @override
   dispose(){
@@ -63,13 +69,11 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
             child: inputUploadFile(
               context,
               controller: textEditingController,
-              onChanged:(value) {
-                print('change: $value');
-              },
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
                 ]),
               onTap: () async {
+                String path = '';
                 final result = await FilePicker.platform.pickFiles(
                   type: FileType.custom,
                   allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
