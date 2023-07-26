@@ -2,6 +2,8 @@ part of 'form_khach_hang_moi_provider.dart';
 
 class FormKhachHangMoiState {
   final FormStatus? formStatus;
+  final String? maHopDong;
+  final String? maKhachHang;
   final Map? dataKhachHang;
   final Map? dataHopDong;
   final Map? dataPhieuThu;
@@ -16,6 +18,8 @@ class FormKhachHangMoiState {
 
   FormKhachHangMoiState({
     this.formStatus = FormStatus.pure,
+    this.maHopDong,
+    this.maKhachHang,
     this.dataKhachHang,
     this.dataHopDong,
     this.dataPhieuThu,
@@ -31,6 +35,8 @@ class FormKhachHangMoiState {
 
   copyWith(
       {FormStatus? formStatus,
+        String? maHopDong,
+        String? maKhachHang,
       Map? dataKhangHang,
       Map? dataHopDong,
       Map? dataPhieuThu,
@@ -44,6 +50,8 @@ class FormKhachHangMoiState {
       bool? isHopDongHosting}) {
     return FormKhachHangMoiState(
       formStatus: formStatus ?? this.formStatus,
+      maHopDong: maHopDong ?? this.maHopDong,
+      maKhachHang: maKhachHang ?? this.maKhachHang,
       dataKhachHang: dataKhangHang ?? this.dataKhachHang,
       dataHopDong: dataHopDong ?? this.dataHopDong,
       dataPhieuThu: dataPhieuThu ?? this.dataPhieuThu,

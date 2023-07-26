@@ -69,6 +69,12 @@ class _FormThongTinWebsiteWidgetState
                         children: [
                           lableTextForm('Ngày ký'),
                           TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'dd-mm-yyyy',
+                            ),
+                            inputFormatters: [
+                              MaskInputFormatter(mask: '##-##-####'),
+                            ],
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               ref
@@ -90,6 +96,12 @@ class _FormThongTinWebsiteWidgetState
                         children: [
                           lableTextForm('Ngày bàn giao'),
                           TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'dd-mm-yyyy',
+                            ),
+                            inputFormatters: [
+                              MaskInputFormatter(mask: '##-##-####'),
+                            ],
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               ref
@@ -146,6 +158,11 @@ class _FormThongTinWebsiteWidgetState
                           TextFormField(
                             minLines: 3,
                             maxLines: 3,
+                            onChanged: (value) {
+                              ref
+                                  .read(formKhachHangMoiProvider.notifier)
+                                  .changeData(type: 'website' ,key: 'ghichu', value: value);
+                            },
                           ),
                         ],
                       ),

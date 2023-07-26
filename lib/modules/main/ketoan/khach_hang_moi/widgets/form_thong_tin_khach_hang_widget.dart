@@ -1,7 +1,5 @@
 part of '../khach_hang_moi_layout.dart';
 
-final String _typeData = 'khachhang';
-
 class FormThongTinKhachHangWidget extends ConsumerStatefulWidget {
   const FormThongTinKhachHangWidget({super.key});
 
@@ -11,14 +9,32 @@ class FormThongTinKhachHangWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinKhachHangWidgetState
     extends ConsumerState<FormThongTinKhachHangWidget> with FormUIMixins {
+
   final Debouncer onSearchDebouncer =
-      Debouncer(delay: const Duration(seconds: 1));
+      Debouncer(delay: const Duration(seconds: 2));
 
-
+  final String _typeData = 'khachhang';
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final Map thongTinKhachHang = ref.watch(kiemTraKhachHangProvider) ?? {};
+    final maKhachHang = ref
+        .watch(formKhachHangMoiProvider.select((value) => value.maKhachHang));
+
+    Map thongTinKhachHang = {};
+    thongTinKhachHang = ref.watch(kiemTraKhachHangProvider.select((value) => value.data ?? {}));
+
+
+    ref.listen(kiemTraKhachHangProvider.select((value) => value.loading),
+        (previous, next) {
+      if (next == true) {
+        Loading(context).start();
+      } else {
+        Future.delayed(const Duration(seconds: 1), () {
+          Loading(context).stop();
+        });
+      }
+    });
 
     return Wrap(
       runSpacing: 25,
@@ -29,7 +45,9 @@ class _FormThongTinKhachHangWidgetState
             Expanded(
               child: Wrap(
                 children: [
-                  lableTextForm('Email khách hàng'),
+                  lableTextForm(
+                    'Email khách hàng',
+                  ),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
@@ -44,9 +62,7 @@ class _FormThongTinKhachHangWidgetState
                       if (value.isEmail()) {
                         onSearchDebouncer.debounce(
                           () {
-                            ref
-                                .read(kiemTraKhachHangProvider.notifier)
-                                .kiemTraThongTinKhachHang(email: value);
+                            ref.read(kiemTraKhachHangProvider.notifier).kiemTraThongTinKhachHang(email: value);
                           },
                         );
                       }
@@ -66,7 +82,8 @@ class _FormThongTinKhachHangWidgetState
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: TextEditingController(text: thongTinKhachHang['makhachhang']),
+                    controller: TextEditingController(
+                        text: thongTinKhachHang['makhachhang'] ?? maKhachHang),
                   ),
                 ],
               ),
@@ -79,7 +96,8 @@ class _FormThongTinKhachHangWidgetState
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang['hoten'] != null ? true : false,
-                    controller: TextEditingController(text: thongTinKhachHang['hoten']),
+                    controller:
+                        TextEditingController(text: (thongTinKhachHang.isNotEmpty) ? thongTinKhachHang['hoten'] : ''),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'hoten', value: value, type: _typeData);
@@ -101,7 +119,7 @@ class _FormThongTinKhachHangWidgetState
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang['phone'] != null ? true : false,
                     controller: TextEditingController(
-                        text: thongTinKhachHang['phone'] ?? ''),
+                        text: thongTinKhachHang['phone']),
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
                           errorText: 'Không bỏ trống.'),
@@ -144,14 +162,9 @@ class _FormThongTinKhachHangWidgetState
                 children: [
                   lableTextForm('Tên Công ty /  Cá Nhân'),
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
                     controller: TextEditingController(
                         text: thongTinKhachHang['congty']),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'congty', value: value, type: _typeData);
@@ -170,7 +183,6 @@ class _FormThongTinKhachHangWidgetState
                 children: [
                   lableTextForm('Người đại diện mới'),
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
@@ -178,10 +190,6 @@ class _FormThongTinKhachHangWidgetState
                           value: {"nguoidaidienmoi": value},
                           type: _typeData);
                     },
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
                   ),
                 ],
               ),
@@ -192,7 +200,6 @@ class _FormThongTinKhachHangWidgetState
                 children: [
                   lableTextForm('Điện thoại cơ quan'),
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
@@ -200,10 +207,6 @@ class _FormThongTinKhachHangWidgetState
                           value: {"dienthoaicoquan": value},
                           type: _typeData);
                     },
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
                   ),
                 ],
               ),
@@ -214,7 +217,6 @@ class _FormThongTinKhachHangWidgetState
                 children: [
                   lableTextForm('Mã số thuế'),
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
                     controller: TextEditingController(
                         text: thongTinKhachHang['masothue']),
@@ -222,10 +224,6 @@ class _FormThongTinKhachHangWidgetState
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'masothue', value: value, type: _typeData);
                     },
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
                   ),
                 ],
               ),
@@ -236,7 +234,6 @@ class _FormThongTinKhachHangWidgetState
                 children: [
                   lableTextForm('CCCD / CMND'),
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
                     controller:
                         TextEditingController(text: thongTinKhachHang['cccd']),
@@ -244,10 +241,6 @@ class _FormThongTinKhachHangWidgetState
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'cccd', value: value, type: _typeData);
                     },
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
                   ),
                 ],
               ),
@@ -274,9 +267,7 @@ class _FormThongTinKhachHangWidgetState
                     ]),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          key: 'diachi',
-                          value: value,
-                          type: _typeData);
+                          key: 'diachi', value: value, type: _typeData);
                     },
                   ),
                 ],
@@ -309,10 +300,10 @@ class _FormThongTinKhachHangWidgetState
     );
   }
 
-
   @override
   dispose() {
     super.dispose();
+    _emailController.dispose();
     ref.invalidate(kiemTraKhachHangProvider);
   }
 }
