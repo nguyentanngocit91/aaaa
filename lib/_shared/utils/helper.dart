@@ -14,8 +14,14 @@ class Helper {
     return strReturn;
   }
 
+
+  static dateFormat(var data){
+    DateTime date = DateTime.parse(data);
+    return  "${date.day}-${date.month}-${date.year}";
+  }
+
   static print2(json) {
-    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+    JsonEncoder encoder = new JsonEncoder.withIndent('  ');
     String prettyprint = encoder.convert(json);
     print(prettyprint);
   }

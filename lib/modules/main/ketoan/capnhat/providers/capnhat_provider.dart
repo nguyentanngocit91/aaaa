@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../_shared/utils/form_status.dart';
 import '../../../../../_shared/utils/helper.dart';
@@ -6,8 +7,9 @@ import '../repositories/capnhat_repository.dart';
 part 'capnhat_state.dart';
 
 final capnhatProvider =
-StateNotifierProvider<CapNhatNotifier, CapNhatState>(
+StateNotifierProvider.autoDispose<CapNhatNotifier, CapNhatState>(
       (ref) {
+
     return CapNhatNotifier();
   },
 );
@@ -15,28 +17,50 @@ StateNotifierProvider<CapNhatNotifier, CapNhatState>(
 class CapNhatNotifier extends StateNotifier<CapNhatState> {
   final CapNhatRepository _capNhatRepository = CapNhatRepository();
   CapNhatNotifier() : super(const CapNhatState());
-
+  int? perPage = 10;
+  int currentPage = 1;
   void onChangeValue(String type, String value) {
     Map<String, String> data = state.data ?? {};
     data.addAll({type: value});
     state = state.copyWith(data: data);
   }
-
+  void setPerPage(int? number,String? type){
+    this.perPage = number;
+    if(type!=null) {
+      onSearch(type);
+    }
+  }
+  void reset(){
+    state = state.copyWith(
+        perPage: PaginatedDataTable.defaultRowsPerPage,
+        currentPage: 1
+    );
+  }
+  void setPage(int number,String? type){
+    this.currentPage = number;
+    if(type!=null) {
+      onSearch(type);
+    }
+  }
   void onSearch(String type) async {
     Map<String, String>? data = state.data;
-    print("data: ${data}");
+
     Map<String, dynamic> params = {
       'mahopdong': (data!=null && data['MAHD']!='')?data['MAHD']:'',
       'makhachhang': (data!=null && data['MAKH']!='')?data['MAKH']:'',
       'email': (data!=null && data['EMAIL']!='')?data['EMAIL']:'',
       'loaihopdong': type,
+      'limit':perPage,
+      'page':currentPage
     };
 
     final jsonResult = await _capNhatRepository.searchInfo(data: params);
-
     state = state.copyWith(
-      result: jsonResult
+      result: jsonResult,
+      perPage: perPage,
+      currentPage: currentPage
     );
+
 
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/ban_giao_model.dart';
 import 'row_domain.dart';
 import 'row_hosting.dart';
 import 'row_website.dart';
@@ -7,18 +8,20 @@ import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 
 class RowHopDong extends StatelessWidget {
-  const RowHopDong({Key? key}) : super(key: key);
+  const RowHopDong({Key? key,required this.index, required this.item}) : super(key: key);
+  final int index;
+  final BanGiaoModel item;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const RowInfoHopDong(
-          stt: 1,
-          maKH: 'NN0818023',
-          maHD: '0833023',
-          tenHD: 'CÔNG TY TNHH ĐẦU TƯ BẤT ĐỘNG SẢN AN MINH PHÚC',
-          giaTri: 5189900,
+         RowInfoHopDong(
+          stt: index,
+          maKH: item.khachhangId!.makhachhang!,
+          maHD: item.mahopdong!,
+          tenHD: item.tenhopdong!,
+          giaTri: item.tongtien!,
           giaTriWeb: 0,
           congNo: 0,
           ngayKhoiTao: '07/06/2023',
@@ -222,7 +225,7 @@ class RowInfoHopDong extends StatelessWidget {
           Expanded(
             flex: 10,
             child: Text(
-              maHD,
+              maHD.toUpperCase(),
               style: const TextStyle(color: Colors.white),
             ),
           ),

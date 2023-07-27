@@ -1,4 +1,7 @@
+
+
 part of '../../../_shared/thietlap_dieuhuong.dart';
+
 
 
 class MenuLayout extends ConsumerWidget {
@@ -66,12 +69,7 @@ class MenuLayout extends ConsumerWidget {
                   context.go('/${DanhSachHDLayout.pathName}');
                 },
               ),
-              itemMenu(
-                title: 'DEMO RP',
-                onTap: () {
-                  context.go('/${MyAppRP.pathName}');
-                },
-              ),
+
               itemMenu(
                 title: 'Nâng cấp Website',
                 onTap: () {

@@ -8,6 +8,9 @@ class ApiUrl{
   static const String signIn = '$baseUrl/login';
   static const String infoUser = '$baseUrl/users/profile';
   static const String changePassword = '$baseUrl/users/change-password';
+
+  // DS HĐ
+
   static const String searchContract = '$baseUrl/hop-dong';
 
 
@@ -23,6 +26,10 @@ class ApiUrl{
 
   //PHIẾU THU
   static const String danhSachPhieuThu = '$baseUrl/phieu-thu';
+
+  //BÀN GIAO
+  static const String danhSachHDTheoSoHD = '$baseUrl/hop-dong';
+
 
   // blacklist
 

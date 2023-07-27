@@ -87,15 +87,17 @@ class Hopdong {
   String? sId;
   String? mahopdong;
   String? tenhopdong;
-  int? tongtien;
+  String? loaihopdong;
+  double? tongtien;
 
-  Hopdong({this.sId, this.mahopdong, this.tenhopdong, this.tongtien});
+  Hopdong({this.sId, this.mahopdong, this.tenhopdong, this.loaihopdong, this.tongtien});
 
   Hopdong.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     mahopdong = json['mahopdong'];
     tenhopdong = json['tenhopdong'];
-    tongtien = json['tongtien'];
+    loaihopdong = json['loaihopdong'];
+    tongtien = double.parse(json['tongtien'].toString());
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +105,7 @@ class Hopdong {
     data['_id'] = sId;
     data['mahopdong'] = mahopdong;
     data['tenhopdong'] = tenhopdong;
+    data['loaihopdong'] = loaihopdong;
     data['tongtien'] = tongtien;
     return data;
   }

@@ -1,164 +1,23 @@
-import 'dart:math';
 
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'widgets/box_search.dart';
 import '../../../../_shared/utils/helper.dart';
 import 'models/phieu_thu_model.dart';
 import 'providers/phieu_thu_provider.dart';
 import 'screen/update_phieuthu_screen.dart';
-import 'widgets/pt_button.dart';
 
 class PhieuThuLayout extends ConsumerWidget {
   PhieuThuLayout({Key? key}) : super(key: const Key(pathName));
-
   static const String pathName = 'phieuthu';
-
-  TextEditingController dateInputFrom = TextEditingController();
-  TextEditingController dateInputTo = TextEditingController();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listPT = ref.watch(futureListPhieuThuProvider);
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFf5f5f5),
-              border: Border.all(color: const Color(0xFFdcdbdb)),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  width: 200,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Số phiếu thu',
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const SizedBox(
-                  width: 130,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Mã HĐ',
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                SizedBox(
-                  width: 130,
-                  child: TextField(
-                    controller: dateInputFrom,
-                    readOnly: true,
-                    //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1950),
-                          //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2100));
-                      if (pickedDate != null) {
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                            DateFormat('dd-MM-yyyy').format(pickedDate);
-                        print(
-                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                        dateInputFrom.text =
-                            formattedDate; //set output date to TextField value.
-                      } else {}
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                SizedBox(
-                  width: 130,
-                  child: TextField(
-                    controller: dateInputTo,
-                    readOnly: true,
-                    //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1950),
-                          //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2100));
-                      if (pickedDate != null) {
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                            DateFormat('dd-MM-yyyy').format(pickedDate);
-                        print(
-                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                        dateInputTo.text =
-                            formattedDate; //set output date to TextField value.
-                      } else {}
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                PtButton(
-                  title: 'Tìm kiếm',
-                  icon: const Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                PtButton(
-                  title: 'Export DS Phiếu Thu',
-                  icon: const Icon(
-                    Icons.download,
-                    color: Colors.white,
-                  ),
-                  width: 200,
-                  onPressed: () {},
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                PtButton(
-                  title: 'Export DS Pending',
-                  icon: const Icon(
-                    Icons.download,
-                    color: Colors.white,
-                  ),
-                  width: 200,
-                  onPressed: () {},
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                PtButton(
-                  title: 'Reset',
-                  icon: const Icon(
-                    Icons.refresh,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
+          BoxSearchPhieuThu(),
           const SizedBox(
             height: 20,
           ),
@@ -267,13 +126,45 @@ class PhieuThuLayout extends ConsumerWidget {
   }
 }
 
+
+
 class RowInfoPhieuThu extends StatelessWidget{
-  const RowInfoPhieuThu({Key? key, required this.item, required this.index,}) : super(key: key);
+  RowInfoPhieuThu({Key? key, required this.item, required this.index,}) : super(key: key);
 
   final PhieuThuModel item;
   final int index;
+
+
   @override
   Widget build(BuildContext context) {
+
+    double? phiWeb;
+    double? phiNCWeb;
+    double? phiHosting = null;
+    double? phiNCHosting = null;
+    double? phiDomain = null;
+    var listHD = item.hopdong;
+    if(listHD != null) {
+      for (var item in listHD) {
+        if(item.loaihopdong != null && item.loaihopdong == 'web' ) {
+          phiWeb = item.tongtien;
+        }
+        if(item.loaihopdong != null && item.loaihopdong == 'ncweb' ) {
+          phiNCWeb = item.tongtien;
+        }
+        if(item.loaihopdong != null && item.loaihopdong == 'hosting' ) {
+          phiHosting = item.tongtien;
+        }
+        if(item.loaihopdong != null && item.loaihopdong == 'nchosting' ) {
+          phiNCHosting = item.tongtien;
+        }
+        if(item.loaihopdong != null && item.loaihopdong == 'domain' ) {
+          phiDomain = item.tongtien;
+        }
+      }
+    }
+
+
     return Column(
       children: [
         Row(
@@ -292,7 +183,7 @@ class RowInfoPhieuThu extends StatelessWidget{
             ),
             Expanded(
               flex:5,
-              child: Text((item.hopdong![0].mahopdong!).replaceAll(new RegExp(r'[^0-9]'),'')),
+              child: Text((item.hopdong![0].mahopdong!).replaceAll(RegExp(r'[^0-9]'),'')),
             ),
             Expanded(
               flex:5,
@@ -320,34 +211,42 @@ class RowInfoPhieuThu extends StatelessWidget{
             ),
             Expanded(
               flex:5,
-              child: Text('${item.tongtien}'),
+              child: Text(Helper.numberFormat(item.tongtien!)),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text( 'Phí web'),
+              child: (phiWeb!=null)?Text(Helper.numberFormat(phiWeb!)):Text('0 đ'),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text('Phí NC web'),
+              child: (phiNCWeb!=null)?Text(Helper.numberFormat(phiNCWeb!)):Text('0 đ'),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text('Phí hosting'),
+              child: (phiHosting!=null)?Text(Helper.numberFormat(phiHosting!)):Text('0 đ'),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text('Phí NC hosting'),
+              child: (phiNCHosting!=null)?Text(Helper.numberFormat(phiNCHosting!)):Text('0 đ'),
             ),
-            const Expanded(
+             Expanded(
               flex:5,
-              child: Text('Phí domain'),
+              child: (phiDomain!=null)?Text(Helper.numberFormat(phiDomain!)):Text('0 đ'),
             ),
             Expanded(
               flex:14,
               child: Row(
                 children: [
                   TextButton(onPressed: (){}, child: Text('Pending'),),
-                  TextButton(onPressed: (){}, child: Text('Cập nhật phiếu thu'),),
+                  TextButton(onPressed: (){
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: false, // user must tap button!
+                      builder: (BuildContext context) {
+                        return const UpdatePhieuThuScreen();
+                      },
+                    );
+                  }, child: Text('Cập nhật phiếu thu'),),
                 ],
               ),
             ),

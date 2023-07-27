@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../phieuthu/widgets/pt_button.dart';
+import '../providers/ban_giao_provider.dart';
 
-class BoxSearchBanGiao extends StatelessWidget {
-  const BoxSearchBanGiao({
+class BoxSearchBanGiao extends ConsumerWidget {
+   BoxSearchBanGiao({
     super.key,
   });
 
+  final TextEditingController soHDController = TextEditingController();
+   final TextEditingController tenHDController = TextEditingController();
+   final TextEditingController dienThoaiController = TextEditingController();
+   final TextEditingController emailController = TextEditingController();
+   final TextEditingController domainHDController = TextEditingController();
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    var soHD = ref.watch(banGiaoProvider).maHD;
+    if(soHD!= null ) soHDController.text  = soHD;
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -18,10 +29,11 @@ class BoxSearchBanGiao extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
+          SizedBox(
             width: 200,
             child: TextField(
-              decoration: InputDecoration(
+              controller: soHDController,
+              decoration: const InputDecoration(
                 hintText: 'Mã HĐ',
               ),
             ),
@@ -79,7 +91,28 @@ class BoxSearchBanGiao extends StatelessWidget {
               Icons.search,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              soHD = soHDController.text;
+              if(soHD=='') {
+                showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Thông báo'),
+                  content: const Text('Vui lòng nhập nội dung cần tìm kiếm!'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('Đóng'),
+                    ),
+                  ],
+                ),
+              );
+              }else{
+                ref.read(banGiaoProvider.notifier).setInputMaHD(maHD: soHD);
+                ref.read(banGiaoProvider.notifier).actionInputSearch();
+              }
+
+            },
           ),
           const SizedBox(
             width: 5,
