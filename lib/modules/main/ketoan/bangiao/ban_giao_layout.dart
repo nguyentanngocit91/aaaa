@@ -35,18 +35,34 @@ class BanGiaoLayout extends ConsumerWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                     BoxInfoCustomer(
-                      tenHD: (listHD[0].tenhopdong!=null)?listHD[0].tenhopdong!:'',
-                      maKH: (listHD[0].khachhangId?.makhachhang!=null)?listHD[0].khachhangId!.makhachhang!:'',
-                      nguoiDaiDien: (listHD[0].khachhangId?.hoten!=null)?listHD[0].khachhangId!.hoten!:'',
-                      dienThoaiDiDong: (listHD[0].khachhangId?.phone!=null)?listHD[0].khachhangId!.phone!:'',
+                    BoxInfoCustomer(
+                      tenHD: (listHD[0].tenhopdong != null)
+                          ? listHD[0].tenhopdong!
+                          : '',
+                      maKH: (listHD[0].khachhangId?.makhachhang != null)
+                          ? listHD[0].khachhangId!.makhachhang!
+                          : '',
+                      nguoiDaiDien: (listHD[0].khachhangId?.hoten != null)
+                          ? listHD[0].khachhangId!.hoten!
+                          : '',
+                      dienThoaiDiDong: (listHD[0].khachhangId?.phone != null)
+                          ? listHD[0].khachhangId!.phone!
+                          : '',
                       dienThoaiCoQuan: '',
-                      email: (listHD[0].khachhangId?.email!=null)?listHD[0].khachhangId!.email!:'',
+                      email: (listHD[0].khachhangId?.email != null)
+                          ? listHD[0].khachhangId!.email!
+                          : '',
                       emailPhu: '',
                       daiDienMoi: '',
-                      maSoThue: (listHD[0].khachhangId?.masothue!=null)?listHD[0].khachhangId!.masothue!:'',
-                      cmnd: (listHD[0].khachhangId?.cccd!=null)?listHD[0].khachhangId!.cccd!:'',
-                      diaChi: (listHD[0].khachhangId?.diachi!=null)?listHD[0].khachhangId!.diachi!:'',
+                      maSoThue: (listHD[0].khachhangId?.masothue != null)
+                          ? listHD[0].khachhangId!.masothue!
+                          : '',
+                      cmnd: (listHD[0].khachhangId?.cccd != null)
+                          ? listHD[0].khachhangId!.cccd!
+                          : '',
+                      diaChi: (listHD[0].khachhangId?.diachi != null)
+                          ? listHD[0].khachhangId!.diachi!
+                          : '',
                       ghiChu: '',
                     ),
                     const SizedBox(
@@ -68,10 +84,12 @@ class BanGiaoLayout extends ConsumerWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: listHD.length,
-                              itemBuilder: (context, index){
-                            return RowHopDong(index: index+1,item: listHD[index],);
-                          })
-
+                              itemBuilder: (context, index) {
+                                return RowHopDong(
+                                  index: index + 1,
+                                  item: listHD[index],
+                                );
+                              })
                         ],
                       ),
                     ),

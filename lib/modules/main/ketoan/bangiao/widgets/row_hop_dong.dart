@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../models/ban_giao_model.dart';
+import 'list_file_of_hop_dong.dart';
 import 'row_domain.dart';
 import 'row_hosting.dart';
 import 'row_website.dart';
@@ -14,17 +16,23 @@ class RowHopDong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String? maKH = item.khachhangId?.makhachhang;
+    String? maHD = item.mahopdong;
+    String? tenHD = item.tenhopdong;
+    double? giaTri = item.tongtien;
+    String? ngayKyHopDong = item.ngaykyhd;
     return Column(
       children: [
          RowInfoHopDong(
           stt: index,
-          maKH: item.khachhangId!.makhachhang!,
-          maHD: item.mahopdong!,
-          tenHD: item.tenhopdong!,
-          giaTri: item.tongtien!,
+          maKH: (maKH!=null)?maKH:'',
+          maHD: (maHD!=null)?maHD:'',
+          tenHD: (tenHD!=null)?tenHD:'',
+          giaTri: (giaTri!=null)?giaTri:0.0,
           giaTriWeb: 0,
           congNo: 0,
-          ngayKhoiTao: '07/06/2023',
+          ngayKhoiTao: (ngayKyHopDong!=null)?DateFormat('dd-MM-yyyy').format(DateTime.parse(ngayKyHopDong)):'-',
         ),
         Container(
           padding: const EdgeInsets.all(5),
@@ -48,7 +56,15 @@ class RowHopDong extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return const ListFileOfHopDong();
+                        },
+                      );
+                    },
                     style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFF03a9f4)),
                     child: const Text(

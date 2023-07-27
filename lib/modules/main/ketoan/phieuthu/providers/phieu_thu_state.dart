@@ -1,17 +1,17 @@
 part of 'phieu_thu_provider.dart';
 class PhieuThuState{
 
-  PhieuThuState({this.formStatus = FormStatus.pure,this.soPhieuThu, this.maHopDong, this.tuNgay, this.denNgay, this.listPhieuThu});
+  PhieuThuState({this.status = FormStatus.pure,this.soPhieuThu, this.maHopDong, this.tuNgay, this.denNgay, this.listPhieuThu = const []});
 
-  final FormStatus? formStatus;
+  final FormStatus? status;
   final String? soPhieuThu;
   final String? maHopDong;
   final String? tuNgay;
   final String? denNgay;
-  final List<PhieuThuModel>? listPhieuThu;
+  final List<PhieuThuModel> listPhieuThu;
 
   PhieuThuState copyWith({
-    FormStatus? formStatus,
+    FormStatus? status,
     String? soPhieuThu,
     String? maHopDong,
     String? tuNgay,
@@ -19,7 +19,7 @@ class PhieuThuState{
     List<PhieuThuModel>? listPhieuThu,
   }) {
     return PhieuThuState(
-      formStatus: formStatus ?? this.formStatus,
+      status: status ?? this.status,
       soPhieuThu: soPhieuThu ?? this.soPhieuThu,
       maHopDong: maHopDong ?? this.maHopDong,
       tuNgay: tuNgay ?? this.tuNgay,

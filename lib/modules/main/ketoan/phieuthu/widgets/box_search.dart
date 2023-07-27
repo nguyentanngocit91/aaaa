@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:nn_phanmem/modules/main/ketoan/phieuthu/widgets/pt_button_download.dart';
+import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
+import '../providers/phieu_thu_provider.dart';
+import 'pt_button_download.dart';
 import 'pt_button.dart';
-class BoxSearchPhieuThu extends StatelessWidget {
+
+class BoxSearchPhieuThu extends ConsumerWidget {
   BoxSearchPhieuThu({
     super.key,
   });
 
-  TextEditingController dateInputFrom = TextEditingController();
-  TextEditingController dateInputTo = TextEditingController();
+  final TextEditingController soPhieuThuInput = TextEditingController();
+  final TextEditingController maHopDongInput = TextEditingController();
+  final TextEditingController dateFromInput = TextEditingController();
+  final TextEditingController dateToInput = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var soPhieuThu = ref.watch(phieuThuProvider).soPhieuThu;
+    if (soPhieuThu != null) soPhieuThuInput.text = soPhieuThu;
+
+    var soHopDong = ref.watch(phieuThuProvider).maHopDong;
+    if (soHopDong != null) maHopDongInput.text = soHopDong;
+
+    var tuNgay = ref.watch(phieuThuProvider).tuNgay;
+    if (tuNgay != null) dateFromInput.text = tuNgay;
+
+    var denNgay = ref.watch(phieuThuProvider).denNgay;
+    if (denNgay != null) dateToInput.text = denNgay;
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -21,10 +39,11 @@ class BoxSearchPhieuThu extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
+          SizedBox(
             width: 200,
             child: TextField(
-              decoration: InputDecoration(
+              controller: soPhieuThuInput,
+              decoration: const InputDecoration(
                 hintText: 'Số phiếu thu',
               ),
             ),
@@ -32,10 +51,11 @@ class BoxSearchPhieuThu extends StatelessWidget {
           const SizedBox(
             width: 5,
           ),
-          const SizedBox(
+          SizedBox(
             width: 130,
             child: TextField(
-              decoration: InputDecoration(
+              controller: maHopDongInput,
+              decoration: const InputDecoration(
                 hintText: 'Mã HĐ',
               ),
             ),
@@ -46,7 +66,7 @@ class BoxSearchPhieuThu extends StatelessWidget {
           SizedBox(
             width: 130,
             child: TextField(
-              controller: dateInputFrom,
+              controller: dateFromInput,
               readOnly: true,
               //set it true, so that user will not able to edit text
               onTap: () async {
@@ -57,15 +77,13 @@ class BoxSearchPhieuThu extends StatelessWidget {
                     //DateTime.now() - not to allow to choose before today.
                     lastDate: DateTime(2100));
                 if (pickedDate != null) {
-                  print(
-                      pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                  //pickedDate output format => 2021-03-10 00:00:00.000
                   String formattedDate =
-                  DateFormat('dd-MM-yyyy').format(pickedDate);
-                  print(
-                      formattedDate); //formatted date output using intl package =>  2021-03-16
-                  dateInputFrom.text =
+                      DateFormat('dd-MM-yyyy').format(pickedDate);
+                  //formatted date output using intl package =>  2021-03-16
+                  dateFromInput.text =
                       formattedDate; //set output date to TextField value.
-                } else {}
+                }
               },
             ),
           ),
@@ -75,7 +93,7 @@ class BoxSearchPhieuThu extends StatelessWidget {
           SizedBox(
             width: 130,
             child: TextField(
-              controller: dateInputTo,
+              controller: dateToInput,
               readOnly: true,
               //set it true, so that user will not able to edit text
               onTap: () async {
@@ -86,15 +104,13 @@ class BoxSearchPhieuThu extends StatelessWidget {
                     //DateTime.now() - not to allow to choose before today.
                     lastDate: DateTime(2100));
                 if (pickedDate != null) {
-                  print(
-                      pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                  //pickedDate output format => 2021-03-10 00:00:00.000
                   String formattedDate =
-                  DateFormat('dd-MM-yyyy').format(pickedDate);
-                  print(
-                      formattedDate); //formatted date output using intl package =>  2021-03-16
-                  dateInputTo.text =
+                      DateFormat('dd-MM-yyyy').format(pickedDate);
+                  //formatted date output using intl package =>  2021-03-16
+                  dateToInput.text =
                       formattedDate; //set output date to TextField value.
-                } else {}
+                }
               },
             ),
           ),
@@ -107,7 +123,56 @@ class BoxSearchPhieuThu extends StatelessWidget {
               Icons.search,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              bool isError = false;
+              String soPhieuthu = soPhieuThuInput.text;
+              String maHD = maHopDongInput.text;
+              String tuNgay = dateFromInput.text;
+              String denNgay = dateToInput.text;
+
+              if (tuNgay != '' && denNgay != '') {
+                DateTime date1 = DateFormat('dd-MM-yyyy').parse(tuNgay);
+                DateTime date2 = DateFormat('dd-MM-yyyy').parse(denNgay);
+                if (date1.isAfter(date2)) {
+                  isError = true;
+                  ShowOkAlertDialog.show(
+                      context, 'Thông báo', 'Ngày sau phải lớn hơn ngày trước');
+                }
+              } else if (tuNgay != '' && denNgay == '') {
+                isError = true;
+                ShowOkAlertDialog.show(
+                    context, 'Thông báo', 'Vui lòng chọn ngày sau');
+              } else if (tuNgay == '' && denNgay != '') {
+                isError = true;
+                ShowOkAlertDialog.show(
+                    context, 'Thông báo', 'Vui lòng chọn ngày trước');
+              }
+
+              if (soPhieuthu == '' &&
+                  maHD == '' &&
+                  tuNgay == '' &&
+                  denNgay == '') {
+                isError = true;
+                ShowOkAlertDialog.show(
+                    context, 'Thông báo', 'Vui lòng nhập thông tin cần tìm');
+              }
+
+              if (isError == false) {
+                ref
+                    .read(phieuThuProvider.notifier)
+                    .setInputSoPhieuThu(soPhieuThu: soPhieuthu);
+                ref
+                    .read(phieuThuProvider.notifier)
+                    .setInputMaHopDong(mahopDong: maHD);
+                ref
+                    .read(phieuThuProvider.notifier)
+                    .setInputTuNgay(tuNgay: tuNgay);
+                ref
+                    .read(phieuThuProvider.notifier)
+                    .setInputDenNgay(denNgay: denNgay);
+                ref.read(phieuThuProvider.notifier).actionInputSearch();
+              }
+            },
           ),
           const SizedBox(
             width: 5,
@@ -117,7 +182,9 @@ class BoxSearchPhieuThu extends StatelessWidget {
             icon: Icon(
               Icons.download,
               color: Colors.white,
-            ), urlPath: 'http://tools.dauchanviet.com/123.mp4', fileName: '111.mp4',
+            ),
+            urlPath: 'http://tools.dauchanviet.com/123.mp4',
+            fileName: '111.mp4',
           ),
           const SizedBox(
             width: 5,
@@ -127,7 +194,9 @@ class BoxSearchPhieuThu extends StatelessWidget {
             icon: Icon(
               Icons.download,
               color: Colors.white,
-            ), urlPath: 'http://tools.dauchanviet.com/123.mp4', fileName: '111.mp4',
+            ),
+            urlPath: 'http://tools.dauchanviet.com/123.mp4',
+            fileName: '111.mp4',
           ),
           const SizedBox(
             width: 5,
@@ -138,7 +207,12 @@ class BoxSearchPhieuThu extends StatelessWidget {
               Icons.refresh,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              soPhieuThuInput.text = '';
+              maHopDongInput.text = '';
+              dateFromInput.text = '';
+              dateToInput.text = '';
+            },
           ),
         ],
       ),
