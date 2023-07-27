@@ -28,9 +28,6 @@ class _UpdateThongTinHopDongWidgetState
         elevation: 0,
 
         children: [
-
-
-
           Stack(
             children: [
 
@@ -183,16 +180,9 @@ class _UpdateThongTinHopDongWidgetState
           ),
 
 
-
-
-
-
           ],
 
     );
-
-
-
 
 
   }
