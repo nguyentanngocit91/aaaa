@@ -1,8 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../_shared/utils/form_status.dart';
 import '../models/ban_giao_model.dart';
 import '../repositories/ban_giao_repository.dart';
 import 'ban_giao_state.dart';
+
+
 
 final banGiaoProvider = NotifierProvider<BanGiaoNotifier, BanGiaoState>(() {
   return BanGiaoNotifier();
@@ -17,26 +20,22 @@ class BanGiaoNotifier extends Notifier<BanGiaoState> {
   }
 
   void setInputMaHD({required String? maHD}){
-
-    print(maHD);
     if(maHD!=null) {
-      print('ok set');
       state = state.copyWith(maHD: maHD);
     }
-    print(state.maHD);
   }
 
   Future<void> actionInputSearch() async {
     var soHD = state.maHD;
     var listHD = state.listHD;
+    state = state.copyWith(status: FormStatus.submissionInProgress,listHD: []);
     if(soHD!= null ) {
-
       var temp = await getListHopDong(soHD: soHD);
       if(temp!=null) {
         listHD = temp;
       }
     }
-
+    state = state.copyWith(status: FormStatus.submissionSuccess);
     state = state.copyWith(listHD: listHD);
 
   }

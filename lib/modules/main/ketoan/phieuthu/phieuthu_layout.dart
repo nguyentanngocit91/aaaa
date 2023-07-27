@@ -1,164 +1,23 @@
-import 'dart:math';
 
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'widgets/box_search.dart';
 import '../../../../_shared/utils/helper.dart';
 import 'models/phieu_thu_model.dart';
 import 'providers/phieu_thu_provider.dart';
 import 'screen/update_phieuthu_screen.dart';
-import 'widgets/pt_button.dart';
 
 class PhieuThuLayout extends ConsumerWidget {
   PhieuThuLayout({Key? key}) : super(key: const Key(pathName));
-
   static const String pathName = 'phieuthu';
-
-  TextEditingController dateInputFrom = TextEditingController();
-  TextEditingController dateInputTo = TextEditingController();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listPT = ref.watch(futureListPhieuThuProvider);
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFf5f5f5),
-              border: Border.all(color: const Color(0xFFdcdbdb)),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  width: 200,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Số phiếu thu',
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const SizedBox(
-                  width: 130,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Mã HĐ',
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                SizedBox(
-                  width: 130,
-                  child: TextField(
-                    controller: dateInputFrom,
-                    readOnly: true,
-                    //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1950),
-                          //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2100));
-                      if (pickedDate != null) {
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                            DateFormat('dd-MM-yyyy').format(pickedDate);
-                        print(
-                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                        dateInputFrom.text =
-                            formattedDate; //set output date to TextField value.
-                      } else {}
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                SizedBox(
-                  width: 130,
-                  child: TextField(
-                    controller: dateInputTo,
-                    readOnly: true,
-                    //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1950),
-                          //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2100));
-                      if (pickedDate != null) {
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                            DateFormat('dd-MM-yyyy').format(pickedDate);
-                        print(
-                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                        dateInputTo.text =
-                            formattedDate; //set output date to TextField value.
-                      } else {}
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                PtButton(
-                  title: 'Tìm kiếm',
-                  icon: const Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                PtButton(
-                  title: 'Export DS Phiếu Thu',
-                  icon: const Icon(
-                    Icons.download,
-                    color: Colors.white,
-                  ),
-                  width: 200,
-                  onPressed: () {},
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                PtButton(
-                  title: 'Export DS Pending',
-                  icon: const Icon(
-                    Icons.download,
-                    color: Colors.white,
-                  ),
-                  width: 200,
-                  onPressed: () {},
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                PtButton(
-                  title: 'Reset',
-                  icon: const Icon(
-                    Icons.refresh,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
+          BoxSearchPhieuThu(),
           const SizedBox(
             height: 20,
           ),
@@ -266,6 +125,8 @@ class PhieuThuLayout extends ConsumerWidget {
     );
   }
 }
+
+
 
 class RowInfoPhieuThu extends StatelessWidget{
   RowInfoPhieuThu({Key? key, required this.item, required this.index,}) : super(key: key);
@@ -385,10 +246,7 @@ class RowInfoPhieuThu extends StatelessWidget{
                         return const UpdatePhieuThuScreen();
                       },
                     );
-
                   }, child: Text('Cập nhật phiếu thu'),),
-
-
                 ],
               ),
             ),

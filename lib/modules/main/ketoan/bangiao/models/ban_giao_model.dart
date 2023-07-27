@@ -14,7 +14,7 @@ class BanGiaoModel {
   KhachhangId? khachhangId;
   String? tenhopdong;
   Nhanvien? lichsuKhoitao;
-  int? tongtien;
+  double? tongtien;
   List<Null>? lichsuCapnhat;
 
   BanGiaoModel(
@@ -61,7 +61,7 @@ class BanGiaoModel {
     lichsuKhoitao = json['lichsu_khoitao'] != null
         ? Nhanvien.fromJson(json['lichsu_khoitao'])
         : null;
-    tongtien = json['tongtien'];
+    tongtien = double.parse(json['tongtien'].toString());
 
   }
 

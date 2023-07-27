@@ -12,11 +12,11 @@ class PtButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width:this.width,
+      width:width,
       child:ElevatedButton(
           style: TextButton.styleFrom(
               padding: const EdgeInsets.all(10),
-              backgroundColor:Color(0xff0783A2)
+              backgroundColor:const Color(0xff0783A2)
           ),
           onPressed: onPressed,
           child: Row(
