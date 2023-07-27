@@ -1,40 +1,72 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../khach_hang_moi_layout.dart';
+import '../../../../../_shared/extensions/date_time_extention.dart';
 
-final danhSachDomainProvider = NotifierProvider<DanhSachDomainNotifier, List<RowDomainWidget>>(() {
+class DomainModel{
+  final bool? defaultRow;
+  final int? rowIndex;
+  final String? domainName;
+  final DateTime? ngayDangKy;
+  final DateTime? ngayHetHan;
+  final String? ghiChu;
+
+  DomainModel({this.defaultRow = false, this.rowIndex, this.domainName, this.ngayDangKy, this.ngayHetHan, this.ghiChu});
+
+  copyWith({bool? defaultRow, int? rowIndex, String? domainName, DateTime? ngayDangKy,DateTime? ngayHetHan, String? ghiChu}){
+    return DomainModel(
+      defaultRow: defaultRow ?? this.defaultRow,
+      rowIndex: rowIndex ?? this.rowIndex,
+      domainName: domainName ?? this.domainName,
+      ngayDangKy: ngayDangKy ?? this.ngayDangKy,
+      ngayHetHan: ngayHetHan ?? this.ngayHetHan,
+      ghiChu: ghiChu ?? this.ghiChu,
+    );
+  }
+}
+
+final danhSachDomainProvider = NotifierProvider<DanhSachDomainNotifier, List<DomainModel>>(() {
   return DanhSachDomainNotifier();
 });
 
-class DanhSachDomainNotifier extends Notifier<List<RowDomainWidget>> {
+class DanhSachDomainNotifier extends Notifier<List<DomainModel>> {
   @override
-  List<RowDomainWidget> build() {
+  List<DomainModel> build() {
     return [];
   }
 
-  addRowDomain(RowDomainWidget newItem) {
+  addNewRowDomain({required int index}) {
+    final now = DateTime.now();
+    final newItem = DomainModel(rowIndex: index, ngayDangKy: now, ngayHetHan: now.copyWith(year: now.year+1), defaultRow: false);
     state = [...state, newItem];
   }
 
-  lamMoiDanhSach(RowDomainWidget newItem){
-    state.clear();
-    state = [newItem];
+  lamMoiDanhSach(){
+    final now = DateTime.now();
+    state = [DomainModel(rowIndex: 0, ngayDangKy: now, ngayHetHan: now.copyWith(year: now.year+1), defaultRow: true)];
+  }
+
+  updateDomain({required int rowIndex,required DomainModel newItem}){
+    state = [
+      for(DomainModel item in state)
+        if(item.rowIndex==rowIndex)
+          newItem
+        else
+          item
+    ];
+    // state[rowIndex] = newItem;
+    // showInfo(state[rowIndex]);
   }
 
   removeDomain(int rowIndex) {
-    print('xoa: $rowIndex');
-    state.forEach((element) {
-      print(element.rowIndex);
-    });
     if(rowIndex>0){
       state = [
-        for(RowDomainWidget item in state)
+        for(DomainModel item in state)
           if(item.rowIndex!=rowIndex) item
       ];
     }
-    print('--------- update -------');
-    state.forEach((element) {
-      print(element.rowIndex);
-    });
+  }
+
+  showInfo(DomainModel item){
+    print('row ${item.rowIndex}: ${item.domainName} - ${item.ngayDangKy!.formatDateTime('dd-MM-yyyy')}  ${item.ngayHetHan!.formatDateTime('dd-MM-yyyy')} - ${item.ghiChu}');
   }
 }

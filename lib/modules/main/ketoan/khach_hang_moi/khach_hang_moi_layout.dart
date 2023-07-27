@@ -125,6 +125,6 @@ _resetForm(WidgetRef ref){
   ref.refresh(formKhachHangMoiProvider); // reset dữ liệu toàn Form
   ref.refresh(kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
   Future.delayed(const Duration(milliseconds: 100),(){
-    ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach(const RowDomainWidget(defaultRow: true, rowIndex: 0));
+    ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach();
   }); // reset danh sách domain
 }

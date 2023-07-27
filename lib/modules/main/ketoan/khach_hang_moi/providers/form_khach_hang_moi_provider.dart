@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
 import '../repositories/khach_hang_moi_repository.dart';
+import 'danh_sach_domain_provider.dart';
 
 part 'form_khach_hang_moi_state.dart';
 
@@ -153,6 +154,10 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
       state.dataDomain!.forEach((key, value) {
         print('Domain {$key:$value}');
       });
+    }
+    final dsDomain = ref.read(danhSachDomainProvider);
+    for(var item in dsDomain){
+      print('${item.domainName}: ${item.ngayDangKy} - ${item.ngayHetHan} - ${item.ghiChu}');
     }
   }
 

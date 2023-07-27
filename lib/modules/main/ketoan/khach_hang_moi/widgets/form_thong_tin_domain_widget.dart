@@ -9,25 +9,13 @@ class FormThongTinDomainWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinDomainWidgetState
     extends ConsumerState<FormThongTinDomainWidget> with FormUIMixins {
-  final RowDomainWidget itemDomain =
-      const RowDomainWidget(defaultRow: true, rowIndex: 0);
 
   int _index = 1;
 
   @override
-  initState() {
-    super.initState();
-    Future.delayed(const Duration(milliseconds: 100),(){
-      ref.read(danhSachDomainProvider.notifier).addRowDomain(itemDomain);
-    });
-  }
-
-
-  @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formKhachHangMoiProvider);
-
-    List<RowDomainWidget> listDomain = ref.watch(danhSachDomainProvider);
+    List<DomainModel> listDomain = ref.watch(danhSachDomainProvider);
 
     return Visibility(
       visible: formState.isHopDongDomain,
@@ -73,9 +61,8 @@ class _FormThongTinDomainWidgetState
                                   size: 15,
                                 ),
                                 onPressed: () {
-                                  RowDomainWidget newItem = RowDomainWidget(defaultRow: false, rowIndex: _index);
                                   _index++;
-                                  ref.read(danhSachDomainProvider.notifier).addRowDomain(newItem);
+                                  ref.read(danhSachDomainProvider.notifier).addNewRowDomain(index: _index);
                                 },
                                 label: const Text('Thêm Domain')),
                           ),
@@ -84,8 +71,8 @@ class _FormThongTinDomainWidgetState
                     ),
                   ],
                 ),
-                for (RowDomainWidget item in listDomain) ...[
-                  item,
+                for (DomainModel item in listDomain) ...[
+                  RowDomainWidget(domainModel: item,),
                 ],
               ],
             ),
@@ -97,10 +84,9 @@ class _FormThongTinDomainWidgetState
 }
 
 class RowDomainWidget extends ConsumerStatefulWidget {
-  const RowDomainWidget({super.key, required this.defaultRow,required this.rowIndex});
+  const RowDomainWidget({super.key,required this.domainModel});
 
-  final bool defaultRow;
-  final int rowIndex;
+  final DomainModel domainModel;
 
   @override
   ConsumerState createState() => _RowDomainWidgetState();
@@ -108,19 +94,53 @@ class RowDomainWidget extends ConsumerStatefulWidget {
 
 class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
     with FormUIMixins {
-  final String _typeData = 'domain';
-  DateTime ngayDangKy = DateTime.now();
-  DateTime? ngayHetHan;
+
+  late final TextEditingController _nameController;
+  late final TextEditingController _ghiChuController;
+  DateTime? selNgayDangKy;
+  DateTime? selNgayHetHan;
 
   @override
-  initState() {
+  initState(){
     super.initState();
-    ngayHetHan = ngayDangKy.copyWith(year: ngayDangKy.year + 1);
+    _nameController = TextEditingController(text: widget.domainModel.domainName ?? '');
+    _ghiChuController = TextEditingController(text: widget.domainModel.ghiChu ?? '');
+
+    _nameController.addListener(() {
+      final String text = _nameController.text;
+      _nameController.value = _nameController.value.copyWith(
+        text: text,
+        selection: TextSelection(baseOffset: text.length, extentOffset: text.length),
+        composing: TextRange.empty,
+      );
+    });
+
+    _ghiChuController.addListener(() {
+      final String text = _ghiChuController.text;
+      _ghiChuController.value = _ghiChuController.value.copyWith(
+        text: text,
+        selection: TextSelection(baseOffset: text.length, extentOffset: text.length),
+        composing: TextRange.empty,
+      );
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant RowDomainWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    Future.delayed(const Duration(milliseconds: 0),(){
+        _nameController.text = widget.domainModel.domainName ?? '';
+        _ghiChuController.text = widget.domainModel.ghiChu ?? '';
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print('index(${widget.rowIndex.toString()}) ${ngayDangKy.formatDateTime('dd-MM-yyyy')}');
+    int rowIndex = widget.domainModel.rowIndex ?? 0;
+
+    selNgayDangKy = widget.domainModel.ngayDangKy;
+    selNgayHetHan = widget.domainModel.ngayHetHan;
+    
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -129,32 +149,31 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
           child: Wrap(
             children: [
               lableTextForm('Domain name',
-                  child: (widget.defaultRow == false)
+                  child: (widget.domainModel.defaultRow == false)
                       ? GestureDetector(
-                          onTap: () {
-                            // ref.read(danhSachDomainProvider.notifier).removeDomain(widget.index ?? 0);
-                            if(widget.rowIndex>0){
-                              print(widget.rowIndex);
-                              ref.read(danhSachDomainProvider).remove(widget.rowIndex);
-                            }
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 7),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: const Text(
-                              'Xoá',
-                              style: TextStyle(color: Colors.white, fontSize: 11),
-                            ),
-                          ))
+                      onTap: () {
+                        if(rowIndex > 0){
+                          ref.read(danhSachDomainProvider.notifier).removeDomain(rowIndex);
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 7),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: const Text(
+                          'Xoá',
+                          style: TextStyle(color: Colors.white, fontSize: 11),
+                        ),
+                      ))
                       : null),
               TextFormField(
+                controller: _nameController,
+                autofocus: true,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: (value) {
-                  ref.read(formKhachHangMoiProvider.notifier).changeData(
-                      type: _typeData, key: 'tenmien', value: value);
+                  ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(domainName: value));
                 },
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(errorText: 'Không bỏ trống.'),
@@ -172,22 +191,19 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
               TextFormField(
                 readOnly: true,
                 controller: TextEditingController(
-                    text: ngayDangKy.formatDateTime('dd-MM-yyyy')),
+                    text: selNgayDangKy!.formatDateTime('dd-MM-yyyy')),
                 onTap: () async {
-                  final DateTime? selDate = await Helper.onSelectDate(context,
-                      initialDate: ngayDangKy);
-                  String txtDate = DateTime.now().formatDateTime('dd-MM-yyyy');
+                  final selDate = await Helper.onSelectDate(context,
+                      initialDate: selNgayDangKy);
                   if (selDate != null) {
-                    txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                    ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ngayDangKy: selDate, ngayHetHan: DateTime(
+                        selDate.year + 1, selDate.month, selDate.day)));
+                    setState(() {
+                      selNgayDangKy = selDate;
+                      selNgayHetHan = DateTime(
+                          selNgayDangKy!.year + 1, selNgayDangKy!.month, selNgayDangKy!.day);
+                    });
                   }
-                  ref.read(formKhachHangMoiProvider.notifier).changeData(
-                      type: _typeData, key: 'ngaydangky', value: txtDate);
-
-                  setState(() {
-                    ngayDangKy = selDate ?? ngayDangKy;
-                    ngayHetHan = DateTime(
-                        ngayDangKy.year + 1, ngayDangKy.month, ngayDangKy.day);
-                  });
                 },
               ),
             ],
@@ -204,23 +220,18 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
                 decoration: const InputDecoration(hintText: 'dd-mm-yyyy'),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: TextEditingController(
-                    text: (ngayHetHan != null)
-                        ? ngayHetHan!.formatDateTime('dd-MM-yyyy')
-                        : ''),
+                    text: selNgayHetHan!.formatDateTime('dd-MM-yyyy')),
                 onTap: () async {
-                  final DateTime? selDate = await Helper.onSelectDate(context,
-                      initialDate: ngayHetHan,
+                  final selDate = await Helper.onSelectDate(context,
+                      initialDate: selNgayHetHan,
                       firstDate:
-                          ngayDangKy.copyWith(year: ngayDangKy.year + 1));
-                  String txtDate = DateTime.now().formatDateTime('dd-MM-yyyy');
+                      selNgayDangKy!.copyWith(year: selNgayDangKy!.year + 1));
                   if (selDate != null) {
-                    txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                    ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ngayHetHan: selDate));
+                    setState(() {
+                      selNgayHetHan = selDate;
+                    });
                   }
-                  ref.read(formKhachHangMoiProvider.notifier).changeData(
-                      type: _typeData, key: 'ngayhethan', value: txtDate);
-                  setState(() {
-                    ngayHetHan = selDate ?? ngayHetHan;
-                  });
                 },
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(errorText: 'Không bỏ trống.'),
@@ -236,11 +247,11 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
             children: [
               lableTextForm('Ghi chú'),
               TextFormField(
-                controller: TextEditingController(text: widget.rowIndex.toString()),
+                controller: _ghiChuController,
                 onChanged: (value) {
                   ref
-                      .read(formKhachHangMoiProvider.notifier)
-                      .changeData(type: _typeData, key: 'ghichu', value: value);
+                      .read(danhSachDomainProvider.notifier)
+                      .updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ghiChu: value));
                 },
               ),
             ],
