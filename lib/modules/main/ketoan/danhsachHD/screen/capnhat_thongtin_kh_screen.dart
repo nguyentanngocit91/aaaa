@@ -5,8 +5,8 @@ enum HinhThucThanhToan { cod, bank }
 enum LoaiPhieuThu { phieuthu, phieuthuBG, phieuthuApp, phieuthuBGApp }
 
 class UpdateThongTinKHScreen extends StatefulWidget {
-  const UpdateThongTinKHScreen({Key? key}) : super(key: key);
-
+  const UpdateThongTinKHScreen({Key? key, required this.id}) : super(key: key);
+  final String id;
   @override
   State<UpdateThongTinKHScreen> createState() => _UpdatePhieuThuScreenState();
 }

@@ -27,15 +27,18 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     state = state.copyWith(data: data);
   }
 
+  void cancelSearch() async {
+    Map<String, String>? data = state.data;
+  }
+
   void onSearch(String type) async {
     Map<String, String>? data = state.data;
     print("data: ${data}");
     Map<String, dynamic> params = {
       'makhachhang': (data!=null && data['MAKH']!='')?data['MAKH']:'',
       'mahopdong': (data!=null && data['MAHD']!='')?data['MAHD']:'',
-      'tenhopdong': (data!=null && data['TenHD']!='')?data['TenHD']:'',
+      'tenhopdong': (data!=null && data['TENHD']!='')?data['TENHD']:'',
       'email': (data!=null && data['EMAIL']!='')?data['EMAIL']:'',
-      //'loaihopdong': type,
     };
 
     final jsonResult = await _dsHDRepository.searchInfo(data: params);

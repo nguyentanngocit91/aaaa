@@ -10,8 +10,8 @@ import '../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../_shared/utils/debouncer.dart';
 import '../../../../_shared/utils/helper.dart';
-import '../../../../_shared/utils/mask_text_input_formatter.dart';
 import '../../../../_shared/utils/ndgap.dart';
+import 'providers/danh_sach_domain_provider.dart';
 import 'providers/form_khach_hang_moi_provider.dart';
 import 'providers/kiem_tra_khach_hang_provider.dart';
 
@@ -38,16 +38,6 @@ class KhachHangMoi extends ConsumerStatefulWidget {
 }
 
 class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins{
-
-  @override
-  initState() {
-    super.initState();
-    _init();
-  }
-
-  _init() async {
-    await ref.read(formKhachHangMoiProvider.notifier).init();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +78,12 @@ class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins{
       ),
     );
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _resetForm(ref);
+  }
 }
 
 class _BtnSubmit extends ConsumerWidget {
@@ -126,6 +122,9 @@ _submitForm(WidgetRef ref) {
 
 _resetForm(WidgetRef ref){
   _formKey.currentState?.reset();
-  ref.invalidate(formKhachHangMoiProvider); // reset dữ liệu toàn Form
-  ref.invalidate(kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
+  ref.refresh(formKhachHangMoiProvider); // reset dữ liệu toàn Form
+  ref.refresh(kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
+  Future.delayed(const Duration(milliseconds: 100),(){
+    ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach();
+  }); // reset danh sách domain
 }

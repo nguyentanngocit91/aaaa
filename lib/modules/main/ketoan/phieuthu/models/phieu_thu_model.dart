@@ -1,4 +1,13 @@
 class PhieuThuModel {
+  double? phiweb;
+  double? phinangcapweb;
+  double? phihosting;
+  double? phinangcaphosting;
+  double? phitenmien;
+  double? phiapp;
+  double? phinangcapapp;
+  String? loaiphieuthu;
+  bool? isPending;
   String? sId;
   String? maphieuthu;
   List<Hopdong>? hopdong;
@@ -6,14 +15,21 @@ class PhieuThuModel {
   List<Nhanvien>? nhanvien;
   List<String>? files;
   double? tongtien;
-  String? vat;
   String? ngaytao;
   String? ngaynopcty;
   String? httt;
   String? ghichu;
 
   PhieuThuModel(
-      {
+      {this.phiweb,
+        this.phinangcapweb,
+        this.phihosting,
+        this.phinangcaphosting,
+        this.phitenmien,
+        this.phiapp,
+        this.phinangcapapp,
+        this.loaiphieuthu,
+        this.isPending,
         this.sId,
         this.maphieuthu,
         this.hopdong,
@@ -21,15 +37,22 @@ class PhieuThuModel {
         this.nhanvien,
         this.files,
         this.tongtien,
-        this.vat,
         this.ngaytao,
-        this.ngaynopcty,
+        //this.ngaynopcty,
         this.httt,
         this.ghichu,
         });
 
   PhieuThuModel.fromJson(Map<String, dynamic> json) {
-
+    phiweb = json['phiweb'].toDouble();
+    phinangcapweb = json['phinangcapweb'].toDouble();
+    phihosting = json['phihosting'].toDouble();
+    phinangcaphosting = json['phinangcaphosting'].toDouble();
+    phitenmien = json['phitenmien'].toDouble();
+    phiapp = json['phiapp'].toDouble();
+    phinangcapapp = json['phinangcapapp'].toDouble();
+    loaiphieuthu = json['loaiphieuthu'];
+    isPending = json['is_pending'];
     sId = json['_id'];
     maphieuthu = json['maphieuthu'];
     if (json['hopdong'] != null) {
@@ -48,8 +71,7 @@ class PhieuThuModel {
       });
     }
     files = json['files'].cast<String>();
-    tongtien = double.parse(json['tongtien'].toString());
-    vat = json['vat'];
+    tongtien = json['tongtien'].toDouble();
     ngaytao = json['ngaytao'];
     ngaynopcty = json['ngaynopcty'];
     httt = json['httt'];
@@ -59,6 +81,16 @@ class PhieuThuModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['phiweb'] = phiweb;
+    data['phinangcapweb'] = phinangcapweb;
+    data['phihosting'] = phihosting;
+    data['phinangcaphosting'] = phinangcaphosting;
+    data['phitenmien'] = phitenmien;
+    data['phiapp'] = phiapp;
+    data['phinangcapapp'] = phinangcapapp;
+
+    data['loaiphieuthu'] = loaiphieuthu;
+    data['is_pending'] = isPending;
 
     data['_id'] = sId;
     data['maphieuthu'] = maphieuthu;
@@ -73,7 +105,6 @@ class PhieuThuModel {
     }
     data['files'] = files;
     data['tongtien'] = tongtien;
-    data['vat'] = vat;
     data['ngaytao'] = ngaytao;
     data['ngaynopcty'] = ngaynopcty;
     data['httt'] = httt;
@@ -87,17 +118,15 @@ class Hopdong {
   String? sId;
   String? mahopdong;
   String? tenhopdong;
-  String? loaihopdong;
-  double? tongtien;
+  int? tongtien;
 
-  Hopdong({this.sId, this.mahopdong, this.tenhopdong, this.loaihopdong, this.tongtien});
+  Hopdong({this.sId, this.mahopdong, this.tenhopdong, this.tongtien});
 
   Hopdong.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     mahopdong = json['mahopdong'];
     tenhopdong = json['tenhopdong'];
-    loaihopdong = json['loaihopdong'];
-    tongtien = double.parse(json['tongtien'].toString());
+    tongtien = json['tongtien'];
   }
 
   Map<String, dynamic> toJson() {
@@ -105,7 +134,6 @@ class Hopdong {
     data['_id'] = sId;
     data['mahopdong'] = mahopdong;
     data['tenhopdong'] = tenhopdong;
-    data['loaihopdong'] = loaihopdong;
     data['tongtien'] = tongtien;
     return data;
   }
