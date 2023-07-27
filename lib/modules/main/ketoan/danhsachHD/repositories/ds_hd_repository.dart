@@ -9,8 +9,11 @@ class DSHDRepository{
 
   searchInfo({required Map<String, dynamic> data}) async{
 
+
     final response =
     await App.dioClient.get(ApiUrl.searchContract,queryParameters:data);
+
+
     List<ItemContractSearchResultModel> list = [];
     var result = {
       "status":false,
@@ -29,22 +32,15 @@ class DSHDRepository{
         result['status'] = true;
         result['message'] = "Success";
         result['info'] = InfoContractResponseModel.fromJson(res);
-
-
-        //print("$res['data']+res_buoc_jsonReponse");
-
-        result['data'] = res['data'];
-
-      //  print("$list+res_buoc_list");
-
-       /*for (var item in res['data']) {
+       for (var item in res['data']) {
           list.add(ItemContractSearchResultModel.fromJson(item));
-        }*/
+        }
+        result['data'] = list;
 
       }
     }
 
-    //print(result);
+   // print(result);
 
     return result;
   }
