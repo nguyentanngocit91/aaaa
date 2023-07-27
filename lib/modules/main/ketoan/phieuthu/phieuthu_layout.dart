@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nn_phanmem/modules/main/ketoan/phieuthu/screen/add_pendding_screen.dart';
 import '../../../../_shared/utils/form_status.dart';
 import 'widgets/box_search.dart';
 import '../../../../_shared/utils/helper.dart';
 import 'models/phieu_thu_model.dart';
 import 'providers/phieu_thu_provider.dart';
 import 'screen/update_phieuthu_screen.dart';
+import 'widgets/pt_button.dart';
 
 class PhieuThuLayout extends ConsumerStatefulWidget {
   const PhieuThuLayout({Key? key}) : super(key: const Key(pathName));
@@ -139,8 +141,9 @@ class _PhieuThuLayoutState extends ConsumerState<PhieuThuLayout> {
     );
   }
 }
+
 class RowInfoPhieuThu extends StatelessWidget {
-  const RowInfoPhieuThu({
+  RowInfoPhieuThu({
     Key? key,
     required this.item,
     required this.index,
@@ -259,29 +262,112 @@ class RowInfoPhieuThu extends StatelessWidget {
                     ? Text(Helper.numberFormat(phiDomain))
                     : const Text('0 đ'),
               ),
-              Expanded(
-                flex: 14,
-                child: Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Pending'),
+                Expanded(
+              flex: 14,
+              child: Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return const AddPenddingScreen();
+                        },
+                      );
+                    },
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.only(
+                              left: 15, right: 15, top: 0, bottom: 0)),
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith<Color>((states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Colors.white;
+                        }
+                        return Colors.white;
+                      }),
+                      overlayColor:
+                          MaterialStateProperty.resolveWith<Color>((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Colors.transparent;
+                        }
+                        return Color(0xffeaf7e5);
+                      }),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0))),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        showDialog<void>(
-                          context: context,
-                          barrierDismissible: false, // user must tap button!
-                          builder: (BuildContext context) {
-                            return const UpdatePhieuThuScreen();
-                          },
-                        );
-                      },
-                      child: const Text('Cập nhật phiếu thu'),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.add,
+                          color: Colors.green,
+                          size: 16,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          'Pendding',
+                          style: TextStyle(color: Colors.green, fontSize: 14),
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return const UpdatePhieuThuScreen();
+                        },
+                      );
+                    },
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.only(
+                              left: 15, right: 15, top: 0, bottom: 0)),
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith<Color>((states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Colors.white;
+                        }
+                        return Colors.white;
+                      }),
+                      overlayColor:
+                          MaterialStateProperty.resolveWith<Color>((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Colors.transparent;
+                        }
+                        return Color(0xffeaf7e5);
+                      }),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0))),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.edit,
+                          color: Colors.green,
+                          size: 16,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          'Cập nhật',
+                          style: TextStyle(color: Colors.green, fontSize: 14),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
+            ),
             ],
           ),
         ),
@@ -293,6 +379,7 @@ class RowInfoPhieuThu extends StatelessWidget {
 class HeaderRowItem extends StatelessWidget {
   const HeaderRowItem({Key? key, required this.text}) : super(key: key);
   final String text;
+
   @override
   Widget build(BuildContext context) {
     return Container(
