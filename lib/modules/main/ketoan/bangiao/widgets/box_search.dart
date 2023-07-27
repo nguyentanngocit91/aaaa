@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
 import '../../phieuthu/widgets/pt_button.dart';
 import '../providers/ban_giao_provider.dart';
 
@@ -94,19 +95,7 @@ class BoxSearchBanGiao extends ConsumerWidget {
             onPressed: () {
               soHD = soHDController.text;
               if(soHD=='') {
-                showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                  title: const Text('Thông báo'),
-                  content: const Text('Vui lòng nhập nội dung cần tìm kiếm!'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'OK'),
-                      child: const Text('Đóng'),
-                    ),
-                  ],
-                ),
-              );
+                ShowOkAlertDialog.show(context, 'Thông báo', 'Vui lòng nhập nội dung cần tìm kiếm!');
               }else{
                 ref.read(banGiaoProvider.notifier).setInputMaHD(maHD: soHD);
                 ref.read(banGiaoProvider.notifier).actionInputSearch();

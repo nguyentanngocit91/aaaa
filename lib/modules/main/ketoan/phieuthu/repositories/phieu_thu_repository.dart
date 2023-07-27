@@ -13,4 +13,14 @@ class PhieuThuRepository {
     }
     return null;
   }
+
+  Future<Map?> searchListPhieuThu({String soPhieuThu = '', String soHD = '', String tuNgay = '', String denNgay = ''}) async {
+    final Response response = await App.dioClient.get(ApiUrl.danhSachPhieuThu);
+    if(response.statusCode==200){
+      if(response.data['success']==true){
+        return response.data;
+      }
+    }
+    return null;
+  }
 }
