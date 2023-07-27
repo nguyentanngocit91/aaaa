@@ -1,8 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nn_phanmem/modules/main/ketoan/data20152019/screens/widgets/list_view20152019.dart';
 
 import '../../phieuthu/widgets/pt_button.dart';
+import 'widgets/row_2015_2019_widget.dart';
 
 class Data20152019 extends StatefulWidget {
   const Data20152019({Key? key}) : super(key:const Key(pathName));
@@ -289,7 +291,6 @@ class _Data20152019State extends State<Data20152019> {
                   ),
 
                   Expanded(
-
                     child: Wrap(
                       runSpacing: 0,
                       children: [
@@ -307,81 +308,15 @@ class _Data20152019State extends State<Data20152019> {
             ),
           ),
             SizedBox(height:30,),
-
-
-          Expanded(
-            child: DataTable2(
-                columnSpacing: 8,
-                horizontalMargin: 8,
-                minWidth: 600,
-                headingRowColor: MaterialStatePropertyAll(Color(0xff105a6c)),
-                headingTextStyle: TextStyle(color: Color(0xffffffff)),
-
-                columns: const [
-                  DataColumn2(
-                      label: Text('#'),
-                      fixedWidth: 50
-
-                  ),
-                  DataColumn2(
-                    label: Text('Mã HĐ'),
-                    fixedWidth:150,
-
-                  ),
-                  DataColumn(
-                    label: Text('Số phiếu thu'),
-                  ),
-                  DataColumn2(
-                      label: Text('	Cty/Tên khách hàng'),
-
-                  ),
-                  DataColumn2(
-                      label: Text('Tên khách hàng'),
-
-                  ),
-                  DataColumn2(
-                    label: Text('	Điện thoại'),
-
-                  ),
-                  DataColumn2(
-                    label: Text('Email'),
-
-                  ),
-                  DataColumn2(
-                    label: Text('Ghi chú'),
-
-                  ),
-                  DataColumn2(
-                    label: Text('Thao tác'),
-                    fixedWidth:110
-                  ),
-
-
-                ],
-                rows: List<DataRow>.generate(
-                    1000,
-                        (index) => DataRow(cells: [
-                      DataCell(Container(width:50,child:Text((index + 1).toString()),)),
-                      DataCell(Text('A11220'+index.toString())),
-                      DataCell(Text('A11220'+index.toString())),
-                      DataCell(Text('A11220'+index.toString())),
-                      DataCell(Text('28/6/2023 ký biên bản cho tặng source cho 1029023W CÔNG TY TNHH THƯƠNG MẠI SẢN XUẤT CAO NGUYÊN MỚI' )),
-                      DataCell(Text('A11220'+index.toString())),
-                      DataCell(Text('A11220'+index.toString())),
-                      DataCell(Text('A11220'+index.toString())),
-                      DataCell(
-                        PtButton(
-                          icon:Icon(Icons.remove_red_eye,color:Colors.white,size:18,),
-                          title:"Chi tiết",
-                          onPressed:(){
-                            print(index.toString());
-                          },
-                        )
-                      ),
-
-
-                    ]))),
-          )
+          // header
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(color: Color(0xff105a6c)),
+              child:Row20152019HeardeWidget(),
+            ),// end header
+          // body
+          // end body
+          ListView20152019()
         ],
       ),
     );
