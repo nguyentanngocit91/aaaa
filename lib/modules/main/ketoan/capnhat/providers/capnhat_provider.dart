@@ -17,7 +17,7 @@ StateNotifierProvider.autoDispose<CapNhatNotifier, CapNhatState>(
 class CapNhatNotifier extends StateNotifier<CapNhatState> {
   final CapNhatRepository _capNhatRepository = CapNhatRepository();
   CapNhatNotifier() : super(const CapNhatState());
-  int? perPage = 15;
+  int? perPage = 10;
   int currentPage = 1;
   void onChangeValue(String type, String value) {
     Map<String, String> data = state.data ?? {};
