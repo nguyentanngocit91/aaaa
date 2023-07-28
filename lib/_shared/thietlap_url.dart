@@ -39,8 +39,9 @@ class ApiUrl{
   static const String danhSachHDTheoSoHD = '$baseUrl/hop-dong';
 
 
-  // blacklist
+  //Blacklist
 
   static const String danhsachBlackList = '$baseUrl/black-list';
+
 
 }

@@ -41,83 +41,121 @@ class _AddPenddingScreenState extends State<AddPenddingScreen> {
                 "Trạng thái",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-             Container(
-               margin:EdgeInsets.only(top:5,bottom:10),
-               decoration:BoxDecoration(
-                 color:Colors.black12,
-                 borderRadius:BorderRadius.circular(3)
+              Container(
+                margin: EdgeInsets.only(top: 5, bottom: 10),
+                decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(3)
 
-               ),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.start,
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                   Expanded(
-                     flex:3,
-                     child: ListTile(
-                       title: const Text('Pendding'),
-                       leading: Radio<SingingCharacter>(
-                         value: SingingCharacter.pendding,
-                         groupValue: _trangthaiPendding,
-                         onChanged: (SingingCharacter? value) {
-                           setState(() {
-                             _trangthaiPendding = value;
-                           });
-                         },
-                       ),
-                     ),
-                   ),
-                   Expanded(
-                     flex:3,
-                     child: ListTile(
-                       title: const Text('Mở pendding'),
-                       leading: Radio<SingingCharacter>(
-                         value: SingingCharacter.openpendding,
-                         groupValue: _trangthaiPendding,
-                         onChanged: (SingingCharacter? value) {
-                           setState(() {
-                             _trangthaiPendding = value;
-                           });
-                         },
-                       ),
-                     ),
-                   ),
-                   Expanded(
-                     flex:6,
-                     child:Container(),
-                   )
-                 ],
-               ),
-             ),
+                    Expanded(
+                      flex: 3,
+                      child: ListTile(
+                        title: const Text('Pendding'),
+                        leading: Radio<SingingCharacter>(
+                          value: SingingCharacter.pendding,
+                          groupValue: _trangthaiPendding,
+                          onChanged: (SingingCharacter? value) {
+                            setState(() {
+                              _trangthaiPendding = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: ListTile(
+                        title: const Text('Mở pendding'),
+                        leading: Radio<SingingCharacter>(
+                          value: SingingCharacter.openpendding,
+                          groupValue: _trangthaiPendding,
+                          onChanged: (SingingCharacter? value) {
+                            setState(() {
+                              _trangthaiPendding = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Container(),
+                    )
+                  ],
+                ),
+              ),
 
-              Text("Ghi chú",style:TextStyle(fontWeight:FontWeight.bold),),
-              SizedBox(height:10,),
-              TextField(minLines:5,maxLines:null,),
-              SizedBox(height:10,),
-             Container(
-               padding:EdgeInsets.all(8),
-               decoration:BoxDecoration(
-                 color:Color(0xFF105A6C),
-                 
-               ),
-               child: Row(
-                 children: [
-                   Expanded(
-                     flex:1,
-                     child:TitleHeader(stringTitle:"#",),),
-                   Expanded(
-                     flex:1,
-                     child:TitleHeader(stringTitle:"Ngày tháng",),),
-                   Expanded(
-                     flex:1,
-                     child:TitleHeader(stringTitle:"Trạng thái",),),
-                   Expanded(
-                     flex:1,
-                     child:TitleHeader(stringTitle:"Ghi chú",),),
-                 ],
-               ),
-             )
+              Text("Ghi chú", style: TextStyle(fontWeight: FontWeight.bold),),
+              SizedBox(height: 10,),
+              TextField(minLines: 5, maxLines: null,),
+              SizedBox(height: 10,),
+              Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Color(0xFF105A6C),
+
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TitleHeader(stringTitle: "#",),),
+                    Expanded(
+                      flex: 1,
+                      child: TitleHeader(stringTitle: "Ngày tháng",),),
+                    Expanded(
+                      flex: 1,
+                      child: TitleHeader(stringTitle: "Trạng thái",),),
+                    Expanded(
+                      flex: 3,
+                      child: TitleHeader(stringTitle: "Ghi chú",),),
+                  ],
+                ),
+              ),
+
+              Container(
+                height:250,
+
+                child:ListView.builder(
+                    padding: const EdgeInsets.all(0),
+                    itemCount:10,
+                    itemBuilder: (BuildContext context, int index) {
+                      return  Container(
+                        decoration:BoxDecoration(
+                            border:Border(bottom:BorderSide(width:1,color:Colors.black12))
+                        ),
+                        padding: EdgeInsets.all(8),
+
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: TitleHeader(
+                                stringTitle: (index+1).toString(), colorTitle: Colors.black,),),
+                            Expanded(
+                              flex: 1,
+                              child: TitleHeader(
+                                stringTitle: "Ngày tháng", colorTitle: Colors.black,),),
+                            Expanded(
+                              flex: 1,
+                              child: TitleHeader(
+                                stringTitle: "Trạng thái", colorTitle: Colors.black,),),
+                            Expanded(
+                              flex: 3,
+                              child: TitleHeader(
+                                stringTitle: "Ghi chú", colorTitle: Colors.black,),),
+                          ],
+                        ),
+                      );
+                    }
+                ),
+              )
 
 
             ],

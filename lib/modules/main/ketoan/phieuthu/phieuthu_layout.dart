@@ -170,9 +170,12 @@ class RowInfoPhieuThu extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(5),
-          color: (isPending != null && isPending)
-              ? Colors.red.withOpacity(0.2)
-              : Colors.transparent,
+          decoration:BoxDecoration(
+            color: (isPending != null && isPending)
+                ? Colors.red.withOpacity(0.1)
+                : Colors.transparent,
+            border:Border(bottom:BorderSide(width:1,color:Colors.black12))
+          ),
           child: Row(
             children: [
               Expanded(

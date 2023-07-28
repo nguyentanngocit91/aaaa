@@ -9,10 +9,10 @@ part 'danh_sach_blacklist_state.dart';
 
 final DanhsachBlackListReponsitory _danhsachBlackListReponsitory = DanhsachBlackListReponsitory();
 
-// final DanhSachBlacklistProvider =
-// NotifierProvider<DanhSachBlacklistNotifier, DanhSachBlacklistState>(() {
-//   return PhieuthuNotifier();
-// });
+final DanhSachBlacklistProvider =
+NotifierProvider<DanhSachBlacklistNotifier, DanhSachBlacklistState>(() {
+  return DanhSachBlacklistNotifier();
+});
 
 class DanhSachBlacklistNotifier extends Notifier<DanhSachBlacklistState> {
 
@@ -33,9 +33,22 @@ class DanhSachBlacklistNotifier extends Notifier<DanhSachBlacklistState> {
     return null;
   }
 
+  Future<Map?> addBlacklist() async {
+    final result = await _danhsachBlackListReponsitory.addBlacklist();
+    if(result!=null){
+
+      return result;
+    }
+    return null;
+  }
+
+
+
 }
-final futureListBlackListProvider =
-FutureProvider.autoDispose<List<DanhSachBlacklistModel>?>((ref) async {
+
+
+
+final futureListBlackListProvider = FutureProvider.autoDispose<List<DanhSachBlacklistModel>?>((ref) async {
   final List<DanhSachBlacklistModel> list = [];
   final response = await _danhsachBlackListReponsitory.getListBlacklist();
 
@@ -49,4 +62,7 @@ FutureProvider.autoDispose<List<DanhSachBlacklistModel>?>((ref) async {
   }
   return list;
 });
+
+
+
 
