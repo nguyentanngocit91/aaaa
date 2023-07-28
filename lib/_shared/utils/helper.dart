@@ -7,6 +7,15 @@ import 'package:intl/intl.dart';
 import '../../_shared/thietlap_ngonngu.dart';
 
 class Helper {
+  static padding(){
+    return EdgeInsets.all(5);
+  }
+  InputDecoration disabledInput(){
+    return  InputDecoration(
+      filled: true, //<-- SEE HERE
+      fillColor: Colors.black12, //<-- SEE HERE
+    );
+  }
   static String convertName(Key? key) {
     String strReturn = key.toString();
     strReturn = strReturn.replaceAll("[<'", "");

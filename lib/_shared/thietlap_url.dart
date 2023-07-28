@@ -12,6 +12,7 @@ class ApiUrl{
   // DS HĐ
 
   static const String searchContract = '$baseUrl/hop-dong';
+  static const String infoContract = '$baseUrl/hop-dong/';
 
 
   // Cấp mã HĐ, KH tự động

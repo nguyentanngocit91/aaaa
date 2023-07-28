@@ -1,50 +1,78 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:responsive_grid/responsive_grid.dart';
+import 'package:responsive_ui/responsive_ui.dart';
+
+import '../../../../../../_shared/mixins/form_ui_mixins.dart';
+import '../../../../../../_shared/utils/helper.dart';
+import '../../../../../../_shared/utils/ndgap.dart';
+import '../../models/contract_model.dart';
+import '../../providers/capnhat_provider.dart';
 
 enum HinhThucThanhToan { cod, bank }
 
 enum LoaiPhieuThu { phieuthu, phieuthuBG, phieuthuApp, phieuthuBGApp }
 
-class UpdateWebsite extends StatefulWidget {
+class UpdateWebsite extends ConsumerStatefulWidget {
   UpdateWebsite({Key? key, required this.id}) : super(key: key);
   final String id;
+
   @override
-  State<UpdateWebsite> createState() => _UpdatePhieuThuScreenState();
+  ConsumerState<UpdateWebsite> createState() => _UpdatePhieuThuScreenState();
 }
 
-class _UpdatePhieuThuScreenState extends State<UpdateWebsite> {
-  final TextEditingController txtMaHDInput = TextEditingController();
-
-  final TextEditingController txtTenHDInput = TextEditingController();
-
-  final TextEditingController txtTongGiaTriInput = TextEditingController();
-
-  final TextEditingController txtTongNoInput = TextEditingController();
-
+class _UpdatePhieuThuScreenState extends ConsumerState<UpdateWebsite>
+    with FormUIMixins {
   HinhThucThanhToan? _httt = HinhThucThanhToan.cod;
   LoaiPhieuThu? _loaiPT = LoaiPhieuThu.phieuthu;
+  bool isLoading = true;
+  Map<String,TextEditingController> listController = {};
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ['mahopdong','ngaykyweb','ngaybangiao','chucnang','ghichu'].forEach((String item) => listController[item] = TextEditingController());
+    Future.delayed(Duration.zero,() async {
+      await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
+      ContractModel? data = ref.watch(capnhatProvider.select((value) => value.contract));
+      listController!['mahopdong']!.text =
+          data!.l1_data!.mahopdong.toString();
+      listController!['ngaykyweb']!.text =
+          Helper.dateFormat(data!.l1_data!.ngaykyhd.toString());
+      listController!['ngaybangiao']!.text =
+          Helper.dateFormat(data!.webs![0]['ngaybangiao']);
+      listController!['chucnang']!.text = data!.webs![0]['chucnang'];
+      listController!['ghichu']!.text = data!.l1_data!.ghichu.toString();
 
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    txtMaHDInput.text = '2461622';
-    txtTenHDInput.text =
-    'HĐ ABC';
+
+
+
     return SimpleDialog(
       backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.all(0),
       insetPadding: const EdgeInsets.all(30),
       elevation: 0,
       children: [
-        Padding(
+
+        const Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'Cập nhật phiếu thu'.toUpperCase(),
+            'CẬP NHẬT WEBSITE',
             style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
           ),
         ),
         const Divider(),
         Container(
+          width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.all(20),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
               Row(
                 children: [
@@ -56,7 +84,7 @@ class _UpdatePhieuThuScreenState extends State<UpdateWebsite> {
                     width: 10,
                   ),
                   Text(
-                    'Thông tin hợp đồng'.toUpperCase(),
+                    'Thông tin website'.toUpperCase(),
                     style: const TextStyle(color: Color(0xFF105a6c)),
                   ),
                 ],
@@ -65,105 +93,145 @@ class _UpdatePhieuThuScreenState extends State<UpdateWebsite> {
                 height: 10,
               ),
               Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFf5f5f5),
-                  border: Border.all(color: const Color(0xFFdcdbdb)),
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Mã hợp đồng web/app',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFf5f5f5),
+                    border: Border.all(color: const Color(0xFFdcdbdb)),
+                  ),
+                  child: ResponsiveGridRow(
+                    children: [
+                      ResponsiveGridCol(
+                        lg: 6,
+                        xs: 12,
+                        child: Container(
+                          padding: Helper.padding(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Mã hợp đồng',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              TextField(
+                                controller: listController['mahopdong'],
+                                readOnly: true,
+                                decoration: Helper().disabledInput(),
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          TextField(
-                            controller: txtMaHDInput,
-                            readOnly: true,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Tên hợp đồng',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 12),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        TextField(
-                          controller: txtTenHDInput,
-                          readOnly: true,
-                        ),
-                      ],
-                    ),),
+                      ResponsiveGridCol(
+                        xs: 6,
+                        md: 6,
+                        lg: 3,
+                        child: Container(
+                          padding: Helper.padding(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Ngày ký web',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              TextField(
+                                controller: listController['ngaykyweb'],
+                                onTap: () {
+                                  final DateTime? selDate = await Helper.onS
+                                },
 
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      width: 150,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Tổng giá trị',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          TextField(
-                            controller: txtTongGiaTriInput,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      width: 150,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Tổng nợ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
+                      ResponsiveGridCol(
+                        xs: 6,
+                        md: 6,
+                        lg: 3,
+                        child: Container(
+                          padding: Helper.padding(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Ngày bàn giao',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              TextField(
+                                controller: listController['ngaybangiao'],
+
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          TextField(
-                            controller: txtTongNoInput,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                      ResponsiveGridCol(
+                        xs: 12,
+                        child: Container(
+                          padding: Helper.padding(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Chức năng',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              TextField(
+                                controller: listController['chucnang'],
+                                maxLines: 3, //or null
+
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      ResponsiveGridCol(
+                        xs: 12,
+                        child: Container(
+                          padding: Helper.padding(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Ghi chú',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              TextField(
+                                controller: listController['ghichu'],
+                                maxLines: 3, //or null
+
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
               const SizedBox(
                 height: 20,
               ),
-              Row(
+              const Row(
                 children: [
                   const Icon(
                     Icons.text_snippet_outlined,
@@ -173,7 +241,7 @@ class _UpdatePhieuThuScreenState extends State<UpdateWebsite> {
                     width: 10,
                   ),
                   Text(
-                    'Thông tin phiếu thu'.toUpperCase(),
+                    'UPLOAD FILE HĐ',
                     style: const TextStyle(color: Color(0xFF105a6c)),
                   ),
                 ],
@@ -187,382 +255,108 @@ class _UpdatePhieuThuScreenState extends State<UpdateWebsite> {
                   color: const Color(0xFFf5f5f5),
                   border: Border.all(color: const Color(0xFFdcdbdb)),
                 ),
-                child: (Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(
-                          top: 10, bottom: 10, left: 5, right: 5),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFe3e6e6),
-                        border: Border.all(color: const Color(0xFFdcdbdb)),
+                child: ResponsiveGridRow(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ResponsiveGridCol(
+                        lg: 12,
+                        xl:4,
+                        md:12,
+                        xs: 12,
+                        child: Container(
+                          padding: Helper.padding(),
+                          child: Row(
+                            children: [
+                              const Text(
+                                'Phương thức thanh toán:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Radio<HinhThucThanhToan>(
+                                value: HinhThucThanhToan.cod,
+                                groupValue: _httt,
+                                onChanged: (HinhThucThanhToan? value) {
+                                  setState(() {
+                                    _httt = value;
+                                  });
+                                },
+                              ),
+                              const Text('Hợp đồng'),
+                              Radio<HinhThucThanhToan>(
+                                value: HinhThucThanhToan.bank,
+                                groupValue: _httt,
+                                onChanged: (HinhThucThanhToan? value) {
+                                  setState(() {
+                                    _httt = value;
+                                  });
+                                },
+                              ),
+                              const Text('Chứng từ khác'),
+                            ],
+                          ),
+                        ),
                       ),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'Phương thức thanh toán:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                      ResponsiveGridCol(
+                        lg: 6,
+                        xl:4,
+                        xs: 12,
+                        child: Container(
+                          padding: Helper.padding(),
+                          child: SizedBox(
+                            child: inputUploadFile(context,
+                                //   controller: textEditingController,
+                                validator: FormBuilderValidators.compose([
+                                  //    FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
+                                ]), onTap: () async {
+                              String path = '';
+                              final result =
+                                  await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: [
+                                  'pdf',
+                                  'doc',
+                                  'docx',
+                                  'xls',
+                                  'xlsx'
+                                ],
+                              );
+                              if (result != null) {
+                                PlatformFile file = result.files.first;
+                                //   textEditingController.text = file.name;
+                              } else {
+                                // textEditingController.clear();
+                              }
+                            }),
                           ),
-                          Radio<HinhThucThanhToan>(
-                            value: HinhThucThanhToan.cod,
-                            groupValue: _httt,
-                            onChanged: (HinhThucThanhToan? value) {
-                              setState(() {
-                                _httt = value;
-                              });
-                            },
-                          ),
-                          const Text('Tiền mặt'),
-                          Radio<HinhThucThanhToan>(
-                            value: HinhThucThanhToan.bank,
-                            groupValue: _httt,
-                            onChanged: (HinhThucThanhToan? value) {
-                              setState(() {
-                                _httt = value;
-                              });
-                            },
-                          ),
-                          const Text('Chuyển khoản'),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            'Loại phiếu thu:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Radio<LoaiPhieuThu>(
-                            value: LoaiPhieuThu.phieuthu,
-                            groupValue: _loaiPT,
-                            onChanged: (LoaiPhieuThu? value) {
-                              setState(() {
-                                _loaiPT = value;
-                              });
-                            },
-                          ),
-                          const Text('Phiếu thu'),
-                          Radio<LoaiPhieuThu>(
-                            value: LoaiPhieuThu.phieuthuBG,
-                            groupValue: _loaiPT,
-                            onChanged: (LoaiPhieuThu? value) {
-                              setState(() {
-                                _loaiPT = value;
-                              });
-                            },
-                          ),
-                          const Text('Phiếu thu bàn giao'),
-                          Radio<LoaiPhieuThu>(
-                            value: LoaiPhieuThu.phieuthuApp,
-                            groupValue: _loaiPT,
-                            onChanged: (LoaiPhieuThu? value) {
-                              setState(() {
-                                _loaiPT = value;
-                              });
-                            },
-                          ),
-                          const Text('Phiếu thu APP'),
-                          Radio<LoaiPhieuThu>(
-                            value: LoaiPhieuThu.phieuthuBGApp,
-                            groupValue: _loaiPT,
-                            onChanged: (LoaiPhieuThu? value) {
-                              setState(() {
-                                _loaiPT = value;
-                              });
-                            },
-                          ),
-                          const Text('Phiếu thu bàn giao APP'),
-                        ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Ngày nộp',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
+                      ResponsiveGridCol(
+                        xs: 12,
+                        lg: 6,
+                        xl:4,
+                        child: Container(
+                          padding: Helper.padding(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextField(
+                                decoration: InputDecoration(
+                                  hintText:
+                                      'Nhập nội dung ghi chú cho file upload',
                                 ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
+                               // controller: txtGhichu,
+                                maxLines: 3, //or null
+                              ),
+                            ],
+                          ),
                         ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Số phiếu thu',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Mã nhân viên',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Nhân viên kinh doanh',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Phòng',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Khu vực',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Tổng tiền thu',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Phí web',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Phí nâng cấp web',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Phí hosting',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Phí nâng cấp host',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Phí tên miền',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Phí App',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'VAT',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            flex: 4,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Ghi chú',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField()
-                              ],
-                            )),
-                      ],
-                    )
-                  ],
-                )),
+                      ),
+                    ]),
               ),
+
+              const SizedBox(
+                height: 10,
+              ),
+              Data(),
               const SizedBox(
                 height: 10,
               ),
@@ -610,5 +404,76 @@ class _UpdatePhieuThuScreenState extends State<UpdateWebsite> {
       ],
     );
     ;
+  }
+}
+
+class Data extends ConsumerWidget {
+  Data({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context,WidgetRef ref) {
+   // var data = ref.watch(capnhatProvider.select((value) => value.result));
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: Color(0xFF105A6C),
+            ),
+            child: const Row(
+              children: [
+                Expanded(
+                    flex:1,
+                    child: HeaderRowItem(text: 'STT')),
+                Expanded(
+                  flex:3,
+                  child: HeaderRowItem(text: 'Ngày tháng'),
+                ),
+
+                Expanded(
+                  flex:3,
+                  child: HeaderRowItem(text: 'User cập nhật'),
+                ),
+                Expanded(
+                  flex:4,
+                  child: HeaderRowItem(text: 'Loại file'),
+                ),
+                Expanded(
+                  flex:3,
+                  child: HeaderRowItem(text: 'Ghi chú'),
+                ),
+                Expanded(
+                  flex:4,
+                  child: HeaderRowItem(text: 'Thao tác'),
+                ),
+
+              ],
+            ),
+          ),
+          // if(data!=null && data['data'].length > 0)...[
+          //   ListView.builder(
+          //       padding: const EdgeInsets.all(0),
+          //       physics: const NeverScrollableScrollPhysics(),
+          //       shrinkWrap: true,
+          //       primary: true,
+          //       itemCount: data['data'].length,
+          //       itemBuilder: (BuildContext context, index) {
+          //         InfoResponseModel info = data['info'];
+          //         return InfoUpdate(item: data['data'][index], index: info.page! * info.limit! - (info.limit!)+index+1);
+          //       }),
+          //   GeneratePagin(data['info']),
+          // ]else...[
+          //   const BsAlert(
+          //     closeButton: false,
+          //     margin: EdgeInsets.only(bottom: 10.0),
+          //     style: BsAlertStyle.danger,
+          //     child: Text('Không có dữ liệu',textAlign: TextAlign.center),
+          //   ),
+          //
+          // ],
+        ],
+      ),
+    );
   }
 }
