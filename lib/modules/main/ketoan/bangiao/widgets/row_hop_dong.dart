@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/ban_giao_model.dart';
 import 'list_file_of_hop_dong.dart';
+import 'row_app.dart';
 import 'row_domain.dart';
 import 'row_hosting.dart';
 import 'row_website.dart';
@@ -22,6 +23,8 @@ class RowHopDong extends StatelessWidget {
     String? tenHD = item.tenhopdong;
     double? giaTri = item.tongtien;
     String? ngayKyHopDong = item.ngaykyhd;
+    String? loaiHopDong = item.loaihopdong;
+
     return Column(
       children: [
          RowInfoHopDong(
@@ -75,25 +78,31 @@ class RowHopDong extends StatelessWidget {
                 ],
               ),
               ndGapH8(),
-              const RowHosting(
+              (loaiHopDong!=null && loaiHopDong == 'hosting')?const RowHosting(
                 stt: 1,
                 dungLuong: '5GB',
                 ngayDangKy: '07/06/2023',
                 ngayHetHan: '07/06/2024',
                 trangThai: 'Ký mới',
-              ),
+              ):const SizedBox(),
               ndGapH8(),
-              const RowWebsite(
+              (loaiHopDong!=null && loaiHopDong == 'web')?const RowWebsite(
                   stt: 1,
                   chucNang:
                       'CB-MOBILE- GIỎ HÀNG CB- SSL- ĐĂNG KÝ ĐĂNG NHẬP ĐÁNH GIÁ SAO- TÍNH PHI SHIP THEO GIA TỰ NHẬP- SẢN PHẨM SĂP RA MẮT BẢO VỀ EMAIL',
-                  ngayKy: '07/06/2023'),
+                  ngayKy: '07/06/2023'):const SizedBox(),
               ndGapH8(),
-              const RowDomain(
+              (loaiHopDong!=null && loaiHopDong == 'domain')?const RowDomain(
                   stt: 1,
                   domain: 'nina.com.vn',
                   ngayDangKy: '19/07/2023',
-                  ngayHetHan: '19/07/2024'),
+                  ngayHetHan: '19/07/2024'):const SizedBox(),
+              ndGapH8(),
+              (loaiHopDong!=null && loaiHopDong == 'app')?const RowApp(
+                  stt: 1,
+                  chucNang:
+                  'CB-MOBILE- GIỎ HÀNG CB- SSL- ĐĂNG KÝ ĐĂNG NHẬP ĐÁNH GIÁ SAO- TÍNH PHI SHIP THEO GIA TỰ NHẬP- SẢN PHẨM SĂP RA MẮT BẢO VỀ EMAIL',
+                  ngayKy: '07/06/2023'):const SizedBox(),
               ndGapH8(),
               Row(
                 children: [

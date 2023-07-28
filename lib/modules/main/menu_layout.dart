@@ -93,6 +93,12 @@ class MenuLayout extends ConsumerWidget {
                 onTap: () {},
               ),
               itemMenu(
+                title: 'Danh sách Domain mới ký',
+                onTap: () {
+                  context.go('/${DanhSachDomainMoiKy.pathName}');
+                },
+              ),
+              itemMenu(
                 title: 'Phiếu thu',
                 onTap: () {
                   context.go('/${PhieuThuLayout.pathName}');

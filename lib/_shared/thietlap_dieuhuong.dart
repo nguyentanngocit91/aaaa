@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import '../modules/main/ketoan/danh_sach_domain_moi/dsdomain_layout.dart';
 import 'thietlap_media.dart';
 
 import '../_shared/utils/helper.dart';
@@ -94,6 +95,9 @@ ShellRoute addShellRouterMain(String strKey) {
 
 
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
+        //DANH SACH DOMAIN MOI
+        addGoRouter(DanhSachDomainMoiKy(), isSubModule: false),
+
         //PHIEU THU
         addGoRouter(PhieuThuLayout(), isSubModule: false),
         //BAN GIAO

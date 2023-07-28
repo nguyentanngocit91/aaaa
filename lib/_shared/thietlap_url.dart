@@ -22,6 +22,9 @@ class ApiUrl{
   // Khách hàng
   static const String danhSachKhachHang = '$baseUrl/khach-hang';
 
+  //DOMAIN
+  static const String danhSachDomain = '$baseUrl/domain';
+
 
 
   //PHIẾU THU
