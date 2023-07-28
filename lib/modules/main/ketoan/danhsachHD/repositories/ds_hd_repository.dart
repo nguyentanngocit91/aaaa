@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import '../../../../../_shared/app_config/app.dart';
 import '../../../../../_shared/thietlap_url.dart';
-import '../models/infocontractresponse_model.dart';
+
 import '../models/item_contract_search_result_model.dart';
+import '../models/searchcontractcustomer_model.dart';
+import '../models/searchcustomer_model.dart';
+import '../models/searchcustomercontract_model.dart';
 
 class DSHDRepository{
 
@@ -11,36 +14,39 @@ class DSHDRepository{
 
 
     final response =
-    await App.dioClient.get(ApiUrl.searchContract,queryParameters:data);
+    await App.dioClient.get(ApiUrl.searchContractCustomer,queryParameters:data);
 
-
-    List<ItemContractSearchResultModel> list = [];
+   // print("$response+SEARCH HD");
+    List<SearchCustomerContractModel> list = [];
     var result = {
       "status":false,
       "message":"Lỗi",
-      "info":  {},
-      "data":[]
+      "khachhang": {},
+      "hopdongs":[]
 
     };
     if (response.statusCode == 200) {
       final res = response.data;
-     // print("$res+res_buoc_1");
+     print("$res+res_buoc_1");
       if(res['success']==false){
-        result['status'] = true;
+        result['status'] = false;
         result['message'] = "Không tìm thấy dữ liệu";
       }else {
         result['status'] = true;
         result['message'] = "Success";
-        result['info'] = InfoContractResponseModel.fromJson(res);
-       for (var item in res['data']) {
-          list.add(ItemContractSearchResultModel.fromJson(item));
+        result['khachhang'] = SearchCustomerModel.fromJson(res['khachhang']);
+
+        print("${result['khachhang']}+SEARCH khachhang");
+
+       for (var item in res['hopdongs']) {
+          list.add(SearchCustomerContractModel.fromJson(item));
         }
-        result['data'] = list;
+        result['hopdongs'] = list;
 
       }
     }
 
-   // print(result);
+   print("$result+SEARCH HD");
 
     return result;
   }
