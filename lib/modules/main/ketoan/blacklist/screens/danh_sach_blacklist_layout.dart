@@ -89,7 +89,9 @@ class DanhSachBlacklistLayout extends ConsumerWidget {
                         Container(
                           margin: EdgeInsets.only(top: 20),
                           child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                ref.read(DanhSachBlacklistProvider.notifier).addBlacklist();
+                              },
                               child: Text(
                                 "Lưu thông tin",
                                 style: TextStyle(color: Colors.white),
