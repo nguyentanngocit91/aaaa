@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../_shared/extensions/date_time_extention.dart';
@@ -11,9 +12,12 @@ import '../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../_shared/utils/debouncer.dart';
 import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/ndgap.dart';
+import '../../../../packages/textfield_tags/textfield_tags.dart';
 import 'providers/danh_sach_domain_provider.dart';
 import 'providers/form_khach_hang_moi_provider.dart';
 import 'providers/kiem_tra_khach_hang_provider.dart';
+import 'providers/nhan_vien_phu_trach_provider.dart';
+import 'widgets/tags_input_widget.dart';
 
 part 'widgets/form_thong_tin_khach_hang_widget.dart';
 
@@ -124,6 +128,7 @@ _resetForm(WidgetRef ref){
   _formKey.currentState?.reset();
   ref.refresh(formKhachHangMoiProvider); // reset dữ liệu toàn Form
   ref.refresh(kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
+  ref.refresh(nhanVienPhuTrachProvider); // reset dữ liệu nhân viên phụ trách
   Future.delayed(const Duration(milliseconds: 100),(){
     ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach();
   }); // reset danh sách domain

@@ -24,7 +24,6 @@ class _FormThongTinKhachHangWidgetState
     Map thongTinKhachHang = {};
     thongTinKhachHang = ref.watch(kiemTraKhachHangProvider.select((value) => value.data ?? {}));
 
-
     ref.listen(kiemTraKhachHangProvider.select((value) => value.loading),
         (previous, next) {
       if (next == true) {

@@ -35,7 +35,7 @@ class KiemTraKhachHangNotifier extends Notifier<KhachHangCuState> {
   Future<void> kiemTraThongTinKhachHang({required String email}) async {
     state = state.copyWith(loading: true, data: null);
     final Map? result =
-        await _khachHangMoiRepository.thongTinKhachHang(email: email);
+        await _khachHangMoiRepository.thongTinKhachHang(email: email, type: '&type=single');
     if(result!=null){
       result.forEach((key, value) {
         ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'khachhang', key: key, value: value);
