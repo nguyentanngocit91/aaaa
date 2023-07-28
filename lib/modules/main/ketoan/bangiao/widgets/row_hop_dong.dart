@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import '../models/ban_giao_model.dart';
+import 'list_file_of_hop_dong.dart';
 import 'row_domain.dart';
 import 'row_hosting.dart';
 import 'row_website.dart';
@@ -7,21 +10,29 @@ import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 
 class RowHopDong extends StatelessWidget {
-  const RowHopDong({Key? key}) : super(key: key);
+  const RowHopDong({Key? key,required this.index, required this.item}) : super(key: key);
+  final int index;
+  final BanGiaoModel item;
 
   @override
   Widget build(BuildContext context) {
+
+    String? maKH = item.khachhangId?.makhachhang;
+    String? maHD = item.mahopdong;
+    String? tenHD = item.tenhopdong;
+    double? giaTri = item.tongtien;
+    String? ngayKyHopDong = item.ngaykyhd;
     return Column(
       children: [
-        const RowInfoHopDong(
-          stt: 1,
-          maKH: 'NN0818023',
-          maHD: '0833023',
-          tenHD: 'CÔNG TY TNHH ĐẦU TƯ BẤT ĐỘNG SẢN AN MINH PHÚC',
-          giaTri: 5189900,
+         RowInfoHopDong(
+          stt: index,
+          maKH: (maKH!=null)?maKH:'',
+          maHD: (maHD!=null)?maHD:'',
+          tenHD: (tenHD!=null)?tenHD:'',
+          giaTri: (giaTri!=null)?giaTri:0.0,
           giaTriWeb: 0,
           congNo: 0,
-          ngayKhoiTao: '07/06/2023',
+          ngayKhoiTao: (ngayKyHopDong!=null)?DateFormat('dd-MM-yyyy').format(DateTime.parse(ngayKyHopDong)):'-',
         ),
         Container(
           padding: const EdgeInsets.all(5),
@@ -45,7 +56,15 @@ class RowHopDong extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return const ListFileOfHopDong();
+                        },
+                      );
+                    },
                     style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFF03a9f4)),
                     child: const Text(
@@ -222,7 +241,7 @@ class RowInfoHopDong extends StatelessWidget {
           Expanded(
             flex: 10,
             child: Text(
-              maHD,
+              maHD.toUpperCase(),
               style: const TextStyle(color: Colors.white),
             ),
           ),

@@ -31,6 +31,7 @@ extension DateTimeExtension on DateTime {
     return short ? cMonth.substring(0, 3) : cMonth;
   }
 
+
   String formatDateTime(String formatString){
     // 'dd-MM-yyyy' , 'dd-MM-yyyy H:m:s'
     return DateFormat(formatString).format(this);

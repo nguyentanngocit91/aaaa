@@ -12,6 +12,11 @@ StateNotifierProvider<DSHDNotifier, DSHDState>(
   },
 );
 
+
+final controllerProvider = StateProvider<String>((ref) {
+  return "";
+});
+
 class DSHDNotifier extends StateNotifier<DSHDState> {
   final DSHDRepository _dsHDRepository = DSHDRepository();
   DSHDNotifier() : super(const DSHDState());
@@ -22,15 +27,18 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     state = state.copyWith(data: data);
   }
 
+  void cancelSearch() async {
+    Map<String, String>? data = state.data;
+  }
+
   void onSearch(String type) async {
     Map<String, String>? data = state.data;
     print("data: ${data}");
     Map<String, dynamic> params = {
       'makhachhang': (data!=null && data['MAKH']!='')?data['MAKH']:'',
       'mahopdong': (data!=null && data['MAHD']!='')?data['MAHD']:'',
-      'tenhopdong': (data!=null && data['TenHD']!='')?data['TenHD']:'',
+      'tenhopdong': (data!=null && data['TENHD']!='')?data['TENHD']:'',
       'email': (data!=null && data['EMAIL']!='')?data['EMAIL']:'',
-      //'loaihopdong': type,
     };
 
     final jsonResult = await _dsHDRepository.searchInfo(data: params);
@@ -38,6 +46,8 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     state = state.copyWith(
         result: jsonResult
     );
+
+   // print("${state.result}+000000");
 
   }
 }

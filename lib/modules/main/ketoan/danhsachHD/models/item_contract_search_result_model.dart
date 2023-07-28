@@ -24,33 +24,55 @@ part 'item_contract_search_result_model.g.dart';
 // Version : 1.0.1 Beta
 // **************************************************************************
 
+
+
 @freezed
 class ItemContractSearchResultModel with _$ItemContractSearchResultModel {
   const factory ItemContractSearchResultModel({
     List<dynamic>? dichvuIds,
-    String? info,
     List<dynamic>? lichsu_thanhtoan,
     @JsonKey(name: '_id') @required String? id,
-    int? sohopdong,
+    String? sohopdong,
     String? namhopdong,
+    String? ngaykyhd,
     String? loaihopdong,
     String? mahopdongcu,
     String? mahopdong,
     List<dynamic>? nhanvien,
+    String? ghichu,
+    @JsonKey(name: 'info') L1_info? l1_info,
     @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
     String? tenhopdong,
     @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
-    int? tongtien,
+    double? tongtien,
     List<dynamic>? lichsu_capnhat}) = _ItemContractSearchResultModel;
 
   factory ItemContractSearchResultModel.fromJson(Map<String, dynamic> json) => _$ItemContractSearchResultModelFromJson(json);
 }
 
 @freezed
+class L1_info with _$L1_info {
+  const factory L1_info({
+    String? chucnang}) = _L1_info;
+
+  factory L1_info.fromJson(Map<String, dynamic> json) => _$L1_infoFromJson(json);
+}
+
+@freezed
 class L1_khachhangId with _$L1_khachhangId {
   const factory L1_khachhangId({
+    String? lichsu_khoitao,
+    List<dynamic>? lichsu_capnhat,
     @JsonKey(name: '_id') @required String? id,
-    String? makhachhang}) = _L1_khachhangId;
+    String? makhachhang,
+    String? type,
+    String? hoten,
+    String? phone,
+    String? email,
+    String? congty,
+    String? masothue,
+    String? diachi,
+    String? cccd}) = _L1_khachhangId;
 
   factory L1_khachhangId.fromJson(Map<String, dynamic> json) => _$L1_khachhangIdFromJson(json);
 }

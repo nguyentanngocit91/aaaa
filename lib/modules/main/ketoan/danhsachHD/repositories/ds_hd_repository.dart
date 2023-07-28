@@ -9,8 +9,11 @@ class DSHDRepository{
 
   searchInfo({required Map<String, dynamic> data}) async{
 
+
     final response =
     await App.dioClient.get(ApiUrl.searchContract,queryParameters:data);
+
+
     List<ItemContractSearchResultModel> list = [];
     var result = {
       "status":false,
@@ -21,7 +24,7 @@ class DSHDRepository{
     };
     if (response.statusCode == 200) {
       final res = response.data;
-      print("$res+res_buoc_1");
+     // print("$res+res_buoc_1");
       if(res['success']==false){
         result['status'] = true;
         result['message'] = "Không tìm thấy dữ liệu";
@@ -29,23 +32,15 @@ class DSHDRepository{
         result['status'] = true;
         result['message'] = "Success";
         result['info'] = InfoContractResponseModel.fromJson(res);
-
-        final jsonReponse = (res['data']);
-        print("$jsonReponse+res_buoc_jsonReponse");
-
-        (res['data'] as List).forEach((json) {
-          list.add(ItemContractSearchResultModel.fromJson(json.decode(json)));
-        });
-        print("$list+res_buoc_list");
-
-       /* for (var item in res['data']) {
+       for (var item in res['data']) {
           list.add(ItemContractSearchResultModel.fromJson(item));
-        }*/
+        }
         result['data'] = list;
+
       }
     }
 
-    //print(result);
+   // print(result);
 
     return result;
   }

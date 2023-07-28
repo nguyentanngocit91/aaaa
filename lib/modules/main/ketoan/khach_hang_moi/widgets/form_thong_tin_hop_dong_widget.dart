@@ -14,6 +14,11 @@ class _FormThongTinHopDongWidgetState
   
   @override
   Widget build(BuildContext context) {
+    final formState = ref.watch(formKhachHangMoiProvider);
+    String maHopDong = formState.maHopDong.toString();
+    if(formState.isHopDongApp){
+      maHopDong = '${maHopDong}A';
+    }
     return Wrap(
       runSpacing: 25,
       children: [
@@ -31,6 +36,7 @@ class _FormThongTinHopDongWidgetState
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
+                    controller: TextEditingController(text: maHopDong),
                   ),
                 ],
               ),
