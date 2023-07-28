@@ -50,10 +50,10 @@ class Data extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var data = ref.watch(capnhatProvider.select((value) => value.result));
-
-    if(data!=null && (data!['info'].page > data!['info'].lastPage)){
+    if(data!=null && (data!['info'].page > data!['info'].lastPage && data!['info'].total > 0)){
         ref.read(capnhatProvider.notifier).setPage(data!['info'].lastPage,searchType);
     }
+
 
     return SingleChildScrollView(
         child: Column(
@@ -353,11 +353,11 @@ class filter extends ConsumerWidget {
                       runSpacing: 10,
                       children: [
                         textForm(
-                            title: 'Mã hợp đồng',
+                            title: 'Số hợp đồng',
                             onchange: (value) {
                               ref
                                   .read(capnhatProvider.notifier)
-                                  .onChangeValue('MAHD', value);
+                                  .onChangeValue('SOHD', value);
                             }),
                       ],
                     ),

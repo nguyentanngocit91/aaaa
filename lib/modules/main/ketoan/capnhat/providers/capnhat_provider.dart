@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../_shared/utils/form_status.dart';
-import '../../../../../_shared/utils/helper.dart';
-import '../../../../../core/auth/providers/auth_provider.dart';
 import '../models/contract_model.dart';
 import '../repositories/capnhat_repository.dart';
 part 'capnhat_state.dart';
@@ -45,9 +43,10 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
   void onSearch(String type) async {
     Map<String, String>? data = state.data;
     Map<String, dynamic> params = {
-      'mahopdong': (data!=null && data['MAHD']!='')?data['MAHD']:'',
+      'sohopdong': (data!=null && data['SOHD']!='')?data['SOHD']:'',
       'makhachhang': (data!=null && data['MAKH']!='')?data['MAKH']:'',
       'email': (data!=null && data['EMAIL']!='')?data['EMAIL']:'',
+      'tenhopdong': (data!=null && data['TENHD']!='')?data['TENHD']:'',
       'loaihopdong': type,
       'limit':perPage,
       'page':currentPage
@@ -55,10 +54,29 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
 
     final jsonResult = await _capNhatRepository.searchInfo(data: params);
     state = state.copyWith(
-      result: jsonResult,
-      perPage: perPage,
-      currentPage: currentPage
+        result: jsonResult,
+        perPage: perPage,
+        currentPage: currentPage
     );
+    return;
+
+    if(params['sohopdong']=='' && params['makhachhang']=='' && params['email']=='' && params['tenhopdong']==''){
+
+
+      state = state.copyWith(
+          result: null,
+          perPage: perPage,
+          currentPage: currentPage
+      );
+
+    }else {
+      final jsonResult = await _capNhatRepository.searchInfo(data: params);
+      state = state.copyWith(
+          result: jsonResult,
+          perPage: perPage,
+          currentPage: currentPage
+      );
+    }
 
 
   }

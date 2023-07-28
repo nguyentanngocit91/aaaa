@@ -11,6 +11,8 @@ class CapNhatRepository{
 
   searchInfo({required Map<String, dynamic> data}) async{
 
+
+    print(data);
     final response =
         await App.dioClient.get(ApiUrl.searchContract,queryParameters:data);
     List<ItemSearchResultModel> list = [];

@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:responsive_ui/responsive_ui.dart';
 
@@ -142,10 +143,25 @@ class _UpdatePhieuThuScreenState extends ConsumerState<UpdateWebsite>
                               const SizedBox(
                                 height: 5,
                               ),
-                              TextField(
+                              TextFormField(
+                                readOnly: true,
                                 controller: listController['ngaykyweb'],
-                                onTap: () {
-                                  final DateTime? selDate = await Helper.onS
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: 'Không bỏ trống.'),
+                                ]),
+                                onTap: () async {
+                                  final DateTime? selDate = await Helper.onSelectDate(context,initialDate: Helper.parseDate(listController['ngaykyweb']!.value.text,'dd-MM-yyyy'));
+                                  if(selDate!=null){
+                                    listController['ngaykyweb']!.text = Helper.dateFormat(selDate);
+                                    DateTime date1 = Helper.parseDate(listController['ngaykyweb']!.value.text,'dd-MM-yyyy');
+                                    DateTime date2 = Helper.parseDate(listController['ngaybangiao']!.value.text,'dd-MM-yyyy');
+                                    if(date1.compareTo(date2) > 0){
+                                      listController['ngaybangiao']!.text = Helper.dateFormat(selDate);
+                                    }
+
+                                  }
                                 },
 
                               ),
@@ -170,8 +186,20 @@ class _UpdatePhieuThuScreenState extends ConsumerState<UpdateWebsite>
                               const SizedBox(
                                 height: 5,
                               ),
-                              TextField(
+                              TextFormField(
+                                readOnly: true,
                                 controller: listController['ngaybangiao'],
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: 'Không bỏ trống.'),
+                                ]),
+                                onTap: () async {
+                                  final DateTime? selDate = await Helper.onSelectDate(context,initialDate: Helper.parseDate(listController['ngaybangiao']!.value.text,'dd-MM-yyyy'),firstDate: Helper.parseDate(listController['ngaykyweb']!.value.text,'dd-MM-yyyy'));
+                                  if(selDate!=null){
+                                    listController['ngaybangiao']!.text = Helper.dateFormat(selDate);
+                                  }
+                                },
 
                               ),
                             ],
@@ -193,9 +221,14 @@ class _UpdatePhieuThuScreenState extends ConsumerState<UpdateWebsite>
                               const SizedBox(
                                 height: 5,
                               ),
-                              TextField(
+                              TextFormField(
                                 controller: listController['chucnang'],
-                                maxLines: 3, //or null
+                                maxLines: 3,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: 'Không bỏ trống.'),
+                                ]),
 
                               ),
                             ],
@@ -217,9 +250,14 @@ class _UpdatePhieuThuScreenState extends ConsumerState<UpdateWebsite>
                               const SizedBox(
                                 height: 5,
                               ),
-                              TextField(
+                              TextFormField(
                                 controller: listController['ghichu'],
-                                maxLines: 3, //or null
+                                maxLines: 3,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: 'Không bỏ trống.'),
+                                ]),
 
                               ),
                             ],
