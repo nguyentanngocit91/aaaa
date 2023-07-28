@@ -25,7 +25,7 @@ class Helper {
 
 
   static dateFormat(var data){
-    DateTime date = DateTime.parse(data);
+    DateTime date = DateTime.parse(data.toString());
     return  "${date.day}-${date.month}-${date.year}";
   }
 
@@ -52,6 +52,11 @@ class Helper {
       firstDate: firstDate ?? DateTime(now.year - 2),
       lastDate: DateTime(now.year + 5),
     );
+  }
+
+  static parseDate(String text, String s) {
+    final f = new DateFormat(s);
+    return f.parse(text);
   }
 }
 
