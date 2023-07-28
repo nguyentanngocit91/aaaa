@@ -6,6 +6,8 @@ class CapNhatState{
   final Map<String,dynamic>? result;
   final int perPage;
   final int currentPage;
+  final bool loading;
+  final ContractModel? contract;
 
 
   const CapNhatState({
@@ -15,6 +17,8 @@ class CapNhatState{
     this.result = null,
     this.perPage = 10,
     this.currentPage = 1,
+    this.loading = false,
+    this.contract = null,
   });
 
   CapNhatState copyWith({
@@ -25,6 +29,8 @@ class CapNhatState{
     Map<String,dynamic>? result,
     int? perPage,
     int? currentPage,
+    bool? loading,
+    ContractModel? contract
   }) {
     return CapNhatState(
       data: data ?? this.data,
@@ -33,6 +39,8 @@ class CapNhatState{
       currentPage: currentPage ?? this.currentPage,
       perPage: perPage ?? this.perPage,
       errorMessage: errorMessage ?? this.errorMessage,
+      loading: loading ?? this.loading,
+      contract: contract ?? this.contract,
     );
   }
 }

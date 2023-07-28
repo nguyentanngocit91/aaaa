@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../_shared/utils/form_status.dart';
 import '../../../../../_shared/utils/helper.dart';
 import '../../../../../core/auth/providers/auth_provider.dart';
+import '../models/contract_model.dart';
 import '../repositories/capnhat_repository.dart';
 part 'capnhat_state.dart';
 
 final capnhatProvider =
 StateNotifierProvider.autoDispose<CapNhatNotifier, CapNhatState>(
       (ref) {
-
     return CapNhatNotifier();
   },
 );
@@ -44,7 +44,6 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
   }
   void onSearch(String type) async {
     Map<String, String>? data = state.data;
-
     Map<String, dynamic> params = {
       'mahopdong': (data!=null && data['MAHD']!='')?data['MAHD']:'',
       'makhachhang': (data!=null && data['MAKH']!='')?data['MAKH']:'',
@@ -62,5 +61,11 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
     );
 
 
+  }
+
+  getConstractById(String id) async {
+   state = state.copyWith(contract: null);
+   final jsonResult = await _capNhatRepository.getInfo(id);
+   state = state.copyWith(contract: jsonResult['data']);
   }
 }

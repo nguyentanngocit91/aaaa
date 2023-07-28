@@ -186,3 +186,32 @@ Widget textForm({required String title, required onchange}){
     style: const TextStyle(fontSize: 13),
   );
 }
+class HeaderRowItem extends StatelessWidget {
+  const HeaderRowItem({Key? key, required this.text}) : super(key: key);
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: const BoxDecoration(
+        color: Color(0xFF105A6C),
+      ),
+      child: Text(text,style: const TextStyle(color: Colors.white),),
+    );
+  }
+}
+
+class BodyRowItem extends StatelessWidget {
+  const BodyRowItem(this.text);
+  final Widget text;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top:7.0,bottom:7.0,left:15.0,right:15.0),
+      decoration: const BoxDecoration(
+
+      ),
+      child: this.text,
+    );
+  }
+}
