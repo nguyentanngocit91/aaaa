@@ -25,8 +25,8 @@ class KhachHangMoiRepository {
     return null;
   }
 
-  Future<Map?> thongTinKhachHang({required String email}) async {
-    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email');
+  Future<Map?> thongTinKhachHang({required String email, String? type}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email$type');
     if(response.statusCode==200){
       if(response.data['success']==true){
         if((response.data['data'] as List).isNotEmpty) return response.data['data'][0];
@@ -35,4 +35,16 @@ class KhachHangMoiRepository {
     }
     return null;
   }
+
+  Future<Map?> thongTinNhanVien({required String maNhanVien}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachNhanVien}?manhanvien=$maNhanVien');
+    if(response.statusCode==200){
+      if(response.data['success']==true){
+        if((response.data['data'] as List).isNotEmpty) return response.data['data'][0];
+        return null;
+      }
+    }
+    return null;
+  }
+
 }

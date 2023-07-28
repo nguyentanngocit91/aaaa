@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-mixin FormUIMixins {
+mixin FormUIMixins{
   Widget lableTextForm(String title, {Widget? child}) {
     return Container(
       width: double.infinity,
@@ -115,4 +115,6 @@ mixin FormUIMixins {
       onTap: onTap,
     );
   }
+
+
 }

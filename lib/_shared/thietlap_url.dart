@@ -9,6 +9,10 @@ class ApiUrl{
   static const String infoUser = '$baseUrl/users/profile';
   static const String changePassword = '$baseUrl/users/change-password';
 
+  // Nhân viên
+  static const String danhSachNhanVien = '$baseUrl/nhan-vien';
+
+
   // DS HĐ
 
   static const String searchContract = '$baseUrl/hop-dong';

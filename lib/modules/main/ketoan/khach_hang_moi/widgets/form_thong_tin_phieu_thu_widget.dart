@@ -16,7 +16,6 @@ class _FormThongTinPhieuThuWidgetState
   final String _typeData = 'phieuthu';
   HinhThucThanhToan _httt = HinhThucThanhToan.cod;
   LoaiPhieuThu _loaiPhieuThu = LoaiPhieuThu.phieuthu;
-  List<String> _listMaHD = [];
   DateTime ngayNop = DateTime.now();
 
   @override
@@ -170,12 +169,15 @@ class _FormThongTinPhieuThuWidgetState
                       FormBuilderValidators.required(
                           errorText: 'Không bỏ trống.'),
                     ]),
-                    controller: TextEditingController(text: ngayNop.formatDateTime('dd-MM-yyyy')),
+                    controller: TextEditingController(
+                        text: ngayNop.formatDateTime('dd-MM-yyyy')),
                     readOnly: true,
                     onTap: () async {
-                      final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayNop);
+                      final DateTime? selDate = await Helper.onSelectDate(
+                          context,
+                          initialDate: ngayNop);
                       String txtDate = ngayNop.formatDateTime('dd-MM-yyyy');
-                      if(selDate!=null){
+                      if (selDate != null) {
                         txtDate = selDate.formatDateTime('dd-MM-yyyy');
                       }
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
@@ -212,15 +214,22 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Mã nhân viên'),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
-                    onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'manhanvien', value: value);
+                  _MaNhaVienWidget(),
+                ],
+              ),
+            ),
+            ndGapW16(),
+            Expanded(
+              child: Wrap(
+                children: [
+                  lableTextForm('Nhân viên kinh doanh'),
+                  Consumer(
+                    builder: (context, ref, child) {
+                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      return TextFormField(
+                        readOnly: true,
+                        controller: TextEditingController(text: ref.read(nhanVienPhuTrachProvider.notifier).showThongTinNhanVienInput(field: 'hoten')),
+                      );
                     },
                   ),
                 ],
@@ -230,17 +239,15 @@ class _FormThongTinPhieuThuWidgetState
             Expanded(
               child: Wrap(
                 children: [
-                  lableTextForm('Nhân viên kinh doanh'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
                   lableTextForm('Phòng'),
-                  TextFormField(),
+                  Consumer(
+                    builder: (context, ref, child) {
+                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      return TextFormField(
+                        readOnly: true,
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -249,7 +256,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Khu vực'),
-                  TextFormField(),
+                  Consumer(
+                    builder: (context, ref, child) {
+                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      return TextFormField(
+                        readOnly: true,
+                        controller: TextEditingController(text: ref.read(nhanVienPhuTrachProvider.notifier).showThongTinNhanVienInput(field: 'maphongban')),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -273,7 +288,7 @@ class _FormThongTinPhieuThuWidgetState
                     ]),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'manhanvien', value: value);
+                          type: _typeData, key: 'tongtien', value: value);
                     },
                   ),
                 ],
@@ -379,7 +394,8 @@ class LoaiHopDongWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final FormKhachHangMoiState formKhachHangMoiState = ref.watch(formKhachHangMoiProvider);
+    final FormKhachHangMoiState formKhachHangMoiState =
+        ref.watch(formKhachHangMoiProvider);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -450,6 +466,71 @@ class LoaiHopDongWidget extends ConsumerWidget {
             const Text("App"),
           ],
         ),
+      ],
+    );
+  }
+}
+
+class _MaNhaVienWidget extends ConsumerStatefulWidget {
+  const _MaNhaVienWidget({super.key});
+
+  @override
+  ConsumerState createState() => __MaNhaVienWidgetState();
+}
+
+class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
+
+  late final TextFieldTagsController _textFieldTagsController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textFieldTagsController = TextFieldTagsController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dsNhanvien = ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ?? [];
+
+    if(dsNhanvien==[] || dsNhanvien.isEmpty){
+      _textFieldTagsController.clearTextFieldTags();
+    }
+
+    return TagsInputWidget(
+      textFieldTagsController: _textFieldTagsController,
+      validator: (tag) {
+        if(tag.length<3){ return 'Mã nhân viên quá ngắn'; }
+        return null;
+      },
+      onTag: (tag) async {
+        final result = await ref
+            .read(nhanVienPhuTrachProvider.notifier)
+            .themMaNhanVien(tag);
+        if (result == false) {
+          if (context.mounted){
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Thông báo'),
+                  content: Text('Không tồn tại nhân viên có mã $tag'),
+                  actions: [
+                    FilledButton(onPressed: (){
+                      context.pop();
+                    }, child: Text('Đâ hiểu')),
+                  ],
+                );
+              },
+            );
+            _textFieldTagsController.removeTag = tag;
+          }
+        }
+      },
+      onDelete: (tag) {
+        ref.read(nhanVienPhuTrachProvider.notifier).xoaNhanVien(tag);
+      },
+      initialTags: [
+        for (var nv in dsNhanvien) nv['manhanvien']
       ],
     );
   }
