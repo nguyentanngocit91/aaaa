@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../_shared/utils/form_status.dart';
 import '../models/phieu_thu_model.dart';
@@ -26,6 +27,11 @@ class PhieuthuNotifier extends Notifier<PhieuThuState> {
     await getListPhieuThu();
   }
 
+  void resetInputSearch() async{
+    state = state.copyWith(soPhieuThu: '',maHopDong: '',tuNgay: '',denNgay: '');
+    await getListPhieuThu();
+
+  }
 
   void setInputSoPhieuThu({required String? soPhieuThu}){
     if(soPhieuThu!=null) {
@@ -55,14 +61,23 @@ class PhieuthuNotifier extends Notifier<PhieuThuState> {
     var maHopDong = state.maHopDong;
     var tuNgay = state.tuNgay;
     var denNgay = state.denNgay;
-    var listPhieuThu = state.listPhieuThu;
+    List<PhieuThuModel> listPhieuThu = [];
 
     soPhieuThu ??= '';
     maHopDong ??= '';
     tuNgay ??= '';
     denNgay ??= '';
+
+    if(tuNgay !='' && denNgay !=''){
+      DateTime date1 = DateFormat('dd-MM-yyyy').parse(tuNgay);
+      DateTime date2 = DateFormat('dd-MM-yyyy').parse(denNgay);
+      tuNgay = DateFormat('yyyy-MM-dd').format(date1);
+      denNgay = DateFormat('yyyy-MM-dd').format(date2);
+    }
+
+
     state = state.copyWith(status: FormStatus.submissionInProgress,listPhieuThu: []);
-      var temp = await searchPhieuThu(soPhieuThu: soPhieuThu,maHopDong: maHopDong, tuNgay: tuNgay, denNgay:  denNgay);
+    List<PhieuThuModel>? temp = await searchPhieuThu(soPhieuThu: soPhieuThu,maHopDong: maHopDong, tuNgay: tuNgay, denNgay:  denNgay);
       if(temp!=null) {
         listPhieuThu = temp;
       }
