@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:nn_phanmem/modules/main/ketoan/phieuthu/screen/add_pendding_screen.dart';
+import 'screen/add_pendding_screen.dart';
 import '../../../../_shared/utils/form_status.dart';
 import 'widgets/box_search.dart';
 import '../../../../_shared/utils/helper.dart';
 import 'models/phieu_thu_model.dart';
 import 'providers/phieu_thu_provider.dart';
 import 'screen/update_phieuthu_screen.dart';
-import 'widgets/pt_button.dart';
 
 class PhieuThuLayout extends ConsumerStatefulWidget {
   const PhieuThuLayout({Key? key}) : super(key: const Key(pathName));
@@ -50,7 +49,7 @@ class _PhieuThuLayoutState extends ConsumerState<PhieuThuLayout> {
                 ),
                 child: const Row(
                   children: [
-                    Expanded(flex: 1, child: HeaderRowItem(text: '#')),
+                    Expanded(flex: 2, child: HeaderRowItem(text: '#')),
                     Expanded(
                       flex: 5,
                       child: HeaderRowItem(text: 'Ngày tháng'),
@@ -125,9 +124,11 @@ class _PhieuThuLayoutState extends ConsumerState<PhieuThuLayout> {
                   primary: true,
                   itemCount: listPT.length,
                   itemBuilder: (BuildContext context, index) {
-                    return RowInfoPhieuThu(
-                      item: listPT[index],
-                      index: index + 1,
+                    return SelectionArea(
+                      child: RowInfoPhieuThu(
+                        item: listPT[index],
+                        index: index + 1,
+                      ),
                     );
                   })
             ],
@@ -143,7 +144,7 @@ class _PhieuThuLayoutState extends ConsumerState<PhieuThuLayout> {
 }
 
 class RowInfoPhieuThu extends StatelessWidget {
-  RowInfoPhieuThu({
+  const RowInfoPhieuThu({
     Key? key,
     required this.item,
     required this.index,
@@ -175,7 +176,7 @@ class RowInfoPhieuThu extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Text('$index'),
               ),
               Expanded(
@@ -278,7 +279,7 @@ class RowInfoPhieuThu extends StatelessWidget {
                     },
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsets>(
-                          EdgeInsets.only(
+                          const EdgeInsets.only(
                               left: 15, right: 15, top: 0, bottom: 0)),
                       backgroundColor:
                           MaterialStateProperty.resolveWith<Color>((states) {
@@ -292,7 +293,7 @@ class RowInfoPhieuThu extends StatelessWidget {
                         if (states.contains(MaterialState.pressed)) {
                           return Colors.transparent;
                         }
-                        return Color(0xffeaf7e5);
+                        return const Color(0xffeaf7e5);
                       }),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0))),
@@ -314,7 +315,7 @@ class RowInfoPhieuThu extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   OutlinedButton(
@@ -329,7 +330,7 @@ class RowInfoPhieuThu extends StatelessWidget {
                     },
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsets>(
-                          EdgeInsets.only(
+                          const EdgeInsets.only(
                               left: 15, right: 15, top: 0, bottom: 0)),
                       backgroundColor:
                           MaterialStateProperty.resolveWith<Color>((states) {
@@ -343,7 +344,7 @@ class RowInfoPhieuThu extends StatelessWidget {
                         if (states.contains(MaterialState.pressed)) {
                           return Colors.transparent;
                         }
-                        return Color(0xffeaf7e5);
+                        return const Color(0xffeaf7e5);
                       }),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0))),
