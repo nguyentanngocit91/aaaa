@@ -13,9 +13,7 @@ StateNotifierProvider<DSHDNotifier, DSHDState>(
 );
 
 
-final controllerProvider = StateProvider<String>((ref) {
-  return "";
-});
+
 
 class DSHDNotifier extends StateNotifier<DSHDState> {
   final DSHDRepository _dsHDRepository = DSHDRepository();
@@ -31,7 +29,7 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     Map<String, String>? data = state.data;
   }
 
-  void onSearch(String type) async {
+  void onSearch() async {
     Map<String, String>? data = state.data;
     print("data: ${data}");
     Map<String, dynamic> params = {
@@ -47,7 +45,7 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
         result: jsonResult
     );
 
-   // print("${state.result}+000000");
+    print("${state.result}+000000");
 
   }
 }

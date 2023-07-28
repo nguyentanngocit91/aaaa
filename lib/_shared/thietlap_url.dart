@@ -11,6 +11,8 @@ class ApiUrl{
 
   // DS HĐ
 
+  static const String searchContractCustomer = '$baseUrl/tim-kiem/hop-dong-theo-khach-hang';
+
   static const String searchContract = '$baseUrl/hop-dong';
 
 

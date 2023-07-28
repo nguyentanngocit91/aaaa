@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'item_contract_search_result_model.dart';
+part of 'searchcustomercontract_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,13 +14,13 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ItemContractSearchResultModel _$ItemContractSearchResultModelFromJson(
+SearchCustomerContractModel _$SearchCustomerContractModelFromJson(
     Map<String, dynamic> json) {
-  return _ItemContractSearchResultModel.fromJson(json);
+  return _SearchCustomerContractModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ItemContractSearchResultModel {
+mixin _$SearchCustomerContractModel {
   List<dynamic>? get dichvuIds => throw _privateConstructorUsedError;
   List<dynamic>? get lichsu_thanhtoan => throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
@@ -35,28 +35,27 @@ mixin _$ItemContractSearchResultModel {
   String? get ghichu => throw _privateConstructorUsedError;
   @JsonKey(name: 'info')
   L1_info? get l1_info => throw _privateConstructorUsedError;
-  @JsonKey(name: 'khachhangId')
-  L1_khachhangId? get l1_khachhangId => throw _privateConstructorUsedError;
+  String? get khachhangId => throw _privateConstructorUsedError;
   String? get tenhopdong => throw _privateConstructorUsedError;
   @JsonKey(name: 'lichsu_khoitao')
   L1_lichsu_khoitao? get l1_lichsu_khoitao =>
       throw _privateConstructorUsedError;
-  double? get tongtien => throw _privateConstructorUsedError;
+  int? get tongtien => throw _privateConstructorUsedError;
   List<dynamic>? get lichsu_capnhat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ItemContractSearchResultModelCopyWith<ItemContractSearchResultModel>
+  $SearchCustomerContractModelCopyWith<SearchCustomerContractModel>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ItemContractSearchResultModelCopyWith<$Res> {
-  factory $ItemContractSearchResultModelCopyWith(
-          ItemContractSearchResultModel value,
-          $Res Function(ItemContractSearchResultModel) then) =
-      _$ItemContractSearchResultModelCopyWithImpl<$Res,
-          ItemContractSearchResultModel>;
+abstract class $SearchCustomerContractModelCopyWith<$Res> {
+  factory $SearchCustomerContractModelCopyWith(
+          SearchCustomerContractModel value,
+          $Res Function(SearchCustomerContractModel) then) =
+      _$SearchCustomerContractModelCopyWithImpl<$Res,
+          SearchCustomerContractModel>;
   @useResult
   $Res call(
       {List<dynamic>? dichvuIds,
@@ -71,22 +70,21 @@ abstract class $ItemContractSearchResultModelCopyWith<$Res> {
       List<dynamic>? nhanvien,
       String? ghichu,
       @JsonKey(name: 'info') L1_info? l1_info,
-      @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
+      String? khachhangId,
       String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
-      double? tongtien,
+      int? tongtien,
       List<dynamic>? lichsu_capnhat});
 
   $L1_infoCopyWith<$Res>? get l1_info;
-  $L1_khachhangIdCopyWith<$Res>? get l1_khachhangId;
   $L1_lichsu_khoitaoCopyWith<$Res>? get l1_lichsu_khoitao;
 }
 
 /// @nodoc
-class _$ItemContractSearchResultModelCopyWithImpl<$Res,
-        $Val extends ItemContractSearchResultModel>
-    implements $ItemContractSearchResultModelCopyWith<$Res> {
-  _$ItemContractSearchResultModelCopyWithImpl(this._value, this._then);
+class _$SearchCustomerContractModelCopyWithImpl<$Res,
+        $Val extends SearchCustomerContractModel>
+    implements $SearchCustomerContractModelCopyWith<$Res> {
+  _$SearchCustomerContractModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -108,7 +106,7 @@ class _$ItemContractSearchResultModelCopyWithImpl<$Res,
     Object? nhanvien = freezed,
     Object? ghichu = freezed,
     Object? l1_info = freezed,
-    Object? l1_khachhangId = freezed,
+    Object? khachhangId = freezed,
     Object? tenhopdong = freezed,
     Object? l1_lichsu_khoitao = freezed,
     Object? tongtien = freezed,
@@ -163,10 +161,10 @@ class _$ItemContractSearchResultModelCopyWithImpl<$Res,
           ? _value.l1_info
           : l1_info // ignore: cast_nullable_to_non_nullable
               as L1_info?,
-      l1_khachhangId: freezed == l1_khachhangId
-          ? _value.l1_khachhangId
-          : l1_khachhangId // ignore: cast_nullable_to_non_nullable
-              as L1_khachhangId?,
+      khachhangId: freezed == khachhangId
+          ? _value.khachhangId
+          : khachhangId // ignore: cast_nullable_to_non_nullable
+              as String?,
       tenhopdong: freezed == tenhopdong
           ? _value.tenhopdong
           : tenhopdong // ignore: cast_nullable_to_non_nullable
@@ -178,7 +176,7 @@ class _$ItemContractSearchResultModelCopyWithImpl<$Res,
       tongtien: freezed == tongtien
           ? _value.tongtien
           : tongtien // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as int?,
       lichsu_capnhat: freezed == lichsu_capnhat
           ? _value.lichsu_capnhat
           : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
@@ -200,18 +198,6 @@ class _$ItemContractSearchResultModelCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $L1_khachhangIdCopyWith<$Res>? get l1_khachhangId {
-    if (_value.l1_khachhangId == null) {
-      return null;
-    }
-
-    return $L1_khachhangIdCopyWith<$Res>(_value.l1_khachhangId!, (value) {
-      return _then(_value.copyWith(l1_khachhangId: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $L1_lichsu_khoitaoCopyWith<$Res>? get l1_lichsu_khoitao {
     if (_value.l1_lichsu_khoitao == null) {
       return null;
@@ -224,12 +210,12 @@ class _$ItemContractSearchResultModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ItemContractSearchResultModelCopyWith<$Res>
-    implements $ItemContractSearchResultModelCopyWith<$Res> {
-  factory _$$_ItemContractSearchResultModelCopyWith(
-          _$_ItemContractSearchResultModel value,
-          $Res Function(_$_ItemContractSearchResultModel) then) =
-      __$$_ItemContractSearchResultModelCopyWithImpl<$Res>;
+abstract class _$$_SearchCustomerContractModelCopyWith<$Res>
+    implements $SearchCustomerContractModelCopyWith<$Res> {
+  factory _$$_SearchCustomerContractModelCopyWith(
+          _$_SearchCustomerContractModel value,
+          $Res Function(_$_SearchCustomerContractModel) then) =
+      __$$_SearchCustomerContractModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -245,28 +231,26 @@ abstract class _$$_ItemContractSearchResultModelCopyWith<$Res>
       List<dynamic>? nhanvien,
       String? ghichu,
       @JsonKey(name: 'info') L1_info? l1_info,
-      @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
+      String? khachhangId,
       String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
-      double? tongtien,
+      int? tongtien,
       List<dynamic>? lichsu_capnhat});
 
   @override
   $L1_infoCopyWith<$Res>? get l1_info;
   @override
-  $L1_khachhangIdCopyWith<$Res>? get l1_khachhangId;
-  @override
   $L1_lichsu_khoitaoCopyWith<$Res>? get l1_lichsu_khoitao;
 }
 
 /// @nodoc
-class __$$_ItemContractSearchResultModelCopyWithImpl<$Res>
-    extends _$ItemContractSearchResultModelCopyWithImpl<$Res,
-        _$_ItemContractSearchResultModel>
-    implements _$$_ItemContractSearchResultModelCopyWith<$Res> {
-  __$$_ItemContractSearchResultModelCopyWithImpl(
-      _$_ItemContractSearchResultModel _value,
-      $Res Function(_$_ItemContractSearchResultModel) _then)
+class __$$_SearchCustomerContractModelCopyWithImpl<$Res>
+    extends _$SearchCustomerContractModelCopyWithImpl<$Res,
+        _$_SearchCustomerContractModel>
+    implements _$$_SearchCustomerContractModelCopyWith<$Res> {
+  __$$_SearchCustomerContractModelCopyWithImpl(
+      _$_SearchCustomerContractModel _value,
+      $Res Function(_$_SearchCustomerContractModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -284,13 +268,13 @@ class __$$_ItemContractSearchResultModelCopyWithImpl<$Res>
     Object? nhanvien = freezed,
     Object? ghichu = freezed,
     Object? l1_info = freezed,
-    Object? l1_khachhangId = freezed,
+    Object? khachhangId = freezed,
     Object? tenhopdong = freezed,
     Object? l1_lichsu_khoitao = freezed,
     Object? tongtien = freezed,
     Object? lichsu_capnhat = freezed,
   }) {
-    return _then(_$_ItemContractSearchResultModel(
+    return _then(_$_SearchCustomerContractModel(
       dichvuIds: freezed == dichvuIds
           ? _value._dichvuIds
           : dichvuIds // ignore: cast_nullable_to_non_nullable
@@ -339,10 +323,10 @@ class __$$_ItemContractSearchResultModelCopyWithImpl<$Res>
           ? _value.l1_info
           : l1_info // ignore: cast_nullable_to_non_nullable
               as L1_info?,
-      l1_khachhangId: freezed == l1_khachhangId
-          ? _value.l1_khachhangId
-          : l1_khachhangId // ignore: cast_nullable_to_non_nullable
-              as L1_khachhangId?,
+      khachhangId: freezed == khachhangId
+          ? _value.khachhangId
+          : khachhangId // ignore: cast_nullable_to_non_nullable
+              as String?,
       tenhopdong: freezed == tenhopdong
           ? _value.tenhopdong
           : tenhopdong // ignore: cast_nullable_to_non_nullable
@@ -354,7 +338,7 @@ class __$$_ItemContractSearchResultModelCopyWithImpl<$Res>
       tongtien: freezed == tongtien
           ? _value.tongtien
           : tongtien // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as int?,
       lichsu_capnhat: freezed == lichsu_capnhat
           ? _value._lichsu_capnhat
           : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
@@ -365,10 +349,10 @@ class __$$_ItemContractSearchResultModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ItemContractSearchResultModel
+class _$_SearchCustomerContractModel
     with DiagnosticableTreeMixin
-    implements _ItemContractSearchResultModel {
-  const _$_ItemContractSearchResultModel(
+    implements _SearchCustomerContractModel {
+  const _$_SearchCustomerContractModel(
       {final List<dynamic>? dichvuIds,
       final List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') this.id,
@@ -381,7 +365,7 @@ class _$_ItemContractSearchResultModel
       final List<dynamic>? nhanvien,
       this.ghichu,
       @JsonKey(name: 'info') this.l1_info,
-      @JsonKey(name: 'khachhangId') this.l1_khachhangId,
+      this.khachhangId,
       this.tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') this.l1_lichsu_khoitao,
       this.tongtien,
@@ -391,9 +375,8 @@ class _$_ItemContractSearchResultModel
         _nhanvien = nhanvien,
         _lichsu_capnhat = lichsu_capnhat;
 
-  factory _$_ItemContractSearchResultModel.fromJson(
-          Map<String, dynamic> json) =>
-      _$$_ItemContractSearchResultModelFromJson(json);
+  factory _$_SearchCustomerContractModel.fromJson(Map<String, dynamic> json) =>
+      _$$_SearchCustomerContractModelFromJson(json);
 
   final List<dynamic>? _dichvuIds;
   @override
@@ -447,15 +430,14 @@ class _$_ItemContractSearchResultModel
   @JsonKey(name: 'info')
   final L1_info? l1_info;
   @override
-  @JsonKey(name: 'khachhangId')
-  final L1_khachhangId? l1_khachhangId;
+  final String? khachhangId;
   @override
   final String? tenhopdong;
   @override
   @JsonKey(name: 'lichsu_khoitao')
   final L1_lichsu_khoitao? l1_lichsu_khoitao;
   @override
-  final double? tongtien;
+  final int? tongtien;
   final List<dynamic>? _lichsu_capnhat;
   @override
   List<dynamic>? get lichsu_capnhat {
@@ -468,14 +450,14 @@ class _$_ItemContractSearchResultModel
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ItemContractSearchResultModel(dichvuIds: $dichvuIds, lichsu_thanhtoan: $lichsu_thanhtoan, id: $id, sohopdong: $sohopdong, namhopdong: $namhopdong, ngaykyhd: $ngaykyhd, loaihopdong: $loaihopdong, mahopdongcu: $mahopdongcu, mahopdong: $mahopdong, nhanvien: $nhanvien, ghichu: $ghichu, l1_info: $l1_info, l1_khachhangId: $l1_khachhangId, tenhopdong: $tenhopdong, l1_lichsu_khoitao: $l1_lichsu_khoitao, tongtien: $tongtien, lichsu_capnhat: $lichsu_capnhat)';
+    return 'SearchCustomerContractModel(dichvuIds: $dichvuIds, lichsu_thanhtoan: $lichsu_thanhtoan, id: $id, sohopdong: $sohopdong, namhopdong: $namhopdong, ngaykyhd: $ngaykyhd, loaihopdong: $loaihopdong, mahopdongcu: $mahopdongcu, mahopdong: $mahopdong, nhanvien: $nhanvien, ghichu: $ghichu, l1_info: $l1_info, khachhangId: $khachhangId, tenhopdong: $tenhopdong, l1_lichsu_khoitao: $l1_lichsu_khoitao, tongtien: $tongtien, lichsu_capnhat: $lichsu_capnhat)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ItemContractSearchResultModel'))
+      ..add(DiagnosticsProperty('type', 'SearchCustomerContractModel'))
       ..add(DiagnosticsProperty('dichvuIds', dichvuIds))
       ..add(DiagnosticsProperty('lichsu_thanhtoan', lichsu_thanhtoan))
       ..add(DiagnosticsProperty('id', id))
@@ -488,7 +470,7 @@ class _$_ItemContractSearchResultModel
       ..add(DiagnosticsProperty('nhanvien', nhanvien))
       ..add(DiagnosticsProperty('ghichu', ghichu))
       ..add(DiagnosticsProperty('l1_info', l1_info))
-      ..add(DiagnosticsProperty('l1_khachhangId', l1_khachhangId))
+      ..add(DiagnosticsProperty('khachhangId', khachhangId))
       ..add(DiagnosticsProperty('tenhopdong', tenhopdong))
       ..add(DiagnosticsProperty('l1_lichsu_khoitao', l1_lichsu_khoitao))
       ..add(DiagnosticsProperty('tongtien', tongtien))
@@ -499,7 +481,7 @@ class _$_ItemContractSearchResultModel
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ItemContractSearchResultModel &&
+            other is _$_SearchCustomerContractModel &&
             const DeepCollectionEquality()
                 .equals(other._dichvuIds, _dichvuIds) &&
             const DeepCollectionEquality()
@@ -520,8 +502,8 @@ class _$_ItemContractSearchResultModel
             const DeepCollectionEquality().equals(other._nhanvien, _nhanvien) &&
             (identical(other.ghichu, ghichu) || other.ghichu == ghichu) &&
             (identical(other.l1_info, l1_info) || other.l1_info == l1_info) &&
-            (identical(other.l1_khachhangId, l1_khachhangId) ||
-                other.l1_khachhangId == l1_khachhangId) &&
+            (identical(other.khachhangId, khachhangId) ||
+                other.khachhangId == khachhangId) &&
             (identical(other.tenhopdong, tenhopdong) ||
                 other.tenhopdong == tenhopdong) &&
             (identical(other.l1_lichsu_khoitao, l1_lichsu_khoitao) ||
@@ -548,7 +530,7 @@ class _$_ItemContractSearchResultModel
       const DeepCollectionEquality().hash(_nhanvien),
       ghichu,
       l1_info,
-      l1_khachhangId,
+      khachhangId,
       tenhopdong,
       l1_lichsu_khoitao,
       tongtien,
@@ -557,21 +539,21 @@ class _$_ItemContractSearchResultModel
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ItemContractSearchResultModelCopyWith<_$_ItemContractSearchResultModel>
-      get copyWith => __$$_ItemContractSearchResultModelCopyWithImpl<
-          _$_ItemContractSearchResultModel>(this, _$identity);
+  _$$_SearchCustomerContractModelCopyWith<_$_SearchCustomerContractModel>
+      get copyWith => __$$_SearchCustomerContractModelCopyWithImpl<
+          _$_SearchCustomerContractModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ItemContractSearchResultModelToJson(
+    return _$$_SearchCustomerContractModelToJson(
       this,
     );
   }
 }
 
-abstract class _ItemContractSearchResultModel
-    implements ItemContractSearchResultModel {
-  const factory _ItemContractSearchResultModel(
+abstract class _SearchCustomerContractModel
+    implements SearchCustomerContractModel {
+  const factory _SearchCustomerContractModel(
       {final List<dynamic>? dichvuIds,
       final List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') final String? id,
@@ -584,15 +566,15 @@ abstract class _ItemContractSearchResultModel
       final List<dynamic>? nhanvien,
       final String? ghichu,
       @JsonKey(name: 'info') final L1_info? l1_info,
-      @JsonKey(name: 'khachhangId') final L1_khachhangId? l1_khachhangId,
+      final String? khachhangId,
       final String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao')
       final L1_lichsu_khoitao? l1_lichsu_khoitao,
-      final double? tongtien,
-      final List<dynamic>? lichsu_capnhat}) = _$_ItemContractSearchResultModel;
+      final int? tongtien,
+      final List<dynamic>? lichsu_capnhat}) = _$_SearchCustomerContractModel;
 
-  factory _ItemContractSearchResultModel.fromJson(Map<String, dynamic> json) =
-      _$_ItemContractSearchResultModel.fromJson;
+  factory _SearchCustomerContractModel.fromJson(Map<String, dynamic> json) =
+      _$_SearchCustomerContractModel.fromJson;
 
   @override
   List<dynamic>? get dichvuIds;
@@ -621,20 +603,19 @@ abstract class _ItemContractSearchResultModel
   @JsonKey(name: 'info')
   L1_info? get l1_info;
   @override
-  @JsonKey(name: 'khachhangId')
-  L1_khachhangId? get l1_khachhangId;
+  String? get khachhangId;
   @override
   String? get tenhopdong;
   @override
   @JsonKey(name: 'lichsu_khoitao')
   L1_lichsu_khoitao? get l1_lichsu_khoitao;
   @override
-  double? get tongtien;
+  int? get tongtien;
   @override
   List<dynamic>? get lichsu_capnhat;
   @override
   @JsonKey(ignore: true)
-  _$$_ItemContractSearchResultModelCopyWith<_$_ItemContractSearchResultModel>
+  _$$_SearchCustomerContractModelCopyWith<_$_SearchCustomerContractModel>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -775,416 +756,6 @@ abstract class _L1_info implements L1_info {
   @override
   @JsonKey(ignore: true)
   _$$_L1_infoCopyWith<_$_L1_info> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-L1_khachhangId _$L1_khachhangIdFromJson(Map<String, dynamic> json) {
-  return _L1_khachhangId.fromJson(json);
-}
-
-/// @nodoc
-mixin _$L1_khachhangId {
-  String? get lichsu_khoitao => throw _privateConstructorUsedError;
-  List<dynamic>? get lichsu_capnhat => throw _privateConstructorUsedError;
-  @JsonKey(name: '_id')
-  String? get id => throw _privateConstructorUsedError;
-  String? get makhachhang => throw _privateConstructorUsedError;
-  String? get type => throw _privateConstructorUsedError;
-  String? get hoten => throw _privateConstructorUsedError;
-  String? get phone => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
-  String? get congty => throw _privateConstructorUsedError;
-  String? get masothue => throw _privateConstructorUsedError;
-  String? get diachi => throw _privateConstructorUsedError;
-  String? get cccd => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $L1_khachhangIdCopyWith<L1_khachhangId> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $L1_khachhangIdCopyWith<$Res> {
-  factory $L1_khachhangIdCopyWith(
-          L1_khachhangId value, $Res Function(L1_khachhangId) then) =
-      _$L1_khachhangIdCopyWithImpl<$Res, L1_khachhangId>;
-  @useResult
-  $Res call(
-      {String? lichsu_khoitao,
-      List<dynamic>? lichsu_capnhat,
-      @JsonKey(name: '_id') String? id,
-      String? makhachhang,
-      String? type,
-      String? hoten,
-      String? phone,
-      String? email,
-      String? congty,
-      String? masothue,
-      String? diachi,
-      String? cccd});
-}
-
-/// @nodoc
-class _$L1_khachhangIdCopyWithImpl<$Res, $Val extends L1_khachhangId>
-    implements $L1_khachhangIdCopyWith<$Res> {
-  _$L1_khachhangIdCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? lichsu_khoitao = freezed,
-    Object? lichsu_capnhat = freezed,
-    Object? id = freezed,
-    Object? makhachhang = freezed,
-    Object? type = freezed,
-    Object? hoten = freezed,
-    Object? phone = freezed,
-    Object? email = freezed,
-    Object? congty = freezed,
-    Object? masothue = freezed,
-    Object? diachi = freezed,
-    Object? cccd = freezed,
-  }) {
-    return _then(_value.copyWith(
-      lichsu_khoitao: freezed == lichsu_khoitao
-          ? _value.lichsu_khoitao
-          : lichsu_khoitao // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lichsu_capnhat: freezed == lichsu_capnhat
-          ? _value.lichsu_capnhat
-          : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      makhachhang: freezed == makhachhang
-          ? _value.makhachhang
-          : makhachhang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      hoten: freezed == hoten
-          ? _value.hoten
-          : hoten // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phone: freezed == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      congty: freezed == congty
-          ? _value.congty
-          : congty // ignore: cast_nullable_to_non_nullable
-              as String?,
-      masothue: freezed == masothue
-          ? _value.masothue
-          : masothue // ignore: cast_nullable_to_non_nullable
-              as String?,
-      diachi: freezed == diachi
-          ? _value.diachi
-          : diachi // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cccd: freezed == cccd
-          ? _value.cccd
-          : cccd // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_L1_khachhangIdCopyWith<$Res>
-    implements $L1_khachhangIdCopyWith<$Res> {
-  factory _$$_L1_khachhangIdCopyWith(
-          _$_L1_khachhangId value, $Res Function(_$_L1_khachhangId) then) =
-      __$$_L1_khachhangIdCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String? lichsu_khoitao,
-      List<dynamic>? lichsu_capnhat,
-      @JsonKey(name: '_id') String? id,
-      String? makhachhang,
-      String? type,
-      String? hoten,
-      String? phone,
-      String? email,
-      String? congty,
-      String? masothue,
-      String? diachi,
-      String? cccd});
-}
-
-/// @nodoc
-class __$$_L1_khachhangIdCopyWithImpl<$Res>
-    extends _$L1_khachhangIdCopyWithImpl<$Res, _$_L1_khachhangId>
-    implements _$$_L1_khachhangIdCopyWith<$Res> {
-  __$$_L1_khachhangIdCopyWithImpl(
-      _$_L1_khachhangId _value, $Res Function(_$_L1_khachhangId) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? lichsu_khoitao = freezed,
-    Object? lichsu_capnhat = freezed,
-    Object? id = freezed,
-    Object? makhachhang = freezed,
-    Object? type = freezed,
-    Object? hoten = freezed,
-    Object? phone = freezed,
-    Object? email = freezed,
-    Object? congty = freezed,
-    Object? masothue = freezed,
-    Object? diachi = freezed,
-    Object? cccd = freezed,
-  }) {
-    return _then(_$_L1_khachhangId(
-      lichsu_khoitao: freezed == lichsu_khoitao
-          ? _value.lichsu_khoitao
-          : lichsu_khoitao // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lichsu_capnhat: freezed == lichsu_capnhat
-          ? _value._lichsu_capnhat
-          : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      makhachhang: freezed == makhachhang
-          ? _value.makhachhang
-          : makhachhang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      hoten: freezed == hoten
-          ? _value.hoten
-          : hoten // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phone: freezed == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      congty: freezed == congty
-          ? _value.congty
-          : congty // ignore: cast_nullable_to_non_nullable
-              as String?,
-      masothue: freezed == masothue
-          ? _value.masothue
-          : masothue // ignore: cast_nullable_to_non_nullable
-              as String?,
-      diachi: freezed == diachi
-          ? _value.diachi
-          : diachi // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cccd: freezed == cccd
-          ? _value.cccd
-          : cccd // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_L1_khachhangId
-    with DiagnosticableTreeMixin
-    implements _L1_khachhangId {
-  const _$_L1_khachhangId(
-      {this.lichsu_khoitao,
-      final List<dynamic>? lichsu_capnhat,
-      @JsonKey(name: '_id') this.id,
-      this.makhachhang,
-      this.type,
-      this.hoten,
-      this.phone,
-      this.email,
-      this.congty,
-      this.masothue,
-      this.diachi,
-      this.cccd})
-      : _lichsu_capnhat = lichsu_capnhat;
-
-  factory _$_L1_khachhangId.fromJson(Map<String, dynamic> json) =>
-      _$$_L1_khachhangIdFromJson(json);
-
-  @override
-  final String? lichsu_khoitao;
-  final List<dynamic>? _lichsu_capnhat;
-  @override
-  List<dynamic>? get lichsu_capnhat {
-    final value = _lichsu_capnhat;
-    if (value == null) return null;
-    if (_lichsu_capnhat is EqualUnmodifiableListView) return _lichsu_capnhat;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  @JsonKey(name: '_id')
-  final String? id;
-  @override
-  final String? makhachhang;
-  @override
-  final String? type;
-  @override
-  final String? hoten;
-  @override
-  final String? phone;
-  @override
-  final String? email;
-  @override
-  final String? congty;
-  @override
-  final String? masothue;
-  @override
-  final String? diachi;
-  @override
-  final String? cccd;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'L1_khachhangId(lichsu_khoitao: $lichsu_khoitao, lichsu_capnhat: $lichsu_capnhat, id: $id, makhachhang: $makhachhang, type: $type, hoten: $hoten, phone: $phone, email: $email, congty: $congty, masothue: $masothue, diachi: $diachi, cccd: $cccd)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'L1_khachhangId'))
-      ..add(DiagnosticsProperty('lichsu_khoitao', lichsu_khoitao))
-      ..add(DiagnosticsProperty('lichsu_capnhat', lichsu_capnhat))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('makhachhang', makhachhang))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('hoten', hoten))
-      ..add(DiagnosticsProperty('phone', phone))
-      ..add(DiagnosticsProperty('email', email))
-      ..add(DiagnosticsProperty('congty', congty))
-      ..add(DiagnosticsProperty('masothue', masothue))
-      ..add(DiagnosticsProperty('diachi', diachi))
-      ..add(DiagnosticsProperty('cccd', cccd));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_L1_khachhangId &&
-            (identical(other.lichsu_khoitao, lichsu_khoitao) ||
-                other.lichsu_khoitao == lichsu_khoitao) &&
-            const DeepCollectionEquality()
-                .equals(other._lichsu_capnhat, _lichsu_capnhat) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.makhachhang, makhachhang) ||
-                other.makhachhang == makhachhang) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.hoten, hoten) || other.hoten == hoten) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.congty, congty) || other.congty == congty) &&
-            (identical(other.masothue, masothue) ||
-                other.masothue == masothue) &&
-            (identical(other.diachi, diachi) || other.diachi == diachi) &&
-            (identical(other.cccd, cccd) || other.cccd == cccd));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      lichsu_khoitao,
-      const DeepCollectionEquality().hash(_lichsu_capnhat),
-      id,
-      makhachhang,
-      type,
-      hoten,
-      phone,
-      email,
-      congty,
-      masothue,
-      diachi,
-      cccd);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_L1_khachhangIdCopyWith<_$_L1_khachhangId> get copyWith =>
-      __$$_L1_khachhangIdCopyWithImpl<_$_L1_khachhangId>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_L1_khachhangIdToJson(
-      this,
-    );
-  }
-}
-
-abstract class _L1_khachhangId implements L1_khachhangId {
-  const factory _L1_khachhangId(
-      {final String? lichsu_khoitao,
-      final List<dynamic>? lichsu_capnhat,
-      @JsonKey(name: '_id') final String? id,
-      final String? makhachhang,
-      final String? type,
-      final String? hoten,
-      final String? phone,
-      final String? email,
-      final String? congty,
-      final String? masothue,
-      final String? diachi,
-      final String? cccd}) = _$_L1_khachhangId;
-
-  factory _L1_khachhangId.fromJson(Map<String, dynamic> json) =
-      _$_L1_khachhangId.fromJson;
-
-  @override
-  String? get lichsu_khoitao;
-  @override
-  List<dynamic>? get lichsu_capnhat;
-  @override
-  @JsonKey(name: '_id')
-  String? get id;
-  @override
-  String? get makhachhang;
-  @override
-  String? get type;
-  @override
-  String? get hoten;
-  @override
-  String? get phone;
-  @override
-  String? get email;
-  @override
-  String? get congty;
-  @override
-  String? get masothue;
-  @override
-  String? get diachi;
-  @override
-  String? get cccd;
-  @override
-  @JsonKey(ignore: true)
-  _$$_L1_khachhangIdCopyWith<_$_L1_khachhangId> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
