@@ -10,16 +10,15 @@ class RichTextInfo extends StatelessWidget {
   final String content;
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        style: DefaultTextStyle.of(context).style,
-        children: <TextSpan>[
+    return Text.rich(
+      TextSpan(
+        children: [
           TextSpan(
-              text: '$title: ',
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          TextSpan(text: content),
-        ],
-      ),
+      text: '$title: ',
+        style: const TextStyle(fontWeight: FontWeight.bold),
+    ),
+      TextSpan(text: content),
+        ],)
     );
   }
 }

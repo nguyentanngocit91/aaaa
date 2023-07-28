@@ -25,6 +25,35 @@ class BanGiaoNotifier extends Notifier<BanGiaoState> {
     }
   }
 
+  void setInputTenHopDong({required String? tenHD}){
+    if(tenHD!=null) {
+      state = state.copyWith(maHD: tenHD);
+    }
+  }
+
+  void setInputDienThoai({required String? dienThoai}){
+    if(dienThoai!=null) {
+      state = state.copyWith(dienThoai: dienThoai);
+    }
+  }
+
+  void setInputEmail({required String? email}){
+    if(email!=null) {
+      state = state.copyWith(email: email);
+    }
+  }
+
+  void setInputDomain({required String? domain}){
+    if(domain!=null) {
+      state = state.copyWith(domain: domain);
+    }
+  }
+
+  void resetInputSearch(){
+    state = state.copyWith(maHD: '',tenHD: '',email: '',dienThoai: '',domain: '', listHD: []);
+
+  }
+
   Future<void> actionInputSearch() async {
     var soHD = state.maHD;
     var listHD = state.listHD;
