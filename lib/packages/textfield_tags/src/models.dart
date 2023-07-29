@@ -164,14 +164,14 @@ class TextFieldTagsController extends ChangeNotifier {
 
   ///Get the text controller
   static TextEditingController get getTextEditingController {
-    // return textEditingController;
-    return TextEditingController();
+    return textEditingController;
+    // return TextEditingController();
   }
 
   ///Get the text controller focus node
   static FocusNode get getFocusNode {
-    // return focusNode;
-    return FocusNode();
+    return focusNode;
+    // return FocusNode();
   }
 
   ///Show prefix icon?

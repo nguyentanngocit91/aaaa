@@ -213,7 +213,7 @@ class _FormThongTinPhieuThuWidgetState
             Expanded(
               child: Wrap(
                 children: [
-                  lableTextForm('Mã nhân viên'),
+                  lableTextForm('Mã nhân viên (cách nhau dấu ",")'),
                   _MaNhaVienWidget(),
                 ],
               ),
@@ -225,10 +225,15 @@ class _FormThongTinPhieuThuWidgetState
                   lableTextForm('Nhân viên kinh doanh'),
                   Consumer(
                     builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      ref.watch(nhanVienPhuTrachProvider
+                          .select((value) => value.maNhanViens));
                       return TextFormField(
+                        autofocus: false,
                         readOnly: true,
-                        controller: TextEditingController(text: ref.read(nhanVienPhuTrachProvider.notifier).showThongTinNhanVienInput(field: 'hoten')),
+                        controller: TextEditingController(
+                            text: ref
+                                .read(nhanVienPhuTrachProvider.notifier)
+                                .showThongTinNhanVienInput(field: 'hoten')),
                       );
                     },
                   ),
@@ -242,7 +247,8 @@ class _FormThongTinPhieuThuWidgetState
                   lableTextForm('Phòng'),
                   Consumer(
                     builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      ref.watch(nhanVienPhuTrachProvider
+                          .select((value) => value.maNhanViens));
                       return TextFormField(
                         readOnly: true,
                       );
@@ -258,10 +264,15 @@ class _FormThongTinPhieuThuWidgetState
                   lableTextForm('Khu vực'),
                   Consumer(
                     builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      ref.watch(nhanVienPhuTrachProvider
+                          .select((value) => value.maNhanViens));
                       return TextFormField(
                         readOnly: true,
-                        controller: TextEditingController(text: ref.read(nhanVienPhuTrachProvider.notifier).showThongTinNhanVienInput(field: 'maphongban')),
+                        controller: TextEditingController(
+                            text: ref
+                                .read(nhanVienPhuTrachProvider.notifier)
+                                .showThongTinNhanVienInput(
+                                    field: 'maphongban')),
                       );
                     },
                   ),
@@ -479,7 +490,6 @@ class _MaNhaVienWidget extends ConsumerStatefulWidget {
 }
 
 class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
-
   late final TextFieldTagsController _textFieldTagsController;
 
   @override
@@ -490,16 +500,19 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final dsNhanvien = ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ?? [];
+    final dsNhanvien = ref.watch(
+            nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ?? [];
 
-    if(dsNhanvien==[] || dsNhanvien.isEmpty){
+    if (dsNhanvien == [] || dsNhanvien.isEmpty) {
       _textFieldTagsController.clearTextFieldTags();
     }
 
     return TagsInputWidget(
       textFieldTagsController: _textFieldTagsController,
       validator: (tag) {
-        if(tag.length<3){ return 'Mã nhân viên quá ngắn'; }
+        if (tag.length < 3) {
+          return 'Mã nhân viên quá ngắn';
+        }
         return null;
       },
       onTag: (tag) async {
@@ -507,7 +520,7 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
             .read(nhanVienPhuTrachProvider.notifier)
             .themMaNhanVien(tag);
         if (result == false) {
-          if (context.mounted){
+          if (context.mounted) {
             await showDialog(
               context: context,
               builder: (context) {
@@ -515,9 +528,13 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
                   title: Text('Thông báo'),
                   content: Text('Không tồn tại nhân viên có mã $tag'),
                   actions: [
-                    FilledButton(onPressed: (){
-                      context.pop();
-                    }, child: Text('Đâ hiểu')),
+                    FilledButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      autofocus: true,
+                      child: const Text('Đâ hiểu'),
+                    ),
                   ],
                 );
               },
@@ -529,9 +546,7 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
       onDelete: (tag) {
         ref.read(nhanVienPhuTrachProvider.notifier).xoaNhanVien(tag);
       },
-      initialTags: [
-        for (var nv in dsNhanvien) nv['manhanvien']
-      ],
+      initialTags: [for (var nv in dsNhanvien) nv['manhanvien']],
     );
   }
 }
