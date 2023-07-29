@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:bs_flutter_alert/bs_flutter_alert.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -105,9 +107,14 @@ class DaTaThongTinKH extends ConsumerWidget {
             if(data['status']==true)...[
               InfoListCustomer(item:data['khachhang'], index: 1,),
             ] else ...[
+              
+              BsAlert(
+                closeButton: false,
+                margin: EdgeInsets.only(bottom: 10.0),
+                style: BsAlertStyle.danger,
+                child: Text('Không tìm thấy thông tin khách hàng ! Vui lòng kiểm tra lại !!!', textAlign: TextAlign.center),
+              ),
 
-              //NotFoundSearch(),
-             // _showDialogError(context: context,message: "Không tìm thấy kết quả"),
 
             ]
 
@@ -188,16 +195,35 @@ class DaTaThongTinHD extends ConsumerWidget {
           ),
           if(data!=null)...[
 
-            ListView.builder(
-                padding: const EdgeInsets.all(0),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                primary: true,
-                itemCount: data['hopdongs'].length,
-                itemBuilder: (BuildContext context, index) {
-                  return InfoListContract(infoKH:data['khachhang'],item: data['hopdongs'][index], index: index+1,);
-                }),
-            // GeneratePagin(data['info']),
+
+            if(data['status']==true)...[
+
+              ListView.builder(
+                  padding: const EdgeInsets.all(0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  primary: true,
+                  itemCount: data['hopdongs'].length,
+                  itemBuilder: (BuildContext context, index) {
+                    return InfoListContract(infoKH:data['khachhang'],item: data['hopdongs'][index], index: index+1,);
+                  }),
+              // GeneratePagin(data['info']),
+
+            ] else ...[
+
+
+
+              BsAlert(
+                closeButton: false,
+                margin: EdgeInsets.only(bottom: 10.0),
+                style: BsAlertStyle.danger,
+                child: Text('Không tìm thấy thông tin hợp đồng ! Vui lòng kiểm tra lại !!!', textAlign: TextAlign.center),
+              ),
+
+            ]
+
+
+
           ],
         ],
       ),
@@ -709,11 +735,43 @@ class InfoListContract extends StatelessWidget {
 
 
 class NotFoundSearch extends StatelessWidget {
-  const NotFoundSearch({super.key});
-
+  const NotFoundSearch({super.key, required this.context});
+final BuildContext context;
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  AnimatedButton(
+      text: 'Info Dialog fixed width and square buttons',
+      pressEvent: () {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.info,
+          borderSide: const BorderSide(
+            color: Colors.green,
+            width: 2,
+          ),
+          width: 280,
+          buttonsBorderRadius: const BorderRadius.all(
+            Radius.circular(2),
+          ),
+          dismissOnTouchOutside: true,
+          dismissOnBackKeyPress: false,
+          onDismissCallback: (type) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Dismissed by $type'),
+              ),
+            );
+          },
+          headerAnimationLoop: false,
+          animType: AnimType.bottomSlide,
+          title: 'INFO',
+          desc: 'This Dialog can be dismissed touching outside',
+          showCloseIcon: true,
+          btnCancelOnPress: () {},
+          btnOkOnPress: () {},
+        ).show();
+      },
+    );
   }
 }
 
