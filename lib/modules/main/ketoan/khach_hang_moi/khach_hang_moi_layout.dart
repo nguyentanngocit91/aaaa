@@ -10,6 +10,7 @@ import '../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../_shared/utils/debouncer.dart';
+import '../../../../_shared/utils/form_status.dart';
 import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/ndgap.dart';
 import '../../../../packages/textfield_tags/textfield_tags.dart';
@@ -120,8 +121,11 @@ class _BtnSubmit extends ConsumerWidget {
 }
 
 _submitForm(WidgetRef ref) {
+  ref.read(formKhachHangMoiProvider.notifier).batDatSubmit();
   if (_formKey.currentState!.validate()) {
     ref.read(formKhachHangMoiProvider.notifier).saveForm();
+  }else{
+    ref.read(formKhachHangMoiProvider.notifier).ketThucSubmit();
   }
 }
 

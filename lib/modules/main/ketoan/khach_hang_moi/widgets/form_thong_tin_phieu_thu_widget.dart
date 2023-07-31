@@ -195,7 +195,7 @@ class _FormThongTinPhieuThuWidgetState
                         txtDate = selDate.formatDateTime('dd-MM-yyyy');
                       }
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'ngaynop', value: txtDate);
+                          type: _typeData, key: 'ngaynopcty', value: txtDate);
                       if (mounted) {
                         setState(() {
                           ngayNop = selDate ?? ngayNop;
@@ -315,7 +315,7 @@ class _FormThongTinPhieuThuWidgetState
                     ]),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'tongtien', value: value);
+                          type: _typeData, key: 'tongtien', value: value.toString().replaceAll('.', ''));
                     },
                   ),
                 ],
@@ -332,7 +332,7 @@ class _FormThongTinPhieuThuWidgetState
                     ],
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'manhanvien', value: value);
+                          type: _typeData, key: 'phiweb', value: value.toString().replaceAll('.', ''));
                     },
                   ),
                 ],
@@ -343,7 +343,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí nâng cấp web'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phinangcapweb', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -352,7 +360,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí hosting'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phihosting', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -361,7 +377,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí nâng cấp hosting'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phinangcaphosting', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -370,7 +394,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí tên miền'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phitenmien', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -384,7 +416,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí App'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phiapp', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -394,7 +434,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí VAT'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'vat', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -404,7 +452,12 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Ghi chú'),
-                  TextFormField(),
+                  TextFormField(
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'ghichu', value: value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -510,6 +563,7 @@ class _MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final FormStatus? formStatus = ref.watch(formKhachHangMoiProvider.select((value) => value.formStatus));
     final dsNhanvien = ref.watch(
             nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ??
         [];
@@ -517,7 +571,6 @@ class _MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
     if (dsNhanvien == [] || dsNhanvien.isEmpty) {
       _textFieldTagsController.clearTextFieldTags();
     }
-
     return TagsInputWidget(
       textFieldTagsController: _textFieldTagsController,
       validator: (tag) {
@@ -526,6 +579,7 @@ class _MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
         }
         return null;
       },
+      errText: (dsNhanvien.isNotEmpty || formStatus == FormStatus.pure) ? null : 'Không để trống',
       onTag: (tag) async {
         final result = await ref
             .read(nhanVienPhuTrachProvider.notifier)
