@@ -1,7 +1,5 @@
 part of '../khach_hang_moi_layout.dart';
 
-enum LoaiFileHD { hopDong, chungTuKhac }
-
 
 class UploadFileHDWidget extends ConsumerStatefulWidget {
   const UploadFileHDWidget({super.key});
@@ -16,6 +14,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
   final TextEditingController textEditingController = TextEditingController();
 
   LoaiFileHD _loaiFileHD = LoaiFileHD.hopDong;
+  FileHDModel _fileHD = FileHDModel();
 
   @override
   dispose(){
@@ -41,6 +40,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                 value: LoaiFileHD.hopDong,
                 groupValue: _loaiFileHD,
                 onChanged: (LoaiFileHD? value) {
+                  _fileHD = _fileHD.copyWith(loaiFile: value);
                   setState(() {
                     _loaiFileHD = value!;
                   });
@@ -52,6 +52,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                 value: LoaiFileHD.chungTuKhac,
                 groupValue: _loaiFileHD,
                 onChanged: (LoaiFileHD? value) {
+                  _fileHD = _fileHD.copyWith(loaiFile: value);
                   setState(() {
                     _loaiFileHD = value!;
                   });
@@ -69,21 +70,28 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
             child: inputUploadFile(
               context,
               controller: textEditingController,
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
-                ]),
               onTap: () async {
                 String path = '';
                 final result = await FilePicker.platform.pickFiles(
+                  allowMultiple: false,
                   type: FileType.custom,
                   allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
                 );
                 if (result != null) {
-                  PlatformFile file = result.files.first;
-                  textEditingController.text = file.name;
+                  for(PlatformFile file in result.files){
+                    _fileHD = _fileHD.copyWith(tenFile: file.name, pathFile: file.path);
+                    // ref.read(fileHDProvider.notifier).addFile(fileHD: fileHD);
+                  }
+                  if(result.files.length>1){
+                    textEditingController.text = 'Đã chọn ${result.files.length} files';
+                  }else{
+                    textEditingController.text = result.files.first.name;
+                  }
                 }else{
+                  _fileHD = _fileHD.copyWith(tenFile: null, pathFile: null);
                   textEditingController.clear();
                 }
+                print(_fileHD.toString());
               }
             ),
           ),
@@ -99,6 +107,9 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                 ),
                 minLines: 3,
                 maxLines: 3,
+                onChanged: (value) {
+                  _fileHD = _fileHD.copyWith(ghiChu: value);
+                },
               ),
             ],
           ),
