@@ -6,21 +6,24 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import '../../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../../_shared/utils/ndgap.dart';
+import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
+import '../models/searchcustomercontract_model.dart';
+import '../providers/ds_hd_provider.dart';
 
-class UpdateThongTinHopDongWidget extends ConsumerStatefulWidget {
-  const UpdateThongTinHopDongWidget({super.key});
 
+
+
+class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
+  const UpdateThongTinHopDongWidget({Key? key,required this.item, required this.id, required this.masohd}) : super(key: key);
+  final String id;
+  final SearchCustomerContractModel item;
+  final String masohd;
   @override
-  ConsumerState createState() => _UpdateThongTinHopDongWidgetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _UpdateThongTinHopDongWidgetState
-    extends ConsumerState<UpdateThongTinHopDongWidget> with FormUIMixins {
+    final controllerTenHD = TextEditingController();
+    final controllerTongTIEN = TextEditingController();
 
-  final String _typeData = 'hopdong';
-
-  @override
-  Widget build(BuildContext context) {
     return  SimpleDialog(
         backgroundColor: Colors.white,
         contentPadding: EdgeInsets.all(0),
@@ -69,7 +72,7 @@ class _UpdateThongTinHopDongWidgetState
 
             titleForm(context, title: 'Thông tin hợp đồng'),
             bodyForm(
-              child:     Row(
+              child:  Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
@@ -78,10 +81,12 @@ class _UpdateThongTinHopDongWidgetState
                       children: [
                         lableTextForm('Mã hợp đồng Web/App'),
                         TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            label: Text(item.mahopdong.toString()),
                             filled: true,
                             fillColor: Colors.black12,
                           ),
+
                           readOnly: true,
                         ),
                       ],
@@ -94,10 +99,17 @@ class _UpdateThongTinHopDongWidgetState
                       children: [
                         lableTextForm('Tên hợp đồng'),
                         TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onChanged: (value) {
-                            //ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData ,key: 'tenhopdong', value: value);
+                            ref.read(dshdProvider.notifier).onChangeValue("TENHD", value);
                           },
+                          controller: controllerTenHD,
+                          decoration: InputDecoration(
+                            label: Text(item.tenhopdong.toString()),
+                            filled: true,
+                            fillColor: Colors.black12,
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: 'Không bỏ trống.'),
@@ -114,12 +126,19 @@ class _UpdateThongTinHopDongWidgetState
                         lableTextForm('Tổng giá trị'),
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: InputDecoration(
+                            label: Text(item.tongtien.toString()),
+                            filled: true,
+                            fillColor: Colors.black12,
+                          ),
+                          onChanged: (value) {
+                            ref.read(dshdProvider.notifier).onChangeValue("TONGTIEN", value);
+                          },
+                          controller: controllerTongTIEN,
                           inputFormatters: [
                             CurrencyTextInputFormatter(symbol: ''),
                           ],
-                          onChanged: (value) {
-                            // ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData ,key: 'tongtien', value: value);
-                          },
+
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: 'Không bỏ trống.'),
@@ -139,19 +158,36 @@ class _UpdateThongTinHopDongWidgetState
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(10),
-                      backgroundColor: Colors.blueAccent),
-                  child: const Text(
-                    'Cập nhật',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
+                GestureDetector(
+                onTap: () {
+
+                  bool isError = false;
+                  String tenHD = controllerTenHD.text;
+                  String tongtien = controllerTongTIEN.text;
+
+                  if (tenHD == '' && tongtien == '' ) {
+                    isError = true;
+                    ShowOkAlertDialog.show(
+                        context, 'Thông báo', 'Vui lòng nhập thông tin');
+                  }
+
+                  if (isError == false) {
+                    ref.read(dshdProvider.notifier).updateContractById(item.id.toString());
+                  }
+
+
+
+                },
+                  child:Container(
+                        padding: const EdgeInsets.all(10),
+                        color: Colors.blueAccent,
+                    child: Text(
+                      'Cập nhật',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white),
+                    ),
                   ),
                 ),
                 const SizedBox(

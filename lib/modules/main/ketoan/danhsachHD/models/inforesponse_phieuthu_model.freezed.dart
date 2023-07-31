@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'infocontractresponse_model.dart';
+part of 'inforesponse_phieuthu_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,13 +14,13 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-InfoContractResponseModel _$InfoContractResponseModelFromJson(
+InforesponsePhieuthuModel _$InforesponsePhieuthuModelFromJson(
     Map<String, dynamic> json) {
-  return _InfoContractResponseModel.fromJson(json);
+  return _InforesponsePhieuthuModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$InfoContractResponseModel {
+mixin _$InforesponsePhieuthuModel {
   int? get countActivated => throw _privateConstructorUsedError;
   int? get countTrashed => throw _privateConstructorUsedError;
   int? get total => throw _privateConstructorUsedError;
@@ -30,15 +30,15 @@ mixin _$InfoContractResponseModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $InfoContractResponseModelCopyWith<InfoContractResponseModel> get copyWith =>
+  $InforesponsePhieuthuModelCopyWith<InforesponsePhieuthuModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $InfoContractResponseModelCopyWith<$Res> {
-  factory $InfoContractResponseModelCopyWith(InfoContractResponseModel value,
-          $Res Function(InfoContractResponseModel) then) =
-      _$InfoContractResponseModelCopyWithImpl<$Res, InfoContractResponseModel>;
+abstract class $InforesponsePhieuthuModelCopyWith<$Res> {
+  factory $InforesponsePhieuthuModelCopyWith(InforesponsePhieuthuModel value,
+          $Res Function(InforesponsePhieuthuModel) then) =
+      _$InforesponsePhieuthuModelCopyWithImpl<$Res, InforesponsePhieuthuModel>;
   @useResult
   $Res call(
       {int? countActivated,
@@ -50,10 +50,10 @@ abstract class $InfoContractResponseModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$InfoContractResponseModelCopyWithImpl<$Res,
-        $Val extends InfoContractResponseModel>
-    implements $InfoContractResponseModelCopyWith<$Res> {
-  _$InfoContractResponseModelCopyWithImpl(this._value, this._then);
+class _$InforesponsePhieuthuModelCopyWithImpl<$Res,
+        $Val extends InforesponsePhieuthuModel>
+    implements $InforesponsePhieuthuModelCopyWith<$Res> {
+  _$InforesponsePhieuthuModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -100,12 +100,12 @@ class _$InfoContractResponseModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_InfoContractResponseModelCopyWith<$Res>
-    implements $InfoContractResponseModelCopyWith<$Res> {
-  factory _$$_InfoContractResponseModelCopyWith(
-          _$_InfoContractResponseModel value,
-          $Res Function(_$_InfoContractResponseModel) then) =
-      __$$_InfoContractResponseModelCopyWithImpl<$Res>;
+abstract class _$$_InforesponsePhieuthuModelCopyWith<$Res>
+    implements $InforesponsePhieuthuModelCopyWith<$Res> {
+  factory _$$_InforesponsePhieuthuModelCopyWith(
+          _$_InforesponsePhieuthuModel value,
+          $Res Function(_$_InforesponsePhieuthuModel) then) =
+      __$$_InforesponsePhieuthuModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -118,13 +118,13 @@ abstract class _$$_InfoContractResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_InfoContractResponseModelCopyWithImpl<$Res>
-    extends _$InfoContractResponseModelCopyWithImpl<$Res,
-        _$_InfoContractResponseModel>
-    implements _$$_InfoContractResponseModelCopyWith<$Res> {
-  __$$_InfoContractResponseModelCopyWithImpl(
-      _$_InfoContractResponseModel _value,
-      $Res Function(_$_InfoContractResponseModel) _then)
+class __$$_InforesponsePhieuthuModelCopyWithImpl<$Res>
+    extends _$InforesponsePhieuthuModelCopyWithImpl<$Res,
+        _$_InforesponsePhieuthuModel>
+    implements _$$_InforesponsePhieuthuModelCopyWith<$Res> {
+  __$$_InforesponsePhieuthuModelCopyWithImpl(
+      _$_InforesponsePhieuthuModel _value,
+      $Res Function(_$_InforesponsePhieuthuModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -137,7 +137,7 @@ class __$$_InfoContractResponseModelCopyWithImpl<$Res>
     Object? page = freezed,
     Object? lastPage = freezed,
   }) {
-    return _then(_$_InfoContractResponseModel(
+    return _then(_$_InforesponsePhieuthuModel(
       countActivated: freezed == countActivated
           ? _value.countActivated
           : countActivated // ignore: cast_nullable_to_non_nullable
@@ -168,10 +168,10 @@ class __$$_InfoContractResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_InfoContractResponseModel
+class _$_InforesponsePhieuthuModel
     with DiagnosticableTreeMixin
-    implements _InfoContractResponseModel {
-  const _$_InfoContractResponseModel(
+    implements _InforesponsePhieuthuModel {
+  const _$_InforesponsePhieuthuModel(
       {this.countActivated,
       this.countTrashed,
       this.total,
@@ -179,8 +179,8 @@ class _$_InfoContractResponseModel
       this.page,
       this.lastPage});
 
-  factory _$_InfoContractResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_InfoContractResponseModelFromJson(json);
+  factory _$_InforesponsePhieuthuModel.fromJson(Map<String, dynamic> json) =>
+      _$$_InforesponsePhieuthuModelFromJson(json);
 
   @override
   final int? countActivated;
@@ -197,14 +197,14 @@ class _$_InfoContractResponseModel
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'InfoContractResponseModel(countActivated: $countActivated, countTrashed: $countTrashed, total: $total, limit: $limit, page: $page, lastPage: $lastPage)';
+    return 'InforesponsePhieuthuModel(countActivated: $countActivated, countTrashed: $countTrashed, total: $total, limit: $limit, page: $page, lastPage: $lastPage)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'InfoContractResponseModel'))
+      ..add(DiagnosticsProperty('type', 'InforesponsePhieuthuModel'))
       ..add(DiagnosticsProperty('countActivated', countActivated))
       ..add(DiagnosticsProperty('countTrashed', countTrashed))
       ..add(DiagnosticsProperty('total', total))
@@ -217,7 +217,7 @@ class _$_InfoContractResponseModel
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InfoContractResponseModel &&
+            other is _$_InforesponsePhieuthuModel &&
             (identical(other.countActivated, countActivated) ||
                 other.countActivated == countActivated) &&
             (identical(other.countTrashed, countTrashed) ||
@@ -237,29 +237,29 @@ class _$_InfoContractResponseModel
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InfoContractResponseModelCopyWith<_$_InfoContractResponseModel>
-      get copyWith => __$$_InfoContractResponseModelCopyWithImpl<
-          _$_InfoContractResponseModel>(this, _$identity);
+  _$$_InforesponsePhieuthuModelCopyWith<_$_InforesponsePhieuthuModel>
+      get copyWith => __$$_InforesponsePhieuthuModelCopyWithImpl<
+          _$_InforesponsePhieuthuModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_InfoContractResponseModelToJson(
+    return _$$_InforesponsePhieuthuModelToJson(
       this,
     );
   }
 }
 
-abstract class _InfoContractResponseModel implements InfoContractResponseModel {
-  const factory _InfoContractResponseModel(
+abstract class _InforesponsePhieuthuModel implements InforesponsePhieuthuModel {
+  const factory _InforesponsePhieuthuModel(
       {final int? countActivated,
       final int? countTrashed,
       final int? total,
       final int? limit,
       final int? page,
-      final int? lastPage}) = _$_InfoContractResponseModel;
+      final int? lastPage}) = _$_InforesponsePhieuthuModel;
 
-  factory _InfoContractResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_InfoContractResponseModel.fromJson;
+  factory _InforesponsePhieuthuModel.fromJson(Map<String, dynamic> json) =
+      _$_InforesponsePhieuthuModel.fromJson;
 
   @override
   int? get countActivated;
@@ -275,6 +275,6 @@ abstract class _InfoContractResponseModel implements InfoContractResponseModel {
   int? get lastPage;
   @override
   @JsonKey(ignore: true)
-  _$$_InfoContractResponseModelCopyWith<_$_InfoContractResponseModel>
+  _$$_InforesponsePhieuthuModelCopyWith<_$_InforesponsePhieuthuModel>
       get copyWith => throw _privateConstructorUsedError;
 }
