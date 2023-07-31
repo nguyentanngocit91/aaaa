@@ -46,6 +46,7 @@ class TextFieldTags extends StatefulWidget {
 
   final bool? readyOnlyTags;
 
+
   const TextFieldTags({
     Key? key,
     this.tagsDistanceFromBorderEnd = 0.725,
@@ -176,7 +177,7 @@ class _TextFieldTagsState extends State<TextFieldTags> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       maxLength: widget.textFieldStyler.maxLength,
       keyboardType: widget.textFieldStyler.textInputType,
       readOnly: widget.textFieldStyler.readOnly,
@@ -230,7 +231,7 @@ class _TextFieldTagsState extends State<TextFieldTags> {
               )
             : null,
       ),
-      onSubmitted: (value) {
+      onFieldSubmitted: (value) {
         if (_tagState!['show_validator'] == false) {
           final val = widget.letterCase == LetterCase.small
               ? value.trim().toLowerCase()

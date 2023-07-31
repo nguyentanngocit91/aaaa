@@ -76,7 +76,7 @@ class _FormThongTinHopDongWidgetState
                     onChanged: (value) {
                       ref
                           .read(formKhachHangMoiProvider.notifier)
-                          .changeData(type: _typeData ,key: 'tongtien', value: value);
+                          .changeData(type: _typeData ,key: 'tongtien', value: value.toString().replaceAll('.', ''));
                     },
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
