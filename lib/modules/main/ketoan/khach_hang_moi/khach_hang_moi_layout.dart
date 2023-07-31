@@ -14,6 +14,7 @@ import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/ndgap.dart';
 import '../../../../packages/textfield_tags/textfield_tags.dart';
 import 'providers/danh_sach_domain_provider.dart';
+import 'providers/files_hd_provider.dart';
 import 'providers/form_khach_hang_moi_provider.dart';
 import 'providers/kiem_tra_khach_hang_provider.dart';
 import 'providers/nhan_vien_phu_trach_provider.dart';
@@ -30,7 +31,7 @@ part 'widgets/form_thong_tin_hosting_widget.dart';
 part 'widgets/form_thong_tin_app_widget.dart';
 part 'widgets/upload_file_hd_widget.dart';
 
-GlobalKey<FormState> _formKey = GlobalKey();
+final GlobalKey<FormState> _formKey = GlobalKey();
 
 class KhachHangMoi extends ConsumerStatefulWidget {
   const KhachHangMoi({Key? key}) : super(key: const Key(pathName));

@@ -18,6 +18,8 @@ class _FormThongTinPhieuThuWidgetState
   LoaiPhieuThu _loaiPhieuThu = LoaiPhieuThu.phieuthu;
   DateTime ngayNop = DateTime.now();
 
+
+
   @override
   initState() {
     super.initState();
@@ -62,9 +64,11 @@ class _FormThongTinPhieuThuWidgetState
                     onChanged: (HinhThucThanhToan? value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           type: _typeData, key: 'httt', value: 'cod');
-                      setState(() {
-                        _httt = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _httt = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Tiền mặt'),
@@ -75,9 +79,11 @@ class _FormThongTinPhieuThuWidgetState
                     onChanged: (HinhThucThanhToan? value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           type: _typeData, key: 'httt', value: 'bank');
-                      setState(() {
-                        _httt = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _httt = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Chuyển khoản'),
@@ -100,9 +106,11 @@ class _FormThongTinPhieuThuWidgetState
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: _typeData);
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _loaiPhieuThu = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Phiếu thu'),
@@ -115,9 +123,11 @@ class _FormThongTinPhieuThuWidgetState
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthubg');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _loaiPhieuThu = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Phiếu thu bàn giao'),
@@ -130,9 +140,11 @@ class _FormThongTinPhieuThuWidgetState
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthuapp');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _loaiPhieuThu = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Phiếu thu App'),
@@ -145,9 +157,11 @@ class _FormThongTinPhieuThuWidgetState
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthuappbg');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _loaiPhieuThu = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Phiếu thu bàn giao App'),
@@ -182,9 +196,11 @@ class _FormThongTinPhieuThuWidgetState
                       }
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           type: _typeData, key: 'ngaynop', value: txtDate);
-                      setState(() {
-                        ngayNop = selDate ?? ngayNop;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          ngayNop = selDate ?? ngayNop;
+                        });
+                      }
                     },
                   ),
                 ],
@@ -214,7 +230,7 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Mã nhân viên (cách nhau dấu ",")'),
-                  _MaNhaVienWidget(),
+                  const _MaNhaVienWidget(),
                 ],
               ),
             ),
@@ -486,22 +502,17 @@ class _MaNhaVienWidget extends ConsumerStatefulWidget {
   const _MaNhaVienWidget({super.key});
 
   @override
-  ConsumerState createState() => __MaNhaVienWidgetState();
+  ConsumerState createState() => _MaNhaVienWidgetState();
 }
 
-class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
-  late final TextFieldTagsController _textFieldTagsController;
-
-  @override
-  void initState() {
-    super.initState();
-    _textFieldTagsController = TextFieldTagsController();
-  }
+class _MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
+  final TextFieldTagsController _textFieldTagsController = TextFieldTagsController();
 
   @override
   Widget build(BuildContext context) {
     final dsNhanvien = ref.watch(
-            nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ?? [];
+            nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ??
+        [];
 
     if (dsNhanvien == [] || dsNhanvien.isEmpty) {
       _textFieldTagsController.clearTextFieldTags();
@@ -540,6 +551,9 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
               },
             );
             _textFieldTagsController.removeTag = tag;
+            if (dsNhanvien.isEmpty) {
+              _textFieldTagsController.setPrefixIcon = false;
+            }
           }
         }
       },
