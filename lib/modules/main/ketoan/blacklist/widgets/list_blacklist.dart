@@ -14,87 +14,89 @@ class ListBlacklist extends ConsumerWidget {
 
 
 
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(color: Color(0xff105a6c)),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: TitleHeader(
-                    stringTitle: "#",
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(color: Color(0xff105a6c)),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: TitleHeader(
+                      stringTitle: "#",
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TitleHeader(
-                    stringTitle: "Mã HĐ",
+                  Expanded(
+                    flex: 1,
+                    child: TitleHeader(
+                      stringTitle: "Mã HĐ",
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: TitleHeader(
-                    stringTitle: "Ghi chú",
+                  Expanded(
+                    flex: 10,
+                    child: TitleHeader(
+                      stringTitle: "Ghi chú",
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: TitleHeader(
-                    stringTitle: "Người khởi tạo",
+                  Expanded(
+                    flex: 2,
+                    child: TitleHeader(
+                      stringTitle: "Người khởi tạo",
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: TitleHeader(
-                    stringTitle: "Ngày tạo",
+                  Expanded(
+                    flex: 2,
+                    child: TitleHeader(
+                      stringTitle: "Ngày tạo",
+                    ),
                   ),
-                ),
 
-                Expanded(
-                  flex: 1,
-                  child: TitleHeader(stringTitle: "Thao tác"),
-                ),
-              ],
-            ),
-          ), // end header
+                  Expanded(
+                    flex: 1,
+                    child: TitleHeader(stringTitle: "Thao tác"),
+                  ),
+                ],
+              ),
+            ), // end header
 
-          listBlacklist.when(data: (List<DanhSachBlacklistModel>? data) {
-            if (data != null) {
+            listBlacklist.when(data: (List<DanhSachBlacklistModel>? data) {
+              if (data != null) {
 
-              return ListView.builder(
-                  padding: const EdgeInsets.all(0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  primary: true,
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return RowItemBL(
-                      itemBl:data[index],
-                      index: index,
+                return ListView.builder(
+                    padding: const EdgeInsets.all(0),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    primary: true,
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return RowItemBL(
+                        itemBl:data[index],
+                        index: index,
 
-                    );
-                  });
-            } else {
+                      );
+                    });
+              } else {
+                return const Center(
+                  child: Text('Data not found'),
+                );
+              }
+            }, error: (error, stackTrace) {
+              print(stackTrace);
               return const Center(
-                child: Text('Data not found'),
+                child: Text('Không load được dữ liệu!'),
               );
-            }
-          }, error: (error, stackTrace) {
-            print(stackTrace);
-            return const Center(
-              child: Text('Không load được dữ liệu!'),
-            );
-          }, loading: () {
-            return Container(
-              child: CircularProgressIndicator(),
-            );
-          }),
+            }, loading: () {
+              return Container(
+                child: CircularProgressIndicator(),
+              );
+            }),
 
-          // end header
-        ],
+            // end header
+          ],
+        ),
       ),
     );
   }
