@@ -1,6 +1,5 @@
 
 import 'package:bs_flutter_alert/bs_flutter_alert.dart';
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,12 +17,12 @@ import 'models/searchcustomercontract_model.dart';
 import 'providers/ds_hd_provider.dart';
 
 
-class DanhSachHDLayout extends StatelessWidget {
+class DanhSachHDLayout extends ConsumerWidget {
   const DanhSachHDLayout():super(key:const Key(pathName));
   static const String pathName = 'danh-sach-hd';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: ListView(
         children: [
@@ -55,8 +54,9 @@ class DaTaThongTinKH extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-    var data = ref.watch(dshdProvider.select((value) => value.result));
 
+    var data = ref.watch(dshdProvider.select((value) => value.result));
+print("${data?.length}+ppppp");
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -101,10 +101,11 @@ class DaTaThongTinKH extends ConsumerWidget {
               ],
             ),
           ),
-          if(data!=null)...[
+          if(data!=null && data!.length>0)...[
 
             if(data['status']==true)...[
-              InfoListCustomer(item:data['khachhang'], index: 1,),
+              SelectionArea(child:  InfoListCustomer(item:data['khachhang'], index: 1,),),
+
             ] else ...[
 
               BsAlert(
@@ -114,20 +115,16 @@ class DaTaThongTinKH extends ConsumerWidget {
                 child: Text('Không tìm thấy thông tin khách hàng ! Vui lòng kiểm tra lại !!!', textAlign: TextAlign.center),
               ),
 
-
             ]
+          ] else ...[
 
+            BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Vui lòng nhập thông tin cần tìm !!!', textAlign: TextAlign.center),
+            ),
 
-            /*ListView.builder(
-                padding: const EdgeInsets.all(0),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                primary: true,
-                itemCount: data['data'].length,
-                itemBuilder: (BuildContext context, index) {
-                  return InfoListCustomer(item: data['data'][index], index: index+1,);
-                }),*/
-           // GeneratePagin(data['info']),
           ],
 
 
@@ -204,7 +201,7 @@ class DaTaThongTinHD extends ConsumerWidget {
                   primary: true,
                   itemCount: data['hopdongs'].length,
                   itemBuilder: (BuildContext context, index) {
-                    return InfoListContract(infoKH:data['khachhang'],item: data['hopdongs'][index], index: index+1,);
+                    return SelectionArea(child:InfoListContract(infoKH:data['khachhang'],item: data['hopdongs'][index], index: index+1,) ,);
                   }),
               // GeneratePagin(data['info']),
 
@@ -222,6 +219,15 @@ class DaTaThongTinHD extends ConsumerWidget {
             ]
 
 
+
+          ] else ...[
+
+            BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Vui lòng nhập thông tin cần tìm !!!', textAlign: TextAlign.center),
+            ),
 
           ],
         ],
@@ -270,12 +276,10 @@ class FilterHD extends ConsumerWidget {
                           title: 'Mã KH',
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAKH", value);
-
                           },
                         controller: controllerMAKH,
+                      ),
 
-
-                          ),
                     ],
                   ),
                 ),
@@ -291,12 +295,8 @@ class FilterHD extends ConsumerWidget {
                           title: 'Mã HĐ',
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAHD", value);
-
                           },
                           controller: controllerMAHD,),
-
-
-
                     ],
                   ),
                 ),
@@ -316,6 +316,7 @@ class FilterHD extends ConsumerWidget {
                           },
                       controller: controllerTenHD,
                       ),
+
                     ],
                   ),
                 ),
@@ -409,9 +410,6 @@ class FilterHD extends ConsumerWidget {
 
                 GestureDetector(
                     onTap: () {
-                   /*   ref.read(dshdProvider.notifier).onSearch("web");
-                      print("Submit Tìm kiếm ");*/
-
 
                      bool isError = false;
                       String maKH = controllerMAKH.text;
@@ -515,11 +513,10 @@ class InfoListCustomer extends StatelessWidget {
   InfoListCustomer({Key? key, required this.item, required this.index}) : super(key: key);
 
   final SearchCustomerModel item;
-
   final int index;
   @override
   Widget build(BuildContext context) {
-    print(item.congty.toString());
+
     return  Column(
         children: [
 
@@ -573,7 +570,7 @@ class InfoListCustomer extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return UpdateThongTinKHScreen(id: 'a',);
+                              return UpdateThongTinKHScreen(item: item,);
                             },
                           );
                         },
@@ -708,7 +705,7 @@ class InfoListContract extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return UpdateThongTinHopDongWidget(item:item ,id: item.id.toString(),masohd: item.mahopdong.toString(),);
+                              return UpdateThongTinHopDongWidget(item:item,);
                             },
                           );
                         },

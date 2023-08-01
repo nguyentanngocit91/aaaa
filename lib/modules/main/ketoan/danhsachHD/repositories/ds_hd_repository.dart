@@ -11,11 +11,9 @@ class DSHDRepository{
 
   searchInfo({required Map<String, dynamic> data}) async{
 
-
     final response =
     await App.dioClient.get(ApiUrl.searchContractCustomer,queryParameters:data);
 
-   // print("$response+SEARCH HD");
     List<SearchCustomerContractModel> list = [];
     var result = {
       "status":false,
@@ -35,7 +33,7 @@ class DSHDRepository{
         result['message'] = "Success";
         result['khachhang'] = SearchCustomerModel.fromJson(res['khachhang']);
 
-      //  print("${result['khachhang']}+SEARCH khachhang");
+    // print("${result['khachhang']}+SEARCH khachhang");
 
        for (var item in res['hopdongs']) {
           list.add(SearchCustomerContractModel.fromJson(item));
@@ -97,18 +95,16 @@ class DSHDRepository{
   }
 
 
- updateInfoContract({required Map<String, dynamic> data,required String id}) async{
+ updateInfoContract({Map? data,required String id}) async{
 
     final response =
-    await App.dioClient.put("${ApiUrl.updateContract}/${id}",queryParameters: data);
+    await App.dioClient.put("${ApiUrl.updateContract}/${id}",data: data);
 
-    print("${response}+response-00+${data}+");
+   // print("${response}+response-00+${data}+");
 
     if(response.statusCode==200){
      // print("${response.data}+response-data");
       return response.data;
-
-
     }
     return {
       "success": false,

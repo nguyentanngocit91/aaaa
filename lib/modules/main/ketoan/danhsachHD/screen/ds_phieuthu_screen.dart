@@ -205,7 +205,29 @@ class _DSPhieuThuScreenState extends ConsumerState<DSPhieuThuScreen> with FormUI
 
               ],
 
+                Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
 
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: TextButton.styleFrom(
+                        padding: const EdgeInsets.all(10),
+                        backgroundColor: Colors.grey),
+                    child: const Text(
+                      'Thoát',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white),
+                    ),
+                  ),
+
+
+                  ]
+                ),
 
             ],),
         ),

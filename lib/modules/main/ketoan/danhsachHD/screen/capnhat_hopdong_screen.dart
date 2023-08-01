@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import '../../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../../_shared/utils/ndgap.dart';
@@ -14,10 +17,10 @@ import '../providers/ds_hd_provider.dart';
 
 
 class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
-  const UpdateThongTinHopDongWidget({Key? key,required this.item, required this.id, required this.masohd}) : super(key: key);
-  final String id;
+  const UpdateThongTinHopDongWidget({Key? key,required this.item}) : super(key: key);
+
   final SearchCustomerContractModel item;
-  final String masohd;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
@@ -81,12 +84,11 @@ class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
                       children: [
                         lableTextForm('Mã hợp đồng Web/App'),
                         TextFormField(
-                          decoration: InputDecoration(
-                            label: Text(item.mahopdong.toString()),
+                          decoration: const InputDecoration(
                             filled: true,
                             fillColor: Colors.black12,
                           ),
-
+                          controller: TextEditingController(text: item.mahopdong.toString()),
                           readOnly: true,
                         ),
                       ],
@@ -100,13 +102,13 @@ class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
                         lableTextForm('Tên hợp đồng'),
                         TextFormField(
                           onChanged: (value) {
-                            ref.read(dshdProvider.notifier).onChangeValue("TENHD", value);
+                            ref.read(dshdProvider.notifier).onChangeValue("Update_TENHD", value);
                           },
                           controller: controllerTenHD,
                           decoration: InputDecoration(
                             label: Text(item.tenhopdong.toString()),
                             filled: true,
-                            fillColor: Colors.black12,
+                            //fillColor: Colors.black12,
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
 
@@ -127,18 +129,20 @@ class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
-                            label: Text(item.tongtien.toString()),
+                           // label: Text(item.tongtien.toString()),
+                            hintText:item.tongtien.toString() ,
+                            labelText: item.tongtien.toString(),
                             filled: true,
-                            fillColor: Colors.black12,
+                            //fillColor: Colors.black12,
                           ),
-                          onChanged: (value) {
-                            ref.read(dshdProvider.notifier).onChangeValue("TONGTIEN", value);
+
+                          onChanged: (value) async {
+                           ref.read(dshdProvider.notifier).onChangeValue("Update_TONGTIEN", value.toString().replaceAll('.', ''));
                           },
                           controller: controllerTongTIEN,
                           inputFormatters: [
                             CurrencyTextInputFormatter(symbol: ''),
                           ],
-
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: 'Không bỏ trống.'),
@@ -158,38 +162,70 @@ class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                GestureDetector(
-                onTap: () {
-
-                  bool isError = false;
-                  String tenHD = controllerTenHD.text;
-                  String tongtien = controllerTongTIEN.text;
-
-                  if (tenHD == '' && tongtien == '' ) {
-                    isError = true;
-                    ShowOkAlertDialog.show(
-                        context, 'Thông báo', 'Vui lòng nhập thông tin');
-                  }
-
-                  if (isError == false) {
-                    ref.read(dshdProvider.notifier).updateContractById(item.id.toString());
-                  }
 
 
 
-                },
-                  child:Container(
-                        padding: const EdgeInsets.all(10),
-                        color: Colors.blueAccent,
-                    child: Text(
-                      'Cập nhật',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white),
-                    ),
+                TextButton(
+                  onPressed: () {
+                    /* Dialogs.materialDialog(
+                      context: context,
+
+                      title: 'Bạn muốn xoá sản phẩm này ?',
+                      actions: [
+                        Consumer(
+                          builder: (context, ref, child) {
+                            return IconsButton(
+                              onPressed: () {
+
+                                Navigator.of(context).pop();
+                              },
+                              text: 'Xoá',
+                              iconData: Icons.delete,
+                              color: Colors.red,
+                              textStyle: TextStyle(color: Colors.white),
+                              iconColor: Colors.white,
+                            );
+                          },
+                        ),
+                        IconsOutlineButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          text: 'Huỷ',
+                          iconData: Icons.cancel_outlined,
+                          textStyle: TextStyle(color: Colors.grey),
+                          iconColor: Colors.grey,
+                        ),
+                      ]);*/
+
+                    bool isError = false;
+                    String tenHD = controllerTenHD.text;
+                    String tongtien = controllerTongTIEN.text;
+
+                    if (tenHD == '' && tongtien == '' ) {
+                      isError = true;
+                      ShowOkAlertDialog.show(
+                          context, 'Thông báo', 'Vui lòng nhập thông tin');
+                    }
+
+                    if (isError == false) {
+                      ref.read(dshdProvider.notifier).updateContractById(item.id.toString());
+                      // ref.refresh(dshdProvider.notifier).clearUpdateDataContract();
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  style: TextButton.styleFrom(
+                      padding: const EdgeInsets.all(10),
+                      backgroundColor: Colors.blueAccent),
+                  child: const Text(
+                    'Cập nhật',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white),
                   ),
                 ),
+
                 const SizedBox(
                   width: 10,
                 ),
