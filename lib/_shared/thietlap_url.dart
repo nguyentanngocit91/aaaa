@@ -9,12 +9,16 @@ class ApiUrl{
   static const String infoUser = '$baseUrl/users/profile';
   static const String changePassword = '$baseUrl/users/change-password';
 
+  // Media
+  static const String media = '$baseUrl/media';
+  static const String uploadFile = '$media/upload';
+
+
   // Nhân viên
   static const String danhSachNhanVien = '$baseUrl/nhan-vien';
 
 
   // DS HĐ
-
   static const String searchContract = '$baseUrl/hop-dong';
 
 
@@ -36,7 +40,6 @@ class ApiUrl{
 
 
   // blacklist
-
   static const String danhsachBlackList = '$baseUrl/black-list';
 
 }

@@ -13,8 +13,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
 
   final TextEditingController textEditingController = TextEditingController();
 
-  LoaiFileHD _loaiFileHD = LoaiFileHD.hopDong;
-  FileHDModel _fileHD = FileHDModel();
+  String _loaiFileHD = 'hopdong';
 
   @override
   dispose(){
@@ -36,11 +35,11 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               ndGapW8(),
-              Radio<LoaiFileHD>(
-                value: LoaiFileHD.hopDong,
+              Radio<String>(
+                value: 'hopdong',
                 groupValue: _loaiFileHD,
-                onChanged: (LoaiFileHD? value) {
-                  _fileHD = _fileHD.copyWith(loaiFile: value);
+                onChanged: (String? value) {
+                  ref.read(fileHDProvider.notifier).changeLoai(value ?? '');
                   setState(() {
                     _loaiFileHD = value!;
                   });
@@ -48,11 +47,11 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
               ),
               const Text('Hợp đồng'),
               ndGapW16(),
-              Radio<LoaiFileHD>(
-                value: LoaiFileHD.chungTuKhac,
+              Radio<String>(
+                value: 'chungtukhac',
                 groupValue: _loaiFileHD,
-                onChanged: (LoaiFileHD? value) {
-                  _fileHD = _fileHD.copyWith(loaiFile: value);
+                onChanged: (value) {
+                  ref.read(fileHDProvider.notifier).changeLoai(value ?? '');
                   setState(() {
                     _loaiFileHD = value!;
                   });
@@ -79,8 +78,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                 );
                 if (result != null) {
                   for(PlatformFile file in result.files){
-                    _fileHD = _fileHD.copyWith(tenFile: file.name, pathFile: file.path);
-                    // ref.read(fileHDProvider.notifier).addFile(fileHD: fileHD);
+                    ref.read(fileHDProvider.notifier).changeFile(file: file);
                   }
                   if(result.files.length>1){
                     textEditingController.text = 'Đã chọn ${result.files.length} files';
@@ -88,10 +86,9 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                     textEditingController.text = result.files.first.name;
                   }
                 }else{
-                  _fileHD = _fileHD.copyWith(tenFile: null, pathFile: null);
+                  ref.read(fileHDProvider.notifier).clear();
                   textEditingController.clear();
                 }
-                print(_fileHD.toString());
               }
             ),
           ),
@@ -102,13 +99,13 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
           child: Wrap(
             children: [
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Nội dung ghi chú cho file',
                 ),
                 minLines: 3,
                 maxLines: 3,
                 onChanged: (value) {
-                  _fileHD = _fileHD.copyWith(ghiChu: value);
+                  ref.read(fileHDProvider.notifier).changeGhiChu(value);
                 },
               ),
             ],

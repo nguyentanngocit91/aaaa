@@ -4,7 +4,9 @@ import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
 import '../repositories/khach_hang_moi_repository.dart';
 import 'danh_sach_domain_provider.dart';
+import 'files_hd_provider.dart';
 import 'kiem_tra_khach_hang_provider.dart';
+import 'nhan_vien_phu_trach_provider.dart';
 
 part 'form_khach_hang_moi_state.dart';
 
@@ -105,24 +107,25 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   saveForm() async{
-    state = state.copyWith(formStatus: FormStatus.submissionInProgress);
-    await saveKhachHang();
-    await saveHopDong();
-    await savePhieuThu();
-    await saveWebsite();
-    await saveDomain();
-    await saveHosting();
-    await saveApp();
+    // await saveKhachHang();
+    // await saveHopDong();
+    // await savePhieuThu();
+    // await saveWebsite();
+    // await saveDomain();
+    // await saveHosting();
+    // await saveApp();
+    await saveFileHD();
     state = state.copyWith(formStatus: FormStatus.submissionSuccess);
     print('submit done!');
   }
 
-  saveKhachHang() async{
-    if (state.dataKhachHang != null) {
-      state.dataKhachHang!.forEach((key, value) {
-        print('Khách hàng {$key:$value}');
-      });
+  Future<bool> saveKhachHang() async{
+    // kiểm tra khách hàng mới hay cũ
+    final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
+    if (state.dataKhachHang != null && thongTinKhachHangCu==null) { // Chỉ lưu thông tin khách hàng mới
+      return await _khachHangMoiRepository.luuThongTinKhachHang(data: state.dataKhachHang);
     }
+    return false;
   }
 
   saveHopDong() async{
@@ -133,16 +136,45 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  savePhieuThu() async{
+  Future<bool> savePhieuThu() async{
     if (state.dataPhieuThu != null) {
-      state.dataPhieuThu!.forEach((key, value) {
-        print('Phiếu thu {$key:$value}');
-      });
+      // state.dataPhieuThu!.forEach((key, value) {
+      //   print('Phiếu thu {$key:$value}');
+      // });
+
+      // Lưu mã khách hàng
+      final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
+      state.dataPhieuThu!['makhachhang'] = (thongTinKhachHangCu!=null) ? thongTinKhachHangCu['makhachhang'] : state.maKhachHang;
+
+      // Lưu danh sách mã đồng
+      final List<String> mahopdong = [];
+      if(state.isHopDongWebsite){
+        mahopdong.add('${state.maHopDong}W');
+      }
+      if(state.isHopDongDomain){
+        mahopdong.add('${state.maHopDong}D');
+      }
+      if(state.isHopDongHosting){
+        mahopdong.add('${state.maHopDong}H');
+      }
+      if(state.isHopDongApp){
+        mahopdong.add('${state.maHopDong}A');
+      }
+      state.dataPhieuThu!['mahopdong'] = mahopdong;
+
+      // Lưu danh sách nhân viên phụ trách
+      final nhanViens = ref.read(nhanVienPhuTrachProvider).maNhanViens;
+      state.dataPhieuThu!['manhanvien'] = [
+        for(var nv in nhanViens!) nv['manhanvien']
+      ];
+
+      return await _khachHangMoiRepository.luuThongTinKhachHang(data: state.dataKhachHang);
     }
+    return false;
   }
 
   saveWebsite() async{
-    if (state.dataWebsite != null) {
+    if (state.dataWebsite != null && state.isHopDongWebsite) {
       state.dataWebsite!.forEach((key, value) {
         print('Website {$key:$value}');
       });
@@ -150,7 +182,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   saveHosting() async{
-    if (state.dataHosting != null) {
+    if (state.dataHosting != null && state.isHopDongHosting) {
       state.dataHosting!.forEach((key, value) {
         print('Hosting {$key:$value}');
       });
@@ -158,7 +190,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   saveDomain() async{
-    if (state.dataDomain != null) {
+    if (state.dataDomain != null && state.isHopDongDomain) {
       state.dataDomain!.forEach((key, value) {
         print('Domain {$key:$value}');
       });
@@ -170,10 +202,18 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   saveApp() async{
-    if (state.dataApp != null) {
+    if (state.dataApp != null && state.isHopDongApp) {
       state.dataApp!.forEach((key, value) {
         print('App {$key:$value}');
       });
+    }
+  }
+
+  saveFileHD() async{
+    final infoFile = ref.read(fileHDProvider);
+    print(infoFile.toString());
+    if(infoFile.fileUpload?.path!=null){
+      // upload file
     }
   }
 }

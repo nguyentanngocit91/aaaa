@@ -137,4 +137,5 @@ _resetForm(WidgetRef ref){
   Future.delayed(const Duration(milliseconds: 100),(){
     ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach();
   }); // reset danh sách domain
+  ref.refresh(fileHDProvider);
 }

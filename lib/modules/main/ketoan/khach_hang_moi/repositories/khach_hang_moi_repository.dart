@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../../../../_shared/app_config/app.dart';
 import '../../../../../_shared/thietlap_url.dart';
+import '../providers/files_hd_provider.dart';
 
 class KhachHangMoiRepository {
 
@@ -46,5 +48,34 @@ class KhachHangMoiRepository {
     }
     return null;
   }
+
+  Future<bool> luuThongTinKhachHang({required Map? data}) async {
+    final Response response = await App.dioClient.post(ApiUrl.danhSachKhachHang, data: data);
+    if(response.statusCode==200){
+      if(response.data['success']==true && response.data['data']!=null) return true;
+    }
+    return false;
+  }
+
+  Future<bool> luuThongTinPhieuThu({required Map? data}) async {
+    final Response response = await App.dioClient.post(ApiUrl.danhSachPhieuThu, data: data);
+    if(response.statusCode==200){
+      if(response.data['success']==true && response.data['data']!=null) return true;
+    }
+    return false;
+  }
+
+  Future saveFile(FileHDModel fileHDModel) async {
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile('${fileHDModel.fileUpload?.path}', filename:fileHDModel.fileUpload?.name),
+      "sohopdong":"",
+      "hopdongId":"",
+      "loaifile":fileHDModel.loaiFile,
+      "ghichu":fileHDModel.ghiChu,
+    });
+    final response = await App.dioClient.post(ApiUrl.uploadFile, data: formData);
+    // return response.data['id'];
+  }
+
 
 }
