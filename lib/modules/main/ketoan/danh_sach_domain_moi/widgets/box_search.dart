@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
 import '../../phieuthu/widgets/pt_button.dart';
+import '../providers/danh_sach_domain_moi_provider.dart';
 
 
 class BoxSearchDomain extends ConsumerWidget {
@@ -16,8 +17,8 @@ class BoxSearchDomain extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    // var soPhieuThu = ref.watch(phieuThuProvider).soPhieuThu;
-    // if (soPhieuThu != null) soPhieuThuInput.text = soPhieuThu;
+     var domain = ref.watch(dsDomainMoiProvider).domain;
+     if (domain != null) domainInput.text = domain;
 
     return Container(
       padding: const EdgeInsets.all(10),
@@ -61,10 +62,10 @@ class BoxSearchDomain extends ConsumerWidget {
 
               if (isError == false) {
 
-                // ref
-                //     .read(phieuThuProvider.notifier)
-                //     .setInputDenNgay(denNgay: denNgay);
-                // ref.read(phieuThuProvider.notifier).actionInputSearch();
+                ref
+                    .read(dsDomainMoiProvider.notifier)
+                    .setInputDomain(domain: domain);
+                ref.read(dsDomainMoiProvider.notifier).actionInputSearch();
               }
             },
           ),
