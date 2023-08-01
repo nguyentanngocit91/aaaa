@@ -137,6 +137,7 @@ class _FormThongTinKhachHangWidgetState
             ),
           ],
         ),
+
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -331,6 +332,7 @@ class _FormThongTinKhachHangWidgetState
             ),
           ],
         ),
+
       ],
     );
   }
