@@ -32,5 +32,7 @@
   "error404_str_btn": "Khởi động lại",
   "nointernet_str_title": "KHÔNG CÓ KẾT NỐI INTERNET",
   "nointernet_str_message": "Vui lòng kết nối với internet và thử lại.",
-  "nointernet_str_btn": "Thử lại"
+  "nointernet_str_btn": "Thử lại",
+  "updateHDSuccess": "Cập nhật thành công",
+  "updateHDFail": "Cập nhật thất bại"
 }

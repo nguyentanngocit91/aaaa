@@ -19,7 +19,14 @@ class ApiUrl{
 
 
   // DS HĐ
+  static const String searchContractCustomer = '$baseUrl/tim-kiem/hop-dong-theo-khach-hang';
+  static const String updateContract = '$baseUrl/hop-dong';
+
+
   static const String searchContract = '$baseUrl/hop-dong';
+  static const String infoContract = '$baseUrl/hop-dong/';
+  static const String uploadFile = '$baseUrl/media/upload/';
+  static const String listFile = '$baseUrl/media/list';
 
 
   // Cấp mã HĐ, KH tự động
@@ -29,6 +36,11 @@ class ApiUrl{
 
   // Khách hàng
   static const String danhSachKhachHang = '$baseUrl/khach-hang';
+
+  //DOMAIN
+  static const String danhSachDomain = '$baseUrl/domain';
+  static const String updateDomain = '$baseUrl/update-domain';
+
 
 
 
@@ -40,7 +52,9 @@ class ApiUrl{
   static const String danhSachHDTheoSoHD = '$baseUrl/hop-dong';
 
 
-  // blacklist
+
+  //Blacklist
   static const String danhsachBlackList = '$baseUrl/black-list';
+
 
 }

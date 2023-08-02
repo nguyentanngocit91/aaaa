@@ -156,16 +156,23 @@ class PhongbanId {
 
 class Info {
   String? chucnang;
+  String? dungluong;
+  String? domain;
 
-  Info({this.chucnang});
+  Info({this.chucnang,this.dungluong, this.domain
+  });
 
   Info.fromJson(Map<String, dynamic> json) {
     chucnang = json['chucnang'];
+    dungluong = json['dungluong'];
+    domain = json['domain'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['chucnang'] = this.chucnang;
+    data['dungluong'] = this.dungluong;
+    data['domain'] = this.domain;
     return data;
   }
 }

@@ -32,8 +32,8 @@ class _ListFileOfHopDongState extends State<ListFileOfHopDong> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(5),
+                decoration: const BoxDecoration(
                   color: Color(0xFF105a6c),
                 ),
                 child: const Row(
@@ -48,8 +48,8 @@ class _ListFileOfHopDongState extends State<ListFileOfHopDong> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(5),
-                child: Row(
+                padding: const EdgeInsets.all(5),
+                child: const Row(
                   children: [
                     Expanded(
                       flex: 2,
@@ -68,7 +68,7 @@ class _ListFileOfHopDongState extends State<ListFileOfHopDong> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [ 
+                children: [
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();

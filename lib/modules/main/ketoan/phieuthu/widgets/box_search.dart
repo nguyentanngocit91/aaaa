@@ -212,6 +212,7 @@ class BoxSearchPhieuThu extends ConsumerWidget {
               maHopDongInput.text = '';
               dateFromInput.text = '';
               dateToInput.text = '';
+              ref.read(phieuThuProvider.notifier).resetInputSearch();
             },
           ),
         ],

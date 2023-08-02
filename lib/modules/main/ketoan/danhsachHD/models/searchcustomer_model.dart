@@ -2,8 +2,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'infocontractresponse_model.freezed.dart';
-part 'infocontractresponse_model.g.dart';
+part 'searchcustomer_model.freezed.dart';
+part 'searchcustomer_model.g.dart';
 
 // **************************************************************************
 // Đây là nội dung được tạo tự động bằng NextDEV Tool
@@ -25,15 +25,31 @@ part 'infocontractresponse_model.g.dart';
 // **************************************************************************
 
 @freezed
-class InfoContractResponseModel with _$InfoContractResponseModel {
-	const factory InfoContractResponseModel({ 
-		int? countActivated,
-		int? countTrashed,
-		int? total,
-		int? limit,
-		int? page,
-		int? lastPage}) = _InfoContractResponseModel;
+class SearchCustomerModel with _$SearchCustomerModel {
+	const factory SearchCustomerModel({
+		String? ghichu,
+		List<dynamic>? lichsu_khoitao,
+		List<dynamic>? lichsu_capnhat,
+		@JsonKey(name: '_id') @required String? id,
+		String? makhachhang,
+		String? type,
+		String? hoten,
+		String? phone,
+		String? email,
+		String? congty,
+		String? masothue,
+		String? diachi,
+		String? cccd,
+		@JsonKey(name: 'info') L1_info? l1_info}) = _SearchCustomerModel;
 
-	factory InfoContractResponseModel.fromJson(Map<String, dynamic> json) => _$InfoContractResponseModelFromJson(json);
+	factory SearchCustomerModel.fromJson(Map<String, dynamic> json) => _$SearchCustomerModelFromJson(json);
+}
+
+@freezed
+class L1_info with _$L1_info {
+	const factory L1_info({
+		String? fax}) = _L1_info;
+
+	factory L1_info.fromJson(Map<String, dynamic> json) => _$L1_infoFromJson(json);
 }
 

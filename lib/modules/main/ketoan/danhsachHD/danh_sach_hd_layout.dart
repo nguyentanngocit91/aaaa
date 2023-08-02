@@ -1,4 +1,5 @@
-import 'package:data_table_2/data_table_2.dart';
+
+import 'package:bs_flutter_alert/bs_flutter_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,16 +11,18 @@ import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/them_phieuthu_s
 
 import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/ndgap.dart';
-import 'models/item_contract_search_result_model.dart';
+import '../../../../_shared/utils/show_ok_alert_dialog.dart';
+import 'models/searchcustomer_model.dart';
+import 'models/searchcustomercontract_model.dart';
 import 'providers/ds_hd_provider.dart';
 
 
-class DanhSachHDLayout extends StatelessWidget {
+class DanhSachHDLayout extends ConsumerWidget {
   const DanhSachHDLayout():super(key:const Key(pathName));
   static const String pathName = 'danh-sach-hd';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: ListView(
         children: [
@@ -29,7 +32,7 @@ class DanhSachHDLayout extends StatelessWidget {
           ndGapH8(),
           heading1('THÔNG TIN KHÁCH HÀNG'),
 
-          DaTaThongTinKH(),
+         DaTaThongTinKH(),
 
           heading1('THÔNG TIN HỢP ĐỒNG'),
 
@@ -51,7 +54,9 @@ class DaTaThongTinKH extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+
     var data = ref.watch(dshdProvider.select((value) => value.result));
+print("${data?.length}+ppppp");
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -91,46 +96,38 @@ class DaTaThongTinKH extends ConsumerWidget {
                   child: HeaderRowItem(text: 'Thao tác'),
                 ),
 
+
+
               ],
             ),
           ),
-          if(data!=null)...[
+          if(data!=null && data!.length>0)...[
 
-            ListView.builder(
-                padding: const EdgeInsets.all(0),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                primary: true,
-                itemCount: data['data'].length,
-                itemBuilder: (BuildContext context, index) {
-                  return InfoListCustomer(item: data['data'][index], index: index+1,);
-                }),
-           // GeneratePagin(data['info']),
+            if(data['status']==true)...[
+              SelectionArea(child:  InfoListCustomer(item:data['khachhang'], index: 1,),),
+
+            ] else ...[
+
+              BsAlert(
+                closeButton: false,
+                margin: EdgeInsets.only(bottom: 10.0),
+                style: BsAlertStyle.danger,
+                child: Text('Không tìm thấy thông tin khách hàng ! Vui lòng kiểm tra lại !!!', textAlign: TextAlign.center),
+              ),
+
+            ]
+          ] else ...[
+
+            BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Vui lòng nhập thông tin cần tìm !!!', textAlign: TextAlign.center),
+            ),
+
           ],
 
-          // data.when(
-          //   data: (List<PhieuThuModel>? data) {
-          //     if (data != null) {
-          //       return ListView.builder(
-          //           padding: const EdgeInsets.all(0),
-          //           physics: const NeverScrollableScrollPhysics(),
-          //           shrinkWrap: true,
-          //           primary: true,
-          //           itemCount: data.length,
-          //           itemBuilder: (BuildContext context, index) {
-          //             return RowInfoPhieuThu(item: data[index], index: index+1,);
-          //           });
-          //     } else {
-          //       return const Center(
-          //         child: Text('Data not found'),
-          //       );
-          //     }
-          //   },
-          //   error: (error, stackTrace) {
-          //     return const Center(child: Text('Không load được dữ liệu!'),);
-          //   },
-          //   loading: () => const CircularProgressIndicator(),
-          // ),
+
 
         ],
       ),
@@ -194,16 +191,44 @@ class DaTaThongTinHD extends ConsumerWidget {
           ),
           if(data!=null)...[
 
-            ListView.builder(
-                padding: const EdgeInsets.all(0),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                primary: true,
-                itemCount: data['data'].length,
-                itemBuilder: (BuildContext context, index) {
-                  return InfoListContract(item: data['data'][index], index: index+1,);
-                }),
-            // GeneratePagin(data['info']),
+
+            if(data['hopdongs'].length>0)...[
+
+              ListView.builder(
+                  padding: const EdgeInsets.all(0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  primary: true,
+                  itemCount: data['hopdongs'].length,
+                  itemBuilder: (BuildContext context, index) {
+                    return SelectionArea(child:InfoListContract(infoKH:data['khachhang'],item: data['hopdongs'][index], index: index+1,) ,);
+                  }),
+              // GeneratePagin(data['info']),
+
+            ] else ...[
+
+
+
+              BsAlert(
+                closeButton: false,
+                margin: EdgeInsets.only(bottom: 10.0),
+                style: BsAlertStyle.danger,
+                child: Text('Không tìm thấy thông tin hợp đồng ! Vui lòng kiểm tra lại !!!', textAlign: TextAlign.center),
+              ),
+
+            ]
+
+
+
+          ] else ...[
+
+            BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Vui lòng nhập thông tin cần tìm !!!', textAlign: TextAlign.center),
+            ),
+
           ],
         ],
       ),
@@ -251,12 +276,10 @@ class FilterHD extends ConsumerWidget {
                           title: 'Mã KH',
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAKH", value);
-
                           },
                         controller: controllerMAKH,
+                      ),
 
-
-                          ),
                     ],
                   ),
                 ),
@@ -272,12 +295,8 @@ class FilterHD extends ConsumerWidget {
                           title: 'Mã HĐ',
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAHD", value);
-
                           },
                           controller: controllerMAHD,),
-
-
-
                     ],
                   ),
                 ),
@@ -297,6 +316,7 @@ class FilterHD extends ConsumerWidget {
                           },
                       controller: controllerTenHD,
                       ),
+
                     ],
                   ),
                 ),
@@ -386,10 +406,34 @@ class FilterHD extends ConsumerWidget {
                 const SizedBox(
                   width: 10,
                 ),
+
+
                 GestureDetector(
                     onTap: () {
-                      ref.read(dshdProvider.notifier).onSearch("web");
-                      print("Submit Tìm kiếm ");
+
+                     bool isError = false;
+                      String maKH = controllerMAKH.text;
+                      String maHD = controllerMAHD.text;
+                      String tenHD = controllerTenHD.text;
+                      String dienThoai = controllerDienThoai.text;
+                      String email = controllerEmail.text;
+
+
+                      if (maKH == '' &&
+                          maHD == '' &&
+                          tenHD == '' &&
+                          dienThoai == '' &&
+                          email == '' ) {
+                        isError = true;
+                        ShowOkAlertDialog.show(
+                            context, 'Thông báo', 'Vui lòng nhập thông tin cần tìm');
+                      }
+
+                      if (isError == false) {
+                        ref.read(dshdProvider.notifier).onSearch();
+                      }
+
+
                     },
                     child: Container(
                       padding: EdgeInsets.all(3.0),
@@ -446,6 +490,9 @@ class HeaderRowItem extends StatelessWidget {
     );
   }
 }
+
+
+
 class BodyRowItem extends StatelessWidget {
   const BodyRowItem(this.text);
   final Widget text;
@@ -465,12 +512,15 @@ class BodyRowItem extends StatelessWidget {
 class InfoListCustomer extends StatelessWidget {
   InfoListCustomer({Key? key, required this.item, required this.index}) : super(key: key);
 
-  final ItemContractSearchResultModel item;
+  final SearchCustomerModel item;
   final int index;
   @override
   Widget build(BuildContext context) {
+
     return  Column(
         children: [
+
+
           Row(
             children: [
               Expanded(
@@ -479,24 +529,24 @@ class InfoListCustomer extends StatelessWidget {
               ),
               Expanded(
                 flex:3,
-                child: BodyRowItem(Text(item.l1_khachhangId!.makhachhang!)),
+                child: BodyRowItem(Text(item.makhachhang!)),
               ),
               Expanded(
                 flex:3,
-                child: BodyRowItem(Text(item.l1_khachhangId!.hoten.toString()!)),
+                child: BodyRowItem(Text(item.hoten.toString()!)),
               ),
               Expanded(
                 flex:3,
-                child: BodyRowItem(Text(item.tenhopdong!)),
+                child: BodyRowItem(Text(item.congty!)),
               ),
               Expanded(
                 flex:6,
-                child: BodyRowItem(Text(item.l1_khachhangId!.email!)),
+                child: BodyRowItem(Text(item.email!)),
               ),
 
               Expanded(
                 flex:7,
-                child: BodyRowItem(Text(item.ghichu.toString())),
+                child: BodyRowItem(Text(item.ghichu.toString()!)),
               ),
               Expanded(
                   flex:4,
@@ -520,7 +570,7 @@ class InfoListCustomer extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return UpdateThongTinKHScreen(id: 'a',);
+                              return UpdateThongTinKHScreen(item: item,);
                             },
                           );
                         },
@@ -544,6 +594,7 @@ class InfoListCustomer extends StatelessWidget {
             ],
           ),
           const Divider(),
+
         ]
     );
 
@@ -553,9 +604,10 @@ class InfoListCustomer extends StatelessWidget {
 
 
 class InfoListContract extends StatelessWidget {
-  InfoListContract({Key? key, required this.item, required this.index}) : super(key: key);
+  InfoListContract({Key? key, required this.infoKH, required this.item, required this.index}) : super(key: key);
 
-  final ItemContractSearchResultModel item;
+  final SearchCustomerModel infoKH;
+  final SearchCustomerContractModel item;
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -570,7 +622,7 @@ class InfoListContract extends StatelessWidget {
 
               Expanded(
                 flex:3,
-                child: BodyRowItem(Text(item.l1_khachhangId!.makhachhang!)),
+                child: BodyRowItem(Text(infoKH.makhachhang!)),
               ),
 
               Expanded(
@@ -584,7 +636,7 @@ class InfoListContract extends StatelessWidget {
               ),
               Expanded(
                 flex:4,
-                child: BodyRowItem(Text(Helper.numberFormat(item.tongtien!))),
+                child: BodyRowItem(Text(Helper.numberFormat(double.parse(item.tongtien.toString())))),
               ),
               Expanded(
                 flex:6,
@@ -633,7 +685,7 @@ class InfoListContract extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return DSPhieuThuScreen();
+                              return DSPhieuThuScreen(id: item.id.toString(),);
                             },
                           );
                         },
@@ -653,7 +705,7 @@ class InfoListContract extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return const UpdateThongTinHopDongWidget();
+                              return UpdateThongTinHopDongWidget(item:item,);
                             },
                           );
                         },
@@ -679,4 +731,5 @@ class InfoListContract extends StatelessWidget {
 
   }
 }
+
 

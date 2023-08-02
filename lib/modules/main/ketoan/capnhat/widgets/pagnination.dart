@@ -6,7 +6,7 @@ class Pagination extends StatefulWidget {
 
         /// Total number of pages
         required this.numOfPages,
-
+        required  this.perPage,
         /// Current selected page
         required this.selectedPage,
 
@@ -15,6 +15,7 @@ class Pagination extends StatefulWidget {
 
         /// Callback function when a page is selected
         required this.onPageChanged,
+        required this.onPerPageChange,
 
         /// Style for the active page text
         required this.activeTextStyle,
@@ -35,14 +36,16 @@ class Pagination extends StatefulWidget {
         this.nextIcon,
         this.lastIcon,
         this.firstIcon,
-
         /// Spacing between the individual page buttons
-        this.spacing});
+        this.spacing, });
 
   final int numOfPages;
   final int selectedPage;
   final int pagesVisible;
+  final int perPage;
+
   final Function onPageChanged;
+  final Function onPerPageChange;
   final TextStyle activeTextStyle;
   final ButtonStyle activeBtnStyle;
   final TextStyle inactiveTextStyle;
@@ -99,15 +102,40 @@ class _PaginationState extends State<Pagination> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+
+        DropdownButton(
+          style: const TextStyle(color: Colors.blue),
+          value: widget.perPage,
+          items: List.generate(5, (int i) => DropdownMenuItem(
+            value: (i+1) * 10,
+            child: Text('${((i+1) * 10).toString()}'),
+          )),
+          onChanged: (value) {
+            setState(() {
+              print(value);
+              widget.onPerPageChange(value);
+            });
+          },
+        ),
+        SizedBox(
+          width: widget.spacing ?? 0,
+        ),
         /// Previous button
         IconButton(
-          icon: widget.firstIcon ?? const Icon(Icons.arrow_back_ios),
-          onPressed: widget.selectedPage > 1
-              ? () => widget.onPageChanged(widget.selectedPage - 1)
-              : null,
+          icon: widget.firstIcon ?? const Icon(
+            Icons.arrow_back,
+            color: Colors.blue,
+            size: 14,
+          ),
+          onPressed: () => widget.onPageChanged(1)
+
         ),
         IconButton(
-          icon: widget.previousIcon ?? const Icon(Icons.arrow_back_ios),
+          icon: widget.previousIcon ?? const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.blue,
+            size: 14,
+          ),
           onPressed: widget.selectedPage > 1
               ? () => widget.onPageChanged(widget.selectedPage - 1)
               : null,
@@ -138,17 +166,40 @@ class _PaginationState extends State<Pagination> {
 
         /// Next button
         IconButton(
-          icon: widget.nextIcon ?? const Icon(Icons.arrow_forward_ios),
+          icon: widget.nextIcon ?? const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+            size: 14,
+            ),
           onPressed: widget.selectedPage < widget.numOfPages
               ? () => widget.onPageChanged(widget.selectedPage + 1)
               : null,
         ),
         IconButton(
-          icon: widget.lastIcon ?? const Icon(Icons.double_arrow_rounded),
-          onPressed: widget.selectedPage < widget.numOfPages
-              ? () => widget.onPageChanged(widget.selectedPage + 1)
-              : null,
+          icon: widget.lastIcon ?? const Icon(
+            Icons.arrow_forward,
+            color: Colors.blue,
+            size: 14,
+          ),
+            onPressed: () => widget.onPageChanged(widget.numOfPages)
         ),
+        SizedBox(
+          width: widget.spacing ?? 0,
+        ),
+        DropdownButton(
+          style: const TextStyle(color: Colors.blue),
+          value: widget.selectedPage,
+          items: List.generate(widget.numOfPages, (int i) => DropdownMenuItem(
+            value: i+1,
+            child: Text('${(i+1).toString()}'),
+          )),
+          onChanged: (value) {
+            setState(() {
+              widget.onPageChanged(value);
+            });
+          },
+        ),
+
       ],
     );
   }

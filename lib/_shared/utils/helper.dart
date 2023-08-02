@@ -3,10 +3,29 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../_shared/thietlap_ngonngu.dart';
-
+enum loadingStatus {NONE,START,STOP}
 class Helper {
+  static toast({required String messenge,required BuildContext context}) {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.info(
+        message:messenge,
+      ),
+    );
+  }
+  static padding(){
+    return EdgeInsets.all(5);
+  }
+  InputDecoration disabledInput(){
+    return  InputDecoration(
+      filled: true, //<-- SEE HERE
+      fillColor: Colors.black12, //<-- SEE HERE
+    );
+  }
   static String convertName(Key? key) {
     String strReturn = key.toString();
     strReturn = strReturn.replaceAll("[<'", "");
@@ -16,7 +35,7 @@ class Helper {
 
 
   static dateFormat(var data){
-    DateTime date = DateTime.parse(data);
+    DateTime date = DateTime.parse(data.toString());
     return  "${date.day}-${date.month}-${date.year}";
   }
 
@@ -43,6 +62,15 @@ class Helper {
       firstDate: firstDate ?? DateTime(now.year - 2),
       lastDate: DateTime(now.year + 5),
     );
+  }
+
+  static parseDate(String text, String s) {
+    final f = new DateFormat(s);
+    return f.parse(text);
+  }
+
+  static saveDate(value) {
+    return DateFormat("yyyy-MM-dd").format(DateFormat('dd-MM-yyyy').parse(value));
   }
 }
 

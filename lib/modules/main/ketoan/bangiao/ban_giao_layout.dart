@@ -18,88 +18,90 @@ class BanGiaoLayout extends ConsumerWidget {
     var statusForm = ref.watch(banGiaoProvider).status;
 
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          BoxSearchBanGiao(),
-          const SizedBox(
-            height: 20,
-          ),
-          (listHD.isNotEmpty)
-              ? Column(
-                  children: [
-                    Text(
-                      'Thông tin khách hàng'.toUpperCase(),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    BoxInfoCustomer(
-                      tenHD: (listHD[0].tenhopdong != null)
-                          ? listHD[0].tenhopdong!
-                          : '',
-                      maKH: (listHD[0].khachhangId?.makhachhang != null)
-                          ? listHD[0].khachhangId!.makhachhang!
-                          : '',
-                      nguoiDaiDien: (listHD[0].khachhangId?.hoten != null)
-                          ? listHD[0].khachhangId!.hoten!
-                          : '',
-                      dienThoaiDiDong: (listHD[0].khachhangId?.phone != null)
-                          ? listHD[0].khachhangId!.phone!
-                          : '',
-                      dienThoaiCoQuan: '',
-                      email: (listHD[0].khachhangId?.email != null)
-                          ? listHD[0].khachhangId!.email!
-                          : '',
-                      emailPhu: '',
-                      daiDienMoi: '',
-                      maSoThue: (listHD[0].khachhangId?.masothue != null)
-                          ? listHD[0].khachhangId!.masothue!
-                          : '',
-                      cmnd: (listHD[0].khachhangId?.cccd != null)
-                          ? listHD[0].khachhangId!.cccd!
-                          : '',
-                      diaChi: (listHD[0].khachhangId?.diachi != null)
-                          ? listHD[0].khachhangId!.diachi!
-                          : '',
-                      ghiChu: '',
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Thông tin hợp đồng'.toUpperCase(),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      color: const Color(0xFFfbdfdf),
-                      child: Column(
-                        children: [
-                          const HeaderListHopDong(),
-                          ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: listHD.length,
-                              itemBuilder: (context, index) {
-                                return RowHopDong(
-                                  index: index + 1,
-                                  item: listHD[index],
-                                );
-                              })
-                        ],
+      child: SelectionArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BoxSearchBanGiao(),
+            const SizedBox(
+              height: 20,
+            ),
+            (listHD.isNotEmpty)
+                ? Column(
+                    children: [
+                      Text(
+                        'Thông tin khách hàng'.toUpperCase(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ],
-                )
-              : const SizedBox(),
-          (statusForm == FormStatus.submissionInProgress)
-              ? const Center(child: CircularProgressIndicator())
-              : const SizedBox(),
-        ],
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      BoxInfoCustomer(
+                        tenHD: (listHD[0].tenhopdong != null)
+                            ? listHD[0].tenhopdong!
+                            : '',
+                        maKH: (listHD[0].khachhangId?.makhachhang != null)
+                            ? listHD[0].khachhangId!.makhachhang!
+                            : '',
+                        nguoiDaiDien: (listHD[0].khachhangId?.hoten != null)
+                            ? listHD[0].khachhangId!.hoten!
+                            : '',
+                        dienThoaiDiDong: (listHD[0].khachhangId?.phone != null)
+                            ? listHD[0].khachhangId!.phone!
+                            : '',
+                        dienThoaiCoQuan: '',
+                        email: (listHD[0].khachhangId?.email != null)
+                            ? listHD[0].khachhangId!.email!
+                            : '',
+                        emailPhu: '',
+                        daiDienMoi: '',
+                        maSoThue: (listHD[0].khachhangId?.masothue != null)
+                            ? listHD[0].khachhangId!.masothue!
+                            : '',
+                        cmnd: (listHD[0].khachhangId?.cccd != null)
+                            ? listHD[0].khachhangId!.cccd!
+                            : '',
+                        diaChi: (listHD[0].khachhangId?.diachi != null)
+                            ? listHD[0].khachhangId!.diachi!
+                            : '',
+                        ghiChu: '',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Thông tin hợp đồng'.toUpperCase(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        color: const Color(0xFFfbdfdf),
+                        child: Column(
+                          children: [
+                            const HeaderListHopDong(),
+                            ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: listHD.length,
+                                itemBuilder: (context, index) {
+                                  return RowHopDong(
+                                    index: index + 1,
+                                    item: listHD[index],
+                                  );
+                                })
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+            (statusForm == FormStatus.submissionInProgress)
+                ? const Center(child: CircularProgressIndicator())
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }

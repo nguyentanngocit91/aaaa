@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:nn_phanmem/modules/main/ketoan/phieuthu/screen/add_pendding_screen.dart';
+import 'screen/add_pendding_screen.dart';
 import '../../../../_shared/utils/form_status.dart';
 import 'widgets/box_search.dart';
 import '../../../../_shared/utils/helper.dart';
 import 'models/phieu_thu_model.dart';
 import 'providers/phieu_thu_provider.dart';
 import 'screen/update_phieuthu_screen.dart';
-import 'widgets/pt_button.dart';
 
 class PhieuThuLayout extends ConsumerStatefulWidget {
   const PhieuThuLayout({Key? key}) : super(key: const Key(pathName));
@@ -50,7 +49,7 @@ class _PhieuThuLayoutState extends ConsumerState<PhieuThuLayout> {
                 ),
                 child: const Row(
                   children: [
-                    Expanded(flex: 1, child: HeaderRowItem(text: '#')),
+                    Expanded(flex: 2, child: HeaderRowItem(text: '#')),
                     Expanded(
                       flex: 5,
                       child: HeaderRowItem(text: 'Ngày tháng'),
@@ -125,9 +124,11 @@ class _PhieuThuLayoutState extends ConsumerState<PhieuThuLayout> {
                   primary: true,
                   itemCount: listPT.length,
                   itemBuilder: (BuildContext context, index) {
-                    return RowInfoPhieuThu(
-                      item: listPT[index],
-                      index: index + 1,
+                    return SelectionArea(
+                      child: RowInfoPhieuThu(
+                        item: listPT[index],
+                        index: index + 1,
+                      ),
                     );
                   })
             ],
@@ -143,7 +144,7 @@ class _PhieuThuLayoutState extends ConsumerState<PhieuThuLayout> {
 }
 
 class RowInfoPhieuThu extends StatelessWidget {
-  RowInfoPhieuThu({
+  const RowInfoPhieuThu({
     Key? key,
     required this.item,
     required this.index,
@@ -169,13 +170,16 @@ class RowInfoPhieuThu extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(5),
-          color: (isPending != null && isPending)
-              ? Colors.red.withOpacity(0.2)
-              : Colors.transparent,
+          decoration:BoxDecoration(
+            color: (isPending != null && isPending)
+                ? Colors.red.withOpacity(0.1)
+                : Colors.transparent,
+            border:Border(bottom:BorderSide(width:1,color:Colors.black12))
+          ),
           child: Row(
             children: [
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Text('$index'),
               ),
               Expanded(
@@ -264,108 +268,110 @@ class RowInfoPhieuThu extends StatelessWidget {
               ),
                 Expanded(
               flex: 14,
-              child: Row(
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      showDialog<void>(
-                        context: context,
-                        barrierDismissible: false, // user must tap button!
-                        builder: (BuildContext context) {
-                          return const AddPenddingScreen();
-                        },
-                      );
-                    },
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsets>(
-                          EdgeInsets.only(
-                              left: 15, right: 15, top: 0, bottom: 0)),
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith<Color>((states) {
-                        if (states.contains(MaterialState.disabled)) {
+              child: SelectionContainer.disabled(
+                child: Row(
+                  children: [
+                    OutlinedButton(
+                      onPressed: () {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return const AddPenddingScreen();
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            const EdgeInsets.only(
+                                left: 15, right: 15, top: 0, bottom: 0)),
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(MaterialState.disabled)) {
+                            return Colors.white;
+                          }
                           return Colors.white;
-                        }
-                        return Colors.white;
-                      }),
-                      overlayColor:
-                          MaterialStateProperty.resolveWith<Color>((states) {
-                        if (states.contains(MaterialState.pressed)) {
-                          return Colors.transparent;
-                        }
-                        return Color(0xffeaf7e5);
-                      }),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0))),
+                        }),
+                        overlayColor:
+                            MaterialStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.transparent;
+                          }
+                          return const Color(0xffeaf7e5);
+                        }),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0))),
+                      ),
+                      child: const Row(
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.green,
+                            size: 16,
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            'Pendding',
+                            style: TextStyle(color: Colors.green, fontSize: 14),
+                          )
+                        ],
+                      ),
                     ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.add,
-                          color: Colors.green,
-                          size: 16,
-                        ),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Text(
-                          'Pendding',
-                          style: TextStyle(color: Colors.green, fontSize: 14),
-                        )
-                      ],
+                    const SizedBox(
+                      width: 5,
                     ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  OutlinedButton(
-                    onPressed: () {
-                      showDialog<void>(
-                        context: context,
-                        barrierDismissible: false, // user must tap button!
-                        builder: (BuildContext context) {
-                          return const UpdatePhieuThuScreen();
-                        },
-                      );
-                    },
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsets>(
-                          EdgeInsets.only(
-                              left: 15, right: 15, top: 0, bottom: 0)),
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith<Color>((states) {
-                        if (states.contains(MaterialState.disabled)) {
+                    OutlinedButton(
+                      onPressed: () {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return const UpdatePhieuThuScreen();
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            const EdgeInsets.only(
+                                left: 15, right: 15, top: 0, bottom: 0)),
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(MaterialState.disabled)) {
+                            return Colors.white;
+                          }
                           return Colors.white;
-                        }
-                        return Colors.white;
-                      }),
-                      overlayColor:
-                          MaterialStateProperty.resolveWith<Color>((states) {
-                        if (states.contains(MaterialState.pressed)) {
-                          return Colors.transparent;
-                        }
-                        return Color(0xffeaf7e5);
-                      }),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0))),
+                        }),
+                        overlayColor:
+                            MaterialStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.transparent;
+                          }
+                          return const Color(0xffeaf7e5);
+                        }),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0))),
+                      ),
+                      child: const Row(
+                        children: [
+                          Icon(
+                            Icons.edit,
+                            color: Colors.green,
+                            size: 16,
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            'Cập nhật',
+                            style: TextStyle(color: Colors.green, fontSize: 14),
+                          )
+                        ],
+                      ),
                     ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.edit,
-                          color: Colors.green,
-                          size: 16,
-                        ),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Text(
-                          'Cập nhật',
-                          style: TextStyle(color: Colors.green, fontSize: 14),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             ],

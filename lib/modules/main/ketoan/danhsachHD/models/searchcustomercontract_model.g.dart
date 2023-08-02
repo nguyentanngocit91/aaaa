@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'item_contract_search_result_model.dart';
+part of 'searchcustomercontract_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ItemContractSearchResultModel _$$_ItemContractSearchResultModelFromJson(
+_$_SearchCustomerContractModel _$$_SearchCustomerContractModelFromJson(
         Map<String, dynamic> json) =>
-    _$_ItemContractSearchResultModel(
+    _$_SearchCustomerContractModel(
       dichvuIds: json['dichvuIds'] as List<dynamic>?,
       lichsu_thanhtoan: json['lichsu_thanhtoan'] as List<dynamic>?,
       id: json['_id'] as String?,
@@ -23,21 +23,18 @@ _$_ItemContractSearchResultModel _$$_ItemContractSearchResultModelFromJson(
       l1_info: json['info'] == null
           ? null
           : L1_info.fromJson(json['info'] as Map<String, dynamic>),
-      l1_khachhangId: json['khachhangId'] == null
-          ? null
-          : L1_khachhangId.fromJson(
-              json['khachhangId'] as Map<String, dynamic>),
+      khachhangId: json['khachhangId'] as String?,
       tenhopdong: json['tenhopdong'] as String?,
       l1_lichsu_khoitao: json['lichsu_khoitao'] == null
           ? null
           : L1_lichsu_khoitao.fromJson(
               json['lichsu_khoitao'] as Map<String, dynamic>),
-      tongtien: json['tongtien'] as double?,
+      tongtien: json['tongtien'] as int?,
       lichsu_capnhat: json['lichsu_capnhat'] as List<dynamic>?,
     );
 
-Map<String, dynamic> _$$_ItemContractSearchResultModelToJson(
-        _$_ItemContractSearchResultModel instance) =>
+Map<String, dynamic> _$$_SearchCustomerContractModelToJson(
+        _$_SearchCustomerContractModel instance) =>
     <String, dynamic>{
       'dichvuIds': instance.dichvuIds,
       'lichsu_thanhtoan': instance.lichsu_thanhtoan,
@@ -51,7 +48,7 @@ Map<String, dynamic> _$$_ItemContractSearchResultModelToJson(
       'nhanvien': instance.nhanvien,
       'ghichu': instance.ghichu,
       'info': instance.l1_info,
-      'khachhangId': instance.l1_khachhangId,
+      'khachhangId': instance.khachhangId,
       'tenhopdong': instance.tenhopdong,
       'lichsu_khoitao': instance.l1_lichsu_khoitao,
       'tongtien': instance.tongtien,
@@ -65,38 +62,6 @@ _$_L1_info _$$_L1_infoFromJson(Map<String, dynamic> json) => _$_L1_info(
 Map<String, dynamic> _$$_L1_infoToJson(_$_L1_info instance) =>
     <String, dynamic>{
       'chucnang': instance.chucnang,
-    };
-
-_$_L1_khachhangId _$$_L1_khachhangIdFromJson(Map<String, dynamic> json) =>
-    _$_L1_khachhangId(
-      lichsu_khoitao: json['lichsu_khoitao'] as String?,
-      lichsu_capnhat: json['lichsu_capnhat'] as List<dynamic>?,
-      id: json['_id'] as String?,
-      makhachhang: json['makhachhang'] as String?,
-      type: json['type'] as String?,
-      hoten: json['hoten'] as String?,
-      phone: json['phone'] as String?,
-      email: json['email'] as String?,
-      congty: json['congty'] as String?,
-      masothue: json['masothue'] as String?,
-      diachi: json['diachi'] as String?,
-      cccd: json['cccd'] as String?,
-    );
-
-Map<String, dynamic> _$$_L1_khachhangIdToJson(_$_L1_khachhangId instance) =>
-    <String, dynamic>{
-      'lichsu_khoitao': instance.lichsu_khoitao,
-      'lichsu_capnhat': instance.lichsu_capnhat,
-      '_id': instance.id,
-      'makhachhang': instance.makhachhang,
-      'type': instance.type,
-      'hoten': instance.hoten,
-      'phone': instance.phone,
-      'email': instance.email,
-      'congty': instance.congty,
-      'masothue': instance.masothue,
-      'diachi': instance.diachi,
-      'cccd': instance.cccd,
     };
 
 _$_L1_lichsu_khoitao _$$_L1_lichsu_khoitaoFromJson(Map<String, dynamic> json) =>

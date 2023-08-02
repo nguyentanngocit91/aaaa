@@ -112,7 +112,15 @@ class BoxSearchBanGiao extends ConsumerWidget {
               Icons.refresh,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              soHDController.text='';
+              tenHDController.text = '';
+              emailController.text='';
+              dienThoaiController.text= '';
+              domainHDController.text = '';
+              ref.read(banGiaoProvider.notifier).resetInputSearch();
+
+            },
           ),
         ],
       ),

@@ -165,8 +165,8 @@ class DioExceptions implements Exception {
       }
     } else {
       // Something happened in setting up or sending the request that triggered an Error
-      print(dioError.requestOptions);
-      print(dioError.message);
+  //    print(dioError.requestOptions);
+     // print(dioError.message);
     }
   }
 
