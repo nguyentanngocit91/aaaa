@@ -8,6 +8,7 @@ import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import '../../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../../_shared/utils/currency_text_input_formatter.dart';
+import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
 import '../models/searchcustomercontract_model.dart';
@@ -101,9 +102,6 @@ class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
                       children: [
                         lableTextForm('Tên hợp đồng'),
                         TextFormField(
-                          onChanged: (value) {
-                            ref.read(dshdProvider.notifier).onChangeValue("Update_TENHD", value);
-                          },
                           controller: controllerTenHD,
                           decoration: InputDecoration(
                             label: Text(item.tenhopdong.toString()),
@@ -129,16 +127,11 @@ class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
-                           // label: Text(item.tongtien.toString()),
-                            hintText:item.tongtien.toString() ,
-                            labelText: item.tongtien.toString(),
+                            label:Text(Helper.numberFormat(double.parse(item.tongtien.toString()))),
+                            hintText:Helper.numberFormat(double.parse(item.tongtien.toString())),
+                           // labelText: item.tongtien.toString(),
                             filled: true,
-                            //fillColor: Colors.black12,
                           ),
-
-                          onChanged: (value) async {
-                           ref.read(dshdProvider.notifier).onChangeValue("Update_TONGTIEN", value.toString().replaceAll('.', ''));
-                          },
                           controller: controllerTongTIEN,
                           inputFormatters: [
                             CurrencyTextInputFormatter(symbol: ''),
@@ -200,17 +193,16 @@ class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
 
                     bool isError = false;
                     String tenHD = controllerTenHD.text;
-                    String tongtien = controllerTongTIEN.text;
+                    String tongTien = controllerTongTIEN.text;
 
-                    if (tenHD == '' && tongtien == '' ) {
+                    if (tenHD == '' && tongTien == '' ) {
                       isError = true;
                       ShowOkAlertDialog.show(
                           context, 'Thông báo', 'Vui lòng nhập thông tin');
                     }
 
                     if (isError == false) {
-                      ref.read(dshdProvider.notifier).updateContractById(item.id.toString());
-                      // ref.refresh(dshdProvider.notifier).clearUpdateDataContract();
+                      ref.read(dshdProvider.notifier).updateContractById(item.id.toString(),tenHD,tongTien.toString().replaceAll('.', ''));
                       Navigator.of(context).pop();
                     }
                   },

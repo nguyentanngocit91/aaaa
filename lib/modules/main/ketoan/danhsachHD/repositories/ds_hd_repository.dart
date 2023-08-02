@@ -20,7 +20,6 @@ class DSHDRepository{
       "message":"Lỗi",
       "khachhang": {},
       "hopdongs":[]
-
     };
     if (response.statusCode == 200) {
       final res = response.data;
@@ -72,7 +71,7 @@ class DSHDRepository{
         result['message'] = "Không tìm thấy dữ liệu";
       }else {
 
-        print("${res['data']}+SEARCH ItemPhieuthuResultModel");
+        //print("${res['data']}+SEARCH ItemPhieuthuResultModel");
 
         result['status'] = true;
         result['message'] = "Success";
@@ -82,11 +81,9 @@ class DSHDRepository{
         }
       //  print("${list}+list ItemPhieuthuResultModel");
 
-
-
         result['data'] = list;
 
-        print("${result['data']}+list ItemPhieuthuResultModel");
+        //print("${result['data']}+list ItemPhieuthuResultModel");
       }
     }
 

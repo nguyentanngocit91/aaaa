@@ -51,9 +51,6 @@ class _UpdatePhieuThuScreenState extends ConsumerState<UpdateWebsite>
   }
   @override
   Widget build(BuildContext context) {
-
-
-
     return SimpleDialog(
       backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.all(0),
