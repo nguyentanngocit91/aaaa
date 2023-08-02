@@ -29,7 +29,7 @@ class DomainModel{
 
   Map toJson() => {
     'tenmien': domainName,
-    'ngaykyhd': ngayKy,
+    'ngaykyhd': ngayKy?.formatDateTime(),
     'sonamdangky': soNamDangKy,
     'ghichu': ghiChu
   };
@@ -78,6 +78,6 @@ class DanhSachDomainNotifier extends Notifier<List<DomainModel>> {
   }
 
   showInfo(DomainModel item){
-    print('row ${item.rowIndex}: ${item.domainName} - ${item.ngayDangKy!.formatDateTime('dd-MM-yyyy')}  ${item.ngayHetHan!.formatDateTime('dd-MM-yyyy')} - ${item.ghiChu}');
+    print('row ${item.rowIndex}: ${item.domainName} - ${item.ngayDangKy!.formatDateTime()}  ${item.ngayHetHan!.formatDateTime()} - ${item.ghiChu}');
   }
 }

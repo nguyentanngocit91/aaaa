@@ -39,7 +39,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
 
   Future<String?> taoMaKhachHang() async {
     String? maKhachHang = await _khachHangMoiRepository.capMaKhachhang();
-    maKhachHang = 'NN$maKhachHang${DateTime.now().formatDateTime('yy')}';
+    maKhachHang = 'NN$maKhachHang${DateTime.now().formatDateTime(formatString: 'yy')}';
     state = state.copyWith(maKhachHang: maKhachHang);
   }
 
@@ -126,18 +126,19 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     ] : [];
 
     // Thông tin Hợp đồng
+    state.dataHopDong?['sohopdong'] = state.soHopDong;
     state.dataHopDong?['manhanvien'] = dsNhanVienPhuTrach;
 
     // Thông tin phiếu thu
     if(state.dataPhieuThu?['ngaynopcty']==null){
-      state.dataPhieuThu?['ngaynopcty'] = DateTime.now();
+      state.dataPhieuThu?['ngaynopcty'] = DateTime.now().formatDateTime();
     }
     state.dataPhieuThu?['manhanvien'] = dsNhanVienPhuTrach;
 
     // thông tin hợp đồng website
     if(state.isHopDongWebsite){
       if(state.dataWebsite?['ngaykyhd']==null){
-        state.dataWebsite?['ngaykyhd'] = DateTime.now();
+        state.dataWebsite?['ngaykyhd'] = DateTime.now().formatDateTime();
       }
       data["Web"] = state.dataWebsite;
     }
@@ -156,7 +157,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     // Thông tin hợp đồng Hosting
     if(state.isHopDongHosting){
       if(state.dataHosting?['ngaykyhd']==null){
-        state.dataHosting?['ngaykyhd'] = DateTime.now();
+        state.dataHosting?['ngaykyhd'] = DateTime.now().formatDateTime();
       }
       if(state.dataHosting?['trangthaihosting']==null){
         state.dataHosting?['trangthaihosting'] = 'kymoi';
@@ -167,7 +168,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     // Thông tin hợp đồng App
     if(state.isHopDongApp){
       if(state.dataApp?['ngaykyhd']==null){
-        state.dataApp?['ngaykyhd'] = DateTime.now();
+        state.dataApp?['ngaykyhd'] = DateTime.now().formatDateTime();
       }
       data["App"] = state.dataApp;
     }
