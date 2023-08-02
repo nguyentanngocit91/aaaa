@@ -13,6 +13,24 @@ final DanhSachBlacklistProvider =
   return DanhSachBlacklistNotifier();
 });
 
+
+final futureListBlackListProvider =
+FutureProvider.autoDispose<List<DanhSachBlacklistModel>?>((ref) async {
+  final List<DanhSachBlacklistModel> list = [];
+  final response = await _danhsachBlackListReponsitory.getListBlacklist();
+
+  if (response != null) {
+    if (response['success']) {
+      for (var json in response['data']) {
+        // print(json);
+        list.add(DanhSachBlacklistModel.fromJson(json));
+      }
+    }
+  }
+  return list;
+});
+
+
 class DanhSachBlacklistNotifier extends Notifier<DanhSachBlacklistState> {
   @override
   DanhSachBlacklistState build() {
@@ -40,18 +58,4 @@ class DanhSachBlacklistNotifier extends Notifier<DanhSachBlacklistState> {
   }
 }
 
-final futureListBlackListProvider =
-    FutureProvider.autoDispose<List<DanhSachBlacklistModel>?>((ref) async {
-  final List<DanhSachBlacklistModel> list = [];
-  final response = await _danhsachBlackListReponsitory.getListBlacklist();
 
-  if (response != null) {
-    if (response['success']) {
-      for (var json in response['data']) {
-        // print(json);
-        list.add(DanhSachBlacklistModel.fromJson(json));
-      }
-    }
-  }
-  return list;
-});

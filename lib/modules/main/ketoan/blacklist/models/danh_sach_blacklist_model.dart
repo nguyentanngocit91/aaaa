@@ -74,6 +74,7 @@ class LichsuCapnhat {
     this.manhanvien,
     this.hoten,
     this.phongbanId,
+    this.ngaykhoitao,
   });
 
   LichsuCapnhat.fromJson(dynamic json) {
@@ -81,24 +82,28 @@ class LichsuCapnhat {
     manhanvien = json['manhanvien'];
     hoten = json['hoten'];
     phongbanId = json['phongbanId'];
+    ngaykhoitao = json['ngaykhoitao'];
   }
 
   String? id;
   String? manhanvien;
   String? hoten;
   String? phongbanId;
+  String? ngaykhoitao;
 
   LichsuCapnhat copyWith({
     String? id,
     String? manhanvien,
     String? hoten,
     String? phongbanId,
+    String? ngaykhoitao,
   }) =>
       LichsuCapnhat(
         id: id ?? this.id,
         manhanvien: manhanvien ?? this.manhanvien,
         hoten: hoten ?? this.hoten,
         phongbanId: phongbanId ?? this.phongbanId,
+        ngaykhoitao: ngaykhoitao ?? this.ngaykhoitao,
       );
 
   Map<String, dynamic> toJson() {
@@ -107,6 +112,7 @@ class LichsuCapnhat {
     map['manhanvien'] = manhanvien;
     map['hoten'] = hoten;
     map['phongbanId'] = phongbanId;
+    map['ngaykhoitao'] = ngaykhoitao;
     return map;
   }
 }
@@ -117,6 +123,7 @@ class LichsuKhoitao {
     this.manhanvien,
     this.hoten,
     this.phongbanId,
+    this.ngaykhoitao,
   });
 
   LichsuKhoitao.fromJson(dynamic json) {
@@ -124,24 +131,28 @@ class LichsuKhoitao {
     manhanvien = json['manhanvien'];
     hoten = json['hoten'];
     phongbanId = json['phongbanId'];
+    ngaykhoitao = json['ngaykhoitao'];
   }
 
   String? id;
   String? manhanvien;
   String? hoten;
   String? phongbanId;
+  String? ngaykhoitao;
 
   LichsuKhoitao copyWith({
     String? id,
     String? manhanvien,
     String? hoten,
     String? phongbanId,
+    String? ngaykhoitao,
   }) =>
       LichsuKhoitao(
         id: id ?? this.id,
         manhanvien: manhanvien ?? this.manhanvien,
         hoten: hoten ?? this.hoten,
         phongbanId: phongbanId ?? this.phongbanId,
+        ngaykhoitao: ngaykhoitao ?? this.ngaykhoitao,
       );
 
   Map<String, dynamic> toJson() {
@@ -150,6 +161,7 @@ class LichsuKhoitao {
     map['manhanvien'] = manhanvien;
     map['hoten'] = hoten;
     map['phongbanId'] = phongbanId;
+    map['ngaykhoitao'] = ngaykhoitao;
     return map;
   }
 }

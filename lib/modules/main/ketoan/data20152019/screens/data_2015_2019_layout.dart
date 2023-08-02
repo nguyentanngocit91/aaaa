@@ -19,6 +19,13 @@ class _Data20152019State extends State<Data20152019> {
 
   TextEditingController dateInputFrom = TextEditingController();
   TextEditingController dateInputTo = TextEditingController();
+  TextEditingController maHDController=TextEditingController();
+  TextEditingController maSoThueController=TextEditingController();
+  TextEditingController soPhieuThuController=TextEditingController();
+  TextEditingController tenCongTyController=TextEditingController();
+  TextEditingController emailController=TextEditingController();
+  TextEditingController domainController=TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -115,8 +122,7 @@ class _Data20152019State extends State<Data20152019> {
                                 String formattedDate =
                                 DateFormat('dd-MM-yyyy').format(pickedDate);
                                 print( formattedDate); //formatted date output using intl package =>  2021-03-16
-                                dateInputTo.text =
-                                    formattedDate; //set output date to TextField value.
+                                dateInputTo.text = formattedDate; //set output date to TextField value.
                               } else {}
                             },
                           ),
@@ -297,8 +303,20 @@ class _Data20152019State extends State<Data20152019> {
                         Container(
                           margin:const EdgeInsets.only(top:20),
                           child: PtButton(width:150,icon:const Icon(Icons.search,color:Colors.white,),title:"Tìm kiếm", onPressed: (){
-                            print("Export");
-                          },),
+                              print("tim kiem");
+
+
+                              String strDateInputFrom =dateInputFrom.text;
+                              String strDateInputTo = dateInputTo.text;
+                              String strMaHDController=maHDController.text;
+                              String strMaSoThueController=maSoThueController.text;
+                              String strSoPhieuThuController=soPhieuThuController.text;
+                              String strTenCongTyController=tenCongTyController.text;
+                              String strEmailController=emailController.text;
+                              String strDomainController=domainController.text;
+
+
+                            },),
                         )
                       ],
                     ),
