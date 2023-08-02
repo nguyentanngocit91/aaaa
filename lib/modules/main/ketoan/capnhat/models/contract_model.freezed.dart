@@ -314,6 +314,7 @@ L1_data _$L1_dataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$L1_data {
   List<dynamic>? get dichvuIds => throw _privateConstructorUsedError;
+  List<dynamic>? get files => throw _privateConstructorUsedError;
   List<dynamic>? get lichsu_thanhtoan => throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
@@ -325,8 +326,6 @@ mixin _$L1_data {
   String? get mahopdong => throw _privateConstructorUsedError;
   List<dynamic>? get nhanvien => throw _privateConstructorUsedError;
   String? get ghichu => throw _privateConstructorUsedError;
-  @JsonKey(name: 'info')
-  L2_info? get l2_info => throw _privateConstructorUsedError;
   String? get khachhangId => throw _privateConstructorUsedError;
   String? get tenhopdong => throw _privateConstructorUsedError;
   @JsonKey(name: 'lichsu_khoitao')
@@ -334,6 +333,17 @@ mixin _$L1_data {
       throw _privateConstructorUsedError;
   int? get tongtien => throw _privateConstructorUsedError;
   List<dynamic>? get lichsu_capnhat => throw _privateConstructorUsedError;
+  String? get chucnang => throw _privateConstructorUsedError;
+  int? get dungluong => throw _privateConstructorUsedError;
+  String? get mota => throw _privateConstructorUsedError;
+  String? get ngaybangiao => throw _privateConstructorUsedError;
+  String? get ngaydangky => throw _privateConstructorUsedError;
+  String? get ngayhethan => throw _privateConstructorUsedError;
+  String? get ngaykichhoat => throw _privateConstructorUsedError;
+  List<dynamic>? get ngayupstore => throw _privateConstructorUsedError;
+  int? get sonamdangky => throw _privateConstructorUsedError;
+  String? get tenapp => throw _privateConstructorUsedError;
+  String? get tenmien => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -347,6 +357,7 @@ abstract class $L1_dataCopyWith<$Res> {
   @useResult
   $Res call(
       {List<dynamic>? dichvuIds,
+      List<dynamic>? files,
       List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') String? id,
       String? sohopdong,
@@ -357,14 +368,23 @@ abstract class $L1_dataCopyWith<$Res> {
       String? mahopdong,
       List<dynamic>? nhanvien,
       String? ghichu,
-      @JsonKey(name: 'info') L2_info? l2_info,
       String? khachhangId,
       String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') L2_lichsu_khoitao? l2_lichsu_khoitao,
       int? tongtien,
-      List<dynamic>? lichsu_capnhat});
+      List<dynamic>? lichsu_capnhat,
+      String? chucnang,
+      int? dungluong,
+      String? mota,
+      String? ngaybangiao,
+      String? ngaydangky,
+      String? ngayhethan,
+      String? ngaykichhoat,
+      List<dynamic>? ngayupstore,
+      int? sonamdangky,
+      String? tenapp,
+      String? tenmien});
 
-  $L2_infoCopyWith<$Res>? get l2_info;
   $L2_lichsu_khoitaoCopyWith<$Res>? get l2_lichsu_khoitao;
 }
 
@@ -382,6 +402,7 @@ class _$L1_dataCopyWithImpl<$Res, $Val extends L1_data>
   @override
   $Res call({
     Object? dichvuIds = freezed,
+    Object? files = freezed,
     Object? lichsu_thanhtoan = freezed,
     Object? id = freezed,
     Object? sohopdong = freezed,
@@ -392,17 +413,31 @@ class _$L1_dataCopyWithImpl<$Res, $Val extends L1_data>
     Object? mahopdong = freezed,
     Object? nhanvien = freezed,
     Object? ghichu = freezed,
-    Object? l2_info = freezed,
     Object? khachhangId = freezed,
     Object? tenhopdong = freezed,
     Object? l2_lichsu_khoitao = freezed,
     Object? tongtien = freezed,
     Object? lichsu_capnhat = freezed,
+    Object? chucnang = freezed,
+    Object? dungluong = freezed,
+    Object? mota = freezed,
+    Object? ngaybangiao = freezed,
+    Object? ngaydangky = freezed,
+    Object? ngayhethan = freezed,
+    Object? ngaykichhoat = freezed,
+    Object? ngayupstore = freezed,
+    Object? sonamdangky = freezed,
+    Object? tenapp = freezed,
+    Object? tenmien = freezed,
   }) {
     return _then(_value.copyWith(
       dichvuIds: freezed == dichvuIds
           ? _value.dichvuIds
           : dichvuIds // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      files: freezed == files
+          ? _value.files
+          : files // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
       lichsu_thanhtoan: freezed == lichsu_thanhtoan
           ? _value.lichsu_thanhtoan
@@ -444,10 +479,6 @@ class _$L1_dataCopyWithImpl<$Res, $Val extends L1_data>
           ? _value.ghichu
           : ghichu // ignore: cast_nullable_to_non_nullable
               as String?,
-      l2_info: freezed == l2_info
-          ? _value.l2_info
-          : l2_info // ignore: cast_nullable_to_non_nullable
-              as L2_info?,
       khachhangId: freezed == khachhangId
           ? _value.khachhangId
           : khachhangId // ignore: cast_nullable_to_non_nullable
@@ -468,19 +499,51 @@ class _$L1_dataCopyWithImpl<$Res, $Val extends L1_data>
           ? _value.lichsu_capnhat
           : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
+      chucnang: freezed == chucnang
+          ? _value.chucnang
+          : chucnang // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dungluong: freezed == dungluong
+          ? _value.dungluong
+          : dungluong // ignore: cast_nullable_to_non_nullable
+              as int?,
+      mota: freezed == mota
+          ? _value.mota
+          : mota // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngaybangiao: freezed == ngaybangiao
+          ? _value.ngaybangiao
+          : ngaybangiao // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngaydangky: freezed == ngaydangky
+          ? _value.ngaydangky
+          : ngaydangky // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngayhethan: freezed == ngayhethan
+          ? _value.ngayhethan
+          : ngayhethan // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngaykichhoat: freezed == ngaykichhoat
+          ? _value.ngaykichhoat
+          : ngaykichhoat // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngayupstore: freezed == ngayupstore
+          ? _value.ngayupstore
+          : ngayupstore // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      sonamdangky: freezed == sonamdangky
+          ? _value.sonamdangky
+          : sonamdangky // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tenapp: freezed == tenapp
+          ? _value.tenapp
+          : tenapp // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tenmien: freezed == tenmien
+          ? _value.tenmien
+          : tenmien // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $L2_infoCopyWith<$Res>? get l2_info {
-    if (_value.l2_info == null) {
-      return null;
-    }
-
-    return $L2_infoCopyWith<$Res>(_value.l2_info!, (value) {
-      return _then(_value.copyWith(l2_info: value) as $Val);
-    });
   }
 
   @override
@@ -505,6 +568,7 @@ abstract class _$$_L1_dataCopyWith<$Res> implements $L1_dataCopyWith<$Res> {
   @useResult
   $Res call(
       {List<dynamic>? dichvuIds,
+      List<dynamic>? files,
       List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') String? id,
       String? sohopdong,
@@ -515,15 +579,23 @@ abstract class _$$_L1_dataCopyWith<$Res> implements $L1_dataCopyWith<$Res> {
       String? mahopdong,
       List<dynamic>? nhanvien,
       String? ghichu,
-      @JsonKey(name: 'info') L2_info? l2_info,
       String? khachhangId,
       String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') L2_lichsu_khoitao? l2_lichsu_khoitao,
       int? tongtien,
-      List<dynamic>? lichsu_capnhat});
+      List<dynamic>? lichsu_capnhat,
+      String? chucnang,
+      int? dungluong,
+      String? mota,
+      String? ngaybangiao,
+      String? ngaydangky,
+      String? ngayhethan,
+      String? ngaykichhoat,
+      List<dynamic>? ngayupstore,
+      int? sonamdangky,
+      String? tenapp,
+      String? tenmien});
 
-  @override
-  $L2_infoCopyWith<$Res>? get l2_info;
   @override
   $L2_lichsu_khoitaoCopyWith<$Res>? get l2_lichsu_khoitao;
 }
@@ -539,6 +611,7 @@ class __$$_L1_dataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? dichvuIds = freezed,
+    Object? files = freezed,
     Object? lichsu_thanhtoan = freezed,
     Object? id = freezed,
     Object? sohopdong = freezed,
@@ -549,17 +622,31 @@ class __$$_L1_dataCopyWithImpl<$Res>
     Object? mahopdong = freezed,
     Object? nhanvien = freezed,
     Object? ghichu = freezed,
-    Object? l2_info = freezed,
     Object? khachhangId = freezed,
     Object? tenhopdong = freezed,
     Object? l2_lichsu_khoitao = freezed,
     Object? tongtien = freezed,
     Object? lichsu_capnhat = freezed,
+    Object? chucnang = freezed,
+    Object? dungluong = freezed,
+    Object? mota = freezed,
+    Object? ngaybangiao = freezed,
+    Object? ngaydangky = freezed,
+    Object? ngayhethan = freezed,
+    Object? ngaykichhoat = freezed,
+    Object? ngayupstore = freezed,
+    Object? sonamdangky = freezed,
+    Object? tenapp = freezed,
+    Object? tenmien = freezed,
   }) {
     return _then(_$_L1_data(
       dichvuIds: freezed == dichvuIds
           ? _value._dichvuIds
           : dichvuIds // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      files: freezed == files
+          ? _value._files
+          : files // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
       lichsu_thanhtoan: freezed == lichsu_thanhtoan
           ? _value._lichsu_thanhtoan
@@ -601,10 +688,6 @@ class __$$_L1_dataCopyWithImpl<$Res>
           ? _value.ghichu
           : ghichu // ignore: cast_nullable_to_non_nullable
               as String?,
-      l2_info: freezed == l2_info
-          ? _value.l2_info
-          : l2_info // ignore: cast_nullable_to_non_nullable
-              as L2_info?,
       khachhangId: freezed == khachhangId
           ? _value.khachhangId
           : khachhangId // ignore: cast_nullable_to_non_nullable
@@ -625,6 +708,50 @@ class __$$_L1_dataCopyWithImpl<$Res>
           ? _value._lichsu_capnhat
           : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
+      chucnang: freezed == chucnang
+          ? _value.chucnang
+          : chucnang // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dungluong: freezed == dungluong
+          ? _value.dungluong
+          : dungluong // ignore: cast_nullable_to_non_nullable
+              as int?,
+      mota: freezed == mota
+          ? _value.mota
+          : mota // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngaybangiao: freezed == ngaybangiao
+          ? _value.ngaybangiao
+          : ngaybangiao // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngaydangky: freezed == ngaydangky
+          ? _value.ngaydangky
+          : ngaydangky // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngayhethan: freezed == ngayhethan
+          ? _value.ngayhethan
+          : ngayhethan // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngaykichhoat: freezed == ngaykichhoat
+          ? _value.ngaykichhoat
+          : ngaykichhoat // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngayupstore: freezed == ngayupstore
+          ? _value._ngayupstore
+          : ngayupstore // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      sonamdangky: freezed == sonamdangky
+          ? _value.sonamdangky
+          : sonamdangky // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tenapp: freezed == tenapp
+          ? _value.tenapp
+          : tenapp // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tenmien: freezed == tenmien
+          ? _value.tenmien
+          : tenmien // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -634,6 +761,7 @@ class __$$_L1_dataCopyWithImpl<$Res>
 class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
   const _$_L1_data(
       {final List<dynamic>? dichvuIds,
+      final List<dynamic>? files,
       final List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') this.id,
       this.sohopdong,
@@ -644,16 +772,28 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
       this.mahopdong,
       final List<dynamic>? nhanvien,
       this.ghichu,
-      @JsonKey(name: 'info') this.l2_info,
       this.khachhangId,
       this.tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') this.l2_lichsu_khoitao,
       this.tongtien,
-      final List<dynamic>? lichsu_capnhat})
+      final List<dynamic>? lichsu_capnhat,
+      this.chucnang,
+      this.dungluong,
+      this.mota,
+      this.ngaybangiao,
+      this.ngaydangky,
+      this.ngayhethan,
+      this.ngaykichhoat,
+      final List<dynamic>? ngayupstore,
+      this.sonamdangky,
+      this.tenapp,
+      this.tenmien})
       : _dichvuIds = dichvuIds,
+        _files = files,
         _lichsu_thanhtoan = lichsu_thanhtoan,
         _nhanvien = nhanvien,
-        _lichsu_capnhat = lichsu_capnhat;
+        _lichsu_capnhat = lichsu_capnhat,
+        _ngayupstore = ngayupstore;
 
   factory _$_L1_data.fromJson(Map<String, dynamic> json) =>
       _$$_L1_dataFromJson(json);
@@ -664,6 +804,16 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
     final value = _dichvuIds;
     if (value == null) return null;
     if (_dichvuIds is EqualUnmodifiableListView) return _dichvuIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<dynamic>? _files;
+  @override
+  List<dynamic>? get files {
+    final value = _files;
+    if (value == null) return null;
+    if (_files is EqualUnmodifiableListView) return _files;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -707,9 +857,6 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
   @override
   final String? ghichu;
   @override
-  @JsonKey(name: 'info')
-  final L2_info? l2_info;
-  @override
   final String? khachhangId;
   @override
   final String? tenhopdong;
@@ -729,8 +876,39 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
   }
 
   @override
+  final String? chucnang;
+  @override
+  final int? dungluong;
+  @override
+  final String? mota;
+  @override
+  final String? ngaybangiao;
+  @override
+  final String? ngaydangky;
+  @override
+  final String? ngayhethan;
+  @override
+  final String? ngaykichhoat;
+  final List<dynamic>? _ngayupstore;
+  @override
+  List<dynamic>? get ngayupstore {
+    final value = _ngayupstore;
+    if (value == null) return null;
+    if (_ngayupstore is EqualUnmodifiableListView) return _ngayupstore;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final int? sonamdangky;
+  @override
+  final String? tenapp;
+  @override
+  final String? tenmien;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'L1_data(dichvuIds: $dichvuIds, lichsu_thanhtoan: $lichsu_thanhtoan, id: $id, sohopdong: $sohopdong, namhopdong: $namhopdong, ngaykyhd: $ngaykyhd, loaihopdong: $loaihopdong, mahopdongcu: $mahopdongcu, mahopdong: $mahopdong, nhanvien: $nhanvien, ghichu: $ghichu, l2_info: $l2_info, khachhangId: $khachhangId, tenhopdong: $tenhopdong, l2_lichsu_khoitao: $l2_lichsu_khoitao, tongtien: $tongtien, lichsu_capnhat: $lichsu_capnhat)';
+    return 'L1_data(dichvuIds: $dichvuIds, files: $files, lichsu_thanhtoan: $lichsu_thanhtoan, id: $id, sohopdong: $sohopdong, namhopdong: $namhopdong, ngaykyhd: $ngaykyhd, loaihopdong: $loaihopdong, mahopdongcu: $mahopdongcu, mahopdong: $mahopdong, nhanvien: $nhanvien, ghichu: $ghichu, khachhangId: $khachhangId, tenhopdong: $tenhopdong, l2_lichsu_khoitao: $l2_lichsu_khoitao, tongtien: $tongtien, lichsu_capnhat: $lichsu_capnhat, chucnang: $chucnang, dungluong: $dungluong, mota: $mota, ngaybangiao: $ngaybangiao, ngaydangky: $ngaydangky, ngayhethan: $ngayhethan, ngaykichhoat: $ngaykichhoat, ngayupstore: $ngayupstore, sonamdangky: $sonamdangky, tenapp: $tenapp, tenmien: $tenmien)';
   }
 
   @override
@@ -739,6 +917,7 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
     properties
       ..add(DiagnosticsProperty('type', 'L1_data'))
       ..add(DiagnosticsProperty('dichvuIds', dichvuIds))
+      ..add(DiagnosticsProperty('files', files))
       ..add(DiagnosticsProperty('lichsu_thanhtoan', lichsu_thanhtoan))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('sohopdong', sohopdong))
@@ -749,12 +928,22 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
       ..add(DiagnosticsProperty('mahopdong', mahopdong))
       ..add(DiagnosticsProperty('nhanvien', nhanvien))
       ..add(DiagnosticsProperty('ghichu', ghichu))
-      ..add(DiagnosticsProperty('l2_info', l2_info))
       ..add(DiagnosticsProperty('khachhangId', khachhangId))
       ..add(DiagnosticsProperty('tenhopdong', tenhopdong))
       ..add(DiagnosticsProperty('l2_lichsu_khoitao', l2_lichsu_khoitao))
       ..add(DiagnosticsProperty('tongtien', tongtien))
-      ..add(DiagnosticsProperty('lichsu_capnhat', lichsu_capnhat));
+      ..add(DiagnosticsProperty('lichsu_capnhat', lichsu_capnhat))
+      ..add(DiagnosticsProperty('chucnang', chucnang))
+      ..add(DiagnosticsProperty('dungluong', dungluong))
+      ..add(DiagnosticsProperty('mota', mota))
+      ..add(DiagnosticsProperty('ngaybangiao', ngaybangiao))
+      ..add(DiagnosticsProperty('ngaydangky', ngaydangky))
+      ..add(DiagnosticsProperty('ngayhethan', ngayhethan))
+      ..add(DiagnosticsProperty('ngaykichhoat', ngaykichhoat))
+      ..add(DiagnosticsProperty('ngayupstore', ngayupstore))
+      ..add(DiagnosticsProperty('sonamdangky', sonamdangky))
+      ..add(DiagnosticsProperty('tenapp', tenapp))
+      ..add(DiagnosticsProperty('tenmien', tenmien));
   }
 
   @override
@@ -764,6 +953,7 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
             other is _$_L1_data &&
             const DeepCollectionEquality()
                 .equals(other._dichvuIds, _dichvuIds) &&
+            const DeepCollectionEquality().equals(other._files, _files) &&
             const DeepCollectionEquality()
                 .equals(other._lichsu_thanhtoan, _lichsu_thanhtoan) &&
             (identical(other.id, id) || other.id == id) &&
@@ -781,7 +971,6 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
                 other.mahopdong == mahopdong) &&
             const DeepCollectionEquality().equals(other._nhanvien, _nhanvien) &&
             (identical(other.ghichu, ghichu) || other.ghichu == ghichu) &&
-            (identical(other.l2_info, l2_info) || other.l2_info == l2_info) &&
             (identical(other.khachhangId, khachhangId) ||
                 other.khachhangId == khachhangId) &&
             (identical(other.tenhopdong, tenhopdong) ||
@@ -791,30 +980,61 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
             (identical(other.tongtien, tongtien) ||
                 other.tongtien == tongtien) &&
             const DeepCollectionEquality()
-                .equals(other._lichsu_capnhat, _lichsu_capnhat));
+                .equals(other._lichsu_capnhat, _lichsu_capnhat) &&
+            (identical(other.chucnang, chucnang) ||
+                other.chucnang == chucnang) &&
+            (identical(other.dungluong, dungluong) ||
+                other.dungluong == dungluong) &&
+            (identical(other.mota, mota) || other.mota == mota) &&
+            (identical(other.ngaybangiao, ngaybangiao) ||
+                other.ngaybangiao == ngaybangiao) &&
+            (identical(other.ngaydangky, ngaydangky) ||
+                other.ngaydangky == ngaydangky) &&
+            (identical(other.ngayhethan, ngayhethan) ||
+                other.ngayhethan == ngayhethan) &&
+            (identical(other.ngaykichhoat, ngaykichhoat) ||
+                other.ngaykichhoat == ngaykichhoat) &&
+            const DeepCollectionEquality()
+                .equals(other._ngayupstore, _ngayupstore) &&
+            (identical(other.sonamdangky, sonamdangky) ||
+                other.sonamdangky == sonamdangky) &&
+            (identical(other.tenapp, tenapp) || other.tenapp == tenapp) &&
+            (identical(other.tenmien, tenmien) || other.tenmien == tenmien));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_dichvuIds),
-      const DeepCollectionEquality().hash(_lichsu_thanhtoan),
-      id,
-      sohopdong,
-      namhopdong,
-      ngaykyhd,
-      loaihopdong,
-      mahopdongcu,
-      mahopdong,
-      const DeepCollectionEquality().hash(_nhanvien),
-      ghichu,
-      l2_info,
-      khachhangId,
-      tenhopdong,
-      l2_lichsu_khoitao,
-      tongtien,
-      const DeepCollectionEquality().hash(_lichsu_capnhat));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(_dichvuIds),
+        const DeepCollectionEquality().hash(_files),
+        const DeepCollectionEquality().hash(_lichsu_thanhtoan),
+        id,
+        sohopdong,
+        namhopdong,
+        ngaykyhd,
+        loaihopdong,
+        mahopdongcu,
+        mahopdong,
+        const DeepCollectionEquality().hash(_nhanvien),
+        ghichu,
+        khachhangId,
+        tenhopdong,
+        l2_lichsu_khoitao,
+        tongtien,
+        const DeepCollectionEquality().hash(_lichsu_capnhat),
+        chucnang,
+        dungluong,
+        mota,
+        ngaybangiao,
+        ngaydangky,
+        ngayhethan,
+        ngaykichhoat,
+        const DeepCollectionEquality().hash(_ngayupstore),
+        sonamdangky,
+        tenapp,
+        tenmien
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -833,6 +1053,7 @@ class _$_L1_data with DiagnosticableTreeMixin implements _L1_data {
 abstract class _L1_data implements L1_data {
   const factory _L1_data(
       {final List<dynamic>? dichvuIds,
+      final List<dynamic>? files,
       final List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') final String? id,
       final String? sohopdong,
@@ -843,18 +1064,30 @@ abstract class _L1_data implements L1_data {
       final String? mahopdong,
       final List<dynamic>? nhanvien,
       final String? ghichu,
-      @JsonKey(name: 'info') final L2_info? l2_info,
       final String? khachhangId,
       final String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao')
       final L2_lichsu_khoitao? l2_lichsu_khoitao,
       final int? tongtien,
-      final List<dynamic>? lichsu_capnhat}) = _$_L1_data;
+      final List<dynamic>? lichsu_capnhat,
+      final String? chucnang,
+      final int? dungluong,
+      final String? mota,
+      final String? ngaybangiao,
+      final String? ngaydangky,
+      final String? ngayhethan,
+      final String? ngaykichhoat,
+      final List<dynamic>? ngayupstore,
+      final int? sonamdangky,
+      final String? tenapp,
+      final String? tenmien}) = _$_L1_data;
 
   factory _L1_data.fromJson(Map<String, dynamic> json) = _$_L1_data.fromJson;
 
   @override
   List<dynamic>? get dichvuIds;
+  @override
+  List<dynamic>? get files;
   @override
   List<dynamic>? get lichsu_thanhtoan;
   @override
@@ -877,9 +1110,6 @@ abstract class _L1_data implements L1_data {
   @override
   String? get ghichu;
   @override
-  @JsonKey(name: 'info')
-  L2_info? get l2_info;
-  @override
   String? get khachhangId;
   @override
   String? get tenhopdong;
@@ -891,148 +1121,30 @@ abstract class _L1_data implements L1_data {
   @override
   List<dynamic>? get lichsu_capnhat;
   @override
-  @JsonKey(ignore: true)
-  _$$_L1_dataCopyWith<_$_L1_data> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-L2_info _$L2_infoFromJson(Map<String, dynamic> json) {
-  return _L2_info.fromJson(json);
-}
-
-/// @nodoc
-mixin _$L2_info {
-  String? get chucnang => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $L2_infoCopyWith<L2_info> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $L2_infoCopyWith<$Res> {
-  factory $L2_infoCopyWith(L2_info value, $Res Function(L2_info) then) =
-      _$L2_infoCopyWithImpl<$Res, L2_info>;
-  @useResult
-  $Res call({String? chucnang});
-}
-
-/// @nodoc
-class _$L2_infoCopyWithImpl<$Res, $Val extends L2_info>
-    implements $L2_infoCopyWith<$Res> {
-  _$L2_infoCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? chucnang = freezed,
-  }) {
-    return _then(_value.copyWith(
-      chucnang: freezed == chucnang
-          ? _value.chucnang
-          : chucnang // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_L2_infoCopyWith<$Res> implements $L2_infoCopyWith<$Res> {
-  factory _$$_L2_infoCopyWith(
-          _$_L2_info value, $Res Function(_$_L2_info) then) =
-      __$$_L2_infoCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String? chucnang});
-}
-
-/// @nodoc
-class __$$_L2_infoCopyWithImpl<$Res>
-    extends _$L2_infoCopyWithImpl<$Res, _$_L2_info>
-    implements _$$_L2_infoCopyWith<$Res> {
-  __$$_L2_infoCopyWithImpl(_$_L2_info _value, $Res Function(_$_L2_info) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? chucnang = freezed,
-  }) {
-    return _then(_$_L2_info(
-      chucnang: freezed == chucnang
-          ? _value.chucnang
-          : chucnang // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_L2_info with DiagnosticableTreeMixin implements _L2_info {
-  const _$_L2_info({this.chucnang});
-
-  factory _$_L2_info.fromJson(Map<String, dynamic> json) =>
-      _$$_L2_infoFromJson(json);
-
-  @override
-  final String? chucnang;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'L2_info(chucnang: $chucnang)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'L2_info'))
-      ..add(DiagnosticsProperty('chucnang', chucnang));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_L2_info &&
-            (identical(other.chucnang, chucnang) ||
-                other.chucnang == chucnang));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, chucnang);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_L2_infoCopyWith<_$_L2_info> get copyWith =>
-      __$$_L2_infoCopyWithImpl<_$_L2_info>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_L2_infoToJson(
-      this,
-    );
-  }
-}
-
-abstract class _L2_info implements L2_info {
-  const factory _L2_info({final String? chucnang}) = _$_L2_info;
-
-  factory _L2_info.fromJson(Map<String, dynamic> json) = _$_L2_info.fromJson;
-
-  @override
   String? get chucnang;
   @override
+  int? get dungluong;
+  @override
+  String? get mota;
+  @override
+  String? get ngaybangiao;
+  @override
+  String? get ngaydangky;
+  @override
+  String? get ngayhethan;
+  @override
+  String? get ngaykichhoat;
+  @override
+  List<dynamic>? get ngayupstore;
+  @override
+  int? get sonamdangky;
+  @override
+  String? get tenapp;
+  @override
+  String? get tenmien;
+  @override
   @JsonKey(ignore: true)
-  _$$_L2_infoCopyWith<_$_L2_info> get copyWith =>
+  _$$_L1_dataCopyWith<_$_L1_data> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -40,6 +40,7 @@ class ContractModel with _$ContractModel {
 class L1_data with _$L1_data {
   const factory L1_data({
     List<dynamic>? dichvuIds,
+    List<dynamic>? files,
     List<dynamic>? lichsu_thanhtoan,
     @JsonKey(name: '_id') @required String? id,
     String? sohopdong,
@@ -50,22 +51,24 @@ class L1_data with _$L1_data {
     String? mahopdong,
     List<dynamic>? nhanvien,
     String? ghichu,
-    @JsonKey(name: 'info') L2_info? l2_info,
     String? khachhangId,
     String? tenhopdong,
     @JsonKey(name: 'lichsu_khoitao') L2_lichsu_khoitao? l2_lichsu_khoitao,
     int? tongtien,
-    List<dynamic>? lichsu_capnhat}) = _L1_data;
+    List<dynamic>? lichsu_capnhat,
+    String? chucnang,
+    int? dungluong,
+    String? mota,
+    String? ngaybangiao,
+    String? ngaydangky,
+    String? ngayhethan,
+    String? ngaykichhoat,
+    List<dynamic>? ngayupstore,
+    int? sonamdangky,
+    String? tenapp,
+    String? tenmien}) = _L1_data;
 
   factory L1_data.fromJson(Map<String, dynamic> json) => _$L1_dataFromJson(json);
-}
-
-@freezed
-class L2_info with _$L2_info {
-  const factory L2_info({
-    String? chucnang}) = _L2_info;
-
-  factory L2_info.fromJson(Map<String, dynamic> json) => _$L2_infoFromJson(json);
 }
 
 @freezed

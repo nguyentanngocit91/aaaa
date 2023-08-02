@@ -44,88 +44,101 @@ class UpgradeWebListLayout extends ConsumerWidget {
     );
   }
 }
+
 class Data extends ConsumerWidget {
   Data({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var data = ref.watch(capnhatProvider.select((value) => value.result));
-    if(data!=null && (data!['info'].page > data!['info'].lastPage && data!['info'].total > 0)){
-        ref.read(capnhatProvider.notifier).setPage(data!['info'].lastPage,searchType);
+    if (data != null &&
+        (data!['info'].page > data!['info'].lastPage &&
+            data!['info'].total > 0)) {
+      ref
+          .read(capnhatProvider.notifier)
+          .setPage(data!['info'].lastPage, searchType);
     }
-
-
     return SingleChildScrollView(
         child: Column(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFF105A6C),
-              ),
-              child: const Row(
-                children: [
-                  Expanded(flex: 1, child: HeaderRowItem(text: '#')),
-                  Expanded(
-                    flex: 3,
-                    child: HeaderRowItem(text: 'Mã KH'),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: HeaderRowItem(text: 'Mã HĐ'),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: HeaderRowItem(text: 'Email'),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: HeaderRowItem(text: 'Ngày ký'),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: HeaderRowItem(text: 'Chức năng'),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: HeaderRowItem(text: 'Ghi chú'),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: HeaderRowItem(text: 'Thao tác'),
-                  ),
-                ],
-              ),
-            ),
-            if (data != null && data['data'].length > 0) ...[
-              ListView.builder(
-                  padding: const EdgeInsets.all(0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  primary: true,
-                  itemCount: data['data'].length,
-                  itemBuilder: (BuildContext context, index) {
-                    InfoResponseModel info = data['info'];
-                    return InfoUpdate(
-                        item: data['data'][index],
-                        index:
-                            info.page! * info.limit! - (info.limit!) + index + 1);
-                  }),
-              GeneratePagin(data['info']),
-            ] else ...[
-              const BsAlert(
-                closeButton: false,
-                margin: EdgeInsets.only(bottom: 10.0),
-                style: BsAlertStyle.danger,
-                child: Text('Không có dữ liệu', textAlign: TextAlign.center),
-              ),
-            ],
-          ],
-        ));
+      children: [
+        _headerTable(),
+        if (data != null && data['data'].length > 0) ...[
+          ListView.builder(
+              padding: const EdgeInsets.all(0),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              primary: true,
+              itemCount: data['data'].length,
+              itemBuilder: (BuildContext context, index) {
+                InfoResponseModel info = data['info'];
+                return InfoUpdate(
+                    item: data['data'][index],
+                    index:
+                        info.page! * info.limit! - (info.limit!) + index + 1);
+              }),
+          GeneratePagin(data['info']),
+        ] else ...[
+          const BsAlert(
+            closeButton: false,
+            margin: EdgeInsets.only(bottom: 10.0),
+            style: BsAlertStyle.danger,
+            child: Text('Không có dữ liệu', textAlign: TextAlign.center),
+          ),
+        ],
+      ],
+    ));
+  }
+}
+
+class _headerTable extends StatelessWidget {
+  const _headerTable({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color(0xFF105A6C),
+      ),
+      child: const Row(
+        children: [
+          Expanded(flex: 1, child: HeaderRowItem(text: '#')),
+          Expanded(
+            flex: 3,
+            child: HeaderRowItem(text: 'Mã KH'),
+          ),
+          Expanded(
+            flex: 3,
+            child: HeaderRowItem(text: 'Mã HĐ'),
+          ),
+          Expanded(
+            flex: 4,
+            child: HeaderRowItem(text: 'Email'),
+          ),
+          Expanded(
+            flex: 3,
+            child: HeaderRowItem(text: 'Ngày ký'),
+          ),
+          Expanded(
+            flex: 5,
+            child: HeaderRowItem(text: 'Chức năng'),
+          ),
+          Expanded(
+            flex: 5,
+            child: HeaderRowItem(text: 'Ghi chú'),
+          ),
+          Expanded(
+            flex: 4,
+            child: HeaderRowItem(text: 'Thao tác'),
+          ),
+        ],
+      ),
+    );
   }
 }
 
 class GeneratePagin extends ConsumerStatefulWidget {
   GeneratePagin(this.data);
+
   final InfoResponseModel data;
 
   @override
@@ -145,9 +158,7 @@ class _GeneratePaginState extends ConsumerState<GeneratePagin> {
         selectedPage = widget.data.lastPage!;
       });
       ref.read(capnhatProvider.notifier).setPage(selectedPage, searchType);
-    //  ref.read(capnhatProvider.notifier).onSearch(searchType);
     }
-
     return widget.data.lastPage! < 2
         ? Container()
         : Column(
@@ -159,7 +170,9 @@ class _GeneratePaginState extends ConsumerState<GeneratePagin> {
                 selectedPage: selectedPage,
                 pagesVisible: 5,
                 onPerPageChange: (page) {
-                  ref.read(capnhatProvider.notifier).setPerPage(page, searchType);
+                  ref
+                      .read(capnhatProvider.notifier)
+                      .setPerPage(page, searchType);
                   // ref.read(capnhatProvider.notifier).onSearch(searchType);
                   setState(() {
                     perPage = page;
@@ -203,12 +216,12 @@ class _GeneratePaginState extends ConsumerState<GeneratePagin> {
 class InfoUpdate extends StatelessWidget {
   InfoUpdate({Key? key, required this.item, required this.index})
       : super(key: key);
-
   final ItemSearchResultModel item;
   final int index;
 
   @override
   Widget build(BuildContext context) {
+
     return Column(children: [
       Row(
         children: [
@@ -234,7 +247,7 @@ class InfoUpdate extends StatelessWidget {
           ),
           Expanded(
             flex: 5,
-            child: BodyRowItem(Text(item.l1_info!.chucnang.toString())),
+            child: BodyRowItem(Text(item.chucnang.toString())),
           ),
           Expanded(
             flex: 5,
@@ -245,7 +258,7 @@ class InfoUpdate extends StatelessWidget {
               child: BodyRowItem(ResponsiveGridRow(children: [
                 ResponsiveGridCol(
                   lg: 6,
-                  sm:12,
+                  sm: 12,
                   xs: 12,
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
@@ -258,16 +271,16 @@ class InfoUpdate extends StatelessWidget {
                       padding: EdgeInsets.only(
                           left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
                       child: Text(
-                        'Nâng cấp',textAlign: TextAlign.center,
+                        'Nâng cấp',
+                        textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
                     )),
                   ),
                 ),
-
                 ResponsiveGridCol(
                   lg: 6,
-                  sm:12,
+                  sm: 12,
                   xs: 12,
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
@@ -278,28 +291,27 @@ class InfoUpdate extends StatelessWidget {
                             barrierDismissible: false,
                             // user must tap button!
                             builder: (BuildContext context) {
-                              return UpdateWebsite(id: item.id!);
+                              return UpdateWebsite(id: item.id!,contractNumber: item.sohopdong!,);
                             },
                           );
                         },
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.green,
-                            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.0)),
                           ),
                           padding: EdgeInsets.only(
                               left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
                           child: Text(
-                            'Cập nhật',textAlign: TextAlign.center,
+                            'Cập nhật',
+                            textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.white),
                           ),
                         )),
                   ),
                 )
-              ])
-
-
-                  )),
+              ]))),
         ],
       ),
       const Divider(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../_shared/utils/form_status.dart';
 import '../models/contract_model.dart';
+import '../models/media_model.dart';
 import '../repositories/capnhat_repository.dart';
 part 'capnhat_state.dart';
 
@@ -17,6 +18,7 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
   CapNhatNotifier() : super(const CapNhatState());
   int? perPage = 10;
   int currentPage = 1;
+  String _search_type =  '';
   void onChangeValue(String type, String value) {
     Map<String, String> data = state.data ?? {};
     data.addAll({type: value});
@@ -40,7 +42,12 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
       onSearch(type);
     }
   }
+
+  void reload() {
+    this.onSearch(_search_type);
+  }
   void onSearch(String type) async {
+    _search_type = type;
     Map<String, String>? data = state.data;
     Map<String, dynamic> params = {
       'sohopdong': (data!=null && data['SOHD']!='')?data['SOHD']:'',
@@ -84,6 +91,7 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
   getConstractById(String id) async {
    state = state.copyWith(contract: null);
    final jsonResult = await _capNhatRepository.getInfo(id);
-   state = state.copyWith(contract: jsonResult['data']);
+   state = state.copyWith(contract: jsonResult['data'],media:jsonResult['media']);
   }
+
 }
