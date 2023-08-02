@@ -46,6 +46,7 @@ class TextFieldTags extends StatefulWidget {
 
   final bool? readyOnlyTags;
 
+
   const TextFieldTags({
     Key? key,
     this.tagsDistanceFromBorderEnd = 0.725,
@@ -103,18 +104,18 @@ class _TextFieldTagsState extends State<TextFieldTags> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _deviceWidth = MediaQuery.of(context).size.width;
+    _deviceWidth = double.infinity;
   }
 
   @override
   void dispose() {
-    super.dispose();
     _scrollController!.dispose();
     _tagController!.dispose();
     _tagsStringContents = null;
     _scrollController = null;
     _deviceWidth = null;
     _tagController = null;
+    super.dispose();
   }
 
   List<Widget> get _getTags {
@@ -163,7 +164,7 @@ class _TextFieldTagsState extends State<TextFieldTags> {
   }
 
   void _animateTransition() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController!.hasClients) {
         _scrollController!.animateTo(
           _scrollController!.position.maxScrollExtent,
@@ -176,13 +177,12 @@ class _TextFieldTagsState extends State<TextFieldTags> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       maxLength: widget.textFieldStyler.maxLength,
       keyboardType: widget.textFieldStyler.textInputType,
       readOnly: widget.textFieldStyler.readOnly,
-      controller: TextFieldTagsController.getTextEditingController,
-      focusNode: TextFieldTagsController.getFocusNode,
-      autocorrect: false,
+      controller: widget.textFieldTagsController?.getTextEditingController,
+      focusNode: widget.textFieldTagsController?.getFocusNode,
       cursorColor: widget.textFieldStyler.cursorColor,
       style: widget.textFieldStyler.textStyle,
       decoration: InputDecoration(
@@ -211,8 +211,9 @@ class _TextFieldTagsState extends State<TextFieldTags> {
         enabledBorder: widget.textFieldStyler.textFieldEnabledBorder,
         prefixIcon: _tagState!['show_prefix_icon']
             ? ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: _deviceWidth! * widget.tagsDistanceFromBorderEnd,
+                constraints: const BoxConstraints(
+                  // maxWidth: _deviceWidth! * widget.tagsDistanceFromBorderEnd,
+                  maxWidth: 200,
                 ),
                 child: Container(
                   margin: widget.scrollableTagsMargin,
@@ -230,14 +231,14 @@ class _TextFieldTagsState extends State<TextFieldTags> {
               )
             : null,
       ),
-      onSubmitted: (value) {
+      onFieldSubmitted: (value) {
         if (_tagState!['show_validator'] == false) {
           final val = widget.letterCase == LetterCase.small
               ? value.trim().toLowerCase()
               : widget.letterCase == LetterCase.capital
                   ? value.trim().toUpperCase()
                   : value.trim();
-          TextFieldTagsController.getTextEditingController.clear();
+          widget.textFieldTagsController?.getTextEditingController.clear();
           if (widget.validator == null || widget.validator!(val) == null) {
             widget.onTag(val);
             if (!_tagState!['show_prefix_icon']) {
@@ -252,6 +253,7 @@ class _TextFieldTagsState extends State<TextFieldTags> {
             _tagController!.showError(widget.validator!(val)!);
           }
         }
+        FocusScope.of(context).requestFocus(widget.textFieldTagsController?.focusNode);
       },
       onChanged: (value) {
         if (_tagState!['show_validator'] == false) {
@@ -272,7 +274,7 @@ class _TextFieldTagsState extends State<TextFieldTags> {
                     ? splits.elementAt(indexer).trim().toUpperCase()
                     : splits.elementAt(indexer).trim();
 
-            TextFieldTagsController.getTextEditingController.clear();
+            widget.textFieldTagsController?.getTextEditingController.clear();
 
             if (widget.validator == null ||
                 widget.validator!(lastLastTag) == null) {

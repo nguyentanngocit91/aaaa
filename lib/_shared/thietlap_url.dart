@@ -17,6 +17,8 @@ class ApiUrl{
 
   static const String searchContractCustomer = '$baseUrl/tim-kiem/hop-dong-theo-khach-hang';
 
+  static const String updateContract = '$baseUrl/hop-dong';
+
   static const String searchContract = '$baseUrl/hop-dong';
   static const String infoContract = '$baseUrl/hop-dong/';
   static const String uploadFile = '$baseUrl/media/upload/';
@@ -33,6 +35,8 @@ class ApiUrl{
 
   //DOMAIN
   static const String danhSachDomain = '$baseUrl/domain';
+  static const String updateDomain = '$baseUrl/update-domain';
+
 
 
 

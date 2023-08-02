@@ -3,24 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import '../../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../../_shared/utils/ndgap.dart';
+import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
+import '../models/searchcustomercontract_model.dart';
+import '../providers/ds_hd_provider.dart';
 
-class UpdateThongTinHopDongWidget extends ConsumerStatefulWidget {
-  const UpdateThongTinHopDongWidget({super.key});
+
+
+
+class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
+  const UpdateThongTinHopDongWidget({Key? key,required this.item}) : super(key: key);
+
+  final SearchCustomerContractModel item;
 
   @override
-  ConsumerState createState() => _UpdateThongTinHopDongWidgetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _UpdateThongTinHopDongWidgetState
-    extends ConsumerState<UpdateThongTinHopDongWidget> with FormUIMixins {
+    final controllerTenHD = TextEditingController();
+    final controllerTongTIEN = TextEditingController();
 
-  final String _typeData = 'hopdong';
-
-  @override
-  Widget build(BuildContext context) {
     return  SimpleDialog(
         backgroundColor: Colors.white,
         contentPadding: EdgeInsets.all(0),
@@ -69,7 +75,7 @@ class _UpdateThongTinHopDongWidgetState
 
             titleForm(context, title: 'Thông tin hợp đồng'),
             bodyForm(
-              child:     Row(
+              child:  Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
@@ -82,6 +88,7 @@ class _UpdateThongTinHopDongWidgetState
                             filled: true,
                             fillColor: Colors.black12,
                           ),
+                          controller: TextEditingController(text: item.mahopdong.toString()),
                           readOnly: true,
                         ),
                       ],
@@ -94,10 +101,17 @@ class _UpdateThongTinHopDongWidgetState
                       children: [
                         lableTextForm('Tên hợp đồng'),
                         TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onChanged: (value) {
-                            //ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData ,key: 'tenhopdong', value: value);
+                            ref.read(dshdProvider.notifier).onChangeValue("Update_TENHD", value);
                           },
+                          controller: controllerTenHD,
+                          decoration: InputDecoration(
+                            label: Text(item.tenhopdong.toString()),
+                            filled: true,
+                            //fillColor: Colors.black12,
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: 'Không bỏ trống.'),
@@ -114,12 +128,21 @@ class _UpdateThongTinHopDongWidgetState
                         lableTextForm('Tổng giá trị'),
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: InputDecoration(
+                           // label: Text(item.tongtien.toString()),
+                            hintText:item.tongtien.toString() ,
+                            labelText: item.tongtien.toString(),
+                            filled: true,
+                            //fillColor: Colors.black12,
+                          ),
+
+                          onChanged: (value) async {
+                           ref.read(dshdProvider.notifier).onChangeValue("Update_TONGTIEN", value.toString().replaceAll('.', ''));
+                          },
+                          controller: controllerTongTIEN,
                           inputFormatters: [
                             CurrencyTextInputFormatter(symbol: ''),
                           ],
-                          onChanged: (value) {
-                            // ref.read(formKhachHangMoiProvider.notifier).changeData(type: _typeData ,key: 'tongtien', value: value);
-                          },
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: 'Không bỏ trống.'),
@@ -139,9 +162,57 @@ class _UpdateThongTinHopDongWidgetState
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+
+
+
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    /* Dialogs.materialDialog(
+                      context: context,
+
+                      title: 'Bạn muốn xoá sản phẩm này ?',
+                      actions: [
+                        Consumer(
+                          builder: (context, ref, child) {
+                            return IconsButton(
+                              onPressed: () {
+
+                                Navigator.of(context).pop();
+                              },
+                              text: 'Xoá',
+                              iconData: Icons.delete,
+                              color: Colors.red,
+                              textStyle: TextStyle(color: Colors.white),
+                              iconColor: Colors.white,
+                            );
+                          },
+                        ),
+                        IconsOutlineButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          text: 'Huỷ',
+                          iconData: Icons.cancel_outlined,
+                          textStyle: TextStyle(color: Colors.grey),
+                          iconColor: Colors.grey,
+                        ),
+                      ]);*/
+
+                    bool isError = false;
+                    String tenHD = controllerTenHD.text;
+                    String tongtien = controllerTongTIEN.text;
+
+                    if (tenHD == '' && tongtien == '' ) {
+                      isError = true;
+                      ShowOkAlertDialog.show(
+                          context, 'Thông báo', 'Vui lòng nhập thông tin');
+                    }
+
+                    if (isError == false) {
+                      ref.read(dshdProvider.notifier).updateContractById(item.id.toString());
+                      // ref.refresh(dshdProvider.notifier).clearUpdateDataContract();
+                      Navigator.of(context).pop();
+                    }
                   },
                   style: TextButton.styleFrom(
                       padding: const EdgeInsets.all(10),
@@ -154,6 +225,7 @@ class _UpdateThongTinHopDongWidgetState
                         color: Colors.white),
                   ),
                 ),
+
                 const SizedBox(
                   width: 10,
                 ),

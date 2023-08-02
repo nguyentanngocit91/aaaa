@@ -55,7 +55,7 @@ class _FormThongTinHostingWidgetState
                       flex: 1,
                       child: Wrap(
                         children: [
-                          lableTextForm('Dung lượng Hosting (MB) - Tối thiểu 500MB'),
+                          lableTextForm('Dung lượng Hosting (MB)'),
                           TextFormField(
                             inputFormatters: [
                               CurrencyTextInputFormatter(symbol: 'MB')

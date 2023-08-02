@@ -18,6 +18,8 @@ class _FormThongTinPhieuThuWidgetState
   LoaiPhieuThu _loaiPhieuThu = LoaiPhieuThu.phieuthu;
   DateTime ngayNop = DateTime.now();
 
+
+
   @override
   initState() {
     super.initState();
@@ -62,9 +64,11 @@ class _FormThongTinPhieuThuWidgetState
                     onChanged: (HinhThucThanhToan? value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           type: _typeData, key: 'httt', value: 'cod');
-                      setState(() {
-                        _httt = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _httt = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Tiền mặt'),
@@ -75,9 +79,11 @@ class _FormThongTinPhieuThuWidgetState
                     onChanged: (HinhThucThanhToan? value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           type: _typeData, key: 'httt', value: 'bank');
-                      setState(() {
-                        _httt = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _httt = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Chuyển khoản'),
@@ -100,9 +106,11 @@ class _FormThongTinPhieuThuWidgetState
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: _typeData);
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _loaiPhieuThu = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Phiếu thu'),
@@ -115,9 +123,11 @@ class _FormThongTinPhieuThuWidgetState
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthubg');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _loaiPhieuThu = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Phiếu thu bàn giao'),
@@ -130,9 +140,11 @@ class _FormThongTinPhieuThuWidgetState
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthuapp');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _loaiPhieuThu = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Phiếu thu App'),
@@ -145,9 +157,11 @@ class _FormThongTinPhieuThuWidgetState
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthuappbg');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _loaiPhieuThu = value!;
+                        });
+                      }
                     },
                   ),
                   const Text('Phiếu thu bàn giao App'),
@@ -181,10 +195,12 @@ class _FormThongTinPhieuThuWidgetState
                         txtDate = selDate.formatDateTime('dd-MM-yyyy');
                       }
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'ngaynop', value: txtDate);
-                      setState(() {
-                        ngayNop = selDate ?? ngayNop;
-                      });
+                          type: _typeData, key: 'ngaynopcty', value: txtDate);
+                      if (mounted) {
+                        setState(() {
+                          ngayNop = selDate ?? ngayNop;
+                        });
+                      }
                     },
                   ),
                 ],
@@ -213,8 +229,8 @@ class _FormThongTinPhieuThuWidgetState
             Expanded(
               child: Wrap(
                 children: [
-                  lableTextForm('Mã nhân viên'),
-                  _MaNhaVienWidget(),
+                  lableTextForm('Mã nhân viên (cách nhau dấu ",")'),
+                  const _MaNhaVienWidget(),
                 ],
               ),
             ),
@@ -225,10 +241,15 @@ class _FormThongTinPhieuThuWidgetState
                   lableTextForm('Nhân viên kinh doanh'),
                   Consumer(
                     builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      ref.watch(nhanVienPhuTrachProvider
+                          .select((value) => value.maNhanViens));
                       return TextFormField(
+                        autofocus: false,
                         readOnly: true,
-                        controller: TextEditingController(text: ref.read(nhanVienPhuTrachProvider.notifier).showThongTinNhanVienInput(field: 'hoten')),
+                        controller: TextEditingController(
+                            text: ref
+                                .read(nhanVienPhuTrachProvider.notifier)
+                                .showThongTinNhanVienInput(field: 'hoten')),
                       );
                     },
                   ),
@@ -242,7 +263,8 @@ class _FormThongTinPhieuThuWidgetState
                   lableTextForm('Phòng'),
                   Consumer(
                     builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      ref.watch(nhanVienPhuTrachProvider
+                          .select((value) => value.maNhanViens));
                       return TextFormField(
                         readOnly: true,
                       );
@@ -258,10 +280,15 @@ class _FormThongTinPhieuThuWidgetState
                   lableTextForm('Khu vực'),
                   Consumer(
                     builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
+                      ref.watch(nhanVienPhuTrachProvider
+                          .select((value) => value.maNhanViens));
                       return TextFormField(
                         readOnly: true,
-                        controller: TextEditingController(text: ref.read(nhanVienPhuTrachProvider.notifier).showThongTinNhanVienInput(field: 'maphongban')),
+                        controller: TextEditingController(
+                            text: ref
+                                .read(nhanVienPhuTrachProvider.notifier)
+                                .showThongTinNhanVienInput(
+                                    field: 'maphongban')),
                       );
                     },
                   ),
@@ -288,7 +315,7 @@ class _FormThongTinPhieuThuWidgetState
                     ]),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'tongtien', value: value);
+                          type: _typeData, key: 'tongtien', value: value.toString().replaceAll('.', ''));
                     },
                   ),
                 ],
@@ -305,7 +332,7 @@ class _FormThongTinPhieuThuWidgetState
                     ],
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'manhanvien', value: value);
+                          type: _typeData, key: 'phiweb', value: value.toString().replaceAll('.', ''));
                     },
                   ),
                 ],
@@ -316,7 +343,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí nâng cấp web'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phinangcapweb', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -325,7 +360,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí hosting'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phihosting', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -334,7 +377,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí nâng cấp hosting'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phinangcaphosting', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -343,7 +394,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí tên miền'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phitenmien', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -357,7 +416,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí App'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'phiapp', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -367,7 +434,15 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Phí VAT'),
-                  TextFormField(),
+                  TextFormField(
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: ''),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'vat', value: value.toString().replaceAll('.', ''));
+                    },
+                  ),
                 ],
               ),
             ),
@@ -377,7 +452,12 @@ class _FormThongTinPhieuThuWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Ghi chú'),
-                  TextFormField(),
+                  TextFormField(
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          type: _typeData, key: 'ghichu', value: value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -475,39 +555,37 @@ class _MaNhaVienWidget extends ConsumerStatefulWidget {
   const _MaNhaVienWidget({super.key});
 
   @override
-  ConsumerState createState() => __MaNhaVienWidgetState();
+  ConsumerState createState() => _MaNhaVienWidgetState();
 }
 
-class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
-
-  late final TextFieldTagsController _textFieldTagsController;
-
-  @override
-  void initState() {
-    super.initState();
-    _textFieldTagsController = TextFieldTagsController();
-  }
+class _MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
+  final TextFieldTagsController _textFieldTagsController = TextFieldTagsController();
 
   @override
   Widget build(BuildContext context) {
-    final dsNhanvien = ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ?? [];
+    final FormStatus? formStatus = ref.watch(formKhachHangMoiProvider.select((value) => value.formStatus));
+    final dsNhanvien = ref.watch(
+            nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ??
+        [];
 
-    if(dsNhanvien==[] || dsNhanvien.isEmpty){
+    if (dsNhanvien == [] || dsNhanvien.isEmpty) {
       _textFieldTagsController.clearTextFieldTags();
     }
-
     return TagsInputWidget(
       textFieldTagsController: _textFieldTagsController,
       validator: (tag) {
-        if(tag.length<3){ return 'Mã nhân viên quá ngắn'; }
+        if (tag.length < 3) {
+          return 'Mã nhân viên quá ngắn';
+        }
         return null;
       },
+      errText: (dsNhanvien.isNotEmpty || formStatus == FormStatus.pure) ? null : 'Không để trống',
       onTag: (tag) async {
         final result = await ref
             .read(nhanVienPhuTrachProvider.notifier)
             .themMaNhanVien(tag);
         if (result == false) {
-          if (context.mounted){
+          if (context.mounted) {
             await showDialog(
               context: context,
               builder: (context) {
@@ -515,23 +593,28 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
                   title: Text('Thông báo'),
                   content: Text('Không tồn tại nhân viên có mã $tag'),
                   actions: [
-                    FilledButton(onPressed: (){
-                      context.pop();
-                    }, child: Text('Đâ hiểu')),
+                    FilledButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      autofocus: true,
+                      child: const Text('Đâ hiểu'),
+                    ),
                   ],
                 );
               },
             );
             _textFieldTagsController.removeTag = tag;
+            if (dsNhanvien.isEmpty) {
+              _textFieldTagsController.setPrefixIcon = false;
+            }
           }
         }
       },
       onDelete: (tag) {
         ref.read(nhanVienPhuTrachProvider.notifier).xoaNhanVien(tag);
       },
-      initialTags: [
-        for (var nv in dsNhanvien) nv['manhanvien']
-      ],
+      initialTags: [for (var nv in dsNhanvien) nv['manhanvien']],
     );
   }
 }

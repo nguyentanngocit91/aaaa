@@ -29,7 +29,7 @@ class KhachHangMoiRepository {
     final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email$type');
     if(response.statusCode==200){
       if(response.data['success']==true){
-        if((response.data['data'] as List).isNotEmpty) return response.data['data'][0];
+        if(response.data['data']!=null) return response.data['data'];
         return null;
       }
     }

@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'infocontractresponse_model.dart';
+part of 'inforesponse_phieuthu_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_InfoContractResponseModel _$$_InfoContractResponseModelFromJson(
+_$_InforesponsePhieuthuModel _$$_InforesponsePhieuthuModelFromJson(
         Map<String, dynamic> json) =>
-    _$_InfoContractResponseModel(
+    _$_InforesponsePhieuthuModel(
       countActivated: json['countActivated'] as int?,
       countTrashed: json['countTrashed'] as int?,
       total: json['total'] as int?,
@@ -17,8 +17,8 @@ _$_InfoContractResponseModel _$$_InfoContractResponseModelFromJson(
       lastPage: json['lastPage'] as int?,
     );
 
-Map<String, dynamic> _$$_InfoContractResponseModelToJson(
-        _$_InfoContractResponseModel instance) =>
+Map<String, dynamic> _$$_InforesponsePhieuthuModelToJson(
+        _$_InforesponsePhieuthuModel instance) =>
     <String, dynamic>{
       'countActivated': instance.countActivated,
       'countTrashed': instance.countTrashed,

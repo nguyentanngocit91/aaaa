@@ -2,8 +2,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'infocontractresponse_model.freezed.dart';
-part 'infocontractresponse_model.g.dart';
+part 'inforesponse_phieuthu_model.freezed.dart';
+part 'inforesponse_phieuthu_model.g.dart';
 
 // **************************************************************************
 // Đây là nội dung được tạo tự động bằng NextDEV Tool
@@ -25,15 +25,15 @@ part 'infocontractresponse_model.g.dart';
 // **************************************************************************
 
 @freezed
-class InfoContractResponseModel with _$InfoContractResponseModel {
-	const factory InfoContractResponseModel({ 
+class InforesponsePhieuthuModel with _$InforesponsePhieuthuModel {
+	const factory InforesponsePhieuthuModel({ 
 		int? countActivated,
 		int? countTrashed,
 		int? total,
 		int? limit,
 		int? page,
-		int? lastPage}) = _InfoContractResponseModel;
+		int? lastPage}) = _InforesponsePhieuthuModel;
 
-	factory InfoContractResponseModel.fromJson(Map<String, dynamic> json) => _$InfoContractResponseModelFromJson(json);
+	factory InforesponsePhieuthuModel.fromJson(Map<String, dynamic> json) => _$InforesponsePhieuthuModelFromJson(json);
 }
 

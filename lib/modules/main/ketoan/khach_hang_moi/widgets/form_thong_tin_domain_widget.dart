@@ -97,14 +97,17 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
 
   late final TextEditingController _nameController;
   late final TextEditingController _ghiChuController;
+  late final TextEditingController _soNamDangkyController;
   DateTime? selNgayDangKy;
   DateTime? selNgayHetHan;
+  DateTime selNgayKy = DateTime.now();
 
   @override
   initState(){
     super.initState();
     _nameController = TextEditingController(text: widget.domainModel.domainName ?? '');
     _ghiChuController = TextEditingController(text: widget.domainModel.ghiChu ?? '');
+    _soNamDangkyController = TextEditingController(text: (widget.domainModel.soNamDangKy!=null) ? widget.domainModel.soNamDangKy.toString() : '');
 
     _nameController.addListener(() {
       final String text = _nameController.text;
@@ -123,6 +126,15 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
         composing: TextRange.empty,
       );
     });
+
+    _soNamDangkyController.addListener(() {
+      final String text = _soNamDangkyController.text;
+      _soNamDangkyController.value = _soNamDangkyController.value.copyWith(
+        text: text,
+        selection: TextSelection(baseOffset: text.length, extentOffset: text.length),
+        composing: TextRange.empty,
+      );
+    });
   }
 
   @override
@@ -131,6 +143,7 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
     Future.delayed(const Duration(milliseconds: 0),(){
         _nameController.text = widget.domainModel.domainName ?? '';
         _ghiChuController.text = widget.domainModel.ghiChu ?? '';
+        _soNamDangkyController.text = (widget.domainModel.soNamDangKy!=null) ? widget.domainModel.soNamDangKy.toString() : '';
     });
   }
 
@@ -140,7 +153,8 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
 
     selNgayDangKy = widget.domainModel.ngayDangKy;
     selNgayHetHan = widget.domainModel.ngayHetHan;
-    
+
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -187,21 +201,18 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
           flex: 1,
           child: Wrap(
             children: [
-              lableTextForm('Ngày đăng ký'),
+              lableTextForm('Ngày ký'),
               TextFormField(
                 readOnly: true,
                 controller: TextEditingController(
-                    text: selNgayDangKy!.formatDateTime('dd-MM-yyyy')),
+                    text: selNgayKy.formatDateTime('dd-MM-yyyy')),
                 onTap: () async {
                   final selDate = await Helper.onSelectDate(context,
                       initialDate: selNgayDangKy);
                   if (selDate != null) {
-                    ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ngayDangKy: selDate, ngayHetHan: DateTime(
-                        selDate.year + 1, selDate.month, selDate.day)));
+                    ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ngayKy: selDate));
                     setState(() {
-                      selNgayDangKy = selDate;
-                      selNgayHetHan = DateTime(
-                          selNgayDangKy!.year + 1, selNgayDangKy!.month, selNgayDangKy!.day);
+                      selNgayKy = selDate;
                     });
                   }
                 },
@@ -214,32 +225,80 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
           flex: 1,
           child: Wrap(
             children: [
-              lableTextForm('Ngày hết hạn'),
+              lableTextForm('Số năm đăng ký'),
               TextFormField(
-                readOnly: true,
-                decoration: const InputDecoration(hintText: 'dd-mm-yyyy'),
+                controller: _soNamDangkyController,
+                keyboardType: TextInputType.number,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: TextEditingController(
-                    text: selNgayHetHan!.formatDateTime('dd-MM-yyyy')),
-                onTap: () async {
-                  final selDate = await Helper.onSelectDate(context,
-                      initialDate: selNgayHetHan,
-                      firstDate:
-                      selNgayDangKy!.copyWith(year: selNgayDangKy!.year + 1));
-                  if (selDate != null) {
-                    ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ngayHetHan: selDate));
-                    setState(() {
-                      selNgayHetHan = selDate;
-                    });
-                  }
+                onChanged: (value) {
+                  ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(soNamDangKy: int.parse(value)));
                 },
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(errorText: 'Không bỏ trống.'),
+                  FormBuilderValidators.numeric(errorText: 'Vui lòng nhập số'),
                 ]),
               ),
             ],
           ),
         ),
+
+        // Expanded(
+        //   flex: 1,
+        //   child: Wrap(
+        //     children: [
+        //       lableTextForm('Ngày đăng ký'),
+        //       TextFormField(
+        //         readOnly: true,
+        //         controller: TextEditingController(
+        //             text: selNgayDangKy!.formatDateTime('dd-MM-yyyy')),
+        //         onTap: () async {
+        //           final selDate = await Helper.onSelectDate(context,
+        //               initialDate: selNgayDangKy);
+        //           if (selDate != null) {
+        //             ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ngayDangKy: selDate, ngayHetHan: DateTime(
+        //                 selDate.year + 1, selDate.month, selDate.day)));
+        //             setState(() {
+        //               selNgayDangKy = selDate;
+        //               selNgayHetHan = DateTime(
+        //                   selNgayDangKy!.year + 1, selNgayDangKy!.month, selNgayDangKy!.day);
+        //             });
+        //           }
+        //         },
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // ndGapW16(),
+        // Expanded(
+        //   flex: 1,
+        //   child: Wrap(
+        //     children: [
+        //       lableTextForm('Ngày hết hạn'),
+        //       TextFormField(
+        //         readOnly: true,
+        //         decoration: const InputDecoration(hintText: 'dd-mm-yyyy'),
+        //         autovalidateMode: AutovalidateMode.onUserInteraction,
+        //         controller: TextEditingController(
+        //             text: selNgayHetHan!.formatDateTime('dd-MM-yyyy')),
+        //         onTap: () async {
+        //           final selDate = await Helper.onSelectDate(context,
+        //               initialDate: selNgayHetHan,
+        //               firstDate:
+        //               selNgayDangKy!.copyWith(year: selNgayDangKy!.year + 1));
+        //           if (selDate != null) {
+        //             ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ngayHetHan: selDate));
+        //             setState(() {
+        //               selNgayHetHan = selDate;
+        //             });
+        //           }
+        //         },
+        //         validator: FormBuilderValidators.compose([
+        //           FormBuilderValidators.required(errorText: 'Không bỏ trống.'),
+        //         ]),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         ndGapW16(),
         Expanded(
           flex: 5,

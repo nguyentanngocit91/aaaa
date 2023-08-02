@@ -9,7 +9,6 @@ class FormThongTinKhachHangWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinKhachHangWidgetState
     extends ConsumerState<FormThongTinKhachHangWidget> with FormUIMixins {
-
   final Debouncer onSearchDebouncer =
       Debouncer(delay: const Duration(seconds: 2));
 
@@ -22,7 +21,8 @@ class _FormThongTinKhachHangWidgetState
         .watch(formKhachHangMoiProvider.select((value) => value.maKhachHang));
 
     Map thongTinKhachHang = {};
-    thongTinKhachHang = ref.watch(kiemTraKhachHangProvider.select((value) => value.data ?? {}));
+    thongTinKhachHang =
+        ref.watch(kiemTraKhachHangProvider.select((value) => value.data ?? {}));
 
     ref.listen(kiemTraKhachHangProvider.select((value) => value.loading),
         (previous, next) {
@@ -61,7 +61,9 @@ class _FormThongTinKhachHangWidgetState
                       if (value.isEmail()) {
                         onSearchDebouncer.debounce(
                           () {
-                            ref.read(kiemTraKhachHangProvider.notifier).kiemTraThongTinKhachHang(email: value);
+                            ref
+                                .read(kiemTraKhachHangProvider.notifier)
+                                .kiemTraThongTinKhachHang(email: value);
                           },
                         );
                       }
@@ -95,8 +97,10 @@ class _FormThongTinKhachHangWidgetState
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang['hoten'] != null ? true : false,
-                    controller:
-                        TextEditingController(text: (thongTinKhachHang.isNotEmpty) ? thongTinKhachHang['hoten'] : ''),
+                    controller: TextEditingController(
+                        text: (thongTinKhachHang.isNotEmpty)
+                            ? thongTinKhachHang['hoten']
+                            : ''),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'hoten', value: value, type: _typeData);
@@ -117,8 +121,8 @@ class _FormThongTinKhachHangWidgetState
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang['phone'] != null ? true : false,
-                    controller: TextEditingController(
-                        text: thongTinKhachHang['phone']),
+                    controller:
+                        TextEditingController(text: thongTinKhachHang['phone']),
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
                           errorText: 'Không bỏ trống.'),
@@ -133,6 +137,7 @@ class _FormThongTinKhachHangWidgetState
             ),
           ],
         ),
+
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -144,10 +149,12 @@ class _FormThongTinKhachHangWidgetState
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
+                    controller: TextEditingController(
+                        text: thongTinKhachHang['info']?['email_phu']),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'info',
-                          value: {"email2": value},
+                          value: {"email_phu": value},
                           type: _typeData);
                     },
                   ),
@@ -156,7 +163,33 @@ class _FormThongTinKhachHangWidgetState
             ),
             ndGapW16(),
             Expanded(
-              flex: 3,
+              flex: 1,
+              child: Wrap(
+                children: [
+                  lableTextForm('Loại Khách hàng'),
+                  DropdownButtonFormField(
+                    value: thongTinKhachHang['type'] ?? 'ca-nhan',
+                    items: const [
+                      DropdownMenuItem<String>(
+                        value: 'ca-nhan',
+                        child: Text('Cá Nhân'),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: 'cong-ty',
+                        child: Text('Công Ty'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          key: 'type', value: value, type: _typeData);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            ndGapW16(),
+            Expanded(
+              flex: 2,
               child: Wrap(
                 children: [
                   lableTextForm('Tên Công ty /  Cá Nhân'),
@@ -183,6 +216,8 @@ class _FormThongTinKhachHangWidgetState
                   lableTextForm('Người đại diện mới'),
                   TextFormField(
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
+                    controller: TextEditingController(
+                        text: thongTinKhachHang['info']?['nguoidaidienmoi']),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'info',
@@ -200,6 +235,8 @@ class _FormThongTinKhachHangWidgetState
                   lableTextForm('Điện thoại cơ quan'),
                   TextFormField(
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
+                    controller: TextEditingController(
+                        text: thongTinKhachHang['info']?['dienthoaicoquan']),
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'info',
@@ -280,13 +317,13 @@ class _FormThongTinKhachHangWidgetState
                   TextFormField(
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
                     controller: TextEditingController(
-                        text: thongTinKhachHang['info']?['ghichu']),
+                        text: thongTinKhachHang['ghichu']),
                     minLines: 3,
                     maxLines: 3,
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          key: 'info',
-                          value: {"ghichu": value},
+                          key: 'ghichu',
+                          value: value,
                           type: _typeData);
                     },
                   ),
@@ -295,6 +332,7 @@ class _FormThongTinKhachHangWidgetState
             ),
           ],
         ),
+
       ],
     );
   }

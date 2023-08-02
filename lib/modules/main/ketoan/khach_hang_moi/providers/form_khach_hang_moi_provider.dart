@@ -4,6 +4,7 @@ import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
 import '../repositories/khach_hang_moi_repository.dart';
 import 'danh_sach_domain_provider.dart';
+import 'kiem_tra_khach_hang_provider.dart';
 
 part 'form_khach_hang_moi_state.dart';
 
@@ -24,6 +25,14 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   init() async {
     await taoMaKhachHang();
     await taoMaHopDong();
+  }
+
+  batDatSubmit(){
+    state = state.copyWith(formStatus: FormStatus.submissionInProgress);
+  }
+
+  ketThucSubmit(){
+    state = state.copyWith(formStatus: FormStatus.submissionCanceled);
   }
 
   Future<String?> taoMaKhachHang() async {
@@ -67,13 +76,10 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
       case 'khachhang':
         Map newDataKhachHang = state.dataKhachHang ?? {};
         newDataKhachHang.update(key, (item) => value, ifAbsent: () => value);
-        state = state.copyWith(dataKhangHang: newDataKhachHang);
+        state = state.copyWith(dataKhachHang: newDataKhachHang);
       case 'hopdong':
         Map newDataHopDong = state.dataHopDong ?? {};
-        newDataHopDong.update(key, (item) {
-          if(key == 'tongtien') return value.toString().replaceAll('.', '');
-          return value;
-        }, ifAbsent: () => value);
+        newDataHopDong.update(key, (item) => value, ifAbsent: () => value);
         state = state.copyWith(dataHopDong: newDataHopDong);
       case 'phieuthu':
         Map newDataPhieuThu = state.dataPhieuThu ?? {};
@@ -98,18 +104,20 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveForm() {
-    saveKhachHang();
-    saveHopDong();
-    savePhieuThu();
-    saveWebsite();
-    saveDomain();
-    saveHosting();
-    saveApp();
+  saveForm() async{
+    state = state.copyWith(formStatus: FormStatus.submissionInProgress);
+    await saveKhachHang();
+    await saveHopDong();
+    await savePhieuThu();
+    await saveWebsite();
+    await saveDomain();
+    await saveHosting();
+    await saveApp();
+    state = state.copyWith(formStatus: FormStatus.submissionSuccess);
     print('submit done!');
   }
 
-  saveKhachHang(){
+  saveKhachHang() async{
     if (state.dataKhachHang != null) {
       state.dataKhachHang!.forEach((key, value) {
         print('Khách hàng {$key:$value}');
@@ -117,7 +125,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveHopDong(){
+  saveHopDong() async{
     if (state.dataHopDong != null) {
       state.dataHopDong!.forEach((key, value) {
         print('Hợp đồng {$key:$value}');
@@ -125,7 +133,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  savePhieuThu(){
+  savePhieuThu() async{
     if (state.dataPhieuThu != null) {
       state.dataPhieuThu!.forEach((key, value) {
         print('Phiếu thu {$key:$value}');
@@ -133,7 +141,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveWebsite(){
+  saveWebsite() async{
     if (state.dataWebsite != null) {
       state.dataWebsite!.forEach((key, value) {
         print('Website {$key:$value}');
@@ -141,7 +149,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveHosting(){
+  saveHosting() async{
     if (state.dataHosting != null) {
       state.dataHosting!.forEach((key, value) {
         print('Hosting {$key:$value}');
@@ -149,7 +157,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveDomain(){
+  saveDomain() async{
     if (state.dataDomain != null) {
       state.dataDomain!.forEach((key, value) {
         print('Domain {$key:$value}');
@@ -161,7 +169,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveApp(){
+  saveApp() async{
     if (state.dataApp != null) {
       state.dataApp!.forEach((key, value) {
         print('App {$key:$value}');

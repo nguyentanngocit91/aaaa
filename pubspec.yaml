@@ -62,10 +62,12 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   motion_toast: ^2.7.8
+
   awesome_dialog: ^3.1.0
   top_snackbar_flutter: ^3.1.0
   adaptive_dialog: ^1.9.0
   dropdown_button2: ^2.3.7
+
 
 dev_dependencies:
   flutter_test:
