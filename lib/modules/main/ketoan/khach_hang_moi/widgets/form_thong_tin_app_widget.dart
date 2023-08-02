@@ -42,7 +42,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                             ),
                             readOnly: true,
                             controller: TextEditingController(
-                                text: '${formState.maHopDong}A'),
+                                text: '${formState.soHopDong}A'),
                           ),
                         ],
                       ),
@@ -95,7 +95,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                                   .read(formKhachHangMoiProvider.notifier)
                                   .changeData(
                                       type: _typeData,
-                                      key: 'ngayky',
+                                      key: 'ngaykyhd',
                                       value: txtDate);
                               setState(() {
                                 ngayDangKy = selDate ?? ngayDangKy;
@@ -128,14 +128,14 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                                 if (selDate != null) {
                                   txtDate =
                                       selDate.formatDateTime('dd-MM-yyyy');
+                                  ref
+                                      .read(formKhachHangMoiProvider.notifier)
+                                      .changeData(
+                                      type: _typeData,
+                                      key: 'ngaybangiao',
+                                      value: selDate);
                                 }
-                                ref
-                                    .read(formKhachHangMoiProvider.notifier)
-                                    .changeData(
-                                        type: _typeData,
-                                        key: 'ngaybangiao',
-                                        value: txtDate);
-                                setState(() {
+                                 setState(() {
                                   ngayBanGiao = selDate ?? ngayBanGiao;
                                 });
                               }),

@@ -195,7 +195,7 @@ class _FormThongTinPhieuThuWidgetState
                         txtDate = selDate.formatDateTime('dd-MM-yyyy');
                       }
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'ngaynopcty', value: txtDate);
+                          type: _typeData, key: 'ngaynopcty', value: ngayNop);
                       if (mounted) {
                         setState(() {
                           ngayNop = selDate ?? ngayNop;

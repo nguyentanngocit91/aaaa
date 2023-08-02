@@ -1,58 +1,53 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum LoaiFileHD { hopDong, chungTuKhac }
 
 class FileHDModel {
-  final LoaiFileHD? loaiFile;
-  final String? tenFile;
-  final String? pathFile;
+  final String? loaiFile;
+  final PlatformFile? fileUpload;
   final String? ghiChu;
 
-  FileHDModel({this.loaiFile, this.tenFile, this.pathFile, this.ghiChu});
+  FileHDModel({this.loaiFile, this.fileUpload, this.ghiChu});
 
   copyWith(
-      {LoaiFileHD? loaiFile,
-      String? tenFile,
-      String? pathFile,
+      {String? loaiFile,
+        PlatformFile? fileUpload,
       String? ghiChu}) {
     return FileHDModel(
         loaiFile: loaiFile ?? this.loaiFile,
-        tenFile: tenFile ?? this.tenFile,
-        pathFile: pathFile ?? this.pathFile,
+        fileUpload: fileUpload ?? this.fileUpload,
         ghiChu: ghiChu ?? this.ghiChu);
   }
 
   @override
   String toString() {
-    return 'Loại File: $loaiFile - Tên File: $tenFile - path: $pathFile - Ghi chú: $ghiChu';
+    return 'Loại File: $loaiFile - Tên File: ${fileUpload?.name} - path: ${fileUpload?.path} - Ghi chú: $ghiChu';
   }
 }
 
-final fileHDProvider = NotifierProvider<FileHDNotifier, List<FileHDModel>>(() {
+final fileHDProvider = NotifierProvider<FileHDNotifier, FileHDModel>(() {
   return FileHDNotifier();
 });
 
-class FileHDNotifier extends Notifier<List<FileHDModel>> {
+class FileHDNotifier extends Notifier<FileHDModel> {
   @override
-  List<FileHDModel> build() {
-    return [];
+  FileHDModel build() {
+    return FileHDModel();
   }
 
-  addFile({required FileHDModel fileHD}) {
-    state = [
-      for (var file in state)
-        if (file.tenFile == fileHD.tenFile) fileHD else file
-    ];
+  changeLoai(String loai){
+    state = state.copyWith(loaiFile: loai);
   }
 
-  removeFile({required String tenFile}) {
-    state = [
-      for (var file in state)
-        if (file.tenFile != tenFile) file
-    ];
+  changeGhiChu(String ghichu){
+    state = state.copyWith(ghiChu: ghichu);
   }
 
-  clear() {
-    state = [];
+  changeFile({required PlatformFile file}){
+    state = state.copyWith(fileUpload: file);
+  }
+
+  clear(){
+    state = FileHDModel();
   }
 }

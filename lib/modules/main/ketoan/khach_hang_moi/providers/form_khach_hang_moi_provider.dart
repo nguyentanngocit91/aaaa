@@ -4,7 +4,9 @@ import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
 import '../repositories/khach_hang_moi_repository.dart';
 import 'danh_sach_domain_provider.dart';
+import 'files_hd_provider.dart';
 import 'kiem_tra_khach_hang_provider.dart';
+import 'nhan_vien_phu_trach_provider.dart';
 
 part 'form_khach_hang_moi_state.dart';
 
@@ -42,8 +44,8 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   Future<String?> taoMaHopDong() async {
-    final maHopDong = await _khachHangMoiRepository.capMaHopDong();
-    state = state.copyWith(maHopDong: maHopDong);
+    final soHopDong = await _khachHangMoiRepository.capSoHopDong();
+    state = state.copyWith(soHopDong: soHopDong);
   }
 
   checkLoaiHopDong(
@@ -105,75 +107,90 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   saveForm() async{
-    state = state.copyWith(formStatus: FormStatus.submissionInProgress);
-    await saveKhachHang();
-    await saveHopDong();
-    await savePhieuThu();
-    await saveWebsite();
-    await saveDomain();
-    await saveHosting();
-    await saveApp();
-    state = state.copyWith(formStatus: FormStatus.submissionSuccess);
-    print('submit done!');
-  }
+    // data
+    Map data = {};
 
-  saveKhachHang() async{
-    if (state.dataKhachHang != null) {
-      state.dataKhachHang!.forEach((key, value) {
-        print('Khách hàng {$key:$value}');
-      });
+    // Thông tin Khách hàng
+    final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
+    if (thongTinKhachHangCu!.isEmpty) {
+      state.dataKhachHang?['makhachhang'] = state.maKhachHang;
+      data["KhachHang"] = state.dataKhachHang;
+    }else{
+      data["KhachHang"] = thongTinKhachHangCu;
+    }
+
+    // Danh sách nhân viên phụ trách
+    final nhanViens = ref.read(nhanVienPhuTrachProvider).maNhanViens;
+    final dsNhanVienPhuTrach = (nhanViens!=null) ? [
+      for(var nv in nhanViens) nv['manhanvien']
+    ] : [];
+
+    // Thông tin Hợp đồng
+    state.dataHopDong?['manhanvien'] = dsNhanVienPhuTrach;
+
+    // Thông tin phiếu thu
+    if(state.dataPhieuThu?['ngaynopcty']==null){
+      state.dataPhieuThu?['ngaynopcty'] = DateTime.now();
+    }
+    state.dataPhieuThu?['manhanvien'] = dsNhanVienPhuTrach;
+
+    // thông tin hợp đồng website
+    if(state.isHopDongWebsite){
+      if(state.dataWebsite?['ngaykyhd']==null){
+        state.dataWebsite?['ngaykyhd'] = DateTime.now();
+      }
+      data["Web"] = state.dataWebsite;
+    }
+
+    // Thông tin hợp đồng Domain
+    if(state.isHopDongDomain){
+      final dsDomain = ref.read(danhSachDomainProvider);
+      List<Map> dataDomain = [];
+      for(DomainModel item in dsDomain){
+        if(item.ngayKy == null) item = item.copyWith(ngayKy: DateTime.now());
+        dataDomain.add(item.toJson());
+      }
+      data["Domain"] = dataDomain;
+    }
+
+    // Thông tin hợp đồng Hosting
+    if(state.isHopDongHosting){
+      if(state.dataHosting?['ngaykyhd']==null){
+        state.dataHosting?['ngaykyhd'] = DateTime.now();
+      }
+      if(state.dataHosting?['trangthaihosting']==null){
+        state.dataHosting?['trangthaihosting'] = 'kymoi';
+      }
+      data["Hosting"] = state.dataHosting;
+    }
+
+    // Thông tin hợp đồng App
+    if(state.isHopDongApp){
+      if(state.dataApp?['ngaykyhd']==null){
+        state.dataApp?['ngaykyhd'] = DateTime.now();
+      }
+      data["App"] = state.dataApp;
+    }
+
+    data["HopDong"] = state.dataHopDong;
+    data["PhieuThu"] = state.dataPhieuThu;
+
+    final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
+    final uploadFiled = await saveFileHD();
+
+    print(result);
+    print(uploadFiled);
+    if(result==true){
+      state = state.copyWith(formStatus: FormStatus.submissionSuccess);
+    }else{
+      state = state.copyWith(formStatus: FormStatus.submissionFailure);
     }
   }
 
-  saveHopDong() async{
-    if (state.dataHopDong != null) {
-      state.dataHopDong!.forEach((key, value) {
-        print('Hợp đồng {$key:$value}');
-      });
-    }
-  }
-
-  savePhieuThu() async{
-    if (state.dataPhieuThu != null) {
-      state.dataPhieuThu!.forEach((key, value) {
-        print('Phiếu thu {$key:$value}');
-      });
-    }
-  }
-
-  saveWebsite() async{
-    if (state.dataWebsite != null) {
-      state.dataWebsite!.forEach((key, value) {
-        print('Website {$key:$value}');
-      });
-    }
-  }
-
-  saveHosting() async{
-    if (state.dataHosting != null) {
-      state.dataHosting!.forEach((key, value) {
-        print('Hosting {$key:$value}');
-      });
-    }
-  }
-
-  saveDomain() async{
-    if (state.dataDomain != null) {
-      state.dataDomain!.forEach((key, value) {
-        print('Domain {$key:$value}');
-      });
-    }
-    final dsDomain = ref.read(danhSachDomainProvider);
-    for(var item in dsDomain){
-      print('${item.domainName}: ${item.ngayDangKy} - ${item.ngayHetHan} - ${item.ghiChu}');
-    }
-  }
-
-  saveApp() async{
-    if (state.dataApp != null) {
-      state.dataApp!.forEach((key, value) {
-        print('App {$key:$value}');
-      });
+  saveFileHD() async{
+    final infoFile = ref.read(fileHDProvider);
+    if(infoFile.fileUpload?.path!=null){
+      await _khachHangMoiRepository.updateFile(fileHDModel: infoFile, soHopDong: state.soHopDong.toString());
     }
   }
 }

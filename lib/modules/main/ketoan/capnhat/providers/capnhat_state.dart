@@ -1,14 +1,15 @@
 part of 'capnhat_provider.dart';
-class CapNhatState{
-  final Map<String,String>? data;
+
+class CapNhatState {
+  final Map<String, String>? data;
   final FormStatus status;
   final String? errorMessage;
-  final Map<String,dynamic>? result;
+  final Map<String, dynamic>? result;
   final int perPage;
   final int currentPage;
   final bool loading;
   final ContractModel? contract;
-
+  final List<MediaModel>? media;
 
   const CapNhatState({
     this.data = null,
@@ -19,18 +20,19 @@ class CapNhatState{
     this.currentPage = 1,
     this.loading = false,
     this.contract = null,
+    this.media = null,
   });
 
   CapNhatState copyWith({
-
-    Map<String,String>? data,
+    Map<String, String>? data,
     FormStatus? status,
     String? errorMessage,
-    Map<String,dynamic>? result,
+    Map<String, dynamic>? result,
     int? perPage,
     int? currentPage,
     bool? loading,
-    ContractModel? contract
+    ContractModel? contract,
+    List<MediaModel>? media,
   }) {
     return CapNhatState(
       data: data ?? this.data,
@@ -41,6 +43,7 @@ class CapNhatState{
       errorMessage: errorMessage ?? this.errorMessage,
       loading: loading ?? this.loading,
       contract: contract ?? this.contract,
+      media: media ?? this.media,
     );
   }
 }

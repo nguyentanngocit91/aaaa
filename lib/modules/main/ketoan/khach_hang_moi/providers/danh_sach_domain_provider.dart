@@ -26,6 +26,13 @@ class DomainModel{
       ghiChu: ghiChu ?? this.ghiChu,
     );
   }
+
+  Map toJson() => {
+    'tenmien': domainName,
+    'ngaykyhd': ngayKy,
+    'sonamdangky': soNamDangKy,
+    'ghichu': ghiChu
+  };
 }
 
 final danhSachDomainProvider = NotifierProvider<DanhSachDomainNotifier, List<DomainModel>>(() {
