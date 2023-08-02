@@ -28,6 +28,9 @@ part 'searchcustomercontract_model.g.dart';
 class SearchCustomerContractModel with _$SearchCustomerContractModel {
 	const factory SearchCustomerContractModel({
 		List<dynamic>? dichvuIds,
+		List<dynamic>? files,
+		List<dynamic>? danhsachtenmien,
+		String? trangthai_hosting,
 		List<dynamic>? lichsu_thanhtoan,
 		@JsonKey(name: '_id') @required String? id,
 		String? sohopdong,
@@ -42,8 +45,19 @@ class SearchCustomerContractModel with _$SearchCustomerContractModel {
 		String? khachhangId,
 		String? tenhopdong,
 		@JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
-		int? tongtien,
-		List<dynamic>? lichsu_capnhat}) = _SearchCustomerContractModel;
+		double? tongtien,
+		List<dynamic>? lichsu_capnhat,
+		List<dynamic>? chucnang,
+		double? dungluong,
+		String? mota,
+		String? ngaybangiao,
+		String? ngaydangky,
+		String? ngayhethan,
+		String? ngaykichhoat,
+		List<dynamic>? ngayupstore,
+		double? sonamdangky,
+		String? tenapp,
+		String? tenmien}) = _SearchCustomerContractModel;
 
 	factory SearchCustomerContractModel.fromJson(Map<String, dynamic> json) => _$SearchCustomerContractModelFromJson(json);
 }
