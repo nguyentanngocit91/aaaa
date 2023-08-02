@@ -33,8 +33,8 @@ class ApiUrl{
 
   //DOMAIN
   static const String danhSachDomain = '$baseUrl/domain';
-  static const String dangkyDomain = '$baseUrl/dang-ky-domain';
-  static const String giahanDomain = '$baseUrl/gia-han-domain';
+  static const String updateDomain = '$baseUrl/update-domain';
+
 
 
 

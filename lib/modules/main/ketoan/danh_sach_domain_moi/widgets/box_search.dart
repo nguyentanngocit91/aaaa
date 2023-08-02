@@ -81,7 +81,7 @@ class BoxSearchDomain extends ConsumerWidget {
             onPressed: () {
               domainInput.text = '';
 
-              //ref.read(phieuThuProvider.notifier).resetInputSearch();
+              ref.read(dsDomainMoiProvider.notifier).resetInputSearch();
             },
           ),
         ],

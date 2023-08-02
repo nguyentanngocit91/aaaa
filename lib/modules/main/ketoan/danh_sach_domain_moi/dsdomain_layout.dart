@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'screen/detail_domain.dart';
 import '../../../../_shared/utils/form_status.dart';
 import 'providers/danh_sach_domain_moi_provider.dart';
 import '../../../../_shared/utils/ndgap.dart';
@@ -41,50 +42,52 @@ class _DanhSachDomainMoiKyState extends ConsumerState<DanhSachDomainMoiKy> {
               ? const Center(child: CircularProgressIndicator())
               : const SizedBox(),
 
-          (listDomain.isNotEmpty)?Column(
-            children: [
-              Container (
-                padding: const EdgeInsets.only(top: 5,bottom: 5),
-                decoration: const BoxDecoration(
-                    color: Color(0xFF105A6C),
-                    border: Border(bottom: BorderSide(color: Color(0xFFFFC107),width: 2))
-                ),
-                child: const Row(
-                  children: [
-                    Expanded(flex: 3, child: HeaderRowItem(text: '#')),
-                    Expanded(
-                      flex: 10,
-                      child: HeaderRowItem(text: 'Số hợp đồng'),
-                    ),
-                    Expanded(
-                      flex: 57,
-                      child: HeaderRowItem(text: 'Domain'),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: HeaderRowItem(text: 'Ngày ký'),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: HeaderRowItem(text: 'Số năm'),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: HeaderRowItem(text: 'Thao tác'),
-                    ),
-                  ],
-                ),
-              ),
-              ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: listDomain.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context,index){
-                    return RowInfoDomain(index: index+1, item: listDomain[index],);
-                  }
+          (listDomain.isNotEmpty)?SelectionArea(
+            child: Column(
+              children: [
+                Container (
+                  padding: const EdgeInsets.only(top: 5,bottom: 5),
+                  decoration: const BoxDecoration(
+                      color: Color(0xFF105A6C),
+                      border: Border(bottom: BorderSide(color: Color(0xFFFFC107),width: 2))
                   ),
-            ],
-          ):SizedBox(),
+                  child: const Row(
+                    children: [
+                      Expanded(flex: 3, child: HeaderRowItem(text: '#')),
+                      Expanded(
+                        flex: 10,
+                        child: HeaderRowItem(text: 'Số hợp đồng'),
+                      ),
+                      Expanded(
+                        flex: 57,
+                        child: HeaderRowItem(text: 'Domain'),
+                      ),
+                      Expanded(
+                        flex: 10,
+                        child: HeaderRowItem(text: 'Ngày ký'),
+                      ),
+                      Expanded(
+                        flex: 10,
+                        child: HeaderRowItem(text: 'Số năm'),
+                      ),
+                      Expanded(
+                        flex: 10,
+                        child: HeaderRowItem(text: 'Thao tác'),
+                      ),
+                    ],
+                  ),
+                ),
+                ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: listDomain.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context,index){
+                      return RowInfoDomain(index: index+1, item: listDomain[index],);
+                    }
+                    ),
+              ],
+            ),
+          ):const SizedBox(),
 
         ],
       ),
@@ -123,14 +126,20 @@ class RowInfoDomain extends StatelessWidget {
                FilledButton.icon(
                  onPressed: () {
 
-
+                   showDialog<void>(
+                     context: context,
+                     barrierDismissible: false, // user must tap button!
+                     builder: (BuildContext context) {
+                       return DetailDomain();
+                     },
+                   );
 
                  },
                  style: TextButton.styleFrom(
                    backgroundColor: Colors.green
                  ),
                  icon: const Icon(Icons.app_registration),
-                 label: const Text('Đăng ký'),
+                 label: const SelectionContainer.disabled(child: Text('Đăng ký'),),
                ),
              ],
            ))
