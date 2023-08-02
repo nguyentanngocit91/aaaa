@@ -12,6 +12,7 @@ class ApiUrl{
   // Media
   static const String media = '$baseUrl/media';
   static const String uploadFile = '$media/upload';
+  static const String listFile = '$baseUrl/media/list';
 
 
   // Nhân viên
@@ -25,8 +26,7 @@ class ApiUrl{
 
   static const String searchContract = '$baseUrl/hop-dong';
   static const String infoContract = '$baseUrl/hop-dong/';
-  static const String uploadFile = '$baseUrl/media/upload/';
-  static const String listFile = '$baseUrl/media/list';
+
 
 
   // Cấp mã HĐ, KH tự động

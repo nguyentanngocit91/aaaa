@@ -205,7 +205,7 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
               TextFormField(
                 readOnly: true,
                 controller: TextEditingController(
-                    text: selNgayKy.formatDateTime('dd-MM-yyyy')),
+                    text: selNgayKy.formatDateTime()),
                 onTap: () async {
                   final selDate = await Helper.onSelectDate(context,
                       initialDate: selNgayDangKy);
@@ -250,7 +250,7 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
         //       TextFormField(
         //         readOnly: true,
         //         controller: TextEditingController(
-        //             text: selNgayDangKy!.formatDateTime('dd-MM-yyyy')),
+        //             text: selNgayDangKy!.formatDateTime()),
         //         onTap: () async {
         //           final selDate = await Helper.onSelectDate(context,
         //               initialDate: selNgayDangKy);
@@ -279,7 +279,7 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
         //         decoration: const InputDecoration(hintText: 'dd-mm-yyyy'),
         //         autovalidateMode: AutovalidateMode.onUserInteraction,
         //         controller: TextEditingController(
-        //             text: selNgayHetHan!.formatDateTime('dd-MM-yyyy')),
+        //             text: selNgayHetHan!.formatDateTime()),
         //         onTap: () async {
         //           final selDate = await Helper.onSelectDate(context,
         //               initialDate: selNgayHetHan,

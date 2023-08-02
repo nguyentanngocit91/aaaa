@@ -184,18 +184,18 @@ class _FormThongTinPhieuThuWidgetState
                           errorText: 'Không bỏ trống.'),
                     ]),
                     controller: TextEditingController(
-                        text: ngayNop.formatDateTime('dd-MM-yyyy')),
+                        text: ngayNop.formatDateTime()),
                     readOnly: true,
                     onTap: () async {
                       final DateTime? selDate = await Helper.onSelectDate(
                           context,
                           initialDate: ngayNop);
-                      String txtDate = ngayNop.formatDateTime('dd-MM-yyyy');
+                      String txtDate = ngayNop.formatDateTime();
                       if (selDate != null) {
-                        txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                        txtDate = selDate.formatDateTime();
                       }
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'ngaynopcty', value: ngayNop);
+                          type: _typeData, key: 'ngaynopcty', value: txtDate);
                       if (mounted) {
                         setState(() {
                           ngayNop = selDate ?? ngayNop;
