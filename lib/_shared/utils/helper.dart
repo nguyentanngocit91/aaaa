@@ -3,10 +3,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../_shared/thietlap_ngonngu.dart';
-
+enum loadingStatus {NONE,START,STOP}
 class Helper {
+  static toast({required String messenge,required BuildContext context}) {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.info(
+        message:messenge,
+      ),
+    );
+  }
   static padding(){
     return EdgeInsets.all(5);
   }
@@ -57,6 +67,10 @@ class Helper {
   static parseDate(String text, String s) {
     final f = new DateFormat(s);
     return f.parse(text);
+  }
+
+  static saveDate(value) {
+    return DateFormat("yyyy-MM-dd").format(DateFormat('dd-MM-yyyy').parse(value));
   }
 }
 

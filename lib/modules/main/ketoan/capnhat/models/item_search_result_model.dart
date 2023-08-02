@@ -28,6 +28,7 @@ part 'item_search_result_model.g.dart';
 class ItemSearchResultModel with _$ItemSearchResultModel {
   const factory ItemSearchResultModel({
     List<dynamic>? dichvuIds,
+    List<dynamic>? files,
     List<dynamic>? lichsu_thanhtoan,
     @JsonKey(name: '_id') @required String? id,
     String? sohopdong,
@@ -38,27 +39,30 @@ class ItemSearchResultModel with _$ItemSearchResultModel {
     String? mahopdong,
     List<dynamic>? nhanvien,
     String? ghichu,
-    @JsonKey(name: 'info') L1_info? l1_info,
     @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
     String? tenhopdong,
     @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
     int? tongtien,
-    List<dynamic>? lichsu_capnhat}) = _ItemSearchResultModel;
+    List<dynamic>? lichsu_capnhat,
+    String? chucnang,
+    int? dungluong,
+    String? mota,
+    String? ngaybangiao,
+    String? ngaydangky,
+    String? ngayhethan,
+    String? ngaykichhoat,
+    List<dynamic>? ngayupstore,
+    int? sonamdangky,
+    String? tenapp,
+    String? tenmien}) = _ItemSearchResultModel;
 
   factory ItemSearchResultModel.fromJson(Map<String, dynamic> json) => _$ItemSearchResultModelFromJson(json);
 }
 
 @freezed
-class L1_info with _$L1_info {
-  const factory L1_info({
-    String? chucnang}) = _L1_info;
-
-  factory L1_info.fromJson(Map<String, dynamic> json) => _$L1_infoFromJson(json);
-}
-
-@freezed
 class L1_khachhangId with _$L1_khachhangId {
   const factory L1_khachhangId({
+    String? ghichu,
     String? lichsu_khoitao,
     List<dynamic>? lichsu_capnhat,
     @JsonKey(name: '_id') @required String? id,

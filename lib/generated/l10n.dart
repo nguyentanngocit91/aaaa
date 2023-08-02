@@ -389,6 +389,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Update success`
+  String get updateHDSuccess {
+    return Intl.message(
+      'Update success',
+      name: 'updateHDSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update error`
+  String get updateHDFail {
+    return Intl.message(
+      'Update error',
+      name: 'updateHDFail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

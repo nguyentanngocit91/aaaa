@@ -64,6 +64,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "theme_lightmode": MessageLookupByLibrary.simpleMessage("Chế độ sáng"),
         "theme_systemmode": MessageLookupByLibrary.simpleMessage("Tự động"),
         "theme_title": MessageLookupByLibrary.simpleMessage("GIAO DIỆN"),
+        "updateHDFail":
+            MessageLookupByLibrary.simpleMessage("Cập nhật thất bại"),
+        "updateHDSuccess":
+            MessageLookupByLibrary.simpleMessage("Cập nhật thành công"),
         "vuilongdoi": MessageLookupByLibrary.simpleMessage("Đang xử lý...")
       };
 }

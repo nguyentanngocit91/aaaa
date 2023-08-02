@@ -62,6 +62,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "theme_lightmode": MessageLookupByLibrary.simpleMessage("Light Mode"),
         "theme_systemmode": MessageLookupByLibrary.simpleMessage("Auto Mode"),
         "theme_title": MessageLookupByLibrary.simpleMessage("THEME MODE"),
+        "updateHDFail": MessageLookupByLibrary.simpleMessage("Update error"),
+        "updateHDSuccess":
+            MessageLookupByLibrary.simpleMessage("Update success"),
         "vuilongdoi": MessageLookupByLibrary.simpleMessage("Processing...")
       };
 }
