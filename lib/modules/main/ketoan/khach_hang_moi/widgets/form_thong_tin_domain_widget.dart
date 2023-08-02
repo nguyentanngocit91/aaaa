@@ -42,7 +42,7 @@ class _FormThongTinDomainWidgetState
                             ),
                             readOnly: true,
                             controller: TextEditingController(
-                                text: '${formState.maHopDong}D'),
+                                text: '${formState.soHopDong}D'),
                           ),
                         ],
                       ),

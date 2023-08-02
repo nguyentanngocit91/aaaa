@@ -44,8 +44,8 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   Future<String?> taoMaHopDong() async {
-    final maHopDong = await _khachHangMoiRepository.capMaHopDong();
-    state = state.copyWith(maHopDong: maHopDong);
+    final soHopDong = await _khachHangMoiRepository.capSoHopDong();
+    state = state.copyWith(soHopDong: soHopDong);
   }
 
   checkLoaiHopDong(
@@ -107,113 +107,90 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   }
 
   saveForm() async{
-    // await saveKhachHang();
-    // await saveHopDong();
-    // await savePhieuThu();
-    // await saveWebsite();
-    // await saveDomain();
-    // await saveHosting();
-    // await saveApp();
-    await saveFileHD();
-    state = state.copyWith(formStatus: FormStatus.submissionSuccess);
-    print('submit done!');
-  }
+    // data
+    Map data = {};
 
-  Future<bool> saveKhachHang() async{
-    // kiểm tra khách hàng mới hay cũ
+    // Thông tin Khách hàng
     final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
-    if (state.dataKhachHang != null && thongTinKhachHangCu==null) { // Chỉ lưu thông tin khách hàng mới
-      return await _khachHangMoiRepository.luuThongTinKhachHang(data: state.dataKhachHang);
+    if (thongTinKhachHangCu!.isEmpty) {
+      state.dataKhachHang?['makhachhang'] = state.maKhachHang;
+      data["KhachHang"] = state.dataKhachHang;
+    }else{
+      data["KhachHang"] = thongTinKhachHangCu;
     }
-    return false;
-  }
 
-  saveHopDong() async{
-    if (state.dataHopDong != null) {
-      state.dataHopDong!.forEach((key, value) {
-        print('Hợp đồng {$key:$value}');
-      });
+    // Danh sách nhân viên phụ trách
+    final nhanViens = ref.read(nhanVienPhuTrachProvider).maNhanViens;
+    final dsNhanVienPhuTrach = (nhanViens!=null) ? [
+      for(var nv in nhanViens) nv['manhanvien']
+    ] : [];
+
+    // Thông tin Hợp đồng
+    state.dataHopDong?['manhanvien'] = dsNhanVienPhuTrach;
+
+    // Thông tin phiếu thu
+    if(state.dataPhieuThu?['ngaynopcty']==null){
+      state.dataPhieuThu?['ngaynopcty'] = DateTime.now();
     }
-  }
+    state.dataPhieuThu?['manhanvien'] = dsNhanVienPhuTrach;
 
-  Future<bool> savePhieuThu() async{
-    if (state.dataPhieuThu != null) {
-      // state.dataPhieuThu!.forEach((key, value) {
-      //   print('Phiếu thu {$key:$value}');
-      // });
-
-      // Lưu mã khách hàng
-      final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
-      state.dataPhieuThu!['makhachhang'] = (thongTinKhachHangCu!=null) ? thongTinKhachHangCu['makhachhang'] : state.maKhachHang;
-
-      // Lưu danh sách mã đồng
-      final List<String> mahopdong = [];
-      if(state.isHopDongWebsite){
-        mahopdong.add('${state.maHopDong}W');
+    // thông tin hợp đồng website
+    if(state.isHopDongWebsite){
+      if(state.dataWebsite?['ngaykyhd']==null){
+        state.dataWebsite?['ngaykyhd'] = DateTime.now();
       }
-      if(state.isHopDongDomain){
-        mahopdong.add('${state.maHopDong}D');
+      data["Web"] = state.dataWebsite;
+    }
+
+    // Thông tin hợp đồng Domain
+    if(state.isHopDongDomain){
+      final dsDomain = ref.read(danhSachDomainProvider);
+      List<Map> dataDomain = [];
+      for(DomainModel item in dsDomain){
+        if(item.ngayKy == null) item = item.copyWith(ngayKy: DateTime.now());
+        dataDomain.add(item.toJson());
       }
-      if(state.isHopDongHosting){
-        mahopdong.add('${state.maHopDong}H');
+      data["Domain"] = dataDomain;
+    }
+
+    // Thông tin hợp đồng Hosting
+    if(state.isHopDongHosting){
+      if(state.dataHosting?['ngaykyhd']==null){
+        state.dataHosting?['ngaykyhd'] = DateTime.now();
       }
-      if(state.isHopDongApp){
-        mahopdong.add('${state.maHopDong}A');
+      if(state.dataHosting?['trangthaihosting']==null){
+        state.dataHosting?['trangthaihosting'] = 'kymoi';
       }
-      state.dataPhieuThu!['mahopdong'] = mahopdong;
-
-      // Lưu danh sách nhân viên phụ trách
-      final nhanViens = ref.read(nhanVienPhuTrachProvider).maNhanViens;
-      state.dataPhieuThu!['manhanvien'] = [
-        for(var nv in nhanViens!) nv['manhanvien']
-      ];
-
-      return await _khachHangMoiRepository.luuThongTinKhachHang(data: state.dataKhachHang);
+      data["Hosting"] = state.dataHosting;
     }
-    return false;
-  }
 
-  saveWebsite() async{
-    if (state.dataWebsite != null && state.isHopDongWebsite) {
-      state.dataWebsite!.forEach((key, value) {
-        print('Website {$key:$value}');
-      });
+    // Thông tin hợp đồng App
+    if(state.isHopDongApp){
+      if(state.dataApp?['ngaykyhd']==null){
+        state.dataApp?['ngaykyhd'] = DateTime.now();
+      }
+      data["App"] = state.dataApp;
     }
-  }
 
-  saveHosting() async{
-    if (state.dataHosting != null && state.isHopDongHosting) {
-      state.dataHosting!.forEach((key, value) {
-        print('Hosting {$key:$value}');
-      });
-    }
-  }
+    data["HopDong"] = state.dataHopDong;
+    data["PhieuThu"] = state.dataPhieuThu;
 
-  saveDomain() async{
-    if (state.dataDomain != null && state.isHopDongDomain) {
-      state.dataDomain!.forEach((key, value) {
-        print('Domain {$key:$value}');
-      });
-    }
-    final dsDomain = ref.read(danhSachDomainProvider);
-    for(var item in dsDomain){
-      print('${item.domainName}: ${item.ngayDangKy} - ${item.ngayHetHan} - ${item.ghiChu}');
-    }
-  }
+    final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
+    final uploadFiled = await saveFileHD();
 
-  saveApp() async{
-    if (state.dataApp != null && state.isHopDongApp) {
-      state.dataApp!.forEach((key, value) {
-        print('App {$key:$value}');
-      });
+    print(result);
+    print(uploadFiled);
+    if(result==true){
+      state = state.copyWith(formStatus: FormStatus.submissionSuccess);
+    }else{
+      state = state.copyWith(formStatus: FormStatus.submissionFailure);
     }
   }
 
   saveFileHD() async{
     final infoFile = ref.read(fileHDProvider);
-    print(infoFile.toString());
     if(infoFile.fileUpload?.path!=null){
-      // upload file
+      await _khachHangMoiRepository.updateFile(fileHDModel: infoFile, soHopDong: state.soHopDong.toString());
     }
   }
 }

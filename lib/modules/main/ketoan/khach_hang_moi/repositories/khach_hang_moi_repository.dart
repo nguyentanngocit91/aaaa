@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 
 import '../../../../../_shared/app_config/app.dart';
 import '../../../../../_shared/thietlap_url.dart';
@@ -17,7 +16,7 @@ class KhachHangMoiRepository {
     return null;
   }
 
-  Future<String?> capMaHopDong() async {
+  Future<String?> capSoHopDong() async {
     final Response response = await App.dioClient.get(ApiUrl.capMaHopDong);
     if(response.statusCode==200){
       if(response.data['success']==true){
@@ -57,25 +56,28 @@ class KhachHangMoiRepository {
     return false;
   }
 
-  Future<bool> luuThongTinPhieuThu({required Map? data}) async {
-    final Response response = await App.dioClient.post(ApiUrl.danhSachPhieuThu, data: data);
+  Future<bool> luuHopDongMoi({required Map? data}) async {
+    print(data);
+    final Response response = await App.dioClient.post(ApiUrl.phieuThuMoi, data: data);
+    print(response);
     if(response.statusCode==200){
-      if(response.data['success']==true && response.data['data']!=null) return true;
+      if(response.data['success']==true) return true;
     }
     return false;
   }
 
-  Future saveFile(FileHDModel fileHDModel) async {
+
+  Future<bool> updateFile({required FileHDModel fileHDModel, required String soHopDong}) async {
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile('${fileHDModel.fileUpload?.path}', filename:fileHDModel.fileUpload?.name),
-      "sohopdong":"",
-      "hopdongId":"",
+      "sohopdong":soHopDong,
       "loaifile":fileHDModel.loaiFile,
       "ghichu":fileHDModel.ghiChu,
     });
     final response = await App.dioClient.post(ApiUrl.uploadFile, data: formData);
-    // return response.data['id'];
+    if(response.statusCode==200){
+      if(response.data['success']) return true;
+    }
+    return false;
   }
-
-
 }
