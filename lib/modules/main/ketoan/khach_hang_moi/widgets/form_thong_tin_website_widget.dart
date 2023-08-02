@@ -43,7 +43,7 @@ class _FormThongTinWebsiteWidgetState
                               fillColor: Colors.black12,
                             ),
                             readOnly: true,
-                            controller: TextEditingController(text: '${formState.maHopDong}W'),
+                            controller: TextEditingController(text: '${formState.soHopDong}W'),
                           ),
                         ],
                       ),
@@ -85,7 +85,7 @@ class _FormThongTinWebsiteWidgetState
                                 txtDate = selDate.formatDateTime('dd-MM-yyyy');
                               }
                               ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                  type: _typeData, key: 'ngayky', value: txtDate);
+                                  type: _typeData, key: 'ngaykyhd', value: txtDate);
                               setState(() {
                                 ngayDangKy = selDate ?? ngayDangKy;
                               });
@@ -109,9 +109,9 @@ class _FormThongTinWebsiteWidgetState
                               String txtDate = '';
                               if(selDate!=null){
                                 txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                    type: _typeData, key: 'ngaybangiao', value: selDate);
                               }
-                              ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                  type: _typeData, key: 'ngaybangiao', value: txtDate);
                               setState(() {
                                 ngayBanGiao = selDate ?? ngayBanGiao;
                               });

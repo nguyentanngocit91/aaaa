@@ -9,15 +9,19 @@ class ApiUrl{
   static const String infoUser = '$baseUrl/users/profile';
   static const String changePassword = '$baseUrl/users/change-password';
 
+  // Media
+  static const String media = '$baseUrl/media';
+  static const String uploadFile = '$media/upload';
+
+
   // Nhân viên
   static const String danhSachNhanVien = '$baseUrl/nhan-vien';
 
 
   // DS HĐ
-
   static const String searchContractCustomer = '$baseUrl/tim-kiem/hop-dong-theo-khach-hang';
-
   static const String updateContract = '$baseUrl/hop-dong';
+
 
   static const String searchContract = '$baseUrl/hop-dong';
   static const String infoContract = '$baseUrl/hop-dong/';
@@ -42,13 +46,14 @@ class ApiUrl{
 
   //PHIẾU THU
   static const String danhSachPhieuThu = '$baseUrl/phieu-thu';
+  static const String phieuThuMoi = '$baseUrl/phieu-thu-moi';
 
   //BÀN GIAO
   static const String danhSachHDTheoSoHD = '$baseUrl/hop-dong';
 
 
-  //Blacklist
 
+  //Blacklist
   static const String danhsachBlackList = '$baseUrl/black-list';
 
 
