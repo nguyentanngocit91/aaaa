@@ -27,7 +27,7 @@ class DanhSachDomainMoiNotifier extends Notifier<DanhSachDomainMoiState> {
 
   void resetInputSearch() async{
     state = state.copyWith(domain: '',status: FormStatus.pure);
-    //await getListPhieuThu();
+    await getListDomain();
 
   }
 
@@ -37,9 +37,11 @@ class DanhSachDomainMoiNotifier extends Notifier<DanhSachDomainMoiState> {
     }
   }
 
-  Future<void> actionRegisterDomain({required String? idDomain}) async {
-    final response = await _domainRepository.registerDomain(idDomain:idDomain);
+  Future<void> actionUpdateDomain({required String idDomain, required String ngayDangKy}) async {
+    if(idDomain!='' && ngayDangKy!=''){
 
+
+    }
 
   }
 

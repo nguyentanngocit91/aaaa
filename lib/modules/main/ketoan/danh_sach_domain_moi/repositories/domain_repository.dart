@@ -5,7 +5,7 @@ import '../../../../../_shared/thietlap_url.dart';
 
 class DomainRepository {
   Future<Map?> getListDomain() async {
-    final Response response = await App.dioClient.get('${ApiUrl.danhSachDomain}?limit=100');
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachDomain}?actived=0&limit=100');
     if(response.statusCode==200){
       if(response.data['success']==true){
         return response.data;
@@ -14,8 +14,8 @@ class DomainRepository {
     return null;
   }
 
-  Future<Map?> registerDomain({required idDomain}) async {
-    final Response response = await App.dioClient.get('${ApiUrl.danhSachDomain}?limit=100');
+  Future<Map?> updateDomain({required idDomain,required ngayDangKy}) async {
+    final Response response = await App.dioClient.get(ApiUrl.updateDomain);
     if(response.statusCode==200){
       if(response.data['success']==true){
         return response.data;
@@ -26,14 +26,10 @@ class DomainRepository {
 
 
   Future<Map?> searchListDomain({String domain = ''}) async {
-
-
-    String strSearchDomain = (domain!='')?'&domain=$domain':'';
-    final Response response = await App.dioClient.get('${ApiUrl.danhSachDomain}?$strSearchDomain');
+    String strSearchDomain = (domain!='')?'&tenmien=$domain':'';
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachDomain}?actived=0&$strSearchDomain');
     if(response.statusCode==200){
       if(response.data['success']==true){
-
-        print(response.data);
         return response.data;
       }
     }
