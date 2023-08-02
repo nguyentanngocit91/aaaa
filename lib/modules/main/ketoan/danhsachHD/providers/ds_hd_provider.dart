@@ -86,7 +86,5 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     }else{
       state = state.copyWith(status: FormStatus.submissionFailure, errorMessage: jsonResult['message']);
     }
-
   }
-
 }
