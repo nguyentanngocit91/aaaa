@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../_shared/mixins/mixin_listview_table/title_header.dart';
 import '../models/danh_sach_blacklist_model.dart';
@@ -109,8 +110,16 @@ class RowItemBL extends StatelessWidget {
   final int index;
   final DanhSachBlacklistModel itemBl;
 
+
+
+
   @override
   Widget build(BuildContext context) {
+
+    DateTime Datengaykhoitao = DateTime.parse(itemBl.lichsuKhoitao!.ngaykhoitao.toString());
+    String formattedDate = DateFormat('dd-MM-yyyy hh:mm a').format(Datengaykhoitao);
+
+
     return Container(
       padding: EdgeInsets.all(6),
       decoration: BoxDecoration(
@@ -161,7 +170,7 @@ class RowItemBL extends StatelessWidget {
           Expanded(
             flex: 2,
             child: TitleHeader(
-              stringTitle:"Ngày khoi tạo",
+              stringTitle:formattedDate.toString(),
               colorTitle: Colors.black,
             ),
           ),
