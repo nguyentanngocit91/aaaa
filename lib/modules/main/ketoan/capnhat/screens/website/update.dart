@@ -15,10 +15,9 @@ import '../../models/media_model.dart';
 import '../../providers/capnhat_provider.dart';
 import '../../providers/form_capnhat_provider.dart';
 
-
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
-  'chungtukhac': 'Chứng từ khác'
+  'chungtu': 'Chứng từ'
 };
 GlobalKey<FormState> _formKey = GlobalKey();
 String _updateType = 'web';
@@ -78,25 +77,36 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
         Loading(context).start();
       }
       if (next == loadingStatus.STOP) {
-        Future.delayed(Duration(seconds: 1), () {
-          ref.read(capnhatProvider.notifier).reload();
+        Future.delayed(Duration(seconds: 1), () async {
+          await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
+          var res = ref.watch(capnhatProvider.notifier);
+          setState(() {
+            _listMedia = res.state.media!;
+          });
           Loading(context).stop();
           if (data.state.success == true) {
             setState(() {
               _resultFile = [];
             });
+
           }
           AwesomeDialog(
             context: context,
+            autoHide:Duration(seconds: 2),
             width: 400.0,
             dialogType:
-                data.state.success ? DialogType.success : DialogType.error,
+            data.state.success ? DialogType.success : DialogType.error,
             animType: AnimType.scale,
-            title: 'Thông báo',
-            desc: data.state.message,
+            title: data.state.message,
+            autoDismiss:true,
+
+            btnOk:Container(),
+            btnCancel:Container(),
+
             btnCancelOnPress: () {},
             btnOkOnPress: () {},
           )..show();
+
         });
       }
     });
@@ -388,6 +398,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                 const SizedBox(
                   height: 10,
                 ),
+                const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -733,55 +744,54 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                 child: BodyRowItem(Text(item['note'])),
                               ),
                               Flexible(
-                                  flex: 1, child: BodyRowItem(
-                                  TextButton(
+                                  flex: 1,
+                                  child: BodyRowItem(TextButton(
                                     onPressed: () {
-                                      ConfirmDialog  alert = ConfirmDialog("Xác nhận","Xoá file đã chọn?",() {
-                                        setState(() {
-                                          _resultFile.removeAt(index);
-                                        });
+                                      ConfirmDialog alert = ConfirmDialog(
+                                        "Xác nhận",
+                                        "Xoá file đã chọn?",
+                                        () {
+                                          setState(() {
+                                            _resultFile.removeAt(index);
+                                          });
 
-                                        Navigator.of(context).pop();
-
-
-                                      },);
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return alert;
                                         },
                                       );
-
                                     },
-
                                     style: TextButton.styleFrom(
-
-
-                                        padding: const EdgeInsets.only(
-                                          top: 16,
-                                          bottom: 16,
-                                          left: 10,
-                                          right: 10,
-                                        ),
-                                        backgroundColor: Colors.blueAccent,
-
-                                      alignment: Alignment.center,
-                                       iconColor: Colors.white,
-
-
-                                    ),
-                                    child:const Row(
-                                        children: [
-                                          Icon(Icons.delete_outline_sharp,size: 15.0,),
-                                          SizedBox(width: 5.0,),
-                                          Text('Xoá',style: TextStyle(color: Colors.white,fontSize: 13.0)),
-                                        ],
+                                      padding: const EdgeInsets.only(
+                                        top: 16,
+                                        bottom: 16,
+                                        left: 10,
+                                        right: 10,
                                       ),
-
-
-                                  )
-
-                              )),
+                                      backgroundColor: Colors.blueAccent,
+                                      alignment: Alignment.center,
+                                      iconColor: Colors.white,
+                                    ),
+                                    child: const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.delete_outline_sharp,
+                                          size: 15.0,
+                                        ),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
+                                        Text('Xoá',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13.0)),
+                                      ],
+                                    ),
+                                  ))),
                             ]),
                             _resultFile.length - 1 > index
                                 ? const Divider()
@@ -850,11 +860,9 @@ class Data extends ConsumerWidget {
                 itemBuilder: (BuildContext context, index) {
                   // InfoResponseModel info = data['info'];
                   return MediaItem(
-                    item: _listMedia[index],
-                    index: index + 1,
-                    divider: !(_listMedia.length - 1 > index)
-
-                  );
+                      item: _listMedia[index],
+                      index: index + 1,
+                      divider: (_listMedia.length - 1 > index));
                 }),
           ] else ...[
             const BsAlert(
@@ -870,18 +878,22 @@ class Data extends ConsumerWidget {
   }
 }
 
-class MediaItem extends StatefulWidget {
-  const MediaItem({Key? key, required this.item, required this.index, required this.divider})
+class MediaItem extends ConsumerStatefulWidget {
+   MediaItem(
+      {Key? key,
+      required this.item,
+      required this.index,
+      required this.divider})
       : super(key: key);
-  final MediaModel item;
+  late MediaModel item;
   final int index;
   final bool divider;
 
   @override
-  State<MediaItem> createState() => _MediaItemState();
+  ConsumerState<MediaItem> createState() => _MediaItemState();
 }
 
-class _MediaItemState extends State<MediaItem> {
+class _MediaItemState extends ConsumerState<MediaItem> {
   late String note = widget.item!.ghichu!;
 
   @override
@@ -899,7 +911,7 @@ class _MediaItemState extends State<MediaItem> {
           ),
           Expanded(
             flex: 3,
-            child: BodyRowItem(Text('tên nhân viên')),
+            child: BodyRowItem(Text(widget.item!.l1_lichsu_khoitao!.hoten!)),
           ),
           Expanded(
             flex: 4,
@@ -908,41 +920,12 @@ class _MediaItemState extends State<MediaItem> {
           ),
           Expanded(
             flex: 3,
-            child: Column(
-              children: [
-                Visibility(
-                  visible: true,
-                  child: BodyRowItem(Text(widget.item.ghichu!)),
-                ),
-                BodyRowItem(Text(widget.item.ghichu!)),
-              ],
-            ),
+            child: BodyRowItem(Text(widget.item.ghichu!)),
           ),
           Expanded(
             flex: 2,
             child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctxt) => new AlertDialog(
-                            title: Text("Text Dialog"),
-                          ));
-                  // SimpleDialog(
-                  //     backgroundColor: Colors.white,
-                  //     contentPadding: const EdgeInsets.all(0),
-                  //     insetPadding: const EdgeInsets.all(30),
-                  //     elevation: 0,
-                  //     children: [
-                  // const Padding(
-                  // padding: const EdgeInsets.all(20.0),
-                  // child: Text(
-                  // 'CẬP NHẬT WEBSITE',
-                  // style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-                  // ),
-                  // ),
-                  // const Divider(),
-                  // ]);
-                },
+                onTap: () {},
                 child: Container(
                   decoration: BoxDecoration(
                     color: Color(0xFF105A6C),
@@ -953,53 +936,57 @@ class _MediaItemState extends State<MediaItem> {
                   child: GestureDetector(
                     onTap: () {
                       final _formKey = GlobalKey<FormState>();
-                      TextEditingController controller = new TextEditingController();
+                      String _selected = widget.item.loaifile.toString();
+                      TextEditingController controller =
+                          new TextEditingController();
                       controller.text = widget.item.ghichu!;
-                      String selectedValue = widget.item.loaifile!;
+
                       Widget _widget = Container(
-                        width: 350,
+                        width: 450,
                         child: Form(
                           key: _formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('Loại file'),
+                              ndGapH8(),
                               DropdownButtonFormField2<String>(
+                                value: _selected,
                                 isExpanded: true,
                                 decoration: InputDecoration(
-
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(vertical: 16),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-
                                 ),
                                 hint: const Text(
                                   'Chọn loại file',
                                   style: TextStyle(fontSize: 14),
                                 ),
-                                items: _loaiPhiethu.entries.map((e) => DropdownMenuItem<String>(
-                                  value: e.key,
-                                  child: Text(
-                                    e.value,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                )).toList(),
-
+                                items: _loaiPhiethu.entries
+                                    .map((e) => DropdownMenuItem<String>(
+                                          value: e.key,
+                                          child: Text(
+                                            e.value,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ))
+                                    .toList(),
                                 validator: (value) {
                                   if (value == null) {
-                                    return 'Please select gender.';
+                                    return 'Please select.';
                                   }
                                   return null;
                                 },
                                 onChanged: (value) {
-                                  //Do something when selected item is changed.
+                                  setState(() {
+                                    _selected = value.toString();
+                                  });
                                 },
-                                onSaved: (value) {
-                                  selectedValue = value.toString();
-                                },
+
                                 buttonStyleData: const ButtonStyleData(
                                   padding: EdgeInsets.only(right: 8),
                                 ),
@@ -1019,38 +1006,62 @@ class _MediaItemState extends State<MediaItem> {
                                   padding: EdgeInsets.symmetric(horizontal: 16),
                                 ),
                               ),
+                              ndGapH8(),
                               const Text('Ghi chú'),
                               ndGapH8(),
                               TextFormField(
                                 controller: controller,
                                 maxLines: 3,
                                 autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                    AutovalidateMode.onUserInteraction,
                                 validator: FormBuilderValidators.compose([
                                   FormBuilderValidators.required(
                                       errorText: 'Không bỏ trống.'),
                                 ]),
-                                // The validator receives the text that the user has entered.
-
                               ),
-
                             ],
                           ),
                         ),
                       );
-                      TextDialog  alert = TextDialog("Điều chỉnh file","",_widget,() {
-                        if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
-                          );
-                          //Navigator.of(context).pop();
-                        }
+                      TextDialog alert = TextDialog(
+                        "Điều chỉnh file",
+                        "",
+                        _widget,
+                        () async {
+                          if (_formKey.currentState!.validate()) {
 
 
+                            var updateMedia = await ref.read(capnhatProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
 
-                      },);
+                            if(updateMedia['status']==true){
+                             Navigator.of(context).pop();
+                              setState(() {
+                                 widget.item = MediaModel.fromJson(updateMedia['data']);
+
+                              });
+
+                            }
+                            AwesomeDialog(
+                              context: context,
+                              autoHide:Duration(seconds: 2),
+                              width: 400.0,
+                               dialogType:
+                               updateMedia['status'] ? DialogType.success : DialogType.error,
+                              animType: AnimType.scale,
+                              title: updateMedia['message'],
+                              autoDismiss:true,
+
+                              btnOk:Container(),
+                              btnCancel:Container(),
+                              
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {},
+                            )..show();
+
+
+                          }
+                        },
+                      );
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -1068,7 +1079,7 @@ class _MediaItemState extends State<MediaItem> {
           ),
         ],
       ),
-      widget.divider ? const Divider():Container()
+      widget.divider ? const Divider() : Container()
     ]);
   }
 }
