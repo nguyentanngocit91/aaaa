@@ -29,7 +29,18 @@ class SearchCustomerContractModel with _$SearchCustomerContractModel {
 	const factory SearchCustomerContractModel({
 		List<dynamic>? dichvuIds,
 		List<dynamic>? files,
+		String? ngaykichhoat,
+		String? ngayhethan,
+		String? tenapp,
+		String? tenmien,
 		List<dynamic>? danhsachtenmien,
+		String? chucnang,
+		String? mota,
+		List<dynamic>? ngayupstore,
+		int? dungluong,
+		int? sonamdangky,
+		String? ngaydangky,
+		String? ngaybangiao,
 		String? trangthai_hosting,
 		List<dynamic>? lichsu_thanhtoan,
 		@JsonKey(name: '_id') @required String? id,
@@ -45,19 +56,8 @@ class SearchCustomerContractModel with _$SearchCustomerContractModel {
 		String? khachhangId,
 		String? tenhopdong,
 		@JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
-		double? tongtien,
-		List<dynamic>? lichsu_capnhat,
-		List<dynamic>? chucnang,
-		double? dungluong,
-		String? mota,
-		String? ngaybangiao,
-		String? ngaydangky,
-		String? ngayhethan,
-		String? ngaykichhoat,
-		List<dynamic>? ngayupstore,
-		double? sonamdangky,
-		String? tenapp,
-		String? tenmien}) = _SearchCustomerContractModel;
+		int? tongtien,
+		List<dynamic>? lichsu_capnhat}) = _SearchCustomerContractModel;
 
 	factory SearchCustomerContractModel.fromJson(Map<String, dynamic> json) => _$SearchCustomerContractModelFromJson(json);
 }
