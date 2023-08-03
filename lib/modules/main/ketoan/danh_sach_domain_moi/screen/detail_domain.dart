@@ -12,7 +12,7 @@ class DetailDomain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ngayDangKyInput.text = selNgayKy.formatDateTime('dd-MM-yyyy');
+    ngayDangKyInput.text = selNgayKy.formatDateTime();
     return SimpleDialog(
       backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.all(0),
@@ -90,7 +90,7 @@ class DetailDomain extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        const Expanded(flex:1,child: Text('Ngày đăng ký'),),
+                        const Expanded(flex:1,child: Text('Ngày kích hoạt'),),
                         Expanded(flex:1,child: TextField(
                           controller: ngayDangKyInput,
                           readOnly: true,

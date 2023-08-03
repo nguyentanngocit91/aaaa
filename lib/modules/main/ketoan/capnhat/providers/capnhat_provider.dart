@@ -6,9 +6,34 @@ import '../models/media_model.dart';
 import '../repositories/capnhat_repository.dart';
 part 'capnhat_state.dart';
 
-final capnhatProvider =
-StateNotifierProvider.autoDispose<CapNhatNotifier, CapNhatState>(
+final capnhatAppProvider =
+StateNotifierProvider<CapNhatNotifier, CapNhatState>(
       (ref) {
+    return CapNhatNotifier();
+  },
+);
+final capnhatDomainProvider =
+StateNotifierProvider<CapNhatNotifier, CapNhatState>(
+      (ref) {
+    return CapNhatNotifier();
+  },
+);
+
+final capnhatHostingProvider =
+StateNotifierProvider<CapNhatNotifier, CapNhatState>(
+      (ref) {
+    return CapNhatNotifier();
+  },
+);
+
+
+
+final capnhatProvider =
+StateNotifierProvider<CapNhatNotifier, CapNhatState>(
+      (ref) {
+        ref.onDispose(() {
+          print("dispose");
+        });
     return CapNhatNotifier();
   },
 );
@@ -87,7 +112,9 @@ class CapNhatNotifier extends StateNotifier<CapNhatState> {
 
 
   }
-
+  updateMedia(Map<dynamic, String?> map) async {
+      return await _capNhatRepository.updateMedia(map);
+  }
   getConstractById(String id) async {
    state = state.copyWith(contract: null);
    final jsonResult = await _capNhatRepository.getInfo(id);

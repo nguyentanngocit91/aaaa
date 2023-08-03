@@ -53,9 +53,9 @@ class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins {
   Widget build(BuildContext context) {
     ref.listen(formKhachHangMoiProvider.select((value) => value.formStatus),
         (previous, next) {
-      // if (next == FormStatus.submissionInProgress) {
-      //   Loading(context).start();
-      // }
+      if (next == FormStatus.submissionInProgress) {
+        Loading(context).start();
+      }
       if (next == FormStatus.submissionCanceled) {
         Loading(context).stop();
       }
@@ -80,6 +80,7 @@ class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins {
         );
       }
       if (next == FormStatus.submissionSuccess) {
+        _resetForm(ref);
         Loading(context).stop();
         showDialog(
           context: context,
@@ -91,7 +92,6 @@ class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins {
                 FilledButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    _resetForm(ref);
                   },
                   child: Text('Ok'),
                 ),

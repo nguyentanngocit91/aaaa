@@ -52,7 +52,7 @@ class CapNhatRepository {
       "media": [],
     };
 
-
+    ContractModel? item;
     if (response.statusCode == 200) {
       final res = response.data;
 
@@ -62,42 +62,58 @@ class CapNhatRepository {
       } else {
         result['status'] = true;
         result['message'] = "Success";
-        result['data'] = ContractModel.fromJson(res);
+        item = ContractModel.fromJson(res);
+        result['data'] = item;
       }
-    }
 
-    final Response medias = await App.dioClient.get(
-        "${ApiUrl.listFile}", queryParameters: {
-          "limit":100,
-          "hopdongId": id
-    });
+    if(res['success']) {
+      final Response medias = await App.dioClient.get(
+          "${ApiUrl.listFile}", queryParameters: {
+        "limit": 100,
+        "sohopdong": item!.l1_data!.sohopdong!
+      });
 
-    print(medias);
-
-    if(medias.statusCode == 200){
-      final mediaRes  = medias.data;
-      if(mediaRes['success']==true){
-          for(var item in mediaRes['data']){
+      if (medias.statusCode == 200) {
+        final mediaRes = medias.data;
+        if (mediaRes['success'] == true) {
+          for (var item in mediaRes['data']) {
             listMedia.add(MediaModel.fromJson(item));
           }
+        }
       }
-    }
 
-    result['media'] = listMedia;
+
+      result['media'] = listMedia;
+    }
+    }
     return result;
   }
 
-  update({required String id, Map<String, String>? data}) async {
+  updateMedia(Map data) async {
     final response =
-    await App.dioClient.put("${ApiUrl.infoContract}${id}", data: data);
-
-
+        await App.dioClient.put("${ApiUrl.updateFile}${data['id']}", data: {'ghichu':data['ghichu'],'loaifile':data['loaifile']});
     var result = {
       "status": false,
       "data": null,
       "message": "Error"
     };
+    if (response.statusCode == 200) {
+      final res = response.data;
+      result['status'] = res['success'];
+      result['message'] = res['message'];
+      result['data'] = res['data'];
 
+    }
+    return result;
+  }
+  update({required String id, Map<String, String>? data}) async {
+    final response =
+    await App.dioClient.put("${ApiUrl.infoContract}${id}", data: data);
+    var result = {
+      "status": false,
+      "data": null,
+      "message": "Error"
+    };
     if (response.statusCode == 200) {
       final res = response.data;
       result['status'] = res['success'];
@@ -118,7 +134,6 @@ class CapNhatRepository {
       ],
       'loaimedia':'hopdong',
       'sohopdong': sohopdong,
-      'hopdongId': hopdongId,
       'loaifile': loaifile,
       'ghichu': ghichu,
     });

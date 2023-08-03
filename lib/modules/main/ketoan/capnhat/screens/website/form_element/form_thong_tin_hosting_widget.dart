@@ -1,5 +1,6 @@
-part of '../khach_hang_moi_layout.dart';
+part of '../upgrade.dart';
 
+enum TrangThaiHosting { kyMoi, phucHoi, nangCap, chuyenDoi }
 
 class FormThongTinHostingWidget extends ConsumerStatefulWidget {
   const FormThongTinHostingWidget({super.key});
@@ -44,7 +45,7 @@ class _FormThongTinHostingWidgetState
                               fillColor: Colors.black12,
                             ),
                             readOnly: true,
-                            controller: TextEditingController(text: '${formState.soHopDong}H'),
+                            controller: TextEditingController(text: '${formState.maHopDong}H'),
                           ),
                         ],
                       ),
@@ -54,7 +55,7 @@ class _FormThongTinHostingWidgetState
                       flex: 1,
                       child: Wrap(
                         children: [
-                          lableTextForm('Dung lượng Hosting (MB)'),
+                          lableTextForm('Dung lượng Hosting (MB) - Tối thiểu 500MB'),
                           TextFormField(
                             inputFormatters: [
                               CurrencyTextInputFormatter(symbol: 'MB')
@@ -66,8 +67,8 @@ class _FormThongTinHostingWidgetState
                                   .read(formKhachHangMoiProvider.notifier)
                                   .changeData(
                                       type: _typeData,
-                                      key: 'dungluong',
-                                      value: value.toString().replaceAll('.', '').replaceAll('MB', '').trim());
+                                      key: 'tenhosting',
+                                      value: value);
                             },
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(
@@ -90,18 +91,18 @@ class _FormThongTinHostingWidgetState
                       flex: 1,
                       child: Wrap(
                         children: [
-                          lableTextForm('Ngày ký'),
+                          lableTextForm('Ngày đăng ký'),
                           TextFormField(
                             readOnly: true,
-                            controller: TextEditingController(text: ngayDangKy.formatDateTime()),
+                            controller: TextEditingController(text: ngayDangKy.formatDateTime('dd-MM-yyyy')),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayDangKy);
-                              String txtDate = DateTime.now().formatDateTime();
+                              String txtDate = DateTime.now().formatDateTime('dd-MM-yyyy');
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime();
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                    type: _typeData, key: 'ngaykyhd', value: selDate);
+                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
                               }
+                              ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                  type: _typeData, key: 'ngayky', value: txtDate);
                               setState(() {
                                 ngayDangKy = selDate ?? ngayDangKy;
                               });
@@ -124,15 +125,15 @@ class _FormThongTinHostingWidgetState
                               FormBuilderValidators.required(
                                   errorText: 'Không bỏ trống.'),
                             ]),
-                            controller: TextEditingController(text: (ngayHetHan!=null) ? ngayHetHan!.formatDateTime() : ''),
+                            controller: TextEditingController(text: (ngayHetHan!=null) ? ngayHetHan!.formatDateTime('dd-MM-yyyy') : ''),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayHetHan);
-                              String txtDate = DateTime.now().formatDateTime();
+                              String txtDate = DateTime.now().formatDateTime('dd-MM-yyyy');
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime();
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                    type: _typeData, key: 'ngayhethan', value: selDate);
+                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
                               }
+                              ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                  type: _typeData, key: 'ngayhethan', value: txtDate);
                               setState(() {
                                 ngayHetHan = selDate ?? ngayHetHan;
                               });
@@ -163,7 +164,7 @@ class _TrangThaiHostingWidget extends ConsumerStatefulWidget {
 class _TrangThaiHostingWidgetState
     extends ConsumerState<_TrangThaiHostingWidget> with FormUIMixins {
 
-  String _trangThaiHosting = 'kymoi';
+  TrangThaiHosting _trangThaiHosting = TrangThaiHosting.kyMoi;
   final String _typeData = 'hosting';
 
   @override
@@ -181,11 +182,10 @@ class _TrangThaiHostingWidgetState
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center ,
                 children: [
-                  Radio<String>(
-                    value: 'kymoi',
+                  Radio<TrangThaiHosting>(
+                    value: TrangThaiHosting.kyMoi,
                     groupValue: _trangThaiHosting,
-                    onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                    onChanged: (TrangThaiHosting? value) {
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -193,11 +193,10 @@ class _TrangThaiHostingWidgetState
                   ),
                   const Text('Ký mới'),
                   ndGapW16(),
-                  Radio<String>(
-                    value: 'phuchoi',
+                  Radio<TrangThaiHosting>(
+                    value: TrangThaiHosting.phucHoi,
                     groupValue: _trangThaiHosting,
-                    onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                    onChanged: (TrangThaiHosting? value) {
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -205,11 +204,10 @@ class _TrangThaiHostingWidgetState
                   ),
                   const Text('Phục hồi'),
                   ndGapW16(),
-                  Radio<String>(
-                    value: 'nangcap',
+                  Radio<TrangThaiHosting>(
+                    value: TrangThaiHosting.nangCap,
                     groupValue: _trangThaiHosting,
-                    onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                    onChanged: (TrangThaiHosting? value) {
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -217,11 +215,10 @@ class _TrangThaiHostingWidgetState
                   ),
                   const Text('Nâng cấp'),
                   ndGapW16(),
-                  Radio<String>(
-                    value: 'chuyendoi',
+                  Radio<TrangThaiHosting>(
+                    value: TrangThaiHosting.chuyenDoi,
                     groupValue: _trangThaiHosting,
-                    onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                    onChanged: (TrangThaiHosting? value) {
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -237,10 +234,10 @@ class _TrangThaiHostingWidgetState
         Expanded(
           flex: 1,
           child: Visibility(
-            visible: (_trangThaiHosting=='chuyendoi' || _trangThaiHosting=='phuchoi') ? true : false,
+            visible: (_trangThaiHosting==TrangThaiHosting.chuyenDoi || _trangThaiHosting==TrangThaiHosting.phucHoi) ? true : false,
             child: Wrap(
               children: [
-                lableTextForm('Số hợp đồng cũ'),
+                lableTextForm('Mã hợp đồng cũ'),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   onChanged: (value) {

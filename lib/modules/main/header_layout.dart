@@ -28,16 +28,6 @@ class HeaderLayout extends ConsumerWidget {
           PopupMenuButton<int>(
             tooltip: '',
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-            icon: const Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                FaIcon(FontAwesomeIcons.user,size: 16,),
-                SizedBox(width: 7,),
-                Text('Tài khoản'),
-                SizedBox(width: 7,),
-                FaIcon(FontAwesomeIcons.angleDown, size: 12,),
-              ],
-            ),
             itemBuilder: (context) => [
               const PopupMenuItem(
                 value: 1,
@@ -64,7 +54,7 @@ class HeaderLayout extends ConsumerWidget {
                 ),
               ),
             ],
-            offset: const Offset(0, 40),
+            offset: const Offset(0, 35),
             onSelected: (value) {
               if(value==1){
                 context.go('/${DoiMatKhauLayout.pathName}');
@@ -73,6 +63,16 @@ class HeaderLayout extends ConsumerWidget {
                 ref.read(authProvider.notifier).signOut();
               }
             },
+            child: const Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                FaIcon(FontAwesomeIcons.user,size: 16,),
+                SizedBox(width: 7,),
+                Text('Tài khoản'),
+                SizedBox(width: 7,),
+                FaIcon(FontAwesomeIcons.angleDown, size: 12,),
+              ],
+            ),
           ),
         ],
       ),

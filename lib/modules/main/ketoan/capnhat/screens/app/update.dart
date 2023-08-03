@@ -4,54 +4,16 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:go_router/go_router.dart';
-import 'package:regexpattern/regexpattern.dart';
 import 'package:responsive_grid/responsive_grid.dart';
-import '../../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../../_shared/mixins/form_ui_mixins.dart';
-import '../../../../../../_shared/utils/currency_text_input_formatter.dart';
-import '../../../../../../_shared/utils/debouncer.dart';
 import '../../../../../../_shared/utils/helper.dart';
 import '../../../../../../_shared/utils/ndgap.dart';
 import '../../../../../../_shared/utils/show_ok_alert_dialog.dart';
-import '../../../../../../packages/textfield_tags/src/models.dart';
-import '../../../khach_hang_moi/providers/kiem_tra_khach_hang_provider.dart';
-import '../../../khach_hang_moi/widgets/tags_input_widget.dart';
 import '../../models/contract_model.dart';
 import '../../models/media_model.dart';
 import '../../providers/capnhat_provider.dart';
-import '../../providers/danh_sach_domain_provider.dart';
 import '../../providers/form_capnhat_provider.dart';
-import '../../providers/form_khach_hang_moi_provider.dart';
-import '../../providers/nhan_vien_phu_trach_provider.dart';
-
-part 'form_element/form_thong_tin_khach_hang_widget.dart';
-
-part 'form_element/form_thong_tin_hop_dong_widget.dart';
-
-part 'form_element/form_thong_tin_phieu_thu_widget.dart';
-part 'form_element/form_thong_tin_website_widget.dart';
-part 'form_element/form_thong_tin_domain_widget.dart';
-part 'form_element/form_thong_tin_hosting_widget.dart';
-part 'form_element/form_thong_tin_app_widget.dart';
-part 'form_element/upload_file_hd_widget.dart';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
@@ -62,17 +24,17 @@ String _updateType = 'web';
 List<Map> _resultFile = [];
 List<MediaModel> _listMedia = [];
 
-class Upgrade extends ConsumerStatefulWidget {
-  Upgrade({Key? key, required this.id, required this.contractNumber})
+class UpdateWebsite extends ConsumerStatefulWidget {
+  UpdateWebsite({Key? key, required this.id, required this.contractNumber})
       : super(key: key);
   final String id;
   final String contractNumber;
 
   @override
-  ConsumerState<Upgrade> createState() => _UpdateWebsiteScreenState();
+  ConsumerState<UpdateWebsite> createState() => _UpdateWebsiteScreenState();
 }
 
-class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
+class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
     with FormUIMixins {
   bool isLoading = true;
   Map<String, TextEditingController> listController = {};
@@ -107,46 +69,46 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
 
   @override
   Widget build(BuildContext context) {
-    // FormCapNhatNotifier data = ref.read(formcapnhatProvider.notifier);
-    // ref.listen(formcapnhatProvider.select((value) => value.loading),
-    //         (previous, next) {
-    //       if (next == loadingStatus.START) {
-    //         Loading(context).start();
-    //       }
-    //       if (next == loadingStatus.STOP) {
-    //         Future.delayed(Duration(seconds: 1), () async {
-    //           await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
-    //           var res = ref.watch(capnhatProvider.notifier);
-    //           setState(() {
-    //             _listMedia = res.state.media!;
-    //           });
-    //           Loading(context).stop();
-    //           if (data.state.success == true) {
-    //             setState(() {
-    //               _resultFile = [];
-    //             });
-    //
-    //           }
-    //           AwesomeDialog(
-    //             context: context,
-    //             autoHide:Duration(seconds: 2),
-    //             width: 400.0,
-    //             dialogType:
-    //             data.state.success ? DialogType.success : DialogType.error,
-    //             animType: AnimType.scale,
-    //             title: data.state.message,
-    //             autoDismiss:true,
-    //
-    //             btnOk:Container(),
-    //             btnCancel:Container(),
-    //
-    //             btnCancelOnPress: () {},
-    //             btnOkOnPress: () {},
-    //           )..show();
-    //
-    //         });
-    //       }
-    //     });
+    FormCapNhatNotifier data = ref.read(formcapnhatProvider.notifier);
+    ref.listen(formcapnhatProvider.select((value) => value.loading),
+        (previous, next) {
+      if (next == loadingStatus.START) {
+        Loading(context).start();
+      }
+      if (next == loadingStatus.STOP) {
+        Future.delayed(Duration(seconds: 1), () async {
+          await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
+          var res = ref.watch(capnhatProvider.notifier);
+          setState(() {
+            _listMedia = res.state.media!;
+          });
+          Loading(context).stop();
+          if (data.state.success == true) {
+            setState(() {
+              _resultFile = [];
+            });
+
+          }
+          AwesomeDialog(
+            context: context,
+            autoHide:Duration(seconds: 2),
+            width: 400.0,
+            dialogType:
+            data.state.success ? DialogType.success : DialogType.error,
+            animType: AnimType.scale,
+            title: data.state.message,
+            autoDismiss:true,
+
+            btnOk:Container(),
+            btnCancel:Container(),
+
+            btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+          )..show();
+
+        });
+      }
+    });
 
     return SimpleDialog(
       backgroundColor: Colors.white,
@@ -157,49 +119,344 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
         const Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'NÂNG CẤP WEBSITE',
+            'CẬP NHẬT WEBSITE',
             style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
           ),
         ),
         const Divider(),
         Form(
           key: _formKey,
-          child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                titleForm(context, title: 'Thông tin khách hàng'),
-                bodyForm(
-                  child: const FormThongTinKhachHangWidget(),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.text_snippet_outlined,
+                      color: Color(0xFF105a6c),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Thông tin website'.toUpperCase(),
+                      style: const TextStyle(color: Color(0xFF105a6c)),
+                    ),
+                  ],
                 ),
-                // ndGapH40(),
-                // titleForm(context, title: 'Thông tin hợp đồng'),
-                // bodyForm(
-                //   child: const FormThongTinHopDongWidget(),
-                // ),
-                // ndGapH40(),
-                // titleForm(context, title: 'Thông tin phiếu thu'),
-                // bodyForm(
-                //   child: const FormThongTinPhieuThuWidget(),
-                // ),
-                // const FormThongTinWebsiteWidget(),
-                // const FormThongTinDomainWidget(),
-                // const FormThongTinHostingWidget(),
-                // const FormThongTinAppWidget(),
-                ndGapH40(),
-                titleForm(context, title: 'Upload file HĐ'),
-                // bodyForm(
-                //   child: const UploadFileHDWidget(),
-                // ),
-                ndGapH40(),
-                const _BtnSubmit(),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFf5f5f5),
+                      border: Border.all(color: const Color(0xFFdcdbdb)),
+                    ),
+                    child: ResponsiveGridRow(
+                      children: [
+                        ResponsiveGridCol(
+                          lg: 6,
+                          xs: 12,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Mã hợp đồng',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextField(
+                                  controller: listController['mahopdong'],
+                                  focusNode: listFocusNode['mahopdong'],
+                                  readOnly: true,
+                                  decoration: Helper().disabledInput(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ResponsiveGridCol(
+                          xs: 6,
+                          md: 6,
+                          lg: 3,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Ngày ký web',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextFormField(
+                                  readOnly: true,
+                                  controller: listController['ngaykyhd'],
+                                  focusNode: listFocusNode['ngaykyhd'],
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: FormBuilderValidators.compose([
+                                    FormBuilderValidators.required(
+                                        errorText: 'Không bỏ trống.'),
+                                  ]),
+                                  onTap: () async {
+                                    final DateTime? selDate =
+                                        await Helper.onSelectDate(context,
+                                            initialDate: Helper.parseDate(
+                                                listController['ngaykyhd']!
+                                                    .value
+                                                    .text,
+                                                'dd-MM-yyyy'));
+                                    if (selDate != null) {
+                                      listController['ngaykyhd']!.text =
+                                          Helper.dateFormat(selDate);
+                                      DateTime date1 = Helper.parseDate(
+                                          listController['ngaykyhd']!
+                                              .value
+                                              .text,
+                                          'dd-MM-yyyy');
+                                      DateTime date2 = Helper.parseDate(
+                                          listController['ngaybangiao']!
+                                              .value
+                                              .text,
+                                          'dd-MM-yyyy');
+                                      if (date1.compareTo(date2) > 0) {
+                                        listController['ngaybangiao']!.text =
+                                            Helper.dateFormat(selDate);
+                                      }
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ResponsiveGridCol(
+                          xs: 6,
+                          md: 6,
+                          lg: 3,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Ngày bàn giao',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextFormField(
+                                  readOnly: true,
+                                  controller: listController['ngaybangiao'],
+                                  focusNode: listFocusNode['ngaybangiao'],
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: FormBuilderValidators.compose([
+                                    FormBuilderValidators.required(
+                                        errorText: 'Không bỏ trống.'),
+                                  ]),
+                                  onTap: () async {
+                                    final DateTime? selDate =
+                                        await Helper.onSelectDate(
+                                            context,
+                                            initialDate: Helper.parseDate(
+                                                listController['ngaybangiao']!
+                                                    .value
+                                                    .text,
+                                                'dd-MM-yyyy'),
+                                            firstDate: Helper.parseDate(
+                                                listController['ngaykyhd']!
+                                                    .value
+                                                    .text,
+                                                'dd-MM-yyyy'));
+                                    if (selDate != null) {
+                                      listController['ngaybangiao']!.text =
+                                          Helper.dateFormat(selDate);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ResponsiveGridCol(
+                          xs: 12,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Chức năng',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextFormField(
+                                  controller: listController['chucnang'],
+                                  focusNode: listFocusNode['chucnang'],
+                                  maxLines: 3,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: FormBuilderValidators.compose([
+                                    FormBuilderValidators.required(
+                                        errorText: 'Không bỏ trống.'),
+                                  ]),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ResponsiveGridCol(
+                          xs: 12,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Ghi chú',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextFormField(
+                                  controller: listController['ghichu'],
+                                  focusNode: listFocusNode['mahopdong'],
+                                  maxLines: 3,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: FormBuilderValidators.compose([
+                                    FormBuilderValidators.required(
+                                        errorText: 'Không bỏ trống.'),
+                                  ]),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Row(
+                  children: [
+                    const Icon(
+                      Icons.text_snippet_outlined,
+                      color: Color(0xFF105a6c),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'UPLOAD FILE HĐ',
+                      style: const TextStyle(color: Color(0xFF105a6c)),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFf5f5f5),
+                    border: Border.all(color: const Color(0xFFdcdbdb)),
+                  ),
+                  child: UploadFileWidget(),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Data(),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          listController.forEach((key, value) {
+                            ref
+                                .read(formcapnhatProvider.notifier)
+                                .onChangeValue(key, value.text);
+                          });
+
+                          ref
+                              .read(formcapnhatProvider.notifier)
+                              .onSubmit(widget.id, widget.contractNumber);
+                        } else {
+                          listFocusNode.forEach((key, value) {
+                            value.requestFocus();
+                          });
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(10),
+                          backgroundColor: Colors.blueAccent),
+                      child: const Text(
+                        'Cập nhật',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(10),
+                          backgroundColor: Colors.grey),
+                      child: const Text(
+                        'Thoát',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
         ),
       ],
     );
-
+    ;
   }
 }
 
@@ -236,8 +493,8 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
             GestureDetector(
                 child: Text(value),
                 onTap: () => setState(() {
-                  _radioValue = key;
-                }))
+                      _radioValue = key;
+                    }))
           ],
         ),
       );
@@ -290,31 +547,31 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                         validator: FormBuilderValidators.compose([
                           //    FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
                         ]), onTap: () async {
-                          String path = '';
-                          final result = await FilePicker.platform.pickFiles(
-                            allowMultiple: true,
-                            type: FileType.custom,
-                            allowedExtensions: [
-                              'pdf',
-                              'doc',
-                              'docx',
-                              'xls',
-                              'xlsx',
-                              'jpg',
-                              'png',
-                            ],
-                          );
-                          if (result != null) {
-                            List<String> name = [];
-                            for (var file in result.files) {
-                              name.add(file.name);
-                            }
-                            _files = result.files;
-                            _uploadController.text = name.join(",");
-                          } else {
-                            _uploadController.clear();
-                          }
-                        }),
+                      String path = '';
+                      final result = await FilePicker.platform.pickFiles(
+                        allowMultiple: true,
+                        type: FileType.custom,
+                        allowedExtensions: [
+                          'pdf',
+                          'doc',
+                          'docx',
+                          'xls',
+                          'xlsx',
+                          'jpg',
+                          'png',
+                        ],
+                      );
+                      if (result != null) {
+                        List<String> name = [];
+                        for (var file in result.files) {
+                          name.add(file.name);
+                        }
+                        _files = result.files;
+                        _uploadController.text = name.join(",");
+                      } else {
+                        _uploadController.clear();
+                      }
+                    }),
                   ),
                 ),
               ),
@@ -492,7 +749,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                       ConfirmDialog alert = ConfirmDialog(
                                         "Xác nhận",
                                         "Xoá file đã chọn?",
-                                            () {
+                                        () {
                                           setState(() {
                                             _resultFile.removeAt(index);
                                           });
@@ -621,11 +878,11 @@ class Data extends ConsumerWidget {
 }
 
 class MediaItem extends ConsumerStatefulWidget {
-  MediaItem(
+   MediaItem(
       {Key? key,
-        required this.item,
-        required this.index,
-        required this.divider})
+      required this.item,
+      required this.index,
+      required this.divider})
       : super(key: key);
   late MediaModel item;
   final int index;
@@ -680,7 +937,7 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                       final _formKey = GlobalKey<FormState>();
                       String _selected = widget.item.loaifile.toString();
                       TextEditingController controller =
-                      new TextEditingController();
+                          new TextEditingController();
                       controller.text = widget.item.ghichu!;
 
                       Widget _widget = Container(
@@ -697,7 +954,7 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                                 isExpanded: true,
                                 decoration: InputDecoration(
                                   contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 16),
+                                      const EdgeInsets.symmetric(vertical: 16),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
                                   ),
@@ -708,14 +965,14 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                                 ),
                                 items: _loaiPhiethu.entries
                                     .map((e) => DropdownMenuItem<String>(
-                                  value: e.key,
-                                  child: Text(
-                                    e.value,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ))
+                                          value: e.key,
+                                          child: Text(
+                                            e.value,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ))
                                     .toList(),
                                 validator: (value) {
                                   if (value == null) {
@@ -755,7 +1012,7 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                                 controller: controller,
                                 maxLines: 3,
                                 autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                    AutovalidateMode.onUserInteraction,
                                 validator: FormBuilderValidators.compose([
                                   FormBuilderValidators.required(
                                       errorText: 'Không bỏ trống.'),
@@ -769,16 +1026,16 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                         "Điều chỉnh file",
                         "",
                         _widget,
-                            () async {
+                        () async {
                           if (_formKey.currentState!.validate()) {
 
 
                             var updateMedia = await ref.read(capnhatProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
 
                             if(updateMedia['status']==true){
-                              Navigator.of(context).pop();
+                             Navigator.of(context).pop();
                               setState(() {
-                                widget.item = MediaModel.fromJson(updateMedia['data']);
+                                 widget.item = MediaModel.fromJson(updateMedia['data']);
 
                               });
 
@@ -787,15 +1044,15 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                               context: context,
                               autoHide:Duration(seconds: 2),
                               width: 400.0,
-                              dialogType:
-                              updateMedia['status'] ? DialogType.success : DialogType.error,
+                               dialogType:
+                               updateMedia['status'] ? DialogType.success : DialogType.error,
                               animType: AnimType.scale,
                               title: updateMedia['message'],
                               autoDismiss:true,
 
                               btnOk:Container(),
                               btnCancel:Container(),
-
+                              
                               btnCancelOnPress: () {},
                               btnOkOnPress: () {},
                             )..show();
@@ -824,48 +1081,4 @@ class _MediaItemState extends ConsumerState<MediaItem> {
       widget.divider ? const Divider() : Container()
     ]);
   }
-}
-
-class _BtnSubmit extends ConsumerWidget {
-  const _BtnSubmit({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FilledButton.icon(
-          onPressed: () {
-            _submitForm(ref);
-          },
-          icon: const FaIcon(FontAwesomeIcons.download, size: 16,),
-          label: const Text('Lưu Thông Tin'),
-        ),
-        ndGapW16(),
-        FilledButton.icon(
-          onPressed: () {
-            _resetForm(ref);
-          },
-          icon: const FaIcon(FontAwesomeIcons.rotate, size: 16,),
-          label: const Text('Nhập lại'),
-        ),
-      ],
-    );
-  }
-}
-
-_submitForm(WidgetRef ref) {
-  if (_formKey.currentState!.validate()) {
-    ref.read(formKhachHangMoiProvider.notifier).saveForm();
-  }
-}
-
-_resetForm(WidgetRef ref){
-  _formKey.currentState?.reset();
-  ref.refresh(formKhachHangMoiProvider); // reset dữ liệu toàn Form
-  ref.refresh(kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
-  ref.refresh(nhanVienPhuTrachProvider); // reset dữ liệu nhân viên phụ trách
-  Future.delayed(const Duration(milliseconds: 100),(){
-    ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach();
-  }); // reset danh sách domain
 }
