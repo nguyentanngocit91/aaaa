@@ -18,7 +18,7 @@ import '../../providers/form_capnhat_provider.dart';
 
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
-  'chungtukhac': 'Chứng từ khác'
+  'chungtu': 'Chứng từ khác'
 };
 GlobalKey<FormState> _formKey = GlobalKey();
 String _updateType = 'web';

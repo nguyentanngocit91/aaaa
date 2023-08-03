@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'searchcustomer_model.dart';
+part of 'customerupdate_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-SearchCustomerModel _$SearchCustomerModelFromJson(Map<String, dynamic> json) {
-  return _SearchCustomerModel.fromJson(json);
+CustomerUpdateModel _$CustomerUpdateModelFromJson(Map<String, dynamic> json) {
+  return _CustomerUpdateModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$SearchCustomerModel {
+mixin _$CustomerUpdateModel {
   List<dynamic>? get lichsu_khoitao => throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
@@ -39,15 +39,15 @@ mixin _$SearchCustomerModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SearchCustomerModelCopyWith<SearchCustomerModel> get copyWith =>
+  $CustomerUpdateModelCopyWith<CustomerUpdateModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchCustomerModelCopyWith<$Res> {
-  factory $SearchCustomerModelCopyWith(
-          SearchCustomerModel value, $Res Function(SearchCustomerModel) then) =
-      _$SearchCustomerModelCopyWithImpl<$Res, SearchCustomerModel>;
+abstract class $CustomerUpdateModelCopyWith<$Res> {
+  factory $CustomerUpdateModelCopyWith(
+          CustomerUpdateModel value, $Res Function(CustomerUpdateModel) then) =
+      _$CustomerUpdateModelCopyWithImpl<$Res, CustomerUpdateModel>;
   @useResult
   $Res call(
       {List<dynamic>? lichsu_khoitao,
@@ -69,9 +69,9 @@ abstract class $SearchCustomerModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SearchCustomerModelCopyWithImpl<$Res, $Val extends SearchCustomerModel>
-    implements $SearchCustomerModelCopyWith<$Res> {
-  _$SearchCustomerModelCopyWithImpl(this._value, this._then);
+class _$CustomerUpdateModelCopyWithImpl<$Res, $Val extends CustomerUpdateModel>
+    implements $CustomerUpdateModelCopyWith<$Res> {
+  _$CustomerUpdateModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -170,11 +170,11 @@ class _$SearchCustomerModelCopyWithImpl<$Res, $Val extends SearchCustomerModel>
 }
 
 /// @nodoc
-abstract class _$$_SearchCustomerModelCopyWith<$Res>
-    implements $SearchCustomerModelCopyWith<$Res> {
-  factory _$$_SearchCustomerModelCopyWith(_$_SearchCustomerModel value,
-          $Res Function(_$_SearchCustomerModel) then) =
-      __$$_SearchCustomerModelCopyWithImpl<$Res>;
+abstract class _$$_CustomerUpdateModelCopyWith<$Res>
+    implements $CustomerUpdateModelCopyWith<$Res> {
+  factory _$$_CustomerUpdateModelCopyWith(_$_CustomerUpdateModel value,
+          $Res Function(_$_CustomerUpdateModel) then) =
+      __$$_CustomerUpdateModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -198,11 +198,11 @@ abstract class _$$_SearchCustomerModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SearchCustomerModelCopyWithImpl<$Res>
-    extends _$SearchCustomerModelCopyWithImpl<$Res, _$_SearchCustomerModel>
-    implements _$$_SearchCustomerModelCopyWith<$Res> {
-  __$$_SearchCustomerModelCopyWithImpl(_$_SearchCustomerModel _value,
-      $Res Function(_$_SearchCustomerModel) _then)
+class __$$_CustomerUpdateModelCopyWithImpl<$Res>
+    extends _$CustomerUpdateModelCopyWithImpl<$Res, _$_CustomerUpdateModel>
+    implements _$$_CustomerUpdateModelCopyWith<$Res> {
+  __$$_CustomerUpdateModelCopyWithImpl(_$_CustomerUpdateModel _value,
+      $Res Function(_$_CustomerUpdateModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -223,7 +223,7 @@ class __$$_SearchCustomerModelCopyWithImpl<$Res>
     Object? ghichu = freezed,
     Object? lichsu_capnhat = freezed,
   }) {
-    return _then(_$_SearchCustomerModel(
+    return _then(_$_CustomerUpdateModel(
       lichsu_khoitao: freezed == lichsu_khoitao
           ? _value._lichsu_khoitao
           : lichsu_khoitao // ignore: cast_nullable_to_non_nullable
@@ -286,10 +286,10 @@ class __$$_SearchCustomerModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SearchCustomerModel
+class _$_CustomerUpdateModel
     with DiagnosticableTreeMixin
-    implements _SearchCustomerModel {
-  const _$_SearchCustomerModel(
+    implements _CustomerUpdateModel {
+  const _$_CustomerUpdateModel(
       {final List<dynamic>? lichsu_khoitao,
       @JsonKey(name: '_id') this.id,
       this.makhachhang,
@@ -307,8 +307,8 @@ class _$_SearchCustomerModel
       : _lichsu_khoitao = lichsu_khoitao,
         _lichsu_capnhat = lichsu_capnhat;
 
-  factory _$_SearchCustomerModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SearchCustomerModelFromJson(json);
+  factory _$_CustomerUpdateModel.fromJson(Map<String, dynamic> json) =>
+      _$$_CustomerUpdateModelFromJson(json);
 
   final List<dynamic>? _lichsu_khoitao;
   @override
@@ -358,14 +358,14 @@ class _$_SearchCustomerModel
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SearchCustomerModel(lichsu_khoitao: $lichsu_khoitao, id: $id, makhachhang: $makhachhang, type: $type, hoten: $hoten, phone: $phone, email: $email, congty: $congty, masothue: $masothue, diachi: $diachi, cccd: $cccd, l1_info: $l1_info, ghichu: $ghichu, lichsu_capnhat: $lichsu_capnhat)';
+    return 'CustomerUpdateModel(lichsu_khoitao: $lichsu_khoitao, id: $id, makhachhang: $makhachhang, type: $type, hoten: $hoten, phone: $phone, email: $email, congty: $congty, masothue: $masothue, diachi: $diachi, cccd: $cccd, l1_info: $l1_info, ghichu: $ghichu, lichsu_capnhat: $lichsu_capnhat)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'SearchCustomerModel'))
+      ..add(DiagnosticsProperty('type', 'CustomerUpdateModel'))
       ..add(DiagnosticsProperty('lichsu_khoitao', lichsu_khoitao))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('makhachhang', makhachhang))
@@ -386,7 +386,7 @@ class _$_SearchCustomerModel
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SearchCustomerModel &&
+            other is _$_CustomerUpdateModel &&
             const DeepCollectionEquality()
                 .equals(other._lichsu_khoitao, _lichsu_khoitao) &&
             (identical(other.id, id) || other.id == id) &&
@@ -429,20 +429,20 @@ class _$_SearchCustomerModel
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SearchCustomerModelCopyWith<_$_SearchCustomerModel> get copyWith =>
-      __$$_SearchCustomerModelCopyWithImpl<_$_SearchCustomerModel>(
+  _$$_CustomerUpdateModelCopyWith<_$_CustomerUpdateModel> get copyWith =>
+      __$$_CustomerUpdateModelCopyWithImpl<_$_CustomerUpdateModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SearchCustomerModelToJson(
+    return _$$_CustomerUpdateModelToJson(
       this,
     );
   }
 }
 
-abstract class _SearchCustomerModel implements SearchCustomerModel {
-  const factory _SearchCustomerModel(
+abstract class _CustomerUpdateModel implements CustomerUpdateModel {
+  const factory _CustomerUpdateModel(
       {final List<dynamic>? lichsu_khoitao,
       @JsonKey(name: '_id') final String? id,
       final String? makhachhang,
@@ -456,10 +456,10 @@ abstract class _SearchCustomerModel implements SearchCustomerModel {
       final String? cccd,
       @JsonKey(name: 'info') final L1_info? l1_info,
       final String? ghichu,
-      final List<dynamic>? lichsu_capnhat}) = _$_SearchCustomerModel;
+      final List<dynamic>? lichsu_capnhat}) = _$_CustomerUpdateModel;
 
-  factory _SearchCustomerModel.fromJson(Map<String, dynamic> json) =
-      _$_SearchCustomerModel.fromJson;
+  factory _CustomerUpdateModel.fromJson(Map<String, dynamic> json) =
+      _$_CustomerUpdateModel.fromJson;
 
   @override
   List<dynamic>? get lichsu_khoitao;
@@ -493,7 +493,7 @@ abstract class _SearchCustomerModel implements SearchCustomerModel {
   List<dynamic>? get lichsu_capnhat;
   @override
   @JsonKey(ignore: true)
-  _$$_SearchCustomerModelCopyWith<_$_SearchCustomerModel> get copyWith =>
+  _$$_CustomerUpdateModelCopyWith<_$_CustomerUpdateModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -503,7 +503,10 @@ L1_info _$L1_infoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$L1_info {
-  String? get key => throw _privateConstructorUsedError;
+  String? get fax => throw _privateConstructorUsedError;
+  String? get email_phu => throw _privateConstructorUsedError;
+  String? get nguoidaidienmoi => throw _privateConstructorUsedError;
+  String? get dienthoaicoquan => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -515,7 +518,11 @@ abstract class $L1_infoCopyWith<$Res> {
   factory $L1_infoCopyWith(L1_info value, $Res Function(L1_info) then) =
       _$L1_infoCopyWithImpl<$Res, L1_info>;
   @useResult
-  $Res call({String? key});
+  $Res call(
+      {String? fax,
+      String? email_phu,
+      String? nguoidaidienmoi,
+      String? dienthoaicoquan});
 }
 
 /// @nodoc
@@ -531,12 +538,27 @@ class _$L1_infoCopyWithImpl<$Res, $Val extends L1_info>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? key = freezed,
+    Object? fax = freezed,
+    Object? email_phu = freezed,
+    Object? nguoidaidienmoi = freezed,
+    Object? dienthoaicoquan = freezed,
   }) {
     return _then(_value.copyWith(
-      key: freezed == key
-          ? _value.key
-          : key // ignore: cast_nullable_to_non_nullable
+      fax: freezed == fax
+          ? _value.fax
+          : fax // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email_phu: freezed == email_phu
+          ? _value.email_phu
+          : email_phu // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nguoidaidienmoi: freezed == nguoidaidienmoi
+          ? _value.nguoidaidienmoi
+          : nguoidaidienmoi // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dienthoaicoquan: freezed == dienthoaicoquan
+          ? _value.dienthoaicoquan
+          : dienthoaicoquan // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -549,7 +571,11 @@ abstract class _$$_L1_infoCopyWith<$Res> implements $L1_infoCopyWith<$Res> {
       __$$_L1_infoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? key});
+  $Res call(
+      {String? fax,
+      String? email_phu,
+      String? nguoidaidienmoi,
+      String? dienthoaicoquan});
 }
 
 /// @nodoc
@@ -562,12 +588,27 @@ class __$$_L1_infoCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? key = freezed,
+    Object? fax = freezed,
+    Object? email_phu = freezed,
+    Object? nguoidaidienmoi = freezed,
+    Object? dienthoaicoquan = freezed,
   }) {
     return _then(_$_L1_info(
-      key: freezed == key
-          ? _value.key
-          : key // ignore: cast_nullable_to_non_nullable
+      fax: freezed == fax
+          ? _value.fax
+          : fax // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email_phu: freezed == email_phu
+          ? _value.email_phu
+          : email_phu // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nguoidaidienmoi: freezed == nguoidaidienmoi
+          ? _value.nguoidaidienmoi
+          : nguoidaidienmoi // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dienthoaicoquan: freezed == dienthoaicoquan
+          ? _value.dienthoaicoquan
+          : dienthoaicoquan // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -576,17 +617,24 @@ class __$$_L1_infoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_L1_info with DiagnosticableTreeMixin implements _L1_info {
-  const _$_L1_info({this.key});
+  const _$_L1_info(
+      {this.fax, this.email_phu, this.nguoidaidienmoi, this.dienthoaicoquan});
 
   factory _$_L1_info.fromJson(Map<String, dynamic> json) =>
       _$$_L1_infoFromJson(json);
 
   @override
-  final String? key;
+  final String? fax;
+  @override
+  final String? email_phu;
+  @override
+  final String? nguoidaidienmoi;
+  @override
+  final String? dienthoaicoquan;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'L1_info(key: $key)';
+    return 'L1_info(fax: $fax, email_phu: $email_phu, nguoidaidienmoi: $nguoidaidienmoi, dienthoaicoquan: $dienthoaicoquan)';
   }
 
   @override
@@ -594,7 +642,10 @@ class _$_L1_info with DiagnosticableTreeMixin implements _L1_info {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'L1_info'))
-      ..add(DiagnosticsProperty('key', key));
+      ..add(DiagnosticsProperty('fax', fax))
+      ..add(DiagnosticsProperty('email_phu', email_phu))
+      ..add(DiagnosticsProperty('nguoidaidienmoi', nguoidaidienmoi))
+      ..add(DiagnosticsProperty('dienthoaicoquan', dienthoaicoquan));
   }
 
   @override
@@ -602,12 +653,19 @@ class _$_L1_info with DiagnosticableTreeMixin implements _L1_info {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_L1_info &&
-            (identical(other.key, key) || other.key == key));
+            (identical(other.fax, fax) || other.fax == fax) &&
+            (identical(other.email_phu, email_phu) ||
+                other.email_phu == email_phu) &&
+            (identical(other.nguoidaidienmoi, nguoidaidienmoi) ||
+                other.nguoidaidienmoi == nguoidaidienmoi) &&
+            (identical(other.dienthoaicoquan, dienthoaicoquan) ||
+                other.dienthoaicoquan == dienthoaicoquan));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, key);
+  int get hashCode => Object.hash(
+      runtimeType, fax, email_phu, nguoidaidienmoi, dienthoaicoquan);
 
   @JsonKey(ignore: true)
   @override
@@ -624,12 +682,22 @@ class _$_L1_info with DiagnosticableTreeMixin implements _L1_info {
 }
 
 abstract class _L1_info implements L1_info {
-  const factory _L1_info({final String? key}) = _$_L1_info;
+  const factory _L1_info(
+      {final String? fax,
+      final String? email_phu,
+      final String? nguoidaidienmoi,
+      final String? dienthoaicoquan}) = _$_L1_info;
 
   factory _L1_info.fromJson(Map<String, dynamic> json) = _$_L1_info.fromJson;
 
   @override
-  String? get key;
+  String? get fax;
+  @override
+  String? get email_phu;
+  @override
+  String? get nguoidaidienmoi;
+  @override
+  String? get dienthoaicoquan;
   @override
   @JsonKey(ignore: true)
   _$$_L1_infoCopyWith<_$_L1_info> get copyWith =>

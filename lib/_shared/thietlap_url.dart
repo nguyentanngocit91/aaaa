@@ -9,11 +9,6 @@ class ApiUrl{
   static const String infoUser = '$baseUrl/users/profile';
   static const String changePassword = '$baseUrl/users/change-password';
 
-  // Media
-  static const String media = '$baseUrl/media';
-  static const String uploadFile = '$media/upload';
-
-
   // Nhân viên
   static const String danhSachNhanVien = '$baseUrl/nhan-vien';
 
@@ -21,6 +16,7 @@ class ApiUrl{
   // DS HĐ
   static const String searchContractCustomer = '$baseUrl/tim-kiem/hop-dong-theo-khach-hang';
   static const String updateContract = '$baseUrl/hop-dong';
+  static const String infoUpdateCustomer = '$baseUrl/khach-hang/';
 
 
   static const String searchContract = '$baseUrl/hop-dong';

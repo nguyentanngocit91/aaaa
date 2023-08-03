@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'searchcustomer_model.dart';
+part of 'customerupdate_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SearchCustomerModel _$$_SearchCustomerModelFromJson(
+_$_CustomerUpdateModel _$$_CustomerUpdateModelFromJson(
         Map<String, dynamic> json) =>
-    _$_SearchCustomerModel(
+    _$_CustomerUpdateModel(
       lichsu_khoitao: json['lichsu_khoitao'] as List<dynamic>?,
       id: json['_id'] as String?,
       makhachhang: json['makhachhang'] as String?,
@@ -27,8 +27,8 @@ _$_SearchCustomerModel _$$_SearchCustomerModelFromJson(
       lichsu_capnhat: json['lichsu_capnhat'] as List<dynamic>?,
     );
 
-Map<String, dynamic> _$$_SearchCustomerModelToJson(
-        _$_SearchCustomerModel instance) =>
+Map<String, dynamic> _$$_CustomerUpdateModelToJson(
+        _$_CustomerUpdateModel instance) =>
     <String, dynamic>{
       'lichsu_khoitao': instance.lichsu_khoitao,
       '_id': instance.id,
@@ -47,10 +47,16 @@ Map<String, dynamic> _$$_SearchCustomerModelToJson(
     };
 
 _$_L1_info _$$_L1_infoFromJson(Map<String, dynamic> json) => _$_L1_info(
-      key: json['key'] as String?,
+      fax: json['fax'] as String?,
+      email_phu: json['email_phu'] as String?,
+      nguoidaidienmoi: json['nguoidaidienmoi'] as String?,
+      dienthoaicoquan: json['dienthoaicoquan'] as String?,
     );
 
 Map<String, dynamic> _$$_L1_infoToJson(_$_L1_info instance) =>
     <String, dynamic>{
-      'key': instance.key,
+      'fax': instance.fax,
+      'email_phu': instance.email_phu,
+      'nguoidaidienmoi': instance.nguoidaidienmoi,
+      'dienthoaicoquan': instance.dienthoaicoquan,
     };

@@ -1,4 +1,5 @@
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,17 +13,27 @@ import '../../../../../_shared/utils/debouncer.dart';
 import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
-import '../../khach_hang_moi/khach_hang_moi_layout.dart';
 import '../../khach_hang_moi/providers/form_khach_hang_moi_provider.dart';
 import '../../khach_hang_moi/providers/kiem_tra_khach_hang_provider.dart';
+import '../models/customerupdate_model.dart';
+import '../models/mediacustomer_model.dart';
 import '../models/searchcustomer_model.dart';
 import '../providers/ds_hd_provider.dart';
+import '../providers/form_update_provider.dart';
 
+Map<String, String> _loaiPhiethu = {
+  'hopdong': 'Hợp đồng',
+  'chungtu': 'Chứng từ khác'
+};
+GlobalKey<FormState> _formKey = GlobalKey();
+List<Map> _resultFile = [];
+List<MediaCustomerModel> _listMedia = [];
 enum HinhThucThanhToan { cod, bank }
 
 class UpdateThongTinKHScreen extends ConsumerStatefulWidget {
-  UpdateThongTinKHScreen({Key? key, required this.item}) : super(key: key);
-  final SearchCustomerModel item;
+  UpdateThongTinKHScreen({Key? key, required this.id,required this.customerNumber}) : super(key: key);
+  final String id;
+  final String customerNumber;
 
   @override
   ConsumerState<UpdateThongTinKHScreen> createState() => _UpdateThongTinKHScreenState();
@@ -30,16 +41,86 @@ class UpdateThongTinKHScreen extends ConsumerStatefulWidget {
 class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
     with FormUIMixins {
 
-  final Debouncer onSearchDebouncer =
-  Debouncer(delay: const Duration(seconds: 2));
+  bool isLoading = true;
+  Map<String, TextEditingController> listController = {};
+  Map<String, FocusNode> listFocusNode = {};
+
   final String _typeData = 'khachhang';
-  final TextEditingController _emailController = TextEditingController();
    HinhThucThanhToan? _httt = HinhThucThanhToan.cod;
+
+
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ['makhachhang', 'email', 'email_phu', 'hoten', 'phone', 'type_customer', 'congty', 'nguoidaidienmoi', 'dienthoaicoquan', 'masothue', 'cccd', 'diachi', 'ghichu'].forEach((item) {
+      listController[item] = TextEditingController();
+      listFocusNode[item] = FocusNode();
+    });
+    Future.delayed(Duration.zero, () async {
+      print("${widget.id}+widget.id");
+      await ref.read(dshdProvider.notifier).getCustomerById(widget.id);
+      var res = ref.watch(dshdProvider.notifier);
+      CustomerUpdateModel? data = res.state.customer;
+      setState(() {
+        _listMedia = res.state.media!;
+      });
+
+      print("${data?.makhachhang!.toString()}+makhachhang");
+
+      listController!['makhachhang']!.text = data!.makhachhang!.toString();
+      listController!['email']!.text = data!.email!.toString();
+      listController!['email_phu']!.text = data!.l1_info!.email_phu.toString();
+      listController!['hoten']!.text = data!.hoten!;
+      listController!['phone']!.text = data!.phone!;
+
+      listController!['type_customer']!.text = data!.type!;
+      listController!['congty']!.text = data!.congty!;
+      listController!['nguoidaidienmoi']!.text = data!.l1_info!.nguoidaidienmoi!;
+      listController!['dienthoaicoquan']!.text = data!.l1_info!.dienthoaicoquan!;
+
+      listController!['masothue']!.text = data!.masothue!;
+      listController!['cccd']!.text = data!.cccd!;
+      listController!['diachi']!.text = data!.diachi!;
+      listController!['ghichu']!.text = data!.ghichu!;
+
+    });
+  }
+  @override
+
   Widget build(BuildContext context) {
 
-    final controllerTenHD = TextEditingController();
-    final controllerTongTIEN = TextEditingController();
+    FormUpdateNotifier data = ref.read(formUpdateProvider.notifier);
+    ref.listen(formUpdateProvider.select((value) => value.loading),
+            (previous, next) {
+          if (next == loadingStatus.START) {
+            Loading(context).start();
+          }
+          if (next == loadingStatus.STOP) {
+            Future.delayed(Duration(seconds: 1), () {
+              ref.read(dshdProvider.notifier).reload();
+              Loading(context).stop();
+              if (data.state.success == true) {
+                setState(() {
+                  _resultFile = [];
+                });
+              }
+              AwesomeDialog(
+                context: context,
+                width: 400.0,
+                dialogType:
+                data.state.success ? DialogType.success : DialogType.error,
+                animType: AnimType.scale,
+                title: 'Thông báo',
+                desc: data.state.message,
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {},
+              )..show();
+            });
+          }
+        });
+
+    print("${listController['email']}+email");
 
     return  SimpleDialog(
       backgroundColor: Colors.white,
@@ -81,495 +162,458 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
 
         const Divider(),
 
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
+        Form(
+        key: _formKey,
+          child:  Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
 
 
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm(
-                          'Email khách hàng',
-                        ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                                errorText: 'Không bỏ trống.'),
-                            FormBuilderValidators.email(
-                                errorText: 'Email không đúng định dạng.')
-                          ]),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'email', value: value, type: _typeData);
-                            if (value.isEmail()) {
-                              onSearchDebouncer.debounce(
-                                    () {
-                                  ref
-                                      .read(kiemTraKhachHangProvider.notifier)
-                                      .kiemTraThongTinKhachHang(email: value);
-                                },
-                              );
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-
-
-                  ndGapW16(),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('Mã khách hàng'),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            filled: true,
-                            fillColor: Colors.black12,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm(
+                            'Email khách hàng',
                           ),
-                          readOnly: true,
-                          controller: TextEditingController(),
-                        ),
-                      ],
+                          TextFormField(
+                            controller: listController['email'],
+                            focusNode: listFocusNode['email'],
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                              FormBuilderValidators.email(
+                                  errorText: 'Email không đúng định dạng.')
+                            ]),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  ndGapW16(),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('Tên khách hàng'),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          readOnly:  false,
-                          controller: TextEditingController(),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'hoten', value: value, type: _typeData);
-                          },
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                                errorText: 'Không bỏ trống.'),
-                          ]),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ndGapW16(),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('Điện thoại di động'),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          readOnly:false,
-                          controller:
-                          TextEditingController(),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                                errorText: 'Không bỏ trống.'),
-                          ]),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'phone', value: value, type: _typeData);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
 
 
-                ],
-              ),
-
-              ndGapH24(),
-
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        lableTextForm('Email khách hàng (email phụ)'),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          readOnly:  false,
-                          controller: TextEditingController(),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'info',
-                                value: {"email_phu": value},
-                                type: _typeData);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  ndGapW16(),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        lableTextForm('Loại Khách hàng'),
-                        DropdownButtonFormField(
-                          value: 'ca-nhan',
-                          items: const [
-                            DropdownMenuItem<String>(
-                              value: 'ca-nhan',
-                              child: Text('Cá Nhân'),
+                    ndGapW16(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('Mã khách hàng'),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              filled: true,
+                              fillColor: Colors.black12,
                             ),
-                            DropdownMenuItem<String>(
-                              value: 'cong-ty',
-                              child: Text('Công Ty'),
-                            ),
-                          ],
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'type', value: value, type: _typeData);
-                          },
-                        ),
-                      ],
+                            readOnly: true,
+
+                            controller: listController['makhachhang'],
+                            focusNode: listFocusNode['makhachhang'],
+
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  ndGapW16(),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        lableTextForm('Tên Công ty /  Cá Nhân'),
-                        TextFormField(
-                          readOnly: false,
-                          controller: TextEditingController(),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'congty', value: value, type: _typeData);
-                          },
-                        ),
-                      ],
+                    ndGapW16(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('Tên khách hàng'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            readOnly:  false,
+                            controller: listController['hoten'],
+                            focusNode: listFocusNode['hoten'],
+
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              ndGapH24(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('Người đại diện mới'),
-                        TextFormField(
-                          readOnly:  false,
-                          controller: TextEditingController(),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'info',
-                                value: {"nguoidaidienmoi": value},
-                                type: _typeData);
-                          },
-                        ),
-                      ],
+                    ndGapW16(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('Điện thoại di động'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            readOnly:false,
+                            controller: listController['phone'],
+                            focusNode: listFocusNode['phone'],
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  ndGapW16(),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('Điện thoại cơ quan'),
-                        TextFormField(
-                          readOnly: false,
-                          controller: TextEditingController(),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'info',
-                                value: {"dienthoaicoquan": value},
-                                type: _typeData);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  ndGapW16(),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('Mã số thuế'),
-                        TextFormField(
-                          readOnly: false,
-                          controller: TextEditingController(),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'masothue', value: value, type: _typeData);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  ndGapW16(),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('CCCD / CMND'),
-                        TextFormField(
-                          readOnly:  false,
-                          controller:
-                          TextEditingController(),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'cccd', value: value, type: _typeData);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              ndGapH24(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('Địa chỉ'),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          controller: TextEditingController(),
-                          readOnly:  false,
-                          minLines: 3,
-                          maxLines: 3,
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                                errorText: 'Không bỏ trống.'),
-                          ]),
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'diachi', value: value, type: _typeData);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  ndGapW16(),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        lableTextForm('Ghi chú'),
-                        TextFormField(
-                          readOnly: false,
-                          controller: TextEditingController(),
-                          minLines: 3,
-                          maxLines: 3,
-                          onChanged: (value) {
-                            ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                key: 'ghichu',
-                                value: value,
-                                type: _typeData);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
 
 
-
-              ndGapH24(),
-
-              const Row(
-                children: [
-                  const Icon(
-                    Icons.text_snippet_outlined,
-                    color: Color(0xFF105a6c),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'UPLOAD FILE HĐ',
-                    style: const TextStyle(color: Color(0xFF105a6c)),
-                  ),
-                ],
-              ),
-
-              ndGapH24(),
-
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFf5f5f5),
-                  border: Border.all(color: const Color(0xFFdcdbdb)),
+                  ],
                 ),
-                child: ResponsiveGridRow(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ResponsiveGridCol(
-                        lg: 12,
-                        xl:4,
-                        md:12,
-                        xs: 12,
-                        child: Container(
-                          padding: Helper.padding(),
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Phương thức thanh toán:',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+
+                ndGapH24(),
+
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          lableTextForm('Email khách hàng (email phụ)'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            readOnly:  false,
+
+                            controller: listController['email_phu'],
+                            focusNode: listFocusNode['email_phu'],
+
+                            /*onChanged: (value) {
+                              ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                  key: 'info',
+                                  value: {"email_phu": value},
+                                  type: _typeData);
+                            },*/
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          lableTextForm('Loại Khách hàng'),
+                          DropdownButtonFormField(
+                            value: 'ca-nhan',
+                            items: const [
+                              DropdownMenuItem<String>(
+                                value: 'ca-nhan',
+                                child: Text('Cá Nhân'),
                               ),
-                              Radio<HinhThucThanhToan>(
-                                value: HinhThucThanhToan.cod,
-                                groupValue: _httt,
-                                onChanged: (HinhThucThanhToan? value) {
-                                  setState(() {
-                                    _httt = value;
-                                  });
-                                },
+                              DropdownMenuItem<String>(
+                                value: 'cong-ty',
+                                child: Text('Công Ty'),
                               ),
-                              const Text('Hợp đồng'),
-                              Radio<HinhThucThanhToan>(
-                                value: HinhThucThanhToan.bank,
-                                groupValue: _httt,
-                                onChanged: (HinhThucThanhToan? value) {
-                                  setState(() {
-                                    _httt = value;
-                                  });
-                                },
-                              ),
-                              const Text('Chứng từ khác'),
                             ],
+                            onChanged: (value) {
+                              ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                  key: 'type', value: value, type: _typeData);
+                            },
                           ),
-                        ),
+                        ],
                       ),
-                      ResponsiveGridCol(
-                        lg: 6,
-                        xl:4,
-                        xs: 12,
-                        child: Container(
-                          padding: Helper.padding(),
-                          child: SizedBox(
-                            child: inputUploadFile(context,
-                                //   controller: textEditingController,
-                                validator: FormBuilderValidators.compose([
-                                  //    FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
-                                ]), onTap: () async {
-                                  String path = '';
-                                  final result =
-                                  await FilePicker.platform.pickFiles(
-                                    type: FileType.custom,
-                                    allowedExtensions: [
-                                      'pdf',
-                                      'doc',
-                                      'docx',
-                                      'xls',
-                                      'xlsx'
-                                    ],
-                                  );
-                                  if (result != null) {
-                                    PlatformFile file = result.files.first;
-                                    //   textEditingController.text = file.name;
-                                  } else {
-                                    // textEditingController.clear();
-                                  }
-                                }),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        children: [
+                          lableTextForm('Tên Công ty /  Cá Nhân'),
+                          TextFormField(
+                            readOnly: false,
+                            controller: listController['congty'],
+                            focusNode: listFocusNode['congty'],
+
                           ),
-                        ),
+                        ],
                       ),
-                      ResponsiveGridCol(
-                        xs: 12,
-                        lg: 6,
-                        xl:4,
-                        child: Container(
-                          padding: Helper.padding(),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextField(
-                                decoration: InputDecoration(
-                                  hintText:
-                                  'Nhập nội dung ghi chú cho file upload',
+                    ),
+                  ],
+                ),
+                ndGapH24(),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('Người đại diện mới'),
+                          TextFormField(
+                            readOnly:  false,
+                            controller: listController['nguoidaidienmoi'],
+                            focusNode: listFocusNode['nguoidaidienmoi'],
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('Điện thoại cơ quan'),
+                          TextFormField(
+                            readOnly: false,
+                            controller: listController['dienthoaicoquan'],
+                            focusNode: listFocusNode['dienthoaicoquan'],
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('Mã số thuế'),
+                          TextFormField(
+                            readOnly: false,
+                            controller: listController['masothue'],
+                            focusNode: listFocusNode['masothue'],
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('CCCD / CMND'),
+                          TextFormField(
+                            readOnly:  false,
+                            controller: listController['cccd'],
+                            focusNode: listFocusNode['cccd'],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                ndGapH24(),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('Địa chỉ'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            controller: listController['diachi'],
+                            focusNode: listFocusNode['diachi'],
+                            readOnly:  false,
+                            minLines: 3,
+                            maxLines: 3,
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          lableTextForm('Ghi chú'),
+                          TextFormField(
+                            readOnly: false,
+                            controller: listController['ghichu'],
+                            focusNode: listFocusNode['ghichu'],
+                            minLines: 3,
+                            maxLines: 3,
+
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+
+
+                ndGapH24(),
+
+                const Row(
+                  children: [
+                    const Icon(
+                      Icons.text_snippet_outlined,
+                      color: Color(0xFF105a6c),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'UPLOAD FILE HĐ',
+                      style: const TextStyle(color: Color(0xFF105a6c)),
+                    ),
+                  ],
+                ),
+
+                ndGapH24(),
+
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFf5f5f5),
+                    border: Border.all(color: const Color(0xFFdcdbdb)),
+                  ),
+                  child: ResponsiveGridRow(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ResponsiveGridCol(
+                          lg: 12,
+                          xl:4,
+                          md:12,
+                          xs: 12,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Phương thức thanh toán:',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                // controller: txtGhichu,
-                                maxLines: 3, //or null
-                              ),
-                            ],
+                                Radio<HinhThucThanhToan>(
+                                  value: HinhThucThanhToan.cod,
+                                  groupValue: _httt,
+                                  onChanged: (HinhThucThanhToan? value) {
+                                    setState(() {
+                                      _httt = value;
+                                    });
+                                  },
+                                ),
+                                const Text('Hợp đồng'),
+                                Radio<HinhThucThanhToan>(
+                                  value: HinhThucThanhToan.bank,
+                                  groupValue: _httt,
+                                  onChanged: (HinhThucThanhToan? value) {
+                                    setState(() {
+                                      _httt = value;
+                                    });
+                                  },
+                                ),
+                                const Text('Chứng từ khác'),
+                              ],
+                            ),
                           ),
                         ),
+                        ResponsiveGridCol(
+                          lg: 6,
+                          xl:4,
+                          xs: 12,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: SizedBox(
+                              child: inputUploadFile(context,
+                                  //   controller: textEditingController,
+                                  validator: FormBuilderValidators.compose([
+                                    //    FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
+                                  ]), onTap: () async {
+                                    String path = '';
+                                    final result =
+                                    await FilePicker.platform.pickFiles(
+                                      type: FileType.custom,
+                                      allowedExtensions: [
+                                        'pdf',
+                                        'doc',
+                                        'docx',
+                                        'xls',
+                                        'xlsx'
+                                      ],
+                                    );
+                                    if (result != null) {
+                                      PlatformFile file = result.files.first;
+                                      //   textEditingController.text = file.name;
+                                    } else {
+                                      // textEditingController.clear();
+                                    }
+                                  }),
+                            ),
+                          ),
+                        ),
+                        ResponsiveGridCol(
+                          xs: 12,
+                          lg: 6,
+                          xl:4,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextField(
+                                  decoration: InputDecoration(
+                                    hintText:
+                                    'Nhập nội dung ghi chú cho file upload',
+                                  ),
+                                  // controller: txtGhichu,
+                                  maxLines: 3, //or null
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ]),
+                ),
+
+                DataTable_UpdateKH(),
+
+                ndGapH24(),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+
+
+
+                    TextButton(
+                      onPressed: () {
+                        bool isError = false;
+
+                        if (isError == false) {
+
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(10),
+                          backgroundColor: Colors.blueAccent),
+                      child: const Text(
+                        'Cập nhật',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white),
                       ),
-                    ]),
-              ),
+                    ),
 
-              DataTable_UpdateKH(),
-
-              ndGapH24(),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-
-
-
-                  TextButton(
-                    onPressed: () {
-                      bool isError = false;
-                      String tenHD = controllerTenHD.text;
-                      String tongtien = controllerTongTIEN.text;
-
-                      if (tenHD == '' && tongtien == '' ) {
-                        isError = true;
-                        ShowOkAlertDialog.show(
-                            context, 'Thông báo', 'Vui lòng nhập thông tin');
-                      }
-
-                      if (isError == false) {
-
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    TextButton(
+                      onPressed: () {
                         Navigator.of(context).pop();
-                      }
-                    },
-                    style: TextButton.styleFrom(
-                        padding: const EdgeInsets.all(10),
-                        backgroundColor: Colors.blueAccent),
-                    child: const Text(
-                      'Cập nhật',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white),
+                      },
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(10),
+                          backgroundColor: Colors.grey),
+                      child: const Text(
+                        'Thoát',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white),
+                      ),
                     ),
-                  ),
-
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: TextButton.styleFrom(
-                        padding: const EdgeInsets.all(10),
-                        backgroundColor: Colors.grey),
-                    child: const Text(
-                      'Thoát',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white),
-                    ),
-                  ),
-                ],
-              )
+                  ],
+                )
 
 
-            ],),
+              ],),
+          ),
+
         ),
+
+
 
 
       ],

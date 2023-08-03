@@ -570,7 +570,7 @@ class InfoListCustomer extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return UpdateThongTinKHScreen(item: item,);
+                              return UpdateThongTinKHScreen(id: item.id.toString(),customerNumber: item.makhachhang.toString(),);
                             },
                           );
                         },

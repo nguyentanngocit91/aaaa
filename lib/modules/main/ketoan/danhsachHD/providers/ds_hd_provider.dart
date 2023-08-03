@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../_shared/utils/form_status.dart';
+import '../models/customerupdate_model.dart';
 import '../models/item_phieuthu_result_model.dart';
+import '../models/mediacustomer_model.dart';
 import '../repositories/ds_hd_repository.dart';
 part 'ds_hd_state.dart';
 
@@ -39,7 +41,9 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     state = state.copyWith(result: null);
     state = state.copyWith(data: null);
   }
-
+  void reload() {
+    this.onSearch();
+  }
 
    onSearch() async {
     Map<String, String>? data = state.data;
@@ -66,9 +70,6 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     state = state.copyWith(listPhieuThu: jsonResult['data'],status: FormStatus.submissionSuccess);
    // print("${jsonResult['data']}+ data 000000");
   }
-
-
-
    updateContractById(String id,String? tenHD,String? tongTien) async {
     //print("tongTien ${tongTien}");
 
@@ -87,4 +88,21 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
       state = state.copyWith(status: FormStatus.submissionFailure, errorMessage: jsonResult['message']);
     }
   }
+
+
+  getCustomerById(String id) async {
+    state = state.copyWith(customer: null);
+    final jsonResult = await _dsHDRepository.getInfoCustomer(id);
+   // print("${jsonResult['data']}+ customer");
+
+
+    //print("${jsonResult['media']}+ media");
+    state = state.copyWith(customer: jsonResult['data'],media:jsonResult['media']);
+
+  // print("${state.customer}+state.customer");
+
+   // print("${state.media}+state.media");
+  }
+
+
 }
