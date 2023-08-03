@@ -75,7 +75,6 @@ class PhieuthuNotifier extends Notifier<PhieuThuState> {
       denNgay = DateFormat('yyyy-MM-dd').format(date2);
     }
 
-
     state = state.copyWith(status: FormStatus.submissionInProgress,listPhieuThu: []);
     List<PhieuThuModel>? temp = await searchPhieuThu(soPhieuThu: soPhieuThu,maHopDong: maHopDong, tuNgay: tuNgay, denNgay:  denNgay);
       if(temp!=null) {

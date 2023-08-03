@@ -56,5 +56,9 @@ class ApiUrl{
   //Blacklist
   static const String danhsachBlackList = '$baseUrl/black-list';
 
+  // tim kiem hd 20152019
+
+static const String danhsach20152019="https://manager.nina.vn/administrator/api/jsonhdcu.php";
+
 
 }

@@ -88,7 +88,6 @@ class PhieuThuModel {
     data['phitenmien'] = phitenmien;
     data['phiapp'] = phiapp;
     data['phinangcapapp'] = phinangcapapp;
-
     data['loaiphieuthu'] = loaiphieuthu;
     data['is_pending'] = isPending;
 
