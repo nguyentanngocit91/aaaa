@@ -265,6 +265,11 @@ class _FormThongTinPhieuThuWidgetState
                           .select((value) => value.maNhanViens));
                       return TextFormField(
                         readOnly: true,
+                        controller: TextEditingController(
+                            text: ref
+                                .read(nhanVienPhuTrachProvider.notifier)
+                                .showThongTinNhanVienInput(
+                                field: 'parentId_hoten')),
                       );
                     },
                   ),
