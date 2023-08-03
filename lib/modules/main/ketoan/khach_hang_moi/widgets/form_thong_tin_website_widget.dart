@@ -83,9 +83,9 @@ class _FormThongTinWebsiteWidgetState
                               String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
                                 txtDate = selDate.formatDateTime();
+                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                    type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
-                              ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                  type: _typeData, key: 'ngaykyhd', value: txtDate);
                               setState(() {
                                 ngayDangKy = selDate ?? ngayDangKy;
                               });
@@ -110,7 +110,7 @@ class _FormThongTinWebsiteWidgetState
                               if(selDate!=null){
                                 txtDate = selDate.formatDateTime();
                                 ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                    type: _typeData, key: 'ngaybangiao', value: txtDate);
+                                    type: _typeData, key: 'ngaybangiao', value: selDate);
                               }
                               setState(() {
                                 ngayBanGiao = selDate ?? ngayBanGiao;

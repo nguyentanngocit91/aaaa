@@ -65,7 +65,6 @@ dependencies:
 
   awesome_dialog: ^3.1.0
   top_snackbar_flutter: ^3.1.0
-  adaptive_dialog: ^1.9.0
   dropdown_button2: ^2.3.7
 
 

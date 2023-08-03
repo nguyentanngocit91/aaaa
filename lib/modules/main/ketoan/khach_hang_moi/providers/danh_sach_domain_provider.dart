@@ -29,7 +29,7 @@ class DomainModel{
 
   Map toJson() => {
     'tenmien': domainName,
-    'ngaykyhd': ngayKy?.formatDateTime(),
+    'ngaykyhd': ngayKy?.formatDateTime(formatString: 'yyyy-MM-dd'),
     'sonamdangky': soNamDangKy,
     'ghichu': ghiChu
   };
