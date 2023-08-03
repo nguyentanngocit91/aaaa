@@ -110,6 +110,9 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     // data
     Map data = {};
 
+    // format date
+    const String formatDate = 'yyyy-MM-dd';
+
     // Thông tin Khách hàng
     final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
     if (thongTinKhachHangCu!.isEmpty) {
@@ -131,14 +134,21 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
 
     // Thông tin phiếu thu
     if(state.dataPhieuThu?['ngaynopcty']==null){
-      state.dataPhieuThu?['ngaynopcty'] = DateTime.now().formatDateTime();
+      state.dataPhieuThu?['ngaynopcty'] = DateTime.now().formatDateTime(formatString: formatDate);
+    }else{
+      state.dataPhieuThu?['ngaynopcty'] = (state.dataPhieuThu?['ngaynopcty'] as DateTime).formatDateTime(formatString: formatDate);
     }
     state.dataPhieuThu?['manhanvien'] = dsNhanVienPhuTrach;
 
     // thông tin hợp đồng website
     if(state.isHopDongWebsite){
       if(state.dataWebsite?['ngaykyhd']==null){
-        state.dataWebsite?['ngaykyhd'] = DateTime.now().formatDateTime();
+        state.dataWebsite?['ngaykyhd'] = DateTime.now().formatDateTime(formatString: formatDate);
+      }else{
+        state.dataWebsite?['ngaykyhd'] = (state.dataWebsite?['ngaykyhd'] as DateTime).formatDateTime(formatString: formatDate);
+      }
+      if(state.dataWebsite?['ngaybangiao']!=null){
+        state.dataWebsite?['ngaybangiao'] = (state.dataWebsite?['ngaybangiao'] as DateTime).formatDateTime(formatString: formatDate);
       }
       data["Web"] = state.dataWebsite;
     }
@@ -157,7 +167,12 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     // Thông tin hợp đồng Hosting
     if(state.isHopDongHosting){
       if(state.dataHosting?['ngaykyhd']==null){
-        state.dataHosting?['ngaykyhd'] = DateTime.now().formatDateTime();
+        state.dataHosting?['ngaykyhd'] = DateTime.now().formatDateTime(formatString: formatDate);
+      }else{
+        state.dataHosting?['ngaykyhd'] = (state.dataHosting?['ngaykyhd'] as DateTime).formatDateTime(formatString: formatDate);
+      }
+      if(state.dataHosting?['ngayhethan']!=null){
+        state.dataHosting?['ngayhethan'] = (state.dataHosting?['ngayhethan'] as DateTime).formatDateTime(formatString: formatDate);
       }
       if(state.dataHosting?['trangthaihosting']==null){
         state.dataHosting?['trangthaihosting'] = 'kymoi';
@@ -168,7 +183,12 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     // Thông tin hợp đồng App
     if(state.isHopDongApp){
       if(state.dataApp?['ngaykyhd']==null){
-        state.dataApp?['ngaykyhd'] = DateTime.now().formatDateTime();
+        state.dataApp?['ngaykyhd'] = DateTime.now().formatDateTime(formatString: formatDate);
+      }else{
+        state.dataApp?['ngaykyhd'] = (state.dataApp?['ngaykyhd'] as DateTime).formatDateTime(formatString: formatDate);
+      }
+      if(state.dataApp?['ngaybangiao']!=null){
+        state.dataApp?['ngaybangiao'] = (state.dataApp?['ngaybangiao'] as DateTime).formatDateTime(formatString: formatDate);
       }
       data["App"] = state.dataApp;
     }
@@ -179,8 +199,6 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
     final uploadFiled = await saveFileHD();
 
-    print(result);
-    print(uploadFiled);
     if(result==true){
       state = state.copyWith(formStatus: FormStatus.submissionSuccess);
     }else{
@@ -188,10 +206,11 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveFileHD() async{
+  Future<bool> saveFileHD() async{
     final infoFile = ref.read(fileHDProvider);
     if(infoFile.fileUpload?.path!=null){
-      await _khachHangMoiRepository.updateFile(fileHDModel: infoFile, soHopDong: state.soHopDong.toString());
+      return await _khachHangMoiRepository.updateFile(fileHDModel: infoFile, soHopDong: state.soHopDong.toString());
     }
+    return false;
   }
 }

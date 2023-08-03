@@ -57,9 +57,7 @@ class KhachHangMoiRepository {
   }
 
   Future<bool> luuHopDongMoi({required Map? data}) async {
-    print(data);
     final Response response = await App.dioClient.post(ApiUrl.phieuThuMoi, data: data);
-    print(response);
     if(response.statusCode==200){
       if(response.data['success']==true) return true;
     }

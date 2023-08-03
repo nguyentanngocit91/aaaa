@@ -90,13 +90,13 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                                   DateTime.now().formatDateTime();
                               if (selDate != null) {
                                 txtDate = selDate.formatDateTime();
+                                ref
+                                    .read(formKhachHangMoiProvider.notifier)
+                                    .changeData(
+                                    type: _typeData,
+                                    key: 'ngaykyhd',
+                                    value: selDate);
                               }
-                              ref
-                                  .read(formKhachHangMoiProvider.notifier)
-                                  .changeData(
-                                      type: _typeData,
-                                      key: 'ngaykyhd',
-                                      value: txtDate);
                               setState(() {
                                 ngayDangKy = selDate ?? ngayDangKy;
                               });
@@ -133,7 +133,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                                       .changeData(
                                       type: _typeData,
                                       key: 'ngaybangiao',
-                                      value: txtDate);
+                                      value: selDate);
                                 }
                                  setState(() {
                                   ngayBanGiao = selDate ?? ngayBanGiao;
