@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import '../modules/main/ketoan/capnhat/screens/app/list.dart';
+import '../modules/main/ketoan/capnhat/screens/domain/list.dart';
+import '../modules/main/ketoan/capnhat/screens/hosting/list.dart';
 import '../modules/main/ketoan/danh_sach_domain_moi/dsdomain_layout.dart';
 import 'thietlap_media.dart';
 
@@ -105,6 +108,9 @@ ShellRoute addShellRouterMain(String strKey) {
 
         addGoRouter(const DoiMatKhauLayout(), isSubModule: false),
         addGoRouter(const UpgradeWebListLayout(), isSubModule: false),
+        addGoRouter(const UpgradeAppListLayout(), isSubModule: false),
+        addGoRouter(const UpgradeHostingListLayout(), isSubModule: false),
+        addGoRouter(const UpgradeDomainListLayout(), isSubModule: false),
 
 
         addGoRouter(const KhachHangMoi(), isSubModule: false),

@@ -78,15 +78,22 @@ class MenuLayout extends ConsumerWidget {
               ),
               itemMenu(
                 title: 'Nâng cấp App',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${UpgradeAppListLayout.pathName}');
+                },
               ),
               itemMenu(
                 title: 'Nâng cấp Hosting',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${UpgradeHostingListLayout.pathName}');
+
+                },
               ),
               itemMenu(
                 title: 'Cập nhật Domain',
-                onTap: () {},
+                onTap: () {
+                  context.go('/${UpgradeDomainListLayout.pathName}');
+                },
               ),
               itemMenu(
                 title: 'DS mới cập nhật & Pendding',

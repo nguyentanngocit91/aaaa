@@ -21,6 +21,7 @@ class ApiUrl{
   static const String infoContract = '$baseUrl/hop-dong/';
   static const String uploadFile = '$baseUrl/media/upload/';
   static const String listFile = '$baseUrl/media/list';
+  static const String updateFile = '$baseUrl/media/update/';
 
 
   // Cấp mã HĐ, KH tự động

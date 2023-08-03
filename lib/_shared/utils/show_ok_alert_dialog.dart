@@ -83,7 +83,7 @@ class TextDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         new ElevatedButton(
-          child: new Text("Chấp nhận"),
+          child: new Text("Xác nhận"),
           onPressed: () {
             continueCallBack();
           },
