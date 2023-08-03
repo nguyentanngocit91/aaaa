@@ -6,22 +6,33 @@ class DomainModel{
   final bool? defaultRow;
   final int? rowIndex;
   final String? domainName;
+  final DateTime? ngayKy;
   final DateTime? ngayDangKy;
   final DateTime? ngayHetHan;
+  final int? soNamDangKy;
   final String? ghiChu;
 
-  DomainModel({this.defaultRow = false, this.rowIndex, this.domainName, this.ngayDangKy, this.ngayHetHan, this.ghiChu});
+  DomainModel({this.defaultRow = false, this.rowIndex, this.domainName, this.ngayKy, this.ngayDangKy, this.ngayHetHan, this.soNamDangKy, this.ghiChu});
 
-  copyWith({bool? defaultRow, int? rowIndex, String? domainName, DateTime? ngayDangKy,DateTime? ngayHetHan, String? ghiChu}){
+  copyWith({bool? defaultRow, int? rowIndex, String? domainName, DateTime? ngayKy, DateTime? ngayDangKy,DateTime? ngayHetHan, int? soNamDangKy, String? ghiChu}){
     return DomainModel(
       defaultRow: defaultRow ?? this.defaultRow,
       rowIndex: rowIndex ?? this.rowIndex,
       domainName: domainName ?? this.domainName,
+      ngayKy: ngayKy ?? this.ngayKy,
       ngayDangKy: ngayDangKy ?? this.ngayDangKy,
       ngayHetHan: ngayHetHan ?? this.ngayHetHan,
+      soNamDangKy: soNamDangKy ?? this.soNamDangKy,
       ghiChu: ghiChu ?? this.ghiChu,
     );
   }
+
+  Map toJson() => {
+    'tenmien': domainName,
+    'ngaykyhd': ngayKy?.formatDateTime(formatString: 'yyyy-MM-dd'),
+    'sonamdangky': soNamDangKy,
+    'ghichu': ghiChu
+  };
 }
 
 final danhSachDomainProvider = NotifierProvider<DanhSachDomainNotifier, List<DomainModel>>(() {
@@ -67,6 +78,6 @@ class DanhSachDomainNotifier extends Notifier<List<DomainModel>> {
   }
 
   showInfo(DomainModel item){
-    print('row ${item.rowIndex}: ${item.domainName} - ${item.ngayDangKy!.formatDateTime('dd-MM-yyyy')}  ${item.ngayHetHan!.formatDateTime('dd-MM-yyyy')} - ${item.ghiChu}');
+    print('row ${item.rowIndex}: ${item.domainName} - ${item.ngayDangKy!.formatDateTime()}  ${item.ngayHetHan!.formatDateTime()} - ${item.ghiChu}');
   }
 }

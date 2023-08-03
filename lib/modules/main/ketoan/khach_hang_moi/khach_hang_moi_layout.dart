@@ -10,10 +10,12 @@ import '../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../_shared/utils/debouncer.dart';
+import '../../../../_shared/utils/form_status.dart';
 import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/ndgap.dart';
 import '../../../../packages/textfield_tags/textfield_tags.dart';
 import 'providers/danh_sach_domain_provider.dart';
+import 'providers/files_hd_provider.dart';
 import 'providers/form_khach_hang_moi_provider.dart';
 import 'providers/kiem_tra_khach_hang_provider.dart';
 import 'providers/nhan_vien_phu_trach_provider.dart';
@@ -24,13 +26,18 @@ part 'widgets/form_thong_tin_khach_hang_widget.dart';
 part 'widgets/form_thong_tin_hop_dong_widget.dart';
 
 part 'widgets/form_thong_tin_phieu_thu_widget.dart';
+
 part 'widgets/form_thong_tin_website_widget.dart';
+
 part 'widgets/form_thong_tin_domain_widget.dart';
+
 part 'widgets/form_thong_tin_hosting_widget.dart';
+
 part 'widgets/form_thong_tin_app_widget.dart';
+
 part 'widgets/upload_file_hd_widget.dart';
 
-GlobalKey<FormState> _formKey = GlobalKey();
+final GlobalKey<FormState> _formKey = GlobalKey();
 
 class KhachHangMoi extends ConsumerStatefulWidget {
   const KhachHangMoi({Key? key}) : super(key: const Key(pathName));
@@ -41,10 +48,60 @@ class KhachHangMoi extends ConsumerStatefulWidget {
   ConsumerState createState() => _KhachHangMoiState();
 }
 
-class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins{
-
+class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins {
   @override
   Widget build(BuildContext context) {
+    ref.listen(formKhachHangMoiProvider.select((value) => value.formStatus),
+        (previous, next) {
+      if (next == FormStatus.submissionInProgress) {
+        Loading(context).start();
+      }
+      if (next == FormStatus.submissionCanceled) {
+        Loading(context).stop();
+      }
+      if (next == FormStatus.submissionFailure) {
+        Loading(context).stop();
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('XIN LỖI'),
+              content: Text('Đã có lỗi trong quá trình thêm dữ liệu...'),
+              actions: [
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+      if (next == FormStatus.submissionSuccess) {
+        _resetForm(ref);
+        Loading(context).stop();
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('THÀNH CÔNG'),
+              content: Text('Dữ liệu đã được thêm thành công.'),
+              actions: [
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -102,7 +159,10 @@ class _BtnSubmit extends ConsumerWidget {
           onPressed: () {
             _submitForm(ref);
           },
-          icon: const FaIcon(FontAwesomeIcons.download, size: 16,),
+          icon: const FaIcon(
+            FontAwesomeIcons.download,
+            size: 16,
+          ),
           label: const Text('Lưu Thông Tin'),
         ),
         ndGapW16(),
@@ -110,7 +170,10 @@ class _BtnSubmit extends ConsumerWidget {
           onPressed: () {
             _resetForm(ref);
           },
-          icon: const FaIcon(FontAwesomeIcons.rotate, size: 16,),
+          icon: const FaIcon(
+            FontAwesomeIcons.rotate,
+            size: 16,
+          ),
           label: const Text('Nhập lại'),
         ),
       ],
@@ -119,17 +182,22 @@ class _BtnSubmit extends ConsumerWidget {
 }
 
 _submitForm(WidgetRef ref) {
+  ref.read(formKhachHangMoiProvider.notifier).batDatSubmit();
   if (_formKey.currentState!.validate()) {
     ref.read(formKhachHangMoiProvider.notifier).saveForm();
+  } else {
+    ref.read(formKhachHangMoiProvider.notifier).ketThucSubmit();
   }
 }
 
-_resetForm(WidgetRef ref){
+_resetForm(WidgetRef ref) {
   _formKey.currentState?.reset();
   ref.refresh(formKhachHangMoiProvider); // reset dữ liệu toàn Form
-  ref.refresh(kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
+  ref.refresh(
+      kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
   ref.refresh(nhanVienPhuTrachProvider); // reset dữ liệu nhân viên phụ trách
-  Future.delayed(const Duration(milliseconds: 100),(){
+  Future.delayed(const Duration(milliseconds: 100), () {
     ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach();
   }); // reset danh sách domain
+  ref.refresh(fileHDProvider);
 }

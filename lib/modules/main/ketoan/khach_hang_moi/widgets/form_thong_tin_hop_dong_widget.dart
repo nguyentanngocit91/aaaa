@@ -15,9 +15,9 @@ class _FormThongTinHopDongWidgetState
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formKhachHangMoiProvider);
-    String maHopDong = formState.maHopDong.toString();
+    String soHopDong = formState.soHopDong.toString();
     if(formState.isHopDongApp){
-      maHopDong = '${maHopDong}A';
+      soHopDong = '${soHopDong}A';
     }
     return Wrap(
       runSpacing: 25,
@@ -29,14 +29,14 @@ class _FormThongTinHopDongWidgetState
               flex: 1,
               child: Wrap(
                 children: [
-                  lableTextForm('Mã hợp đồng Web/App'),
+                  lableTextForm('Số hợp đồng Web/App'),
                   TextFormField(
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: TextEditingController(text: maHopDong),
+                    controller: TextEditingController(text: soHopDong),
                   ),
                 ],
               ),
@@ -76,7 +76,7 @@ class _FormThongTinHopDongWidgetState
                     onChanged: (value) {
                       ref
                           .read(formKhachHangMoiProvider.notifier)
-                          .changeData(type: _typeData ,key: 'tongtien', value: value);
+                          .changeData(type: _typeData ,key: 'tongtien', value: value.toString().replaceAll('.', ''));
                     },
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(

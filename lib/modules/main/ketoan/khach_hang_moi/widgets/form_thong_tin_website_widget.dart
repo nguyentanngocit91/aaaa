@@ -43,7 +43,7 @@ class _FormThongTinWebsiteWidgetState
                               fillColor: Colors.black12,
                             ),
                             readOnly: true,
-                            controller: TextEditingController(text: '${formState.maHopDong}W'),
+                            controller: TextEditingController(text: '${formState.soHopDong}W'),
                           ),
                         ],
                       ),
@@ -77,15 +77,15 @@ class _FormThongTinWebsiteWidgetState
                           lableTextForm('Ngày ký'),
                           TextFormField(
                             readOnly: true,
-                            controller: TextEditingController(text: ngayDangKy.formatDateTime('dd-MM-yyyy')),
+                            controller: TextEditingController(text: ngayDangKy.formatDateTime()),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayDangKy);
-                              String txtDate = DateTime.now().formatDateTime('dd-MM-yyyy');
+                              String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                                txtDate = selDate.formatDateTime();
+                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                    type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
-                              ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                  type: _typeData, key: 'ngayky', value: txtDate);
                               setState(() {
                                 ngayDangKy = selDate ?? ngayDangKy;
                               });
@@ -103,15 +103,15 @@ class _FormThongTinWebsiteWidgetState
                           TextFormField(
                             decoration: const InputDecoration(hintText: 'dd-mm-yyyy'),
                             readOnly: true,
-                            controller: TextEditingController(text: (ngayBanGiao!=null) ? ngayBanGiao!.formatDateTime('dd-MM-yyyy') : null),
+                            controller: TextEditingController(text: (ngayBanGiao!=null) ? ngayBanGiao!.formatDateTime() : null),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayBanGiao);
                               String txtDate = '';
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                                txtDate = selDate.formatDateTime();
+                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                    type: _typeData, key: 'ngaybangiao', value: selDate);
                               }
-                              ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                  type: _typeData, key: 'ngaybangiao', value: txtDate);
                               setState(() {
                                 ngayBanGiao = selDate ?? ngayBanGiao;
                               });

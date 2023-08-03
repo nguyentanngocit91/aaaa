@@ -80,6 +80,7 @@ class DioClient {
       );
       return response;
     } on DioException catch (e) {
+      print(e.toString());
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;
     }

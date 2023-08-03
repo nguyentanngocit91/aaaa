@@ -126,8 +126,8 @@ class TextFieldStyler {
 
 ///Textfield tags controller
 class TextFieldTagsController extends ChangeNotifier {
-  static final textEditingController = TextEditingController();
-  static final focusNode = FocusNode();
+  final textEditingController = TextEditingController();
+  final focusNode = FocusNode();
   late Set<String> tags;
   late Map<String, dynamic> tagStates;
 
@@ -163,15 +163,15 @@ class TextFieldTagsController extends ChangeNotifier {
   }
 
   ///Get the text controller
-  static TextEditingController get getTextEditingController {
-    // return textEditingController;
-    return TextEditingController();
+  TextEditingController get getTextEditingController {
+    return textEditingController;
+    // return TextEditingController();
   }
 
   ///Get the text controller focus node
-  static FocusNode get getFocusNode {
-    // return focusNode;
-    return FocusNode();
+  FocusNode get getFocusNode {
+    return focusNode;
+    // return FocusNode();
   }
 
   ///Show prefix icon?
@@ -244,8 +244,8 @@ class TextFieldTagsController extends ChangeNotifier {
   ///Dispose resouses
   @override
   void dispose() {
-    super.dispose();
     textEditingController.dispose();
     focusNode.dispose();
+    super.dispose();
   }
 }

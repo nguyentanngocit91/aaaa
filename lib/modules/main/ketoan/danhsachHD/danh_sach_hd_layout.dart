@@ -1,6 +1,5 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+
 import 'package:bs_flutter_alert/bs_flutter_alert.dart';
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,18 +12,17 @@ import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/them_phieuthu_s
 import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/ndgap.dart';
 import '../../../../_shared/utils/show_ok_alert_dialog.dart';
-import 'models/item_contract_search_result_model.dart';
 import 'models/searchcustomer_model.dart';
 import 'models/searchcustomercontract_model.dart';
 import 'providers/ds_hd_provider.dart';
 
 
-class DanhSachHDLayout extends StatelessWidget {
+class DanhSachHDLayout extends ConsumerWidget {
   const DanhSachHDLayout():super(key:const Key(pathName));
   static const String pathName = 'danh-sach-hd';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: ListView(
         children: [
@@ -56,8 +54,9 @@ class DaTaThongTinKH extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-    var data = ref.watch(dshdProvider.select((value) => value.result));
 
+    var data = ref.watch(dshdProvider.select((value) => value.result));
+print("${data?.length}+ppppp");
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -102,12 +101,13 @@ class DaTaThongTinKH extends ConsumerWidget {
               ],
             ),
           ),
-          if(data!=null)...[
+          if(data!=null && data!.length>0)...[
 
             if(data['status']==true)...[
-              InfoListCustomer(item:data['khachhang'], index: 1,),
+              SelectionArea(child:  InfoListCustomer(item:data['khachhang'], index: 1,),),
+
             ] else ...[
-              
+
               BsAlert(
                 closeButton: false,
                 margin: EdgeInsets.only(bottom: 10.0),
@@ -115,20 +115,16 @@ class DaTaThongTinKH extends ConsumerWidget {
                 child: Text('Không tìm thấy thông tin khách hàng ! Vui lòng kiểm tra lại !!!', textAlign: TextAlign.center),
               ),
 
-
             ]
+          ] else ...[
 
+            BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Vui lòng nhập thông tin cần tìm !!!', textAlign: TextAlign.center),
+            ),
 
-            /*ListView.builder(
-                padding: const EdgeInsets.all(0),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                primary: true,
-                itemCount: data['data'].length,
-                itemBuilder: (BuildContext context, index) {
-                  return InfoListCustomer(item: data['data'][index], index: index+1,);
-                }),*/
-           // GeneratePagin(data['info']),
           ],
 
 
@@ -196,7 +192,7 @@ class DaTaThongTinHD extends ConsumerWidget {
           if(data!=null)...[
 
 
-            if(data['status']==true)...[
+            if(data['hopdongs'].length>0)...[
 
               ListView.builder(
                   padding: const EdgeInsets.all(0),
@@ -205,7 +201,7 @@ class DaTaThongTinHD extends ConsumerWidget {
                   primary: true,
                   itemCount: data['hopdongs'].length,
                   itemBuilder: (BuildContext context, index) {
-                    return InfoListContract(infoKH:data['khachhang'],item: data['hopdongs'][index], index: index+1,);
+                    return SelectionArea(child:InfoListContract(infoKH:data['khachhang'],item: data['hopdongs'][index], index: index+1,) ,);
                   }),
               // GeneratePagin(data['info']),
 
@@ -223,6 +219,15 @@ class DaTaThongTinHD extends ConsumerWidget {
             ]
 
 
+
+          ] else ...[
+
+            BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Vui lòng nhập thông tin cần tìm !!!', textAlign: TextAlign.center),
+            ),
 
           ],
         ],
@@ -271,12 +276,10 @@ class FilterHD extends ConsumerWidget {
                           title: 'Mã KH',
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAKH", value);
-
                           },
                         controller: controllerMAKH,
+                      ),
 
-
-                          ),
                     ],
                   ),
                 ),
@@ -292,12 +295,8 @@ class FilterHD extends ConsumerWidget {
                           title: 'Mã HĐ',
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAHD", value);
-
                           },
                           controller: controllerMAHD,),
-
-
-
                     ],
                   ),
                 ),
@@ -317,6 +316,7 @@ class FilterHD extends ConsumerWidget {
                           },
                       controller: controllerTenHD,
                       ),
+
                     ],
                   ),
                 ),
@@ -410,9 +410,6 @@ class FilterHD extends ConsumerWidget {
 
                 GestureDetector(
                     onTap: () {
-                   /*   ref.read(dshdProvider.notifier).onSearch("web");
-                      print("Submit Tìm kiếm ");*/
-
 
                      bool isError = false;
                       String maKH = controllerMAKH.text;
@@ -493,6 +490,9 @@ class HeaderRowItem extends StatelessWidget {
     );
   }
 }
+
+
+
 class BodyRowItem extends StatelessWidget {
   const BodyRowItem(this.text);
   final Widget text;
@@ -513,11 +513,10 @@ class InfoListCustomer extends StatelessWidget {
   InfoListCustomer({Key? key, required this.item, required this.index}) : super(key: key);
 
   final SearchCustomerModel item;
-
   final int index;
   @override
   Widget build(BuildContext context) {
-    print(item.congty.toString());
+
     return  Column(
         children: [
 
@@ -571,7 +570,7 @@ class InfoListCustomer extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return UpdateThongTinKHScreen(id: 'a',);
+                              return UpdateThongTinKHScreen(item: item,);
                             },
                           );
                         },
@@ -686,7 +685,7 @@ class InfoListContract extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return DSPhieuThuScreen();
+                              return DSPhieuThuScreen(id: item.id.toString(),);
                             },
                           );
                         },
@@ -706,7 +705,7 @@ class InfoListContract extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return const UpdateThongTinHopDongWidget();
+                              return UpdateThongTinHopDongWidget(item:item,);
                             },
                           );
                         },
@@ -734,95 +733,3 @@ class InfoListContract extends StatelessWidget {
 }
 
 
-class NotFoundSearch extends StatelessWidget {
-  const NotFoundSearch({super.key, required this.context});
-final BuildContext context;
-  @override
-  Widget build(BuildContext context) {
-    return  AnimatedButton(
-      text: 'Info Dialog fixed width and square buttons',
-      pressEvent: () {
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.info,
-          borderSide: const BorderSide(
-            color: Colors.green,
-            width: 2,
-          ),
-          width: 280,
-          buttonsBorderRadius: const BorderRadius.all(
-            Radius.circular(2),
-          ),
-          dismissOnTouchOutside: true,
-          dismissOnBackKeyPress: false,
-          onDismissCallback: (type) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Dismissed by $type'),
-              ),
-            );
-          },
-          headerAnimationLoop: false,
-          animType: AnimType.bottomSlide,
-          title: 'INFO',
-          desc: 'This Dialog can be dismissed touching outside',
-          showCloseIcon: true,
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-      },
-    );
-  }
-}
-
-Future<void> _showDialogError({ required BuildContext context,required String message}) {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        // backgroundColor:Colors.transparent,
-        contentPadding: EdgeInsets.zero,
-        actionsPadding: EdgeInsets.zero,
-        content: Container(
-          height: 100,
-          child: Column(
-            children: [
-              Container(
-                color: Colors.red[600],
-                padding: EdgeInsets.only(
-                    left: 8, right: 8, top: 5, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Thông Báo",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Icon(
-                      Icons.check,
-                      size: 30,
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(message),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("OK",style: TextStyle(color: Theme.of(context).primaryColor,),))
-        ],
-      );
-    },
-  );
-  //
-  // final snackBar = SnackBar(content: Text(message));
-  // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}

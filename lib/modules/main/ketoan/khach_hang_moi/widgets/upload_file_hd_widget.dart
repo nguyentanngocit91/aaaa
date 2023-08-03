@@ -1,7 +1,5 @@
 part of '../khach_hang_moi_layout.dart';
 
-enum LoaiFileHD { hopDong, chungTuKhac }
-
 
 class UploadFileHDWidget extends ConsumerStatefulWidget {
   const UploadFileHDWidget({super.key});
@@ -15,7 +13,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
 
   final TextEditingController textEditingController = TextEditingController();
 
-  LoaiFileHD _loaiFileHD = LoaiFileHD.hopDong;
+  String _loaiFileHD = 'hopdong';
 
   @override
   dispose(){
@@ -37,10 +35,11 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               ndGapW8(),
-              Radio<LoaiFileHD>(
-                value: LoaiFileHD.hopDong,
+              Radio<String>(
+                value: 'hopdong',
                 groupValue: _loaiFileHD,
-                onChanged: (LoaiFileHD? value) {
+                onChanged: (String? value) {
+                  ref.read(fileHDProvider.notifier).changeLoai(value ?? '');
                   setState(() {
                     _loaiFileHD = value!;
                   });
@@ -48,10 +47,11 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
               ),
               const Text('Hợp đồng'),
               ndGapW16(),
-              Radio<LoaiFileHD>(
-                value: LoaiFileHD.chungTuKhac,
+              Radio<String>(
+                value: 'chungtukhac',
                 groupValue: _loaiFileHD,
-                onChanged: (LoaiFileHD? value) {
+                onChanged: (value) {
+                  ref.read(fileHDProvider.notifier).changeLoai(value ?? '');
                   setState(() {
                     _loaiFileHD = value!;
                   });
@@ -69,19 +69,24 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
             child: inputUploadFile(
               context,
               controller: textEditingController,
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
-                ]),
               onTap: () async {
                 String path = '';
                 final result = await FilePicker.platform.pickFiles(
+                  allowMultiple: false,
                   type: FileType.custom,
                   allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
                 );
                 if (result != null) {
-                  PlatformFile file = result.files.first;
-                  textEditingController.text = file.name;
+                  for(PlatformFile file in result.files){
+                    ref.read(fileHDProvider.notifier).changeFile(file: file);
+                  }
+                  if(result.files.length>1){
+                    textEditingController.text = 'Đã chọn ${result.files.length} files';
+                  }else{
+                    textEditingController.text = result.files.first.name;
+                  }
                 }else{
+                  ref.read(fileHDProvider.notifier).clear();
                   textEditingController.clear();
                 }
               }
@@ -94,11 +99,14 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
           child: Wrap(
             children: [
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Nội dung ghi chú cho file',
                 ),
                 minLines: 3,
                 maxLines: 3,
+                onChanged: (value) {
+                  ref.read(fileHDProvider.notifier).changeGhiChu(value);
+                },
               ),
             ],
           ),

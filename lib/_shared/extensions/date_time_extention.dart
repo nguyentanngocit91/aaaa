@@ -32,7 +32,7 @@ extension DateTimeExtension on DateTime {
   }
 
 
-  String formatDateTime(String formatString){
+  String formatDateTime({String formatString = 'dd-MM-yyyy'}){
     // 'dd-MM-yyyy' , 'dd-MM-yyyy H:m:s'
     return DateFormat(formatString).format(this);
   }

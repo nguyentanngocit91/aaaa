@@ -10,6 +10,9 @@ _$_SearchCustomerContractModel _$$_SearchCustomerContractModelFromJson(
         Map<String, dynamic> json) =>
     _$_SearchCustomerContractModel(
       dichvuIds: json['dichvuIds'] as List<dynamic>?,
+      files: json['files'] as List<dynamic>?,
+      danhsachtenmien: json['danhsachtenmien'] as List<dynamic>?,
+      trangthai_hosting: json['trangthai_hosting'] as String?,
       lichsu_thanhtoan: json['lichsu_thanhtoan'] as List<dynamic>?,
       id: json['_id'] as String?,
       sohopdong: json['sohopdong'] as String?,
@@ -29,14 +32,28 @@ _$_SearchCustomerContractModel _$$_SearchCustomerContractModelFromJson(
           ? null
           : L1_lichsu_khoitao.fromJson(
               json['lichsu_khoitao'] as Map<String, dynamic>),
-      tongtien: json['tongtien'] as int?,
+      tongtien: (json['tongtien'] as num?)?.toDouble(),
       lichsu_capnhat: json['lichsu_capnhat'] as List<dynamic>?,
+      chucnang: json['chucnang'] as List<dynamic>?,
+      dungluong: (json['dungluong'] as num?)?.toDouble(),
+      mota: json['mota'] as String?,
+      ngaybangiao: json['ngaybangiao'] as String?,
+      ngaydangky: json['ngaydangky'] as String?,
+      ngayhethan: json['ngayhethan'] as String?,
+      ngaykichhoat: json['ngaykichhoat'] as String?,
+      ngayupstore: json['ngayupstore'] as List<dynamic>?,
+      sonamdangky: (json['sonamdangky'] as num?)?.toDouble(),
+      tenapp: json['tenapp'] as String?,
+      tenmien: json['tenmien'] as String?,
     );
 
 Map<String, dynamic> _$$_SearchCustomerContractModelToJson(
         _$_SearchCustomerContractModel instance) =>
     <String, dynamic>{
       'dichvuIds': instance.dichvuIds,
+      'files': instance.files,
+      'danhsachtenmien': instance.danhsachtenmien,
+      'trangthai_hosting': instance.trangthai_hosting,
       'lichsu_thanhtoan': instance.lichsu_thanhtoan,
       '_id': instance.id,
       'sohopdong': instance.sohopdong,
@@ -53,6 +70,17 @@ Map<String, dynamic> _$$_SearchCustomerContractModelToJson(
       'lichsu_khoitao': instance.l1_lichsu_khoitao,
       'tongtien': instance.tongtien,
       'lichsu_capnhat': instance.lichsu_capnhat,
+      'chucnang': instance.chucnang,
+      'dungluong': instance.dungluong,
+      'mota': instance.mota,
+      'ngaybangiao': instance.ngaybangiao,
+      'ngaydangky': instance.ngaydangky,
+      'ngayhethan': instance.ngayhethan,
+      'ngaykichhoat': instance.ngaykichhoat,
+      'ngayupstore': instance.ngayupstore,
+      'sonamdangky': instance.sonamdangky,
+      'tenapp': instance.tenapp,
+      'tenmien': instance.tenmien,
     };
 
 _$_L1_info _$$_L1_infoFromJson(Map<String, dynamic> json) => _$_L1_info(

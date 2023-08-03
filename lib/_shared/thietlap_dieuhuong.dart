@@ -114,7 +114,7 @@ ShellRoute addShellRouterMain(String strKey) {
 
 
         addGoRouter(const KhachHangMoi(), isSubModule: false),
-        addGoRouter(const DanhSachBlacklistLayout(), isSubModule: false),
+        addGoRouter( DanhSachBlacklistLayout(), isSubModule: false),
         addGoRouter(const ThongKeBanGiao(), isSubModule: false),
         addGoRouter(const Data20152019(), isSubModule: false),
       ]);

@@ -1,4 +1,4 @@
-class PhieuThuModel {
+class ItemPhieuthuResultModel {
   double? phiweb;
   double? phinangcapweb;
   double? phihosting;
@@ -20,7 +20,7 @@ class PhieuThuModel {
   String? httt;
   String? ghichu;
 
-  PhieuThuModel(
+  ItemPhieuthuResultModel(
       {this.phiweb,
         this.phinangcapweb,
         this.phihosting,
@@ -41,9 +41,9 @@ class PhieuThuModel {
         //this.ngaynopcty,
         this.httt,
         this.ghichu,
-        });
+      });
 
-  PhieuThuModel.fromJson(Map<String, dynamic> json) {
+  ItemPhieuthuResultModel.fromJson(Map<String, dynamic> json) {
     phiweb = json['phiweb'].toDouble();
     phinangcapweb = json['phinangcapweb'].toDouble();
     phihosting = json['phihosting'].toDouble();
@@ -88,6 +88,7 @@ class PhieuThuModel {
     data['phitenmien'] = phitenmien;
     data['phiapp'] = phiapp;
     data['phinangcapapp'] = phinangcapapp;
+
     data['loaiphieuthu'] = loaiphieuthu;
     data['is_pending'] = isPending;
 

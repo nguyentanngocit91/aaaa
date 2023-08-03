@@ -1,4 +1,4 @@
-class ApiUrl{
+class ApiUrl {
   static const String protocol = 'http://192.168.1.58';
   static const String port = ':1988';
   static const String baseUrl = '$protocol$port/api/v1';
@@ -9,13 +9,18 @@ class ApiUrl{
   static const String infoUser = '$baseUrl/users/profile';
   static const String changePassword = '$baseUrl/users/change-password';
 
+  // Media
+  static const String media = '$baseUrl/media';
+  static const String uploadFile = '$media/upload';
+  static const String listFile = '$baseUrl/media/list';
+
   // Nhân viên
   static const String danhSachNhanVien = '$baseUrl/nhan-vien';
 
-
   // DS HĐ
-
-  static const String searchContractCustomer = '$baseUrl/tim-kiem/hop-dong-theo-khach-hang';
+  static const String searchContractCustomer =
+      '$baseUrl/tim-kiem/hop-dong-theo-khach-hang';
+  static const String updateContract = '$baseUrl/hop-dong';
 
   static const String searchContract = '$baseUrl/hop-dong';
   static const String infoContract = '$baseUrl/hop-dong/';
@@ -23,30 +28,29 @@ class ApiUrl{
   static const String listFile = '$baseUrl/media/list';
   static const String updateFile = '$baseUrl/media/update/';
 
-
   // Cấp mã HĐ, KH tự động
   static const String capMaKhachHang = '$baseUrl/cap-ma/khach-hang';
   static const String capMaHopDong = '$baseUrl/cap-ma/hop-dong';
-
 
   // Khách hàng
   static const String danhSachKhachHang = '$baseUrl/khach-hang';
 
   //DOMAIN
   static const String danhSachDomain = '$baseUrl/domain';
-
-
+  static const String updateDomain = '$baseUrl/update-domain';
 
   //PHIẾU THU
   static const String danhSachPhieuThu = '$baseUrl/phieu-thu';
+  static const String phieuThuMoi = '$baseUrl/phieu-thu-moi';
 
   //BÀN GIAO
   static const String danhSachHDTheoSoHD = '$baseUrl/hop-dong';
 
-
   //Blacklist
-
   static const String danhsachBlackList = '$baseUrl/black-list';
 
+  // tim kiem hd 20152019
 
+  static const String danhsach20152019 =
+      "https://manager.nina.vn/administrator/api/jsonhdcu.php";
 }

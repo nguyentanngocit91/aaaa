@@ -8,7 +8,7 @@ import '../../../../../_shared/thietlap_url.dart';
 class DanhsachBlackListReponsitory {
   Future<Map?> getListBlacklist() async {
     final Response response =
-        await App.dioClient.get('${ApiUrl.danhsachBlackList}');
+        await App.dioClient.get('${ApiUrl.danhsachBlackList}?limit=150');
 
     if (response.statusCode == 200) {
       if (response.data['success'] == true) {
@@ -19,27 +19,24 @@ class DanhsachBlackListReponsitory {
     }
     return null;
   }
-
   // add blacklist
 
 
-Future<Map?> addBlacklist() async {
+Future<String?> addBlacklist({required String maHD,required String ghichuHD}) async {
+
 
     var data= {
-      "mahopdong": "00000001w",
-      "ghichu": "222122"
+      "mahopdong": "${maHD}",
+      "ghichu": "${ghichuHD}"
     };
-    final Response response =
-      await App.dioClient.post('${ApiUrl.danhsachBlackList}',data:jsonEncode(data));
+
+   // print(data.toString());
+    final Response response = await App.dioClient.post('${ApiUrl.danhsachBlackList}',data:jsonEncode(data));
 
   if (response.statusCode == 200) {
-    if (response.data['success'] == true) {
-      if ((response.data['data'] as List).isNotEmpty) {
-        return response.data;
-      }
-    }
+   return  response.data['message'];
   }
-  return null;
+  return '';
 }
 
 }
