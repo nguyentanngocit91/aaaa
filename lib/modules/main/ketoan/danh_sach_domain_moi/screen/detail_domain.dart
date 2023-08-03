@@ -90,7 +90,7 @@ class DetailDomain extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        const Expanded(flex:1,child: Text('Ngày đăng ký'),),
+                        const Expanded(flex:1,child: Text('Ngày kích hoạt'),),
                         Expanded(flex:1,child: TextField(
                           controller: ngayDangKyInput,
                           readOnly: true,
