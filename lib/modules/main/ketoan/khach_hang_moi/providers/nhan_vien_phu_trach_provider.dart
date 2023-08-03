@@ -75,6 +75,14 @@ class NhanVienPhuTrachNotifier extends Notifier<NhanVienPhuTrachState> {
         for(var nv in state.maNhanViens ?? []){
           list.add(nv['phongbanId'][field]);
         }
+      case 'parentId_hoten':
+        for(var nv in state.maNhanViens ?? []){
+          if(nv['parentId']?['hoten']!=null) {
+            list.add(nv['parentId']?['hoten']);
+          } else {
+            list.add(nv['hoten']);
+          }
+        }
       default:
         for(var nv in state.maNhanViens ?? []){
           list.add(nv[field]);

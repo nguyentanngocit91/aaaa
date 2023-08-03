@@ -56,7 +56,7 @@ class KhachHangMoiRepository {
     return false;
   }
 
-  Future<bool> luuHopDongMoi({required Map? data}) async {
+  Future<bool> luuHopDongMoi({required dynamic data}) async {
     final Response response = await App.dioClient.post(ApiUrl.phieuThuMoi, data: data);
     if(response.statusCode==200){
       if(response.data['success']==true) return true;
@@ -67,10 +67,13 @@ class KhachHangMoiRepository {
 
   Future<bool> updateFile({required FileHDModel fileHDModel, required String soHopDong}) async {
     FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile('${fileHDModel.fileUpload?.path}', filename:fileHDModel.fileUpload?.name),
+      "files": [
+        await MultipartFile.fromFile(fileHDModel.fileUpload!.path!, filename:fileHDModel.fileUpload?.name)
+      ],
       "sohopdong":soHopDong,
-      "loaifile":fileHDModel.loaiFile,
+      "loaifile":fileHDModel.loaiFile ?? 'hopdong',
       "ghichu":fileHDModel.ghiChu,
+      'loaimedia':'khachhang',
     });
     final response = await App.dioClient.post(ApiUrl.uploadFile, data: formData);
     if(response.statusCode==200){
