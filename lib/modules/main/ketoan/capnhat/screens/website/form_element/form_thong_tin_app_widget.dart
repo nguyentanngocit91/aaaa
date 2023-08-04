@@ -81,15 +81,15 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                           TextFormField(
                             readOnly: true,
                             controller: TextEditingController(
-                                text: ngayDangKy.formatDateTime('dd-MM-yyyy')),
+                                text: ngayDangKy.formatDateTime(formatString: 'dd-MM-yyyy')),
                             onTap: () async {
                               final DateTime? selDate =
                                   await Helper.onSelectDate(context,
                                       initialDate: ngayDangKy);
                               String txtDate =
-                                  DateTime.now().formatDateTime('dd-MM-yyyy');
+                                  DateTime.now().formatDateTime(formatString: 'dd-MM-yyyy');
                               if (selDate != null) {
-                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                                txtDate = selDate.formatDateTime(formatString: 'dd-MM-yyyy');
                               }
                               ref
                                   .read(formKhachHangMoiProvider.notifier)
@@ -118,7 +118,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                               controller: TextEditingController(
                                   text: (ngayBanGiao != null)
                                       ? ngayBanGiao!
-                                          .formatDateTime('dd-MM-yyyy')
+                                          .formatDateTime(formatString: 'dd-MM-yyyy')
                                       : null),
                               onTap: () async {
                                 final DateTime? selDate =
@@ -127,7 +127,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                                 String txtDate = '';
                                 if (selDate != null) {
                                   txtDate =
-                                      selDate.formatDateTime('dd-MM-yyyy');
+                                      selDate.formatDateTime(formatString: 'dd-MM-yyyy');
                                 }
                                 ref
                                     .read(formKhachHangMoiProvider.notifier)

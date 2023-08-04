@@ -72,6 +72,7 @@ class Upgrade extends ConsumerStatefulWidget {
   ConsumerState<Upgrade> createState() => _UpdateWebsiteScreenState();
 }
 
+
 class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
     with FormUIMixins {
   bool isLoading = true;
@@ -153,6 +154,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
       contentPadding: const EdgeInsets.all(0),
       insetPadding: const EdgeInsets.all(30),
       elevation: 0,
+
       children: [
         const Padding(
           padding: const EdgeInsets.all(20.0),
@@ -162,35 +164,34 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
           ),
         ),
         const Divider(),
-        Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                titleForm(context, title: 'Thông tin khách hàng'),
+
+                titleForm(context, title: 'Thông tin hợp đồng'),
                 bodyForm(
-                  child: const FormThongTinKhachHangWidget(),
+                  child: const FormThongTinHopDongWidget(),
                 ),
-                // ndGapH40(),
-                // titleForm(context, title: 'Thông tin hợp đồng'),
-                // bodyForm(
-                //   child: const FormThongTinHopDongWidget(),
-                // ),
-                // ndGapH40(),
-                // titleForm(context, title: 'Thông tin phiếu thu'),
-                // bodyForm(
-                //   child: const FormThongTinPhieuThuWidget(),
-                // ),
-                // const FormThongTinWebsiteWidget(),
-                // const FormThongTinDomainWidget(),
-                // const FormThongTinHostingWidget(),
-                // const FormThongTinAppWidget(),
+                ndGapH40(),
+                titleForm(context, title: 'Thông tin phiếu thu'),
+                bodyForm(
+                  child: const FormThongTinPhieuThuWidget(),
+                ),
+                const FormThongTinWebsiteWidget(),
                 ndGapH40(),
                 titleForm(context, title: 'Upload file HĐ'),
-                // bodyForm(
-                //   child: const UploadFileHDWidget(),
-                // ),
+                bodyForm(
+                  child: const UploadFileHDWidget(),
+                ),
+                const FormThongTinDomainWidget(),
+                const FormThongTinHostingWidget(),
+                const FormThongTinAppWidget(),
+
                 ndGapH40(),
                 const _BtnSubmit(),
               ],
@@ -832,26 +833,58 @@ class _BtnSubmit extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        FilledButton.icon(
+        TextButton(
           onPressed: () {
-            _submitForm(ref);
+            // if (_formKey.currentState!.validate()) {
+            //   listController.forEach((key, value) {
+            //     ref
+            //         .read(formcapnhatProvider.notifier)
+            //         .onChangeValue(key, value.text);
+            //   });
+            //
+            //   ref
+            //       .read(formcapnhatProvider.notifier)
+            //       .onSubmit(widget.id, widget.contractNumber);
+            // } else {
+            //   listFocusNode.forEach((key, value) {
+            //     value.requestFocus();
+            //   });
+            // }
           },
-          icon: const FaIcon(FontAwesomeIcons.download, size: 16,),
-          label: const Text('Lưu Thông Tin'),
+          style: TextButton.styleFrom(
+              padding: const EdgeInsets.all(10),
+              backgroundColor: Colors.blueAccent),
+          child: const Text(
+            'Cập nhật',
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.white),
+          ),
         ),
-        ndGapW16(),
-        FilledButton.icon(
+        const SizedBox(
+          width: 10,
+        ),
+        TextButton(
           onPressed: () {
-            _resetForm(ref);
+            Navigator.of(context).pop();
           },
-          icon: const FaIcon(FontAwesomeIcons.rotate, size: 16,),
-          label: const Text('Nhập lại'),
+          style: TextButton.styleFrom(
+              padding: const EdgeInsets.all(10),
+              backgroundColor: Colors.grey),
+          child: const Text(
+            'Thoát',
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.white),
+          ),
         ),
       ],
     );
-  }
+}
 }
 
 _submitForm(WidgetRef ref) {

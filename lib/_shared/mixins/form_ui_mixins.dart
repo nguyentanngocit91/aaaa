@@ -4,9 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 mixin FormUIMixins{
   Widget lableTextForm(String title, {Widget? child}) {
     return Container(
-      width: double.infinity,
+
       margin: const EdgeInsets.only(bottom: 8),
       child: Row(
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: (child!=null) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
         children: [
           Text(

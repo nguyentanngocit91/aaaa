@@ -170,15 +170,15 @@ class _FormThongTinPhieuThuWidgetState
                           errorText: 'Không bỏ trống.'),
                     ]),
                     controller: TextEditingController(
-                        text: ngayNop.formatDateTime('dd-MM-yyyy')),
+                        text: ngayNop.formatDateTime(formatString: 'dd-MM-yyyy')),
                     readOnly: true,
                     onTap: () async {
                       final DateTime? selDate = await Helper.onSelectDate(
                           context,
                           initialDate: ngayNop);
-                      String txtDate = ngayNop.formatDateTime('dd-MM-yyyy');
+                      String txtDate = ngayNop.formatDateTime(formatString: 'dd-MM-yyyy');
                       if (selDate != null) {
-                        txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                        txtDate = selDate.formatDateTime(formatString: 'dd-MM-yyyy');
                       }
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           type: _typeData, key: 'ngaynop', value: txtDate);
