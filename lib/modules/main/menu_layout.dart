@@ -89,8 +89,10 @@ class MenuLayout extends ConsumerWidget {
                 onTap: () {},
               ),
               itemMenu(
-                title: 'DS mới cập nhật & Pendding',
-                onTap: () {},
+                title: 'DS mới cập nhật & Pending',
+                onTap: () {
+                  context.go('/${DanhSachMoiPendingLayout.pathName}');
+                },
               ),
               itemMenu(
                 title: 'Danh sách Domain mới ký',

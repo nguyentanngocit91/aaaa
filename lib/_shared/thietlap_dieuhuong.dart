@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import '../modules/main/ketoan/danh_sach_domain_moi/dsdomain_layout.dart';
+import '../modules/main/ketoan/ds_moi_pending/ds_moi_pending_layout.dart';
 import 'thietlap_media.dart';
 
 import '../_shared/utils/helper.dart';
@@ -87,14 +88,14 @@ ShellRoute addShellRouterMain(String strKey) {
       routes: [
         addGoRouter(const DashboardLayout(), isSubModule: false),
 
-        // addGoRouter(const CapMaHDLayout(), isSubModule: false),
-
-
         // DS HOP DONG
         addGoRouter(const DanhSachHDLayout(), isSubModule: false),
 
-
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
+
+        // Danh sách mới cập nhật và pending
+        addGoRouter(const DanhSachMoiPendingLayout(), isSubModule: false),
+
         //DANH SACH DOMAIN MOI
         addGoRouter(DanhSachDomainMoiKy(), isSubModule: false),
 
