@@ -2,6 +2,7 @@ part of 'form_update_provider.dart';
 
 class FormUpdateState {
   final Map<String, String>? data;
+  final Map? dataKhachHang;
   final FormStatus status;
   final String? message;
   final Map<String, dynamic>? result;
@@ -11,6 +12,7 @@ class FormUpdateState {
 
   const FormUpdateState({
     this.data = null,
+    this.dataKhachHang,
     this.status = FormStatus.pure,
     this.message = '',
     this.result = null,
@@ -21,6 +23,7 @@ class FormUpdateState {
 
   FormUpdateState copyWith({
     Map<String, String>? data,
+    Map? dataKhachHang,
     FormStatus? status,
     String? message,
     Map<String, dynamic>? result,
@@ -30,6 +33,7 @@ class FormUpdateState {
   }) {
     return FormUpdateState(
         data: data ?? this.data,
+        dataKhachHang: dataKhachHang ?? this.dataKhachHang,
         result: result ?? this.result,
         status: status ?? this.status,
         message: message ?? this.message,

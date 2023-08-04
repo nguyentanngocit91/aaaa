@@ -105,4 +105,9 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
   }
 
 
+  updateMedia(Map<dynamic, String?> map) async {
+    return await _dsHDRepository.updateMedia(map);
+  }
+
+
 }

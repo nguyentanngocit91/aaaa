@@ -1,20 +1,17 @@
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:bs_flutter_alert/bs_flutter_alert.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:regexpattern/regexpattern.dart';
 import 'package:responsive_grid/responsive_grid.dart';
-
 import '../../../../../_shared/mixins/form_ui_mixins.dart';
-import '../../../../../_shared/utils/debouncer.dart';
 import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
-import '../../khach_hang_moi/providers/form_khach_hang_moi_provider.dart';
-import '../../khach_hang_moi/providers/kiem_tra_khach_hang_provider.dart';
 import '../models/customerupdate_model.dart';
 import '../models/mediacustomer_model.dart';
 import '../models/searchcustomer_model.dart';
@@ -22,9 +19,11 @@ import '../providers/ds_hd_provider.dart';
 import '../providers/form_update_provider.dart';
 
 Map<String, String> _loaiPhiethu = {
-  'hopdong': 'Hợp đồng',
   'chungtu': 'Chứng từ khác'
 };
+
+String _loaiFileHD = 'chungtu';
+
 GlobalKey<FormState> _formKey = GlobalKey();
 List<Map> _resultFile = [];
 List<MediaCustomerModel> _listMedia = [];
@@ -53,7 +52,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    ['makhachhang', 'email', 'email_phu', 'hoten', 'phone', 'type_customer', 'congty', 'nguoidaidienmoi', 'dienthoaicoquan', 'masothue', 'cccd', 'diachi', 'ghichu'].forEach((item) {
+    ['makhachhang', 'email', 'email_phu', 'hoten', 'phone', 'type', 'congty', 'nguoidaidienmoi', 'dienthoaicoquan', 'masothue', 'cccd', 'diachi', 'ghichu'].forEach((item) {
       listController[item] = TextEditingController();
       listFocusNode[item] = FocusNode();
     });
@@ -74,7 +73,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
       listController!['hoten']!.text = data!.hoten!;
       listController!['phone']!.text = data!.phone!;
 
-      listController!['type_customer']!.text = data!.type!;
+      listController!['type']!.text = data!.type!;
       listController!['congty']!.text = data!.congty!;
       listController!['nguoidaidienmoi']!.text = data!.l1_info!.nguoidaidienmoi!;
       listController!['dienthoaicoquan']!.text = data!.l1_info!.dienthoaicoquan!;
@@ -120,7 +119,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
           }
         });
 
-    print("${listController['email']}+email");
+
 
     return  SimpleDialog(
       backgroundColor: Colors.white,
@@ -304,10 +303,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                                 child: Text('Công Ty'),
                               ),
                             ],
-                            onChanged: (value) {
-                              ref.read(formKhachHangMoiProvider.notifier).changeData(
-                                  key: 'type', value: value, type: _typeData);
-                            },
+                            onChanged: (value) { },
                           ),
                         ],
                       ),
@@ -443,7 +439,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                       width: 10,
                     ),
                     Text(
-                      'UPLOAD FILE HĐ',
+                      'UPLOAD CHỨNG TỪ',
                       style: const TextStyle(color: Color(0xFF105a6c)),
                     ),
                   ],
@@ -457,105 +453,12 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                     color: const Color(0xFFf5f5f5),
                     border: Border.all(color: const Color(0xFFdcdbdb)),
                   ),
-                  child: ResponsiveGridRow(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ResponsiveGridCol(
-                          lg: 12,
-                          xl:4,
-                          md:12,
-                          xs: 12,
-                          child: Container(
-                            padding: Helper.padding(),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Phương thức thanh toán:',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Radio<HinhThucThanhToan>(
-                                  value: HinhThucThanhToan.cod,
-                                  groupValue: _httt,
-                                  onChanged: (HinhThucThanhToan? value) {
-                                    setState(() {
-                                      _httt = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Hợp đồng'),
-                                Radio<HinhThucThanhToan>(
-                                  value: HinhThucThanhToan.bank,
-                                  groupValue: _httt,
-                                  onChanged: (HinhThucThanhToan? value) {
-                                    setState(() {
-                                      _httt = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Chứng từ khác'),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ResponsiveGridCol(
-                          lg: 6,
-                          xl:4,
-                          xs: 12,
-                          child: Container(
-                            padding: Helper.padding(),
-                            child: SizedBox(
-                              child: inputUploadFile(context,
-                                  //   controller: textEditingController,
-                                  validator: FormBuilderValidators.compose([
-                                    //    FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
-                                  ]), onTap: () async {
-                                    String path = '';
-                                    final result =
-                                    await FilePicker.platform.pickFiles(
-                                      type: FileType.custom,
-                                      allowedExtensions: [
-                                        'pdf',
-                                        'doc',
-                                        'docx',
-                                        'xls',
-                                        'xlsx'
-                                      ],
-                                    );
-                                    if (result != null) {
-                                      PlatformFile file = result.files.first;
-                                      //   textEditingController.text = file.name;
-                                    } else {
-                                      // textEditingController.clear();
-                                    }
-                                  }),
-                            ),
-                          ),
-                        ),
-                        ResponsiveGridCol(
-                          xs: 12,
-                          lg: 6,
-                          xl:4,
-                          child: Container(
-                            padding: Helper.padding(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextField(
-                                  decoration: InputDecoration(
-                                    hintText:
-                                    'Nhập nội dung ghi chú cho file upload',
-                                  ),
-                                  // controller: txtGhichu,
-                                  maxLines: 3, //or null
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ]),
+                  child: UploadFileWidget(),
                 ),
 
-                DataTable_UpdateKH(),
+                ndGapH24(),
+
+                DataUploadMediaCustomer(),
 
                 ndGapH24(),
 
@@ -563,17 +466,39 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
 
-
-
-                    TextButton(
+                TextButton(
                       onPressed: () {
-                        bool isError = false;
+                        if (_formKey.currentState!.validate()) {
+                          listController.forEach((key, value) {
 
-                        if (isError == false) {
+                           // ref.read(formUpdateProvider.notifier).onChangeValue(key, value.text);
 
-                          Navigator.of(context).pop();
+                            if(key=="email_phu" ){
+                              ref.read(formUpdateProvider.notifier).changeData(key: 'info',value: {"email_phu": value.text},type: "khachhang");
+
+                            }
+                            if(key=="nguoidaidienmoi"){
+                              ref.read(formUpdateProvider.notifier).changeData(key: 'info',value: {"nguoidaidienmoi": value.text},type: "khachhang");
+
+                            }
+                            if( key=="dienthoaicoquan"){
+                              ref.read(formUpdateProvider.notifier).changeData(key: 'info',value: {"dienthoaicoquan": value.text},type: "khachhang");
+                            }
+                            else{
+                               // ref.read(formUpdateProvider.notifier).onChangeValue(key, value.text);
+                                ref.read(formUpdateProvider.notifier).changeData(key: key, value: value.text, type: "khachhang");
+                             }
+
+
+                          });
+                          ref.read(formUpdateProvider.notifier).onSubmit(widget.id, widget.customerNumber);
+                        } else {
+                          listFocusNode.forEach((key, value) {
+                            value.requestFocus();
+                          });
                         }
                       },
+
                       style: TextButton.styleFrom(
                           padding: const EdgeInsets.all(10),
                           backgroundColor: Colors.blueAccent),
@@ -625,12 +550,377 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
 }
 
 
-
-class DataTable_UpdateKH extends ConsumerWidget {
-  DataTable_UpdateKH({Key? key}) : super(key: key);
+class UploadFileWidget extends ConsumerStatefulWidget {
+  const UploadFileWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  ConsumerState<UploadFileWidget> createState() => _UploadFileWidgetState();
+}
+
+class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
+    with FormUIMixins {
+  TextEditingController _uploadController = new TextEditingController();
+  TextEditingController _noteController = new TextEditingController();
+  List<PlatformFile> _files = [];
+
+  String _radioValue = 'Chứng từ khác';
+
+  List<Widget> _uploadType() {
+    List<Widget> radioButtons = [];
+    _loaiPhiethu.forEach((key, value) {
+      //print(value);
+      radioButtons.add(
+        Row(
+          children: [
+            Radio<String>(
+              value: key,
+              groupValue: _radioValue,
+              onChanged: (value) {
+                setState(() {
+                  _radioValue = value!;
+                });
+              },
+            ),
+            GestureDetector(
+                child: Text(value),
+                onTap: () => setState(() {
+                  _radioValue = key;
+                }))
+          ],
+        ),
+      );
+    });
+    return radioButtons;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // result = ref.watch(formcapnhatProvider.select((value) => value.uploadList)
+
+    return Column(
+      children: [
+        ResponsiveGridRow(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ResponsiveGridCol(
+                lg: 12,
+                xl: 4,
+                md: 12,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Row(
+                    children: [
+                      const Text(
+                        'Loại file:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+
+                      Radio<String>(
+                        value: 'chungtu',
+                        groupValue: _loaiFileHD,
+                        onChanged: (value) {
+                          setState(() {
+                            _loaiFileHD = value!;
+                          });
+                        },
+                      ),
+                      const Text('Chứng từ khác'),
+
+                      //..._uploadType()
+                    ],
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                lg: 6,
+                xl: 3,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: SizedBox(
+                    child: inputUploadFile(context,
+                        controller: _uploadController,
+                        validator: FormBuilderValidators.compose([
+                          //    FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
+                        ]), onTap: () async {
+                          String path = '';
+                          final result = await FilePicker.platform.pickFiles(
+                            allowMultiple: true,
+                            type: FileType.custom,
+                            allowedExtensions: [
+                              'pdf',
+                              'doc',
+                              'docx',
+                              'xls',
+                              'xlsx',
+                              'jpg',
+                              'png',
+                            ],
+                          );
+                         // print(result?.files.first.bytes);
+                          if (result != null && result?.files.first != null) {
+                            List<String> name = [];
+                            for (var file in result.files) {
+                              name.add(file.name);
+                            }
+                            _files = result.files;
+                            _uploadController.text = name.join(",");
+                           // print( _uploadController.text);
+                          } else {
+                            _uploadController.clear();
+                          }
+                        }),
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                xs: 12,
+                lg: 6,
+                xl: 5,
+                child: Padding(
+                  padding: Helper.padding(),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        flex: 10,
+                        child: TextFormField(
+                          controller: _noteController,
+                          decoration: InputDecoration(
+                            hintText: 'Nhập nội dung ghi chú cho file upload',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: TextButton(
+                          onPressed: () {
+                            bool next = true;
+                            if (_uploadController.text == '') {
+                              Helper.toast(
+                                  messenge: 'Vui lòng chọn file tải lên',
+                                  context: context);
+                              next = false;
+                            }
+                            if (next && _radioValue == '') {
+                              Helper.toast(
+                                  messenge: 'Vui lòng chọn loại file',
+                                  context: context);
+                              next = false;
+                            }
+                            if (next) {
+                              List<PlatformFile> _tmpFile = [];
+                              List<String> fileSelected = [];
+                              List<String> pathFiles = [];
+                              // print(_resultFile.length);
+
+                              if (_resultFile.length > 0) {
+                                _resultFile.forEach((element) {
+                                  pathFiles
+                                      .add(element['file'].path.toString());
+                                });
+                              }
+
+                              _files.forEach((element) {
+                                if (pathFiles.indexOf(element.path!) == -1) {
+                                  _tmpFile.add(element);
+                                }
+                              });
+                              if (_tmpFile.length == 0) {
+                                Helper.toast(
+                                    messenge: 'Vui lòng chọn file tải lên',
+                                    context: context);
+                                return;
+                              }
+                             // print(_tmpFile.length);
+                              setState(() {
+                                for (PlatformFile file in _tmpFile) {
+                                  Map tmp = {
+                                    /*'type': _radioValue,
+                                    'typeName': _loaiPhiethu[_radioValue],*/
+                                    'type': "chungtu",
+                                    'typeName': "chứng từ khác",
+                                    'note': _noteController.text,
+                                    'file': file
+                                  };
+                                  _resultFile.add(tmp);
+                                }
+                                _noteController.text = '';
+                                _uploadController.text = '';
+                                _radioValue = '';
+                              });
+                            // print("${_resultFile}+_resultFile");
+                              ref.read(formUpdateProvider.notifier).setFile(_resultFile);
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                              padding: const EdgeInsets.only(
+                                top: 16,
+                                bottom: 16,
+                                left: 10,
+                                right: 10,
+                              ),
+                              backgroundColor: Colors.blueAccent),
+                          child: const Text(
+                            'THÊM',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ]),
+        const SizedBox(height: 5.0),
+        if (_resultFile.length > 0) ...[
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF105A6C),
+                  ),
+                  child: const Row(
+                    children: [
+                      Expanded(flex: 1, child: HeaderRowItem(text: 'STT')),
+                      Expanded(
+                        flex: 2,
+                        child: HeaderRowItem(text: 'Loại file'),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: HeaderRowItem(text: 'Tên file'),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: HeaderRowItem(text: 'Ghi chú'),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: HeaderRowItem(text: 'Xoá'),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                if (_resultFile.length > 0) ...[
+                  ListView.builder(
+                      padding: const EdgeInsets.all(0),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      primary: true,
+                      itemCount: _resultFile.length,
+                      itemBuilder: (BuildContext context, index) {
+                        var item = _resultFile[index];
+                        PlatformFile file = item['file'];
+
+                        return Column(
+                          children: [
+                            Row(children: [
+                              Expanded(
+                                flex: 1,
+                                child: BodyRowItem(Text("${index + 1}")),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: BodyRowItem(Text(item['typeName'])),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: BodyRowItem(Text(file.name)),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: BodyRowItem(Text(item['note'])),
+                              ),
+                              Flexible(
+                                  flex: 1,
+                                  child: BodyRowItem(TextButton(
+                                    onPressed: () {
+                                      ConfirmDialog alert = ConfirmDialog(
+                                        "Xác nhận",
+                                        "Xoá file đã chọn?",
+                                            () {
+                                          setState(() {
+                                            _resultFile.removeAt(index);
+                                          });
+
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                    },
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.only(
+                                        top: 16,
+                                        bottom: 16,
+                                        left: 10,
+                                        right: 10,
+                                      ),
+                                      backgroundColor: Colors.blueAccent,
+                                      alignment: Alignment.center,
+                                      iconColor: Colors.white,
+                                    ),
+                                    child: const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.delete_outline_sharp,
+                                          size: 15.0,
+                                        ),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
+                                        Text('Xoá',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13.0)),
+                                      ],
+                                    ),
+                                  ))),
+                            ]),
+                            _resultFile.length - 1 > index
+                                ? const Divider()
+                                : Container()
+                          ],
+                        );
+                      }),
+                ]
+              ],
+            ),
+          )
+        ]
+      ],
+    );
+  }
+}
+
+
+
+class DataUploadMediaCustomer extends ConsumerWidget {
+  DataUploadMediaCustomer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     // var data = ref.watch(capnhatProvider.select((value) => value.result));
 
     return SingleChildScrollView(
@@ -642,57 +932,264 @@ class DataTable_UpdateKH extends ConsumerWidget {
             ),
             child: const Row(
               children: [
+                Expanded(flex: 1, child: HeaderRowItem(text: 'STT')),
                 Expanded(
-                    flex:1,
-                    child: HeaderRowItem(text: 'STT')),
-                Expanded(
-                  flex:3,
+                  flex: 3,
                   child: HeaderRowItem(text: 'Ngày tháng'),
                 ),
-
                 Expanded(
-                  flex:3,
+                  flex: 3,
                   child: HeaderRowItem(text: 'User cập nhật'),
                 ),
                 Expanded(
-                  flex:4,
+                  flex: 4,
                   child: HeaderRowItem(text: 'Loại file'),
                 ),
                 Expanded(
-                  flex:3,
+                  flex: 3,
                   child: HeaderRowItem(text: 'Ghi chú'),
                 ),
                 Expanded(
-                  flex:4,
+                  flex: 2,
                   child: HeaderRowItem(text: 'Thao tác'),
                 ),
-
               ],
             ),
           ),
-          // if(data!=null && data['data'].length > 0)...[
-          //   ListView.builder(
-          //       padding: const EdgeInsets.all(0),
-          //       physics: const NeverScrollableScrollPhysics(),
-          //       shrinkWrap: true,
-          //       primary: true,
-          //       itemCount: data['data'].length,
-          //       itemBuilder: (BuildContext context, index) {
-          //         InfoResponseModel info = data['info'];
-          //         return InfoUpdate(item: data['data'][index], index: info.page! * info.limit! - (info.limit!)+index+1);
-          //       }),
-          //   GeneratePagin(data['info']),
-          // ]else...[
-          //   const BsAlert(
-          //     closeButton: false,
-          //     margin: EdgeInsets.only(bottom: 10.0),
-          //     style: BsAlertStyle.danger,
-          //     child: Text('Không có dữ liệu',textAlign: TextAlign.center),
-          //   ),
-          //
-          // ],
+          const SizedBox(height: 13.0),
+          if (_listMedia.length > 0) ...[
+            ListView.builder(
+                padding: const EdgeInsets.all(0),
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                primary: true,
+                itemCount: _listMedia.length,
+                itemBuilder: (BuildContext context, index) {
+                  // InfoResponseModel info = data['info'];
+                  return MediaItem(
+                      item: _listMedia[index],
+                      index: index + 1,
+                      divider: (_listMedia.length - 1 > index));
+                }),
+          ] else ...[
+            const BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Không có dữ liệu', textAlign: TextAlign.center),
+            ),
+          ],
         ],
       ),
     );
+  }
+}
+
+
+
+
+class MediaItem extends ConsumerStatefulWidget {
+  MediaItem(
+      {Key? key,
+        required this.item,
+        required this.index,
+        required this.divider})
+      : super(key: key);
+  late MediaCustomerModel item;
+  final int index;
+  final bool divider;
+
+  @override
+  ConsumerState<MediaItem> createState() => _MediaItemState();
+}
+
+class _MediaItemState extends ConsumerState<MediaItem> {
+  late String note = widget.item!.ghichu!;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: BodyRowItem(Text(widget.index.toString())),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(Helper.dateFormat(widget.item.createdAt))),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(widget.item!.l1_lichsu_khoitao!.hoten!)),
+          ),
+          Expanded(
+            flex: 4,
+            child: BodyRowItem(
+                Text(_loaiPhiethu[widget.item.loaifile!].toString())),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(widget.item.ghichu!)),
+          ),
+          Expanded(
+            flex: 2,
+            child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFF105A6C),
+                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  ),
+                  padding: EdgeInsets.only(
+                      left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      final _formKey = GlobalKey<FormState>();
+                      String _selected = widget.item.loaifile.toString();
+                      TextEditingController controller =
+                      new TextEditingController();
+                      controller.text = widget.item.ghichu!;
+
+                      Widget _widget = Container(
+                        width: 450,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Loại file'),
+                              ndGapH8(),
+                              DropdownButtonFormField2<String>(
+                                value: _selected,
+                                isExpanded: true,
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                hint: const Text(
+                                  'Chọn loại file',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                items: _loaiPhiethu.entries
+                                    .map((e) => DropdownMenuItem<String>(
+                                  value: e.key,
+                                  child: Text(
+                                    e.value,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ))
+                                    .toList(),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please select.';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selected = value.toString();
+                                  });
+                                },
+
+                                buttonStyleData: const ButtonStyleData(
+                                  padding: EdgeInsets.only(right: 8),
+                                ),
+                                iconStyleData: const IconStyleData(
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.black45,
+                                  ),
+                                  iconSize: 24,
+                                ),
+                                dropdownStyleData: DropdownStyleData(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                                menuItemStyleData: const MenuItemStyleData(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                ),
+                              ),
+                              ndGapH8(),
+                              const Text('Ghi chú'),
+                              ndGapH8(),
+                              TextFormField(
+                                controller: controller,
+                                maxLines: 3,
+                                autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: 'Không bỏ trống.'),
+                                ]),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      TextDialog alert = TextDialog(
+                        "Điều chỉnh file",
+                        "",
+                        _widget,
+                            () async {
+                          if (_formKey.currentState!.validate()) {
+
+
+                            var updateMedia = await ref.read(dshdProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
+
+                            if(updateMedia['status']==true){
+                              Navigator.of(context).pop();
+                              setState(() {
+                                widget.item = MediaCustomerModel.fromJson(updateMedia['data']);
+
+                              });
+
+                            }
+                            AwesomeDialog(
+                              context: context,
+                              autoHide:Duration(seconds: 2),
+                              width: 400.0,
+                              dialogType:
+                              updateMedia['status'] ? DialogType.success : DialogType.error,
+                              animType: AnimType.scale,
+                              title: updateMedia['message'],
+                              autoDismiss:true,
+
+                              btnOk:Container(),
+                              btnCancel:Container(),
+
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {},
+                            )..show();
+
+
+                          }
+                        },
+                      );
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alert;
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'Cập nhật',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )),
+          ),
+        ],
+      ),
+      widget.divider ? const Divider() : Container()
+    ]);
   }
 }

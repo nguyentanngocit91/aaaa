@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:html';
-
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -119,13 +116,12 @@ class DSHDRepository{
 
   }
 
-
   getInfoCustomer(String id) async {
     List<MediaCustomerModel> listMedia = [];
     final response =
     await App.dioClient.get("${ApiUrl.infoUpdateCustomer}${id}");
     
-    print("${response}+ infoUpdateCustomer");
+   // print("${response}+ infoUpdateCustomer");
     
     var result = {
       "status": false,
@@ -136,7 +132,7 @@ class DSHDRepository{
     if (response.statusCode == 200) {
       final res = response.data;
 
-      print("${res}+ load CustomerUpdateModel");
+     // print("${res}+ load CustomerUpdateModel");
 
       if (res['success'] == false) {
         result['status'] = true;
@@ -146,7 +142,7 @@ class DSHDRepository{
         result['message'] = "Success";
         result['data'] = CustomerUpdateModel.fromJson(res["data"]);
 
-        print("${result['data'] }+ load CustomerUpdateModel");
+       // print("${result['data'] }+ load CustomerUpdateModel");
       }
     }
 
@@ -156,7 +152,7 @@ class DSHDRepository{
       "loaimedia": "khachhang",
       "khachhangId": id
     });
-    print("${medias}+ load medias000");
+   // print("${medias}+ load medias000");
 
     if(medias.statusCode == 200){
       final mediaRes  = medias.data;
@@ -168,15 +164,17 @@ class DSHDRepository{
     }
 
     result['media'] = listMedia;
-    print("${result['media']}+ load result['media']");
+  //  print("${result['media']}+ load result['media']");
     return result;
   }
 
 
-  updateInfoCustomer({required String id, Map<String, String>? data}) async {
-    final response =
-    await App.dioClient.put("${ApiUrl.infoUpdateCustomer}${id}", data: data);
+  updateInfoCustomer({required String id, Map<String, dynamic>? data}) async {
 
+    print("${data?["data"]}+4444 data");
+
+    final response =
+    await App.dioClient.put("${ApiUrl.infoUpdateCustomer}${id}", data: data?["data"]);
     var result = {
       "status": false,
       "data": null,
@@ -218,6 +216,25 @@ class DSHDRepository{
       final res = response.data;
       result['status'] = res['success'];
       result['message'] = res['message'];
+    }
+    return result;
+  }
+
+
+  updateMedia(Map data) async {
+    final response =
+    await App.dioClient.put("${ApiUrl.updateFile}${data['id']}", data: {'ghichu':data['ghichu'],'loaifile':data['loaifile']});
+    var result = {
+      "status": false,
+      "data": null,
+      "message": "Error"
+    };
+    if (response.statusCode == 200) {
+      final res = response.data;
+      result['status'] = res['success'];
+      result['message'] = res['message'];
+      result['data'] = res['data'];
+
     }
     return result;
   }
