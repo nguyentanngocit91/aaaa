@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../phieuthu/widgets/pt_button.dart';
 
 class ListFileOfHopDong extends StatefulWidget {
   const ListFileOfHopDong({Key? key}) : super(key: key);
@@ -40,10 +39,11 @@ class _ListFileOfHopDongState extends State<ListFileOfHopDong> {
                   children: [
                     Expanded(
                       flex: 2,
-                      child: Text('#'),
+                      child: Text('#',style: TextStyle(color: Colors.white),),
                     ),
-                    Expanded(flex: 30, child: Text('Tên file')),
-                    Expanded(flex: 10, child: Text('')),
+                    Expanded(flex: 30, child: Text('Loại file',style: TextStyle(color: Colors.white),),),
+                    Expanded(flex: 30, child: Text('Ghi chú',style: TextStyle(color: Colors.white),),),
+                    Expanded(flex: 10, child: Text('',style: TextStyle(color: Colors.white),),)
                   ],
                 ),
               ),
@@ -58,6 +58,10 @@ class _ListFileOfHopDongState extends State<ListFileOfHopDong> {
                     Expanded(
                       flex: 30,
                       child: Text('Hợp đồng'),
+                    ),
+                    Expanded(
+                      flex: 30,
+                      child: Text('Hợp đồng web'),
                     ),
                     Expanded(flex: 10, child: Text('Xem file')),
                   ],

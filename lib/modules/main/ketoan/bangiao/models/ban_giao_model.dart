@@ -10,7 +10,6 @@ class BanGiaoModel {
   String? mahopdong;
   List<Nhanvien>? nhanvien;
   String? ghichu;
-  Info? info;
   KhachhangId? khachhangId;
   String? tenhopdong;
   Nhanvien? lichsuKhoitao;
@@ -29,7 +28,6 @@ class BanGiaoModel {
         this.mahopdong,
         this.nhanvien,
         this.ghichu,
-        this.info,
         this.khachhangId,
         this.tenhopdong,
         this.lichsuKhoitao,
@@ -53,7 +51,6 @@ class BanGiaoModel {
       });
     }
     ghichu = json['ghichu'];
-    info = json['info'] != null ? Info.fromJson(json['info']) : null;
     khachhangId = json['khachhangId'] != null
         ? KhachhangId.fromJson(json['khachhangId'])
         : null;
@@ -80,9 +77,7 @@ class BanGiaoModel {
       data['nhanvien'] = nhanvien!.map((v) => v.toJson()).toList();
     }
     data['ghichu'] = ghichu;
-    if (info != null) {
-      data['info'] = info!.toJson();
-    }
+
     if (khachhangId != null) {
       data['khachhangId'] = khachhangId!.toJson();
     }
