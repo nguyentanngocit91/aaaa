@@ -67,6 +67,6 @@ class DanhSachDomainNotifier extends Notifier<List<DomainModel>> {
   }
 
   showInfo(DomainModel item){
-    print('row ${item.rowIndex}: ${item.domainName} - ${item.ngayDangKy!.formatDateTime('dd-MM-yyyy')}  ${item.ngayHetHan!.formatDateTime('dd-MM-yyyy')} - ${item.ghiChu}');
+    print('row ${item.rowIndex}: ${item.domainName} - ${item.ngayDangKy!.formatDateTime(formatString: 'dd-MM-yyyy')}  ${item.ngayHetHan!.formatDateTime(formatString: 'dd-MM-yyyy')} - ${item.ghiChu}');
   }
 }

@@ -28,7 +28,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
 
   Future<String?> taoMaKhachHang() async {
     String? maKhachHang = await _khachHangMoiRepository.capMaKhachhang();
-    maKhachHang = 'NN$maKhachHang${DateTime.now().formatDateTime('yy')}';
+    maKhachHang = 'NN$maKhachHang${DateTime.now().formatDateTime(formatString: 'yy')}';
     state = state.copyWith(maKhachHang: maKhachHang);
   }
 

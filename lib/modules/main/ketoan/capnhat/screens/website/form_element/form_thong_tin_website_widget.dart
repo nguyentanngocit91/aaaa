@@ -77,12 +77,12 @@ class _FormThongTinWebsiteWidgetState
                           lableTextForm('Ngày ký'),
                           TextFormField(
                             readOnly: true,
-                            controller: TextEditingController(text: ngayDangKy.formatDateTime('dd-MM-yyyy')),
+                            controller: TextEditingController(text: ngayDangKy.formatDateTime(formatString: 'dd-MM-yyyy')),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayDangKy);
-                              String txtDate = DateTime.now().formatDateTime('dd-MM-yyyy');
+                              String txtDate = DateTime.now().formatDateTime(formatString: 'dd-MM-yyyy');
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                                txtDate = selDate.formatDateTime(formatString: 'dd-MM-yyyy');
                               }
                               ref.read(formKhachHangMoiProvider.notifier).changeData(
                                   type: _typeData, key: 'ngayky', value: txtDate);
@@ -103,12 +103,12 @@ class _FormThongTinWebsiteWidgetState
                           TextFormField(
                             decoration: const InputDecoration(hintText: 'dd-mm-yyyy'),
                             readOnly: true,
-                            controller: TextEditingController(text: (ngayBanGiao!=null) ? ngayBanGiao!.formatDateTime('dd-MM-yyyy') : null),
+                            controller: TextEditingController(text: (ngayBanGiao!=null) ? ngayBanGiao!.formatDateTime(formatString: 'dd-MM-yyyy') : null),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayBanGiao);
                               String txtDate = '';
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime('dd-MM-yyyy');
+                                txtDate = selDate.formatDateTime(formatString: 'dd-MM-yyyy');
                               }
                               ref.read(formKhachHangMoiProvider.notifier).changeData(
                                   type: _typeData, key: 'ngaybangiao', value: txtDate);
