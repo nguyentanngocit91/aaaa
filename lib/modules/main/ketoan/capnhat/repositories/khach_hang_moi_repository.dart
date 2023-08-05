@@ -57,7 +57,7 @@ class KhachHangMoiRepository {
   }
 
   Future<bool> luuHopDongMoi({required dynamic data}) async {
-    final Response response = await App.dioClient.post(ApiUrl.phieuThuMoi, data: data);
+    final Response response = await App.dioClient.post(ApiUrl.updateContract, data: data);
     if(response.statusCode==200){
       if(response.data['success']==true) return true;
     }

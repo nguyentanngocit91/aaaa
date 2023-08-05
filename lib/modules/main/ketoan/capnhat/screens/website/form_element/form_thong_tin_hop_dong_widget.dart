@@ -9,15 +9,11 @@ class FormThongTinHopDongWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinHopDongWidgetState
     extends ConsumerState<FormThongTinHopDongWidget> with FormUIMixins {
-  final String _typeData = 'hopdong';
 
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formKhachHangMoiProvider);
-    String maHopDong = formState.soHopDong.toString();
-    if (formState.isHopDongApp) {
-      maHopDong = '${maHopDong}A';
-    }
+
 
     return ResponsiveGridRow(
       children: [
@@ -33,7 +29,7 @@ class _FormThongTinHopDongWidgetState
                   decoration: Helper().disabledInput(),
                   readOnly: true,
                   controller: TextEditingController(
-                      text: '${formState.soHopDong}W'),
+                      text: '${ref.read(formKhachHangMoiProvider.notifier).getData(type: _typeData, key: 'sohopdong')}'),
                 ),
               ],
             ),
@@ -50,7 +46,9 @@ class _FormThongTinHopDongWidgetState
                 TextFormField(
                   decoration: Helper().disabledInput(),
                   readOnly: true,
-                  controller: _listController['tenhopdong'],
+                  controller: TextEditingController(
+                    text: '${ref.read(formKhachHangMoiProvider.notifier).getData(type: _typeData, key: 'tenhopdong')} '
+                  ),
                 ),
               ],
             ),

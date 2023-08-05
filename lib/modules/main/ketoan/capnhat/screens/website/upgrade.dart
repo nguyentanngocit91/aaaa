@@ -43,7 +43,6 @@ Map<String, String> _loaiPhiethu = {
   'chungtu': 'Chứng từ'
 };
 GlobalKey<FormState> _formKey = GlobalKey();
-String _updateType = 'web';
 final String _typeData = 'website';
 List<Map> _resultFile = [];
 List<MediaModel> _listMedia = [];
@@ -66,11 +65,16 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
   bool isLoading = true;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    //_resetForm(ref);
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
 
-    _resetForm(ref);
     _listController.forEach((key, value) {
       _listController[key]!.dispose();
     });
@@ -94,12 +98,16 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
 
       ref.read(formKhachHangMoiProvider.notifier).changeData(
           type: _typeData,
-          key: 'soHopDong',
+          key: 'sohopdong',
           value: data!.l1_data!.sohopdong);
       ref.read(formKhachHangMoiProvider.notifier).changeData(
           type: _typeData,
-          key: 'maHopDong',
+          key: 'mahopdong',
           value: data!.l1_data!.mahopdong);
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData,
+          key: 'tenhopdong',
+          value: '${data!.l1_data!.tenhopdong} (Nâng cấp/ Phụ lục)');
 
       setState(() {
         _listMedia = res.state.media!;

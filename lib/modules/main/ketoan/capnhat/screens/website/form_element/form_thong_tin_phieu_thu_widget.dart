@@ -323,7 +323,16 @@ class _FormThongTinPhieuThuWidgetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       lableTextForm('Phí nâng cấp web'),
-                      TextFormField(),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phincweb', value: value);
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -339,7 +348,16 @@ class _FormThongTinPhieuThuWidgetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       lableTextForm('Phí hosting'),
-                      TextFormField(),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phihost', value: value);
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -355,7 +373,16 @@ class _FormThongTinPhieuThuWidgetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       lableTextForm('Phí nâng cấp hosting'),
-                      TextFormField(),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phinchost', value: value);
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -371,7 +398,16 @@ class _FormThongTinPhieuThuWidgetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       lableTextForm('Phí tên miền'),
-                      TextFormField(),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phidomain', value: value);
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -388,7 +424,16 @@ class _FormThongTinPhieuThuWidgetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       lableTextForm('Phí App'),
-                      TextFormField(),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phiapp', value: value);
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -404,7 +449,16 @@ class _FormThongTinPhieuThuWidgetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       lableTextForm('Phí VAT'),
-                      TextFormField(),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phivat', value: value);
+                        },
+                      ),
                     ],
                   ),
                 ),

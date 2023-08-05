@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
+import '../../../../../_shared/utils/helper.dart';
 import '../repositories/khach_hang_moi_repository.dart';
 import 'danh_sach_domain_provider.dart';
 import 'files_hd_provider.dart';
@@ -22,14 +23,11 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
 
   @override
   FormKhachHangMoiState build() {
-    init();
+
     return FormKhachHangMoiState();
   }
 
-  init() async {
-    await taoMaKhachHang();
-    await taoMaHopDong();
-  }
+
 
   batDatSubmit() {
     state = state.copyWith(formStatus: FormStatus.submissionInProgress);
@@ -39,17 +37,6 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     state = state.copyWith(formStatus: FormStatus.submissionCanceled);
   }
 
-  Future<String?> taoMaKhachHang() async {
-    String? maKhachHang = await _khachHangMoiRepository.capMaKhachhang();
-    maKhachHang =
-        'NN$maKhachHang${DateTime.now().formatDateTime(formatString: 'yy')}';
-    state = state.copyWith(maKhachHang: maKhachHang);
-  }
-
-  Future<String?> taoMaHopDong() async {
-    final soHopDong = await _khachHangMoiRepository.capSoHopDong();
-    state = state.copyWith(soHopDong: soHopDong);
-  }
 
   checkLoaiHopDong(
       {bool? isHopDongWebsite,
@@ -75,7 +62,24 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
       isHopDongWebsite: isHopDongWebsite ?? state.isHopDongWebsite,
     );
   }
+  getData({required String type, required String key}) {
+    Map<String, Map?> data = {
+      'khachhang': state.dataKhachHang,
+      'hopdong': state.dataHopDong,
+      'website': state.dataWebsite,
+      'domain': state.dataDomain,
+      'hosting': state.dataHosting,
+      'app': state.dataApp,
+    };
+    dynamic xvalue = '';
+    data[type]?.forEach((key2, value) {
+      if(key==key2){
+        xvalue =  value;
+      }
+    });
+    return xvalue;
 
+  }
   changeData(
       {required String type, required String key, required dynamic value}) {
     switch (type) {
@@ -95,7 +99,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
         Map newDataWebsite = state.dataWebsite ?? {};
         newDataWebsite.update(key, (item) => value, ifAbsent: () => value);
         state = state.copyWith(dataWebsite: newDataWebsite);
-        print(value);
+
       case 'domain':
         Map newDataDomain = state.dataDomain ?? {};
         newDataDomain.update(key, (item) => value, ifAbsent: () => value);
@@ -134,7 +138,6 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     final dsNhanVienPhuTrach =
         (nhanViens != null) ? [for (var nv in nhanViens) nv['manhanvien']] : [];
 
-    print(state.dataPhieuThu);
     // Thông tin Hợp đồng
     state.dataHopDong?['sohopdong'] = state.soHopDong;
     state.dataHopDong?['manhanvien'] = dsNhanVienPhuTrach;
@@ -161,13 +164,24 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
                 .formatDateTime(formatString: formatDate);
       }
       if (state.dataWebsite?['ngaybangiao'] != null) {
-        state.dataWebsite?['ngaybangiao'] =
-            (DateTime.parse(state.dataWebsite?['ngaybangiao']))
-                .formatDateTime(formatString: formatDate);
+
+
+        if(DateTime.tryParse(state.dataWebsite?['ngaybangiao'])==null){
+          if(state.dataWebsite?['ngaybangiao'].toString()!='null'){
+            state.dataWebsite?['ngaybangiao'] =
+            (Helper.parseDate(state.dataWebsite?['ngaybangiao'],'dd-MM-yyyy').toString());
+          }
+
+
+
+        }else {
+          state.dataWebsite?['ngaybangiao'] =
+              (DateTime.parse(state.dataWebsite?['ngaybangiao']))
+                  .formatDateTime(formatString: formatDate);
+        }
       }
       data["Web"] = state.dataWebsite;
     }
-    print(state.dataWebsite);return;
 
     // Thông tin hợp đồng Domain
     if (state.isHopDongDomain) {
@@ -220,6 +234,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
 
     data["HopDong"] = state.dataHopDong;
     data["PhieuThu"] = state.dataPhieuThu;
+
 
     final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
 

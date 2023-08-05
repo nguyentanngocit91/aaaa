@@ -31,7 +31,7 @@ class _FormThongTinWebsiteWidgetState
                 padding: Helper.padding(),
                 child: Column(
                   children: [
-                    lableTextForm('Số hợp đồng'),
+                    lableTextForm('Mã hợp đồng'),
                     TextFormField(
                       decoration: const InputDecoration(
                         filled: true,
@@ -39,7 +39,7 @@ class _FormThongTinWebsiteWidgetState
                       ),
                       readOnly: true,
                       controller: TextEditingController(
-                          text: '${formState.soHopDong}W'),
+                          text: '${ref.read(formKhachHangMoiProvider.notifier).getData(type: _typeData, key: 'mahopdong')}'),
                     ),
                   ],
                 ),
@@ -75,6 +75,7 @@ class _FormThongTinWebsiteWidgetState
                         setState(() {
                           ngayDangKy = selDate ?? ngayDangKy;
                         });
+                        if(ngayBanGiao.toString()!=''){
 
                         DateTime date1 = Helper.parseDate(
                             ngayDangKy.toString(),
@@ -86,6 +87,7 @@ class _FormThongTinWebsiteWidgetState
                           setState(() {
                             ngayBanGiao = ngayDangKy;
                           });
+                        }
 
                         }
                       },
