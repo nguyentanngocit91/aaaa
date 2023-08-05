@@ -42,29 +42,31 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
 
   bool isLoading = true;
   Map<String, TextEditingController> listController = {};
+  String typeKH='ca-nhan';
+
   Map<String, FocusNode> listFocusNode = {};
-
   final String _typeData = 'khachhang';
-   HinhThucThanhToan? _httt = HinhThucThanhToan.cod;
-
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    ['makhachhang', 'email', 'email_phu', 'hoten', 'phone', 'type', 'congty', 'nguoidaidienmoi', 'dienthoaicoquan', 'masothue', 'cccd', 'diachi', 'ghichu'].forEach((item) {
+    ['makhachhang', 'email', 'email_phu', 'hoten', 'phone', 'congty', 'nguoidaidienmoi', 'dienthoaicoquan', 'masothue', 'cccd', 'diachi', 'ghichu'].forEach((item) {
       listController[item] = TextEditingController();
       listFocusNode[item] = FocusNode();
     });
+
     Future.delayed(Duration.zero, () async {
       print("${widget.id}+widget.id");
       await ref.read(dshdProvider.notifier).getCustomerById(widget.id);
       var res = ref.watch(dshdProvider.notifier);
       CustomerUpdateModel? data = res.state.customer;
+
       setState(() {
         _listMedia = res.state.media!;
       });
 
+      typeKH = data!.type!;
       print("${data?.makhachhang!.toString()}+makhachhang");
 
       listController!['makhachhang']!.text = data!.makhachhang!.toString();
@@ -73,7 +75,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
       listController!['hoten']!.text = data!.hoten!;
       listController!['phone']!.text = data!.phone!;
 
-      listController!['type']!.text = data!.type!;
+
       listController!['congty']!.text = data!.congty!;
       listController!['nguoidaidienmoi']!.text = data!.l1_info!.nguoidaidienmoi!;
       listController!['dienthoaicoquan']!.text = data!.l1_info!.dienthoaicoquan!;
@@ -118,8 +120,6 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
             });
           }
         });
-
-
 
     return  SimpleDialog(
       backgroundColor: Colors.white,
@@ -292,7 +292,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                         children: [
                           lableTextForm('Loại Khách hàng'),
                           DropdownButtonFormField(
-                            value: 'ca-nhan',
+                            value:  typeKH,
                             items: const [
                               DropdownMenuItem<String>(
                                 value: 'ca-nhan',
@@ -303,7 +303,12 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                                 child: Text('Công Ty'),
                               ),
                             ],
-                            onChanged: (value) { },
+                            onChanged: (value) {
+                              ref.read(formUpdateProvider.notifier).changeData(
+                                  key: 'type', value: value, type: _typeData);
+
+
+                            },
                           ),
                         ],
                       ),
@@ -469,26 +474,22 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                 TextButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+
+                          print("${listController["email_phu"]?.text.toString()}+email_phu");
+
+                          Map<String, String> _typeInfo = {
+                            'email_phu': listController["email_phu"]!.text.toString(),
+                            'nguoidaidienmoi': listController["nguoidaidienmoi"]!.text.toString(),
+                            'dienthoaicoquan':listController["dienthoaicoquan"]!.text.toString(),
+                          };
+                          print("${_typeInfo}+array _typeInfo  _typeInfo");
+
                           listController.forEach((key, value) {
-
-                           // ref.read(formUpdateProvider.notifier).onChangeValue(key, value.text);
-
-                            if(key=="email_phu" ){
-                              ref.read(formUpdateProvider.notifier).changeData(key: 'info',value: {"email_phu": value.text},type: "khachhang");
-
-                            }
-                            if(key=="nguoidaidienmoi"){
-                              ref.read(formUpdateProvider.notifier).changeData(key: 'info',value: {"nguoidaidienmoi": value.text},type: "khachhang");
-
-                            }
-                            if( key=="dienthoaicoquan"){
-                              ref.read(formUpdateProvider.notifier).changeData(key: 'info',value: {"dienthoaicoquan": value.text},type: "khachhang");
-                            }
-                            else{
-                               // ref.read(formUpdateProvider.notifier).onChangeValue(key, value.text);
-                                ref.read(formUpdateProvider.notifier).changeData(key: key, value: value.text, type: "khachhang");
+                             if(key=="email_phu" ||  key=="nguoidaidienmoi" ||  key=="dienthoaicoquan"){
+                               ref.read(formUpdateProvider.notifier).changeData(key: 'info', value: _typeInfo, type: _typeData);
+                             } else{
+                               ref.read(formUpdateProvider.notifier).changeData(key: key, value: value.text, type: _typeData);
                              }
-
 
                           });
                           ref.read(formUpdateProvider.notifier).onSubmit(widget.id, widget.customerNumber);

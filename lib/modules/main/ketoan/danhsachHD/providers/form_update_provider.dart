@@ -20,7 +20,6 @@ class FormUpdateNotifier extends StateNotifier<FormUpdateState> {
 
   void onChangeValue(String type, String value) {
     Map<String, String> data = state.data ?? {};
-
     data.addAll({type: value});
     state = state.copyWith(data: data);
   }
@@ -30,10 +29,8 @@ class FormUpdateNotifier extends StateNotifier<FormUpdateState> {
     switch (type) {
       case 'khachhang':
        Map newDataKhachHang = state.dataKhachHang ?? {};
-
-        newDataKhachHang.update(key, (item) => value, ifAbsent: () => value);
+       newDataKhachHang.update(key, (item) => value, ifAbsent: () => value);
         state = state.copyWith(dataKhachHang: newDataKhachHang);
-
     }
 
     print("${state.dataKhachHang }+state data info");
@@ -74,15 +71,14 @@ class FormUpdateNotifier extends StateNotifier<FormUpdateState> {
     }
   //  Map data = state.data!;
     Map? data = state.dataKhachHang!;
+    data.removeWhere((key, value) => key == "makhachhang");
 
-   data.removeWhere((key, value) => key == "makhachhang");
-
-    final Map<String,dynamic> data1 = {};
-    data1["data"] = state.dataKhachHang;
+    final Map<String,dynamic> dataCustomer = {};
+    dataCustomer["data"] = state.dataKhachHang;
     print("${state.dataKhachHang}+state.data update kh");
 
     final jsonResult =
-    await _dsHDRepository.updateInfoCustomer(id: _id, data: data1);
+    await _dsHDRepository.updateInfoCustomer(id: _id, data: dataCustomer);
     List? file = state.uploadList;
     if(jsonResult['status']==true){
       file = [];
