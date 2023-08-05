@@ -1,27 +1,23 @@
-
-
 part of '../../../_shared/thietlap_dieuhuong.dart';
 
+const Color _textGroupColor = Colors.white;
+const Color _iconGroupColor = Colors.white;
+const FaIcon _faIconGroup = FaIcon(
+  FontAwesomeIcons.circleArrowRight,
+  size: 18,
+);
+const double _fontSizeGroup = 15;
 
+const Color _textColor = Colors.grey;
+const Color _iconColor = Colors.grey;
+const Widget _faIcon = FaIcon(
+  FontAwesomeIcons.angleRight,
+  size: 12,
+);
+const double _fontSize = 14;
 
 class MenuLayout extends ConsumerWidget {
   const MenuLayout({super.key});
-
-  final Color _textGroupColor = Colors.white;
-  final Color _iconGroupColor = Colors.white;
-  final FaIcon _faIconGroup = const FaIcon(
-    FontAwesomeIcons.circleArrowRight,
-    size: 18,
-  );
-  static const double _fontSizeGroup = 15;
-
-  final Color _textColor = Colors.grey;
-  final Color _iconColor = Colors.grey;
-  final FaIcon _faIcon = const FaIcon(
-    FontAwesomeIcons.angleRight,
-    size: 14,
-  );
-  static const double _fontSize = 14;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,113 +37,84 @@ class MenuLayout extends ConsumerWidget {
                 ),
               ),
             ),
-            itemMenuGroup(
+            _ItemMenuGroup(
                 title: 'Dashboard',
                 onTap: () {
                   context.go('/${DashboardLayout.pathName}');
                 }),
-            showMenuGroup(title: 'Kế Toán', children: [
-              itemMenu(
-                title: 'Cấp mã HĐ trước',
-                onTap: () {
-                  context.go('/${CapMaHDLayout.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Danh sách mã đã cấp',
-                onTap: () {},
-              ),
-              itemMenu(
-                title: 'Khách hàng mới',
-                onTap: () {
-                  context.go('/${KhachHangMoi.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Danh sách hợp đồng',
-                onTap: () {
-                  context.go('/${DanhSachHDLayout.pathName}');
-                },
-              ),
-
-              itemMenu(
-                title: 'Nâng cấp Website',
-                onTap: () {
-                  context.go('/${UpgradeWebListLayout.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Nâng cấp App',
-                onTap: () {
-                  context.go('/${UpgradeAppListLayout.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Nâng cấp Hosting',
-                onTap: () {
-                  context.go('/${UpgradeHostingListLayout.pathName}');
-
-                },
-              ),
-              itemMenu(
-                title: 'Cập nhật Domain',
-                onTap: () {
-                  context.go('/${UpgradeDomainListLayout.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'DS mới cập nhật & Pendding',
-                onTap: () {},
-              ),
-              itemMenu(
-                title: 'Danh sách Domain mới ký',
-                onTap: () {
-                  context.go('/${DanhSachDomainMoiKy.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Phiếu thu',
-                onTap: () {
-                  context.go('/${PhieuThuLayout.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Nhân viên kế toán',
-                onTap: () {},
-              ),
-              itemMenu(
-                title: 'Sửa đổi thông tin',
-                onTap: () {},
-              ),
-              itemMenu(
-                title: 'Blacklist',
-                onTap: () {
-                  context.go('/${DanhSachBlacklistLayout.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Tìm kiếm thông tin 2015-2019',
-                onTap: () {
-                  context.go('/${Data20152019.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Import data NVKD',
-                onTap: () {},
-              ),
-              itemMenu(
-                title: 'Bàn giao',
-                onTap: () {
-                  context.go('/${BanGiaoLayout.pathName}');
-                },
-              ),
-              itemMenu(
-                title: 'Thống kê in bàn giao',
-                onTap: () {
-                  context.go('/${ThongKeBanGiao.pathName}');
-                },
-              ),
-            ]),
+            showMenuGroup(
+              title: 'Kế Toán',
+              children: [
+                const _ItemMenu(
+                  title: 'Cấp mã HĐ trước',
+                  pathName: CapMaHDLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Danh sách mã đã cấp',
+                ),
+                const _ItemMenu(
+                  title: 'Khách hàng mới',
+                  pathName: KhachHangMoi.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Danh sách hợp đồng',
+                  pathName: DanhSachHDLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Nâng cấp Website',
+                  pathName: UpgradeWebListLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Nâng cấp App',
+                  pathName: UpgradeAppListLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Nâng cấp Hosting',
+                  pathName: UpgradeHostingListLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Cập nhật Domain',
+                  pathName: UpgradeDomainListLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'DS mới cập nhật & Pending',
+                  pathName: DanhSachMoiPendingLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Danh sách Domain mới ký',
+                  pathName: DanhSachDomainMoiKy.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Phiếu thu',
+                  pathName: PhieuThuLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Nhân viên kế toán',
+                ),
+                const _ItemMenu(
+                  title: 'Sửa đổi thông tin',
+                ),
+                const _ItemMenu(
+                  title: 'Blacklist',
+                  pathName: DanhSachBlacklistLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Tìm kiếm thông tin 2015-2019',
+                  pathName: Data20152019.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Import data NVKD',
+                ),
+                const _ItemMenu(
+                  title: 'Bàn giao',
+                  pathName: BanGiaoLayout.pathName,
+                ),
+                const _ItemMenu(
+                  title: 'Thống kê in bàn giao',
+                  pathName: ThongKeBanGiao.pathName,
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -178,13 +145,25 @@ class MenuLayout extends ConsumerWidget {
             vertical: BorderSide.none, horizontal: BorderSide.none),
         children: children);
   }
+}
 
-  Widget itemMenuGroup(
-      {String? title,
-      Widget? icon,
-      Color? textColor,
-      Color? iconColor,
-      required Function() onTap}) {
+class _ItemMenuGroup extends ConsumerWidget {
+  const _ItemMenuGroup(
+      {super.key,
+      this.title,
+      this.icon,
+      this.textColor,
+      this.iconColor,
+      required this.onTap});
+
+  final String? title;
+  final Widget? icon;
+  final Color? textColor;
+  final Color? iconColor;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: icon ?? _faIconGroup,
       title: Text(
@@ -197,24 +176,41 @@ class MenuLayout extends ConsumerWidget {
       onTap: onTap,
     );
   }
+}
 
-  Widget itemMenu(
-      {String? title,
-      Widget? icon,
-      Color? textColor,
-      Color? iconColor,
-      required Function() onTap}) {
+class _ItemMenu extends ConsumerWidget {
+  const _ItemMenu(
+      {super.key,
+      this.title,
+      this.icon,
+      this.textColor,
+      this.iconColor,
+      this.pathName});
+
+  final String? title;
+  final Widget? icon;
+  final Color? textColor;
+  final Color? iconColor;
+  final String? pathName;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String viTri = GoRouterState.of(context).location;
     return ListTile(
+      dense: true,
       leading: icon ?? _faIcon,
       title: Text(
         title.toString(),
-        style: const TextStyle(fontSize: _fontSize),
+        style:
+            const TextStyle(fontSize: _fontSize, fontWeight: FontWeight.normal),
       ),
-      textColor: textColor ?? _textColor,
-      iconColor: iconColor ?? _iconColor,
-      minLeadingWidth: 10,
+      textColor: (viTri == '/$pathName') ? Colors.red : textColor ?? _textColor,
+      iconColor: (viTri == '/$pathName') ? Colors.red : iconColor ?? _iconColor,
+      minLeadingWidth: 8,
       contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-      onTap: onTap,
+      onTap: () {
+        if (pathName != null) context.go('/$pathName');
+      },
     );
   }
 }

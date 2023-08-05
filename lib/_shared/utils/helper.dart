@@ -45,8 +45,8 @@ class Helper {
     print(prettyprint);
   }
 
-  static String numberFormat(double num) {
-    var numFormat = NumberFormat.currency(locale: "vi_VN", symbol: "đ");
+  static String numberFormat(double num, {String? symbol = "đ"}) {
+    var numFormat = NumberFormat.currency(locale: "vi_VN", symbol: symbol);
     return numFormat.format(num);
   }
 
