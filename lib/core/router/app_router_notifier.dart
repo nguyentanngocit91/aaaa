@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../_shared/app_config/data_box.dart';
+import '../../_shared/providers/app_provider.dart';
 import '../../_shared/thietlap_dieuhuong.dart';
 import '../auth/providers/auth_provider.dart';
 
@@ -62,7 +63,13 @@ class AppRouterNotifier extends AsyncNotifier<void> implements Listenable {
       }
     }
 
+
+    // updateApp(context,state);
     return null;
+  }
+
+  updateApp(BuildContext context, GoRouterState state){
+    ref.read(appProvider.notifier).capNhatViTriHienTai(state.location);
   }
 
   Future authentication() async{

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../_shared/extensions/date_time_extention.dart';
@@ -141,7 +140,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
           DateTime.now().formatDateTime(formatString: formatDate);
     } else {
       state.dataPhieuThu?['ngaynopcty'] =
-          (state.dataPhieuThu?['ngaynopcty'] as DateTime).formatDateTime(formatString: formatDate);
+          DateTime.parse(state.dataPhieuThu?['ngaynopcty']).formatDateTime(formatString: formatDate);
     }
     state.dataPhieuThu?['manhanvien'] = dsNhanVienPhuTrach;
 
@@ -152,12 +151,12 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
             DateTime.now().formatDateTime(formatString: formatDate);
       } else {
         state.dataWebsite?['ngaykyhd'] =
-            (state.dataWebsite?['ngaykyhd'] as DateTime)
+            DateTime.parse(state.dataWebsite?['ngaykyhd'])
                 .formatDateTime(formatString: formatDate);
       }
       if (state.dataWebsite?['ngaybangiao'] != null) {
         state.dataWebsite?['ngaybangiao'] =
-            (state.dataWebsite?['ngaybangiao'] as DateTime)
+            DateTime.parse(state.dataWebsite?['ngaybangiao'])
                 .formatDateTime(formatString: formatDate);
       }
       data["Web"] = state.dataWebsite;
@@ -181,12 +180,12 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
             DateTime.now().formatDateTime(formatString: formatDate);
       } else {
         state.dataHosting?['ngaykyhd'] =
-            (state.dataHosting?['ngaykyhd'] as DateTime)
+            DateTime.parse(state.dataHosting?['ngaykyhd'])
                 .formatDateTime(formatString: formatDate);
       }
       if (state.dataHosting?['ngayhethan'] != null) {
         state.dataHosting?['ngayhethan'] =
-            (state.dataHosting?['ngayhethan'] as DateTime)
+            DateTime.parse(state.dataHosting?['ngayhethan'])
                 .formatDateTime(formatString: formatDate);
       }
       if (state.dataHosting?['trangthaihosting'] == null) {
@@ -201,12 +200,12 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
         state.dataApp?['ngaykyhd'] =
             DateTime.now().formatDateTime(formatString: formatDate);
       } else {
-        state.dataApp?['ngaykyhd'] = (state.dataApp?['ngaykyhd'] as DateTime)
+        state.dataApp?['ngaykyhd'] = DateTime.parse(state.dataApp?['ngaykyhd'])
             .formatDateTime(formatString: formatDate);
       }
       if (state.dataApp?['ngaybangiao'] != null) {
         state.dataApp?['ngaybangiao'] =
-            (state.dataApp?['ngaybangiao'] as DateTime)
+            DateTime.parse(state.dataApp?['ngaybangiao'])
                 .formatDateTime(formatString: formatDate);
       }
       data["App"] = state.dataApp;

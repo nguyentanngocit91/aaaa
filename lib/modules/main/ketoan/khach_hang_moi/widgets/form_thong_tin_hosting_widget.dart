@@ -247,7 +247,7 @@ class _TrangThaiHostingWidgetState
                     ref.read(formKhachHangMoiProvider.notifier)
                         .changeData(
                         type: 'hopdong',
-                        key: 'mahopdongcu',
+                        key: 'sohopdongcu',
                         value: value);
                   },
                   validator: FormBuilderValidators.compose([
