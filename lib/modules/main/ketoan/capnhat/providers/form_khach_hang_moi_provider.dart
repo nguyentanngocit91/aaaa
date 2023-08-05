@@ -1,9 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
+import '../../../../../_shared/utils/helper.dart';
 import '../repositories/khach_hang_moi_repository.dart';
 import 'danh_sach_domain_provider.dart';
+import 'files_hd_provider.dart';
+import 'kiem_tra_khach_hang_provider.dart';
+import 'nhan_vien_phu_trach_provider.dart';
 
 part 'form_khach_hang_moi_state.dart';
 
@@ -13,43 +18,40 @@ final formKhachHangMoiProvider =
 });
 
 class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
-  final KhachHangMoiRepository _khachHangMoiRepository = KhachHangMoiRepository();
+  final KhachHangMoiRepository _khachHangMoiRepository =
+      KhachHangMoiRepository();
 
   @override
   FormKhachHangMoiState build() {
-    init();
+
     return FormKhachHangMoiState();
   }
 
-  init() async {
-    await taoMaKhachHang();
-    await taoMaHopDong();
+
+
+  batDatSubmit() {
+    state = state.copyWith(formStatus: FormStatus.submissionInProgress);
   }
 
-  Future<String?> taoMaKhachHang() async {
-    String? maKhachHang = await _khachHangMoiRepository.capMaKhachhang();
-    maKhachHang = 'NN$maKhachHang${DateTime.now().formatDateTime(formatString: 'yy')}';
-    state = state.copyWith(maKhachHang: maKhachHang);
+  ketThucSubmit() {
+    state = state.copyWith(formStatus: FormStatus.submissionCanceled);
   }
 
-  Future<String?> taoMaHopDong() async {
-    final maHopDong = await _khachHangMoiRepository.capMaHopDong();
-    state = state.copyWith(maHopDong: maHopDong);
-  }
 
   checkLoaiHopDong(
       {bool? isHopDongWebsite,
       bool? isHopDongApp,
       bool? isHopDongDomain,
       bool? isHopDongHosting}) {
-
-    if(isHopDongApp==true){
+    if (isHopDongApp == true) {
       isHopDongWebsite = false;
       isHopDongDomain = false;
       isHopDongHosting = false;
     }
 
-    if(isHopDongWebsite==true || isHopDongDomain==true || isHopDongHosting==true){
+    if (isHopDongWebsite == true ||
+        isHopDongDomain == true ||
+        isHopDongHosting == true) {
       isHopDongApp = false;
     }
 
@@ -60,20 +62,34 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
       isHopDongWebsite: isHopDongWebsite ?? state.isHopDongWebsite,
     );
   }
+  getData({required String type, required String key}) {
+    Map<String, Map?> data = {
+      'khachhang': state.dataKhachHang,
+      'hopdong': state.dataHopDong,
+      'website': state.dataWebsite,
+      'domain': state.dataDomain,
+      'hosting': state.dataHosting,
+      'app': state.dataApp,
+    };
+    dynamic xvalue = '';
+    data[type]?.forEach((key2, value) {
+      if(key==key2){
+        xvalue =  value;
+      }
+    });
+    return xvalue;
 
+  }
   changeData(
       {required String type, required String key, required dynamic value}) {
-    switch(type){
+    switch (type) {
       case 'khachhang':
         Map newDataKhachHang = state.dataKhachHang ?? {};
         newDataKhachHang.update(key, (item) => value, ifAbsent: () => value);
-        state = state.copyWith(dataKhangHang: newDataKhachHang);
+        state = state.copyWith(dataKhachHang: newDataKhachHang);
       case 'hopdong':
         Map newDataHopDong = state.dataHopDong ?? {};
-        newDataHopDong.update(key, (item) {
-          if(key == 'tongtien') return value.toString().replaceAll('.', '');
-          return value;
-        }, ifAbsent: () => value);
+        newDataHopDong.update(key, (item) => value, ifAbsent: () => value);
         state = state.copyWith(dataHopDong: newDataHopDong);
       case 'phieuthu':
         Map newDataPhieuThu = state.dataPhieuThu ?? {};
@@ -83,6 +99,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
         Map newDataWebsite = state.dataWebsite ?? {};
         newDataWebsite.update(key, (item) => value, ifAbsent: () => value);
         state = state.copyWith(dataWebsite: newDataWebsite);
+
       case 'domain':
         Map newDataDomain = state.dataDomain ?? {};
         newDataDomain.update(key, (item) => value, ifAbsent: () => value);
@@ -98,74 +115,143 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveForm() {
-    saveKhachHang();
-    saveHopDong();
-    savePhieuThu();
-    saveWebsite();
-    saveDomain();
-    saveHosting();
-    saveApp();
-    print('submit done!');
+  saveForm() async {
+    // data
+    final Map<String,dynamic> data = {};
+
+    // format date
+    const String formatDate = 'yyyy-MM-dd';
+    //
+    // // Thông tin Khách hàng
+    // final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
+    //
+    // print(thongTinKhachHangCu);
+    // if (thongTinKhachHangCu!.isEmpty) {
+    //   state.dataKhachHang?['makhachhang'] = state.maKhachHang;
+    //   data["KhachHang"] = state.dataKhachHang;
+    // } else {
+    //   data["KhachHang"] = thongTinKhachHangCu;
+    // }
+
+    // Danh sách nhân viên phụ trách
+    final nhanViens = ref.read(nhanVienPhuTrachProvider).maNhanViens;
+    final dsNhanVienPhuTrach =
+        (nhanViens != null) ? [for (var nv in nhanViens) nv['manhanvien']] : [];
+
+    // Thông tin Hợp đồng
+    state.dataHopDong?['sohopdong'] = state.soHopDong;
+    state.dataHopDong?['manhanvien'] = dsNhanVienPhuTrach;
+
+    // Thông tin phiếu thu
+    if (state.dataPhieuThu?['ngaynopcty'] == null) {
+      state.dataPhieuThu?['ngaynopcty'] =
+          DateTime.now().formatDateTime(formatString: formatDate);
+    } else {
+      state.dataPhieuThu?['ngaynopcty'] =
+          (DateTime.parse(state.dataPhieuThu?['ngaynopcty'])).formatDateTime(formatString: formatDate);
+    }
+
+    state.dataPhieuThu?['manhanvien'] = dsNhanVienPhuTrach;
+
+    // thông tin hợp đồng website
+    if (state.isHopDongWebsite) {
+      if (state.dataWebsite?['ngaykyhd'] == null) {
+        state.dataWebsite?['ngaykyhd'] =
+            DateTime.now().formatDateTime(formatString: formatDate);
+      } else {
+        state.dataWebsite?['ngaykyhd'] =
+            (DateTime.parse(state.dataWebsite?['ngaykyhd']))
+                .formatDateTime(formatString: formatDate);
+      }
+      if (state.dataWebsite?['ngaybangiao'] != null) {
+
+
+        if(DateTime.tryParse(state.dataWebsite?['ngaybangiao'])==null){
+          if(state.dataWebsite?['ngaybangiao'].toString()!='null'){
+            state.dataWebsite?['ngaybangiao'] =
+            (Helper.parseDate(state.dataWebsite?['ngaybangiao'],'dd-MM-yyyy').toString());
+          }
+
+
+
+        }else {
+          state.dataWebsite?['ngaybangiao'] =
+              (DateTime.parse(state.dataWebsite?['ngaybangiao']))
+                  .formatDateTime(formatString: formatDate);
+        }
+      }
+      data["Web"] = state.dataWebsite;
+    }
+
+    // Thông tin hợp đồng Domain
+    if (state.isHopDongDomain) {
+      final dsDomain = ref.read(danhSachDomainProvider);
+      List<Map> dataDomain = [];
+      for (DomainModel item in dsDomain) {
+        if (item.ngayKy == null) item = item.copyWith(ngayKy: DateTime.now());
+        dataDomain.add(item.toJson());
+      }
+      data["Domain"] = dataDomain;
+    }
+
+    // Thông tin hợp đồng Hosting
+    if (state.isHopDongHosting) {
+      if (state.dataHosting?['ngaykyhd'] == null) {
+        state.dataHosting?['ngaykyhd'] =
+            DateTime.now().formatDateTime(formatString: formatDate);
+      } else {
+        state.dataHosting?['ngaykyhd'] =
+            (state.dataHosting?['ngaykyhd'] as DateTime)
+                .formatDateTime(formatString: formatDate);
+      }
+      if (state.dataHosting?['ngayhethan'] != null) {
+        state.dataHosting?['ngayhethan'] =
+            (state.dataHosting?['ngayhethan'] as DateTime)
+                .formatDateTime(formatString: formatDate);
+      }
+      if (state.dataHosting?['trangthaihosting'] == null) {
+        state.dataHosting?['trangthaihosting'] = 'kymoi';
+      }
+      data["Hosting"] = state.dataHosting;
+    }
+
+    // Thông tin hợp đồng App
+    if (state.isHopDongApp) {
+      if (state.dataApp?['ngaykyhd'] == null) {
+        state.dataApp?['ngaykyhd'] =
+            DateTime.now().formatDateTime(formatString: formatDate);
+      } else {
+        state.dataApp?['ngaykyhd'] = (state.dataApp?['ngaykyhd'] as DateTime)
+            .formatDateTime(formatString: formatDate);
+      }
+      if (state.dataApp?['ngaybangiao'] != null) {
+        state.dataApp?['ngaybangiao'] =
+            (state.dataApp?['ngaybangiao'] as DateTime)
+                .formatDateTime(formatString: formatDate);
+      }
+      data["App"] = state.dataApp;
+    }
+
+    data["HopDong"] = state.dataHopDong;
+    data["PhieuThu"] = state.dataPhieuThu;
+
+
+    final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
+
+    if(result){
+      final uploadedFile = await _saveFileHD();
+      state = state.copyWith(formStatus: FormStatus.submissionSuccess);
+    }else {
+      state = state.copyWith(formStatus: FormStatus.submissionFailure);
+    }
+
   }
 
-  saveKhachHang(){
-    if (state.dataKhachHang != null) {
-      state.dataKhachHang!.forEach((key, value) {
-        print('Khách hàng {$key:$value}');
-      });
+  Future<bool> _saveFileHD() async {
+    final infoFile = ref.read(fileHDProvider);
+    if (infoFile.fileUpload?.path != null) {
+      return await _khachHangMoiRepository.updateFile(fileHDModel: infoFile, soHopDong: state.soHopDong.toString() ?? '011111');
     }
-  }
-
-  saveHopDong(){
-    if (state.dataHopDong != null) {
-      state.dataHopDong!.forEach((key, value) {
-        print('Hợp đồng {$key:$value}');
-      });
-    }
-  }
-
-  savePhieuThu(){
-    if (state.dataPhieuThu != null) {
-      state.dataPhieuThu!.forEach((key, value) {
-        print('Phiếu thu {$key:$value}');
-      });
-    }
-  }
-
-  saveWebsite(){
-    if (state.dataWebsite != null) {
-      state.dataWebsite!.forEach((key, value) {
-        print('Website {$key:$value}');
-      });
-    }
-  }
-
-  saveHosting(){
-    if (state.dataHosting != null) {
-      state.dataHosting!.forEach((key, value) {
-        print('Hosting {$key:$value}');
-      });
-    }
-  }
-
-  saveDomain(){
-    if (state.dataDomain != null) {
-      state.dataDomain!.forEach((key, value) {
-        print('Domain {$key:$value}');
-      });
-    }
-    final dsDomain = ref.read(danhSachDomainProvider);
-    for(var item in dsDomain){
-      print('${item.domainName}: ${item.ngayDangKy} - ${item.ngayHetHan} - ${item.ghiChu}');
-    }
-  }
-
-  saveApp(){
-    if (state.dataApp != null) {
-      state.dataApp!.forEach((key, value) {
-        print('App {$key:$value}');
-      });
-    }
+    return false;
   }
 }

@@ -83,6 +83,7 @@ class _FormThongTinWebsiteWidgetState
                               String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
                                 txtDate = selDate.formatDateTime();
+                                print(selDate);
                                 ref.read(formKhachHangMoiProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaykyhd', value: selDate);
                               }

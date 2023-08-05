@@ -14,7 +14,6 @@ import '../../models/contract_model.dart';
 import '../../models/media_model.dart';
 import '../../providers/capnhat_provider.dart';
 import '../../providers/form_capnhat_provider.dart';
-
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
   'chungtu': 'Chứng từ'
@@ -60,16 +59,18 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
       listController!['mahopdong']!.text = data!.l1_data!.mahopdong.toString();
       listController!['ngaykyhd']!.text =
           Helper.dateFormat(data!.l1_data!.ngaykyhd.toString());
-      listController!['ngaybangiao']!.text =
-          Helper.dateFormat(data!.l1_data!.ngaybangiao!);
-      listController!['chucnang']!.text = data!.l1_data!.chucnang!;
-      listController!['ghichu']!.text = data!.l1_data!.ghichu!;
+
+      listController!['ngaybangiao']!.text = data!.l1_data!.ngaybangiao != null
+          ? Helper.dateFormat(data!.l1_data!.ngaybangiao!)
+          : '';
+
+      listController!['chucnang']!.text = data!.l1_data!.chucnang!=null ? data!.l1_data!.chucnang!.toString():'';
+      listController!['ghichu']!.text = data!.l1_data!.ghichu!.toString();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     FormCapNhatNotifier data = ref.read(formcapnhatProvider.notifier);
     ref.listen(formcapnhatProvider.select((value) => value.loading),
         (previous, next) {
@@ -88,25 +89,22 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
             setState(() {
               _resultFile = [];
             });
-
+            ref.read(capnhatProvider.notifier).reload();
           }
           AwesomeDialog(
             context: context,
-            autoHide:Duration(seconds: 2),
+            autoHide: Duration(seconds: 2),
             width: 400.0,
             dialogType:
-            data.state.success ? DialogType.success : DialogType.error,
+                data.state.success ? DialogType.success : DialogType.error,
             animType: AnimType.scale,
             title: data.state.message,
-            autoDismiss:true,
-
-            btnOk:Container(),
-            btnCancel:Container(),
-
+            autoDismiss: true,
+            btnOk: Container(),
+            btnCancel: Container(),
             btnCancelOnPress: () {},
             btnOkOnPress: () {},
           )..show();
-
         });
       }
     });
@@ -230,14 +228,19 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                                               .value
                                               .text,
                                           'dd-MM-yyyy');
-                                      DateTime date2 = Helper.parseDate(
-                                          listController['ngaybangiao']!
-                                              .value
-                                              .text,
-                                          'dd-MM-yyyy');
-                                      if (date1.compareTo(date2) > 0) {
-                                        listController['ngaybangiao']!.text =
-                                            Helper.dateFormat(selDate);
+                                      var t = listController['ngaybangiao']!
+                                          .value.text;
+                                      if(t!=null && t!='') {
+                                        DateTime date2 = Helper.parseDate(
+                                            listController['ngaybangiao']!
+                                                .value
+                                                .text,
+                                            'dd-MM-yyyy');
+
+                                        if (date1.compareTo(date2) > 0) {
+                                          listController['ngaybangiao']!.text =
+                                              Helper.dateFormat(selDate);
+                                        }
                                       }
                                     }
                                   },
@@ -275,6 +278,34 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                                         errorText: 'Không bỏ trống.'),
                                   ]),
                                   onTap: () async {
+
+                                    DateTime date1 = Helper.parseDate(
+                                        listController['ngaykyhd']!
+                                            .value
+                                            .text,
+                                        'dd-MM-yyyy');
+                                    var t = listController['ngaybangiao']!
+                                        .value.text;
+                                    if(t!=null && t!='') {
+                                      DateTime date2 = Helper.parseDate(
+                                          listController['ngaybangiao']!
+                                              .value
+                                              .text,
+                                          'dd-MM-yyyy');
+                                      print(date1.compareTo(date2));
+                                      if (date1.compareTo(date2) > 0) {
+                                        listController['ngaybangiao']!.text =
+                                            Helper.dateFormat(date1);
+                                      }
+                                    }else{
+                                      listController['ngaybangiao']!.text =
+                                          Helper.dateFormat(date1);
+                                    }
+
+
+                                    var t2 = listController['ngaykyhd']!
+                                        .value
+                                        .text;
                                     final DateTime? selDate =
                                         await Helper.onSelectDate(
                                             context,
@@ -283,11 +314,11 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                                                     .value
                                                     .text,
                                                 'dd-MM-yyyy'),
-                                            firstDate: Helper.parseDate(
+                                            firstDate: (t2!=null && t2!='')?Helper.parseDate(
                                                 listController['ngaykyhd']!
                                                     .value
                                                     .text,
-                                                'dd-MM-yyyy'));
+                                                'dd-MM-yyyy'):null);
                                     if (selDate != null) {
                                       listController['ngaybangiao']!.text =
                                           Helper.dateFormat(selDate);
@@ -625,19 +656,21 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                       .add(element['file'].path.toString());
                                 });
                               }
-
+                                print('1');
                               _files.forEach((element) {
+                                print(element);
                                 if (pathFiles.indexOf(element.path!) == -1) {
                                   _tmpFile.add(element);
                                 }
                               });
+                              print(_tmpFile);
                               if (_tmpFile.length == 0) {
                                 Helper.toast(
                                     messenge: 'Vui lòng chọn file tải lên',
                                     context: context);
                                 return;
                               }
-
+print('2');
                               setState(() {
                                 for (PlatformFile file in _tmpFile) {
                                   Map tmp = {
@@ -646,6 +679,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                     'note': _noteController.text,
                                     'file': file
                                   };
+                                  print(tmp);
                                   _resultFile.add(tmp);
                                 }
                                 _noteController.text = '';
@@ -879,7 +913,7 @@ class Data extends ConsumerWidget {
 }
 
 class MediaItem extends ConsumerStatefulWidget {
-   MediaItem(
+  MediaItem(
       {Key? key,
       required this.item,
       required this.index,
@@ -986,7 +1020,6 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                                     _selected = value.toString();
                                   });
                                 },
-
                                 buttonStyleData: const ButtonStyleData(
                                   padding: EdgeInsets.only(right: 8),
                                 ),
@@ -1029,36 +1062,36 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                         _widget,
                         () async {
                           if (_formKey.currentState!.validate()) {
+                            var updateMedia = await ref
+                                .read(capnhatProvider.notifier)
+                                .updateMedia({
+                              'id': widget.item.id,
+                              'ghichu': controller.text,
+                              'loaifile': _selected
+                            });
 
-
-                            var updateMedia = await ref.read(capnhatProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
-
-                            if(updateMedia['status']==true){
-                             Navigator.of(context).pop();
+                            if (updateMedia['status'] == true) {
+                              Navigator.of(context).pop();
                               setState(() {
-                                 widget.item = MediaModel.fromJson(updateMedia['data']);
-
+                                widget.item =
+                                    MediaModel.fromJson(updateMedia['data']);
                               });
-
                             }
                             AwesomeDialog(
                               context: context,
-                              autoHide:Duration(seconds: 2),
+                              autoHide: Duration(seconds: 2),
                               width: 400.0,
-                               dialogType:
-                               updateMedia['status'] ? DialogType.success : DialogType.error,
+                              dialogType: updateMedia['status']
+                                  ? DialogType.success
+                                  : DialogType.error,
                               animType: AnimType.scale,
                               title: updateMedia['message'],
-                              autoDismiss:true,
-
-                              btnOk:Container(),
-                              btnCancel:Container(),
-                              
+                              autoDismiss: true,
+                              btnOk: Container(),
+                              btnCancel: Container(),
                               btnCancelOnPress: () {},
                               btnOkOnPress: () {},
                             )..show();
-
-
                           }
                         },
                       );

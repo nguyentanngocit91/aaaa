@@ -27,8 +27,22 @@ part 'item_search_result_model.g.dart';
 @freezed
 class ItemSearchResultModel with _$ItemSearchResultModel {
   const factory ItemSearchResultModel({
+    String? sohopdongcu,
     List<dynamic>? dichvuIds,
     List<dynamic>? files,
+    String? ngayhethan,
+    String? tenapp,
+    String? tenmien,
+    List<dynamic>? danhsachtenmien,
+    String? chucnang,
+    String? mota,
+    int? dungluong,
+    int? sonamdangky,
+    String? ngaydangky,
+    String? ngaybangiao,
+    List<dynamic>? ngayupstore,
+    String? ngaykichhoat,
+    String? trangthai_hosting,
     List<dynamic>? lichsu_thanhtoan,
     @JsonKey(name: '_id') @required String? id,
     String? sohopdong,
@@ -39,24 +53,22 @@ class ItemSearchResultModel with _$ItemSearchResultModel {
     String? mahopdong,
     List<dynamic>? nhanvien,
     String? ghichu,
+    @JsonKey(name: 'info') L1_info? l1_info,
     @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
     String? tenhopdong,
     @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
     int? tongtien,
-    List<dynamic>? lichsu_capnhat,
-    String? chucnang,
-    int? dungluong,
-    String? mota,
-    String? ngaybangiao,
-    String? ngaydangky,
-    String? ngayhethan,
-    String? ngaykichhoat,
-    List<dynamic>? ngayupstore,
-    int? sonamdangky,
-    String? tenapp,
-    String? tenmien}) = _ItemSearchResultModel;
+    List<dynamic>? lichsu_capnhat}) = _ItemSearchResultModel;
 
   factory ItemSearchResultModel.fromJson(Map<String, dynamic> json) => _$ItemSearchResultModelFromJson(json);
+}
+
+@freezed
+class L1_info with _$L1_info {
+  const factory L1_info({
+    String? chucnang}) = _L1_info;
+
+  factory L1_info.fromJson(Map<String, dynamic> json) => _$L1_infoFromJson(json);
 }
 
 @freezed
@@ -74,7 +86,8 @@ class L1_khachhangId with _$L1_khachhangId {
     String? congty,
     String? masothue,
     String? diachi,
-    String? cccd}) = _L1_khachhangId;
+    String? cccd,
+    @JsonKey(name: 'info') L2_info? l2_info}) = _L1_khachhangId;
 
   factory L1_khachhangId.fromJson(Map<String, dynamic> json) => _$L1_khachhangIdFromJson(json);
 }
@@ -89,6 +102,14 @@ class L1_lichsu_khoitao with _$L1_lichsu_khoitao {
     @JsonKey(name: 'phongbanId') L2_phongbanId? l2_phongbanId}) = _L1_lichsu_khoitao;
 
   factory L1_lichsu_khoitao.fromJson(Map<String, dynamic> json) => _$L1_lichsu_khoitaoFromJson(json);
+}
+
+@freezed
+class L2_info with _$L2_info {
+  const factory L2_info({
+    String? fax}) = _L2_info;
+
+  factory L2_info.fromJson(Map<String, dynamic> json) => _$L2_infoFromJson(json);
 }
 
 @freezed

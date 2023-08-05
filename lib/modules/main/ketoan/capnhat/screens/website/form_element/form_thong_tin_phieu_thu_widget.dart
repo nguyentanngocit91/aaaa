@@ -2,7 +2,6 @@ part of '../upgrade.dart';
 
 enum HinhThucThanhToan { cod, bank }
 
-enum LoaiPhieuThu { phieuthu, phieuthuBG, phieuthuApp, phieuthuBGApp }
 
 class FormThongTinPhieuThuWidget extends ConsumerStatefulWidget {
   const FormThongTinPhieuThuWidget({super.key});
@@ -12,10 +11,10 @@ class FormThongTinPhieuThuWidget extends ConsumerStatefulWidget {
 }
 
 class _FormThongTinPhieuThuWidgetState
-    extends ConsumerState<FormThongTinPhieuThuWidget> with FormUIMixins {
+    extends ConsumerState<FormThongTinPhieuThuWidget>
+    with FormUIMixins {
   final String _typeData = 'phieuthu';
   HinhThucThanhToan _httt = HinhThucThanhToan.cod;
-  LoaiPhieuThu _loaiPhieuThu = LoaiPhieuThu.phieuthu;
   DateTime ngayNop = DateTime.now();
 
   @override
@@ -40,436 +39,455 @@ class _FormThongTinPhieuThuWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      runSpacing: 25,
-      children: [
-        bodyForm(
-          backgroundColor: Colors.grey.shade300,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
+    return Column(
+
+        children: [
+          Padding(
+            padding: Helper.padding(),
+            child: bodyForm(
+              backgroundColor: Colors.grey.shade300,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Phương thức thanh toán:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Phương thức thanh toán:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      ndGapW8(),
+                      Radio<HinhThucThanhToan>(
+                        value: HinhThucThanhToan.cod,
+                        groupValue: _httt,
+                        onChanged: (HinhThucThanhToan? value) {
+                          setState(() {
+                            _httt = value!;
+                          });
+                        },
+                      ),
+                      const Text('Tiền mặt'),
+                      ndGapW16(),
+                      Radio<HinhThucThanhToan>(
+                        value: HinhThucThanhToan.bank,
+                        groupValue: _httt,
+                        onChanged: (HinhThucThanhToan? value) {
+                          setState(() {
+                            _httt = value!;
+                          });
+                        },
+                      ),
+                      const Text('Chuyển khoản'),
+                    ],
                   ),
-                  ndGapW8(),
-                  Radio<HinhThucThanhToan>(
-                    value: HinhThucThanhToan.cod,
-                    groupValue: _httt,
-                    onChanged: (HinhThucThanhToan? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'httt', value: 'cod');
-                      setState(() {
-                        _httt = value!;
-                      });
-                    },
-                  ),
-                  const Text('Tiền mặt'),
-                  ndGapW16(),
-                  Radio<HinhThucThanhToan>(
-                    value: HinhThucThanhToan.bank,
-                    groupValue: _httt,
-                    onChanged: (HinhThucThanhToan? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'httt', value: 'bank');
-                      setState(() {
-                        _httt = value!;
-                      });
-                    },
-                  ),
-                  const Text('Chuyển khoản'),
                 ],
               ),
-              ndGapW48(),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Loại Phiếu thu:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          ResponsiveGridRow(
+            children: [
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Ngày nộp'),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Không bỏ trống.'),
+                        ]),
+                        controller: TextEditingController(
+                            text: ngayNop.formatDateTime(
+                                formatString: 'dd-MM-yyyy')),
+                        readOnly: true,
+                        onTap: () async {
+                          final DateTime? selDate = await Helper.onSelectDate(
+                              context,
+                              initialDate: ngayNop);
+                          String txtDate = ngayNop.formatDateTime(
+                              formatString: 'dd-MM-yyyy');
+                          if (selDate != null) {
+                            txtDate = selDate.formatDateTime(
+                                formatString: 'dd-MM-yyyy');
+                          }
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'ngaynop', value: txtDate);
+                          setState(() {
+                            ngayNop = selDate ?? ngayNop;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  ndGapW8(),
-                  Radio<LoaiPhieuThu>(
-                    value: LoaiPhieuThu.phieuthu,
-                    groupValue: _loaiPhieuThu,
-                    onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData,
-                          key: 'loaiphieuthu',
-                          value: _typeData);
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
-                    },
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Số phiếu thu / CK'),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Không bỏ trống.'),
+                        ]),
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'maphieuthu', value: value);
+                        },
+                      ),
+                    ],
                   ),
-                  const Text('Phiếu thu'),
-                  ndGapW16(),
-                  Radio<LoaiPhieuThu>(
-                    value: LoaiPhieuThu.phieuthuBG,
-                    groupValue: _loaiPhieuThu,
-                    onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData,
-                          key: 'loaiphieuthu',
-                          value: 'phieuthubg');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
-                    },
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Mã nhân viên'),
+                      _MaNhaVienWidget(),
+                    ],
                   ),
-                  const Text('Phiếu thu bàn giao'),
-                  ndGapW16(),
-                  Radio<LoaiPhieuThu>(
-                    value: LoaiPhieuThu.phieuthuApp,
-                    groupValue: _loaiPhieuThu,
-                    onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData,
-                          key: 'loaiphieuthu',
-                          value: 'phieuthuapp');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
-                    },
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Nhân viên kinh doanh'),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          ref.watch(nhanVienPhuTrachProvider.select((value) =>
+                          value.maNhanViens));
+                          return TextFormField(
+                            readOnly: true,
+                            controller: TextEditingController(text: ref.read(
+                                nhanVienPhuTrachProvider.notifier)
+                                .showThongTinNhanVienInput(field: 'hoten')),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  const Text('Phiếu thu App'),
-                  ndGapW16(),
-                  Radio<LoaiPhieuThu>(
-                    value: LoaiPhieuThu.phieuthuBGApp,
-                    groupValue: _loaiPhieuThu,
-                    onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData,
-                          key: 'loaiphieuthu',
-                          value: 'phieuthuappbg');
-                      setState(() {
-                        _loaiPhieuThu = value!;
-                      });
-                    },
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Phòng'),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          ref.watch(nhanVienPhuTrachProvider
+                              .select((value) => value.maNhanViens));
+                          return TextFormField(
+                            readOnly: true,
+                            controller: TextEditingController(
+                                text: ref
+                                    .read(nhanVienPhuTrachProvider.notifier)
+                                    .showThongTinNhanVienInput(
+                                    field: 'parentId_hoten')),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  const Text('Phiếu thu bàn giao App'),
-                ],
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Khu vực'),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          ref.watch(nhanVienPhuTrachProvider.select((value) =>
+                          value.maNhanViens));
+                          return TextFormField(
+                            readOnly: true,
+                            controller: TextEditingController(text: ref.read(
+                                nhanVienPhuTrachProvider.notifier)
+                                .showThongTinNhanVienInput(
+                                field: 'maphongban')),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Tổng tiền thu'),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Không bỏ trống.'),
+                        ]),
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'tongtien', value: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Phí web'),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'manhanvien', value: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Phí nâng cấp web'),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phincweb', value: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Phí hosting'),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phihost', value: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Phí nâng cấp hosting'),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phinchost', value: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Phí tên miền'),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phidomain', value: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Phí App'),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phiapp', value: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 2,
+                lg: 4,
+                sm:6,
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Phí VAT'),
+                      TextFormField(
+                        inputFormatters: [
+                          CurrencyTextInputFormatter(symbol: ''),
+                        ],
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'phivat', value: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ResponsiveGridCol(
+                xl: 8,
+                lg: 12,
+
+                xs: 12,
+                child: Container(
+                  padding: Helper.padding(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      lableTextForm('Ghi chú'),
+                      TextFormField(),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Ngày nộp'),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
-                    controller: TextEditingController(
-                        text: ngayNop.formatDateTime(formatString: 'dd-MM-yyyy')),
-                    readOnly: true,
-                    onTap: () async {
-                      final DateTime? selDate = await Helper.onSelectDate(
-                          context,
-                          initialDate: ngayNop);
-                      String txtDate = ngayNop.formatDateTime(formatString: 'dd-MM-yyyy');
-                      if (selDate != null) {
-                        txtDate = selDate.formatDateTime(formatString: 'dd-MM-yyyy');
-                      }
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'ngaynop', value: txtDate);
-                      setState(() {
-                        ngayNop = selDate ?? ngayNop;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Số phiếu thu / CK'),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
-                    onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'maphieuthu', value: value);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Mã nhân viên'),
-                  _MaNhaVienWidget(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Nhân viên kinh doanh'),
-                  Consumer(
-                    builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
-                      return TextFormField(
-                        readOnly: true,
-                        controller: TextEditingController(text: ref.read(nhanVienPhuTrachProvider.notifier).showThongTinNhanVienInput(field: 'hoten')),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Phòng'),
-                  Consumer(
-                    builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
-                      return TextFormField(
-                        readOnly: true,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Khu vực'),
-                  Consumer(
-                    builder: (context, ref, child) {
-                      ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens));
-                      return TextFormField(
-                        readOnly: true,
-                        controller: TextEditingController(text: ref.read(nhanVienPhuTrachProvider.notifier).showThongTinNhanVienInput(field: 'maphongban')),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Tổng tiền thu'),
-                  TextFormField(
-                    inputFormatters: [
-                      CurrencyTextInputFormatter(symbol: ''),
-                    ],
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
-                    onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'tongtien', value: value);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Phí web'),
-                  TextFormField(
-                    inputFormatters: [
-                      CurrencyTextInputFormatter(symbol: ''),
-                    ],
-                    onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          type: _typeData, key: 'manhanvien', value: value);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Phí nâng cấp web'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Phí hosting'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Phí nâng cấp hosting'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              child: Wrap(
-                children: [
-                  lableTextForm('Phí tên miền'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Wrap(
-                children: [
-                  lableTextForm('Phí App'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              flex: 1,
-              child: Wrap(
-                children: [
-                  lableTextForm('Phí VAT'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-            ndGapW16(),
-            Expanded(
-              flex: 4,
-              child: Wrap(
-                children: [
-                  lableTextForm('Ghi chú'),
-                  TextFormField(),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const LoaiHopDongWidget(),
-      ],
+
+        ]
     );
-  }
+
+    }
 }
 
-class LoaiHopDongWidget extends ConsumerWidget {
-  const LoaiHopDongWidget({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final FormKhachHangMoiState formKhachHangMoiState =
-        ref.watch(formKhachHangMoiProvider);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text('Chọn loại hợp đồng:'),
-        ndGapW32(),
-        Wrap(
-          direction: Axis.horizontal,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Checkbox(
-              value: formKhachHangMoiState.isHopDongWebsite,
-              onChanged: (bool? value) {
-                ref
-                    .read(formKhachHangMoiProvider.notifier)
-                    .checkLoaiHopDong(isHopDongWebsite: value ?? false);
-              },
-            ),
-            const Text("Website"),
-          ],
-        ),
-        ndGapW16(),
-        Wrap(
-          direction: Axis.horizontal,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Checkbox(
-              value: formKhachHangMoiState.isHopDongDomain,
-              onChanged: (bool? value) {
-                ref
-                    .read(formKhachHangMoiProvider.notifier)
-                    .checkLoaiHopDong(isHopDongDomain: value ?? false);
-              },
-            ),
-            const Text("Domain"),
-          ],
-        ),
-        ndGapW16(),
-        Wrap(
-          direction: Axis.horizontal,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Checkbox(
-              value: formKhachHangMoiState.isHopDongHosting,
-              onChanged: (bool? value) {
-                ref
-                    .read(formKhachHangMoiProvider.notifier)
-                    .checkLoaiHopDong(isHopDongHosting: value ?? false);
-              },
-            ),
-            const Text("Hosting"),
-          ],
-        ),
-        ndGapW16(),
-        Wrap(
-          direction: Axis.horizontal,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Checkbox(
-              value: formKhachHangMoiState.isHopDongApp,
-              onChanged: (bool? value) {
-                ref
-                    .read(formKhachHangMoiProvider.notifier)
-                    .checkLoaiHopDong(isHopDongApp: value ?? false);
-              },
-            ),
-            const Text("App"),
-          ],
-        ),
-      ],
-    );
-  }
-}
 
 class _MaNhaVienWidget extends ConsumerStatefulWidget {
   const _MaNhaVienWidget({super.key});
@@ -490,16 +508,19 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final dsNhanvien = ref.watch(nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ?? [];
+    final dsNhanvien = ref.watch(
+        nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ?? [];
 
-    if(dsNhanvien==[] || dsNhanvien.isEmpty){
+    if (dsNhanvien == [] || dsNhanvien.isEmpty) {
       _textFieldTagsController.clearTextFieldTags();
     }
 
     return TagsInputWidget(
       textFieldTagsController: _textFieldTagsController,
       validator: (tag) {
-        if(tag.length<3){ return 'Mã nhân viên quá ngắn'; }
+        if (tag.length < 3) {
+          return 'Mã nhân viên quá ngắn';
+        }
         return null;
       },
       onTag: (tag) async {
@@ -507,7 +528,7 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
             .read(nhanVienPhuTrachProvider.notifier)
             .themMaNhanVien(tag);
         if (result == false) {
-          if (context.mounted){
+          if (context.mounted) {
             await showDialog(
               context: context,
               builder: (context) {
@@ -515,7 +536,7 @@ class __MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
                   title: Text('Thông báo'),
                   content: Text('Không tồn tại nhân viên có mã $tag'),
                   actions: [
-                    FilledButton(onPressed: (){
+                    FilledButton(onPressed: () {
                       context.pop();
                     }, child: Text('Đâ hiểu')),
                   ],

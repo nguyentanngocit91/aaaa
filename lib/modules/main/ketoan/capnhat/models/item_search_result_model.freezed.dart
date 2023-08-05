@@ -21,8 +21,22 @@ ItemSearchResultModel _$ItemSearchResultModelFromJson(
 
 /// @nodoc
 mixin _$ItemSearchResultModel {
+  String? get sohopdongcu => throw _privateConstructorUsedError;
   List<dynamic>? get dichvuIds => throw _privateConstructorUsedError;
   List<dynamic>? get files => throw _privateConstructorUsedError;
+  String? get ngayhethan => throw _privateConstructorUsedError;
+  String? get tenapp => throw _privateConstructorUsedError;
+  String? get tenmien => throw _privateConstructorUsedError;
+  List<dynamic>? get danhsachtenmien => throw _privateConstructorUsedError;
+  String? get chucnang => throw _privateConstructorUsedError;
+  String? get mota => throw _privateConstructorUsedError;
+  int? get dungluong => throw _privateConstructorUsedError;
+  int? get sonamdangky => throw _privateConstructorUsedError;
+  String? get ngaydangky => throw _privateConstructorUsedError;
+  String? get ngaybangiao => throw _privateConstructorUsedError;
+  List<dynamic>? get ngayupstore => throw _privateConstructorUsedError;
+  String? get ngaykichhoat => throw _privateConstructorUsedError;
+  String? get trangthai_hosting => throw _privateConstructorUsedError;
   List<dynamic>? get lichsu_thanhtoan => throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
@@ -34,6 +48,8 @@ mixin _$ItemSearchResultModel {
   String? get mahopdong => throw _privateConstructorUsedError;
   List<dynamic>? get nhanvien => throw _privateConstructorUsedError;
   String? get ghichu => throw _privateConstructorUsedError;
+  @JsonKey(name: 'info')
+  L1_info? get l1_info => throw _privateConstructorUsedError;
   @JsonKey(name: 'khachhangId')
   L1_khachhangId? get l1_khachhangId => throw _privateConstructorUsedError;
   String? get tenhopdong => throw _privateConstructorUsedError;
@@ -42,17 +58,6 @@ mixin _$ItemSearchResultModel {
       throw _privateConstructorUsedError;
   int? get tongtien => throw _privateConstructorUsedError;
   List<dynamic>? get lichsu_capnhat => throw _privateConstructorUsedError;
-  String? get chucnang => throw _privateConstructorUsedError;
-  int? get dungluong => throw _privateConstructorUsedError;
-  String? get mota => throw _privateConstructorUsedError;
-  String? get ngaybangiao => throw _privateConstructorUsedError;
-  String? get ngaydangky => throw _privateConstructorUsedError;
-  String? get ngayhethan => throw _privateConstructorUsedError;
-  String? get ngaykichhoat => throw _privateConstructorUsedError;
-  List<dynamic>? get ngayupstore => throw _privateConstructorUsedError;
-  int? get sonamdangky => throw _privateConstructorUsedError;
-  String? get tenapp => throw _privateConstructorUsedError;
-  String? get tenmien => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,8 +72,22 @@ abstract class $ItemSearchResultModelCopyWith<$Res> {
       _$ItemSearchResultModelCopyWithImpl<$Res, ItemSearchResultModel>;
   @useResult
   $Res call(
-      {List<dynamic>? dichvuIds,
+      {String? sohopdongcu,
+      List<dynamic>? dichvuIds,
       List<dynamic>? files,
+      String? ngayhethan,
+      String? tenapp,
+      String? tenmien,
+      List<dynamic>? danhsachtenmien,
+      String? chucnang,
+      String? mota,
+      int? dungluong,
+      int? sonamdangky,
+      String? ngaydangky,
+      String? ngaybangiao,
+      List<dynamic>? ngayupstore,
+      String? ngaykichhoat,
+      String? trangthai_hosting,
       List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') String? id,
       String? sohopdong,
@@ -79,23 +98,14 @@ abstract class $ItemSearchResultModelCopyWith<$Res> {
       String? mahopdong,
       List<dynamic>? nhanvien,
       String? ghichu,
+      @JsonKey(name: 'info') L1_info? l1_info,
       @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
       String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
       int? tongtien,
-      List<dynamic>? lichsu_capnhat,
-      String? chucnang,
-      int? dungluong,
-      String? mota,
-      String? ngaybangiao,
-      String? ngaydangky,
-      String? ngayhethan,
-      String? ngaykichhoat,
-      List<dynamic>? ngayupstore,
-      int? sonamdangky,
-      String? tenapp,
-      String? tenmien});
+      List<dynamic>? lichsu_capnhat});
 
+  $L1_infoCopyWith<$Res>? get l1_info;
   $L1_khachhangIdCopyWith<$Res>? get l1_khachhangId;
   $L1_lichsu_khoitaoCopyWith<$Res>? get l1_lichsu_khoitao;
 }
@@ -114,8 +124,22 @@ class _$ItemSearchResultModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? sohopdongcu = freezed,
     Object? dichvuIds = freezed,
     Object? files = freezed,
+    Object? ngayhethan = freezed,
+    Object? tenapp = freezed,
+    Object? tenmien = freezed,
+    Object? danhsachtenmien = freezed,
+    Object? chucnang = freezed,
+    Object? mota = freezed,
+    Object? dungluong = freezed,
+    Object? sonamdangky = freezed,
+    Object? ngaydangky = freezed,
+    Object? ngaybangiao = freezed,
+    Object? ngayupstore = freezed,
+    Object? ngaykichhoat = freezed,
+    Object? trangthai_hosting = freezed,
     Object? lichsu_thanhtoan = freezed,
     Object? id = freezed,
     Object? sohopdong = freezed,
@@ -126,24 +150,18 @@ class _$ItemSearchResultModelCopyWithImpl<$Res,
     Object? mahopdong = freezed,
     Object? nhanvien = freezed,
     Object? ghichu = freezed,
+    Object? l1_info = freezed,
     Object? l1_khachhangId = freezed,
     Object? tenhopdong = freezed,
     Object? l1_lichsu_khoitao = freezed,
     Object? tongtien = freezed,
     Object? lichsu_capnhat = freezed,
-    Object? chucnang = freezed,
-    Object? dungluong = freezed,
-    Object? mota = freezed,
-    Object? ngaybangiao = freezed,
-    Object? ngaydangky = freezed,
-    Object? ngayhethan = freezed,
-    Object? ngaykichhoat = freezed,
-    Object? ngayupstore = freezed,
-    Object? sonamdangky = freezed,
-    Object? tenapp = freezed,
-    Object? tenmien = freezed,
   }) {
     return _then(_value.copyWith(
+      sohopdongcu: freezed == sohopdongcu
+          ? _value.sohopdongcu
+          : sohopdongcu // ignore: cast_nullable_to_non_nullable
+              as String?,
       dichvuIds: freezed == dichvuIds
           ? _value.dichvuIds
           : dichvuIds // ignore: cast_nullable_to_non_nullable
@@ -152,6 +170,58 @@ class _$ItemSearchResultModelCopyWithImpl<$Res,
           ? _value.files
           : files // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
+      ngayhethan: freezed == ngayhethan
+          ? _value.ngayhethan
+          : ngayhethan // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tenapp: freezed == tenapp
+          ? _value.tenapp
+          : tenapp // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tenmien: freezed == tenmien
+          ? _value.tenmien
+          : tenmien // ignore: cast_nullable_to_non_nullable
+              as String?,
+      danhsachtenmien: freezed == danhsachtenmien
+          ? _value.danhsachtenmien
+          : danhsachtenmien // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      chucnang: freezed == chucnang
+          ? _value.chucnang
+          : chucnang // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mota: freezed == mota
+          ? _value.mota
+          : mota // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dungluong: freezed == dungluong
+          ? _value.dungluong
+          : dungluong // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sonamdangky: freezed == sonamdangky
+          ? _value.sonamdangky
+          : sonamdangky // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ngaydangky: freezed == ngaydangky
+          ? _value.ngaydangky
+          : ngaydangky // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngaybangiao: freezed == ngaybangiao
+          ? _value.ngaybangiao
+          : ngaybangiao // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngayupstore: freezed == ngayupstore
+          ? _value.ngayupstore
+          : ngayupstore // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      ngaykichhoat: freezed == ngaykichhoat
+          ? _value.ngaykichhoat
+          : ngaykichhoat // ignore: cast_nullable_to_non_nullable
+              as String?,
+      trangthai_hosting: freezed == trangthai_hosting
+          ? _value.trangthai_hosting
+          : trangthai_hosting // ignore: cast_nullable_to_non_nullable
+              as String?,
       lichsu_thanhtoan: freezed == lichsu_thanhtoan
           ? _value.lichsu_thanhtoan
           : lichsu_thanhtoan // ignore: cast_nullable_to_non_nullable
@@ -192,6 +262,10 @@ class _$ItemSearchResultModelCopyWithImpl<$Res,
           ? _value.ghichu
           : ghichu // ignore: cast_nullable_to_non_nullable
               as String?,
+      l1_info: freezed == l1_info
+          ? _value.l1_info
+          : l1_info // ignore: cast_nullable_to_non_nullable
+              as L1_info?,
       l1_khachhangId: freezed == l1_khachhangId
           ? _value.l1_khachhangId
           : l1_khachhangId // ignore: cast_nullable_to_non_nullable
@@ -212,51 +286,19 @@ class _$ItemSearchResultModelCopyWithImpl<$Res,
           ? _value.lichsu_capnhat
           : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      chucnang: freezed == chucnang
-          ? _value.chucnang
-          : chucnang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dungluong: freezed == dungluong
-          ? _value.dungluong
-          : dungluong // ignore: cast_nullable_to_non_nullable
-              as int?,
-      mota: freezed == mota
-          ? _value.mota
-          : mota // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngaybangiao: freezed == ngaybangiao
-          ? _value.ngaybangiao
-          : ngaybangiao // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngaydangky: freezed == ngaydangky
-          ? _value.ngaydangky
-          : ngaydangky // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngayhethan: freezed == ngayhethan
-          ? _value.ngayhethan
-          : ngayhethan // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngaykichhoat: freezed == ngaykichhoat
-          ? _value.ngaykichhoat
-          : ngaykichhoat // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngayupstore: freezed == ngayupstore
-          ? _value.ngayupstore
-          : ngayupstore // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
-      sonamdangky: freezed == sonamdangky
-          ? _value.sonamdangky
-          : sonamdangky // ignore: cast_nullable_to_non_nullable
-              as int?,
-      tenapp: freezed == tenapp
-          ? _value.tenapp
-          : tenapp // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tenmien: freezed == tenmien
-          ? _value.tenmien
-          : tenmien // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $L1_infoCopyWith<$Res>? get l1_info {
+    if (_value.l1_info == null) {
+      return null;
+    }
+
+    return $L1_infoCopyWith<$Res>(_value.l1_info!, (value) {
+      return _then(_value.copyWith(l1_info: value) as $Val);
+    });
   }
 
   @override
@@ -293,8 +335,22 @@ abstract class _$$_ItemSearchResultModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<dynamic>? dichvuIds,
+      {String? sohopdongcu,
+      List<dynamic>? dichvuIds,
       List<dynamic>? files,
+      String? ngayhethan,
+      String? tenapp,
+      String? tenmien,
+      List<dynamic>? danhsachtenmien,
+      String? chucnang,
+      String? mota,
+      int? dungluong,
+      int? sonamdangky,
+      String? ngaydangky,
+      String? ngaybangiao,
+      List<dynamic>? ngayupstore,
+      String? ngaykichhoat,
+      String? trangthai_hosting,
       List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') String? id,
       String? sohopdong,
@@ -305,23 +361,15 @@ abstract class _$$_ItemSearchResultModelCopyWith<$Res>
       String? mahopdong,
       List<dynamic>? nhanvien,
       String? ghichu,
+      @JsonKey(name: 'info') L1_info? l1_info,
       @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
       String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
       int? tongtien,
-      List<dynamic>? lichsu_capnhat,
-      String? chucnang,
-      int? dungluong,
-      String? mota,
-      String? ngaybangiao,
-      String? ngaydangky,
-      String? ngayhethan,
-      String? ngaykichhoat,
-      List<dynamic>? ngayupstore,
-      int? sonamdangky,
-      String? tenapp,
-      String? tenmien});
+      List<dynamic>? lichsu_capnhat});
 
+  @override
+  $L1_infoCopyWith<$Res>? get l1_info;
   @override
   $L1_khachhangIdCopyWith<$Res>? get l1_khachhangId;
   @override
@@ -339,8 +387,22 @@ class __$$_ItemSearchResultModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? sohopdongcu = freezed,
     Object? dichvuIds = freezed,
     Object? files = freezed,
+    Object? ngayhethan = freezed,
+    Object? tenapp = freezed,
+    Object? tenmien = freezed,
+    Object? danhsachtenmien = freezed,
+    Object? chucnang = freezed,
+    Object? mota = freezed,
+    Object? dungluong = freezed,
+    Object? sonamdangky = freezed,
+    Object? ngaydangky = freezed,
+    Object? ngaybangiao = freezed,
+    Object? ngayupstore = freezed,
+    Object? ngaykichhoat = freezed,
+    Object? trangthai_hosting = freezed,
     Object? lichsu_thanhtoan = freezed,
     Object? id = freezed,
     Object? sohopdong = freezed,
@@ -351,24 +413,18 @@ class __$$_ItemSearchResultModelCopyWithImpl<$Res>
     Object? mahopdong = freezed,
     Object? nhanvien = freezed,
     Object? ghichu = freezed,
+    Object? l1_info = freezed,
     Object? l1_khachhangId = freezed,
     Object? tenhopdong = freezed,
     Object? l1_lichsu_khoitao = freezed,
     Object? tongtien = freezed,
     Object? lichsu_capnhat = freezed,
-    Object? chucnang = freezed,
-    Object? dungluong = freezed,
-    Object? mota = freezed,
-    Object? ngaybangiao = freezed,
-    Object? ngaydangky = freezed,
-    Object? ngayhethan = freezed,
-    Object? ngaykichhoat = freezed,
-    Object? ngayupstore = freezed,
-    Object? sonamdangky = freezed,
-    Object? tenapp = freezed,
-    Object? tenmien = freezed,
   }) {
     return _then(_$_ItemSearchResultModel(
+      sohopdongcu: freezed == sohopdongcu
+          ? _value.sohopdongcu
+          : sohopdongcu // ignore: cast_nullable_to_non_nullable
+              as String?,
       dichvuIds: freezed == dichvuIds
           ? _value._dichvuIds
           : dichvuIds // ignore: cast_nullable_to_non_nullable
@@ -377,6 +433,58 @@ class __$$_ItemSearchResultModelCopyWithImpl<$Res>
           ? _value._files
           : files // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
+      ngayhethan: freezed == ngayhethan
+          ? _value.ngayhethan
+          : ngayhethan // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tenapp: freezed == tenapp
+          ? _value.tenapp
+          : tenapp // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tenmien: freezed == tenmien
+          ? _value.tenmien
+          : tenmien // ignore: cast_nullable_to_non_nullable
+              as String?,
+      danhsachtenmien: freezed == danhsachtenmien
+          ? _value._danhsachtenmien
+          : danhsachtenmien // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      chucnang: freezed == chucnang
+          ? _value.chucnang
+          : chucnang // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mota: freezed == mota
+          ? _value.mota
+          : mota // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dungluong: freezed == dungluong
+          ? _value.dungluong
+          : dungluong // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sonamdangky: freezed == sonamdangky
+          ? _value.sonamdangky
+          : sonamdangky // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ngaydangky: freezed == ngaydangky
+          ? _value.ngaydangky
+          : ngaydangky // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngaybangiao: freezed == ngaybangiao
+          ? _value.ngaybangiao
+          : ngaybangiao // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ngayupstore: freezed == ngayupstore
+          ? _value._ngayupstore
+          : ngayupstore // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      ngaykichhoat: freezed == ngaykichhoat
+          ? _value.ngaykichhoat
+          : ngaykichhoat // ignore: cast_nullable_to_non_nullable
+              as String?,
+      trangthai_hosting: freezed == trangthai_hosting
+          ? _value.trangthai_hosting
+          : trangthai_hosting // ignore: cast_nullable_to_non_nullable
+              as String?,
       lichsu_thanhtoan: freezed == lichsu_thanhtoan
           ? _value._lichsu_thanhtoan
           : lichsu_thanhtoan // ignore: cast_nullable_to_non_nullable
@@ -417,6 +525,10 @@ class __$$_ItemSearchResultModelCopyWithImpl<$Res>
           ? _value.ghichu
           : ghichu // ignore: cast_nullable_to_non_nullable
               as String?,
+      l1_info: freezed == l1_info
+          ? _value.l1_info
+          : l1_info // ignore: cast_nullable_to_non_nullable
+              as L1_info?,
       l1_khachhangId: freezed == l1_khachhangId
           ? _value.l1_khachhangId
           : l1_khachhangId // ignore: cast_nullable_to_non_nullable
@@ -437,50 +549,6 @@ class __$$_ItemSearchResultModelCopyWithImpl<$Res>
           ? _value._lichsu_capnhat
           : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      chucnang: freezed == chucnang
-          ? _value.chucnang
-          : chucnang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dungluong: freezed == dungluong
-          ? _value.dungluong
-          : dungluong // ignore: cast_nullable_to_non_nullable
-              as int?,
-      mota: freezed == mota
-          ? _value.mota
-          : mota // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngaybangiao: freezed == ngaybangiao
-          ? _value.ngaybangiao
-          : ngaybangiao // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngaydangky: freezed == ngaydangky
-          ? _value.ngaydangky
-          : ngaydangky // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngayhethan: freezed == ngayhethan
-          ? _value.ngayhethan
-          : ngayhethan // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngaykichhoat: freezed == ngaykichhoat
-          ? _value.ngaykichhoat
-          : ngaykichhoat // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngayupstore: freezed == ngayupstore
-          ? _value._ngayupstore
-          : ngayupstore // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
-      sonamdangky: freezed == sonamdangky
-          ? _value.sonamdangky
-          : sonamdangky // ignore: cast_nullable_to_non_nullable
-              as int?,
-      tenapp: freezed == tenapp
-          ? _value.tenapp
-          : tenapp // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tenmien: freezed == tenmien
-          ? _value.tenmien
-          : tenmien // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -491,8 +559,22 @@ class _$_ItemSearchResultModel
     with DiagnosticableTreeMixin
     implements _ItemSearchResultModel {
   const _$_ItemSearchResultModel(
-      {final List<dynamic>? dichvuIds,
+      {this.sohopdongcu,
+      final List<dynamic>? dichvuIds,
       final List<dynamic>? files,
+      this.ngayhethan,
+      this.tenapp,
+      this.tenmien,
+      final List<dynamic>? danhsachtenmien,
+      this.chucnang,
+      this.mota,
+      this.dungluong,
+      this.sonamdangky,
+      this.ngaydangky,
+      this.ngaybangiao,
+      final List<dynamic>? ngayupstore,
+      this.ngaykichhoat,
+      this.trangthai_hosting,
       final List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') this.id,
       this.sohopdong,
@@ -503,32 +585,25 @@ class _$_ItemSearchResultModel
       this.mahopdong,
       final List<dynamic>? nhanvien,
       this.ghichu,
+      @JsonKey(name: 'info') this.l1_info,
       @JsonKey(name: 'khachhangId') this.l1_khachhangId,
       this.tenhopdong,
       @JsonKey(name: 'lichsu_khoitao') this.l1_lichsu_khoitao,
       this.tongtien,
-      final List<dynamic>? lichsu_capnhat,
-      this.chucnang,
-      this.dungluong,
-      this.mota,
-      this.ngaybangiao,
-      this.ngaydangky,
-      this.ngayhethan,
-      this.ngaykichhoat,
-      final List<dynamic>? ngayupstore,
-      this.sonamdangky,
-      this.tenapp,
-      this.tenmien})
+      final List<dynamic>? lichsu_capnhat})
       : _dichvuIds = dichvuIds,
         _files = files,
+        _danhsachtenmien = danhsachtenmien,
+        _ngayupstore = ngayupstore,
         _lichsu_thanhtoan = lichsu_thanhtoan,
         _nhanvien = nhanvien,
-        _lichsu_capnhat = lichsu_capnhat,
-        _ngayupstore = ngayupstore;
+        _lichsu_capnhat = lichsu_capnhat;
 
   factory _$_ItemSearchResultModel.fromJson(Map<String, dynamic> json) =>
       _$$_ItemSearchResultModelFromJson(json);
 
+  @override
+  final String? sohopdongcu;
   final List<dynamic>? _dichvuIds;
   @override
   List<dynamic>? get dichvuIds {
@@ -549,6 +624,48 @@ class _$_ItemSearchResultModel
     return EqualUnmodifiableListView(value);
   }
 
+  @override
+  final String? ngayhethan;
+  @override
+  final String? tenapp;
+  @override
+  final String? tenmien;
+  final List<dynamic>? _danhsachtenmien;
+  @override
+  List<dynamic>? get danhsachtenmien {
+    final value = _danhsachtenmien;
+    if (value == null) return null;
+    if (_danhsachtenmien is EqualUnmodifiableListView) return _danhsachtenmien;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final String? chucnang;
+  @override
+  final String? mota;
+  @override
+  final int? dungluong;
+  @override
+  final int? sonamdangky;
+  @override
+  final String? ngaydangky;
+  @override
+  final String? ngaybangiao;
+  final List<dynamic>? _ngayupstore;
+  @override
+  List<dynamic>? get ngayupstore {
+    final value = _ngayupstore;
+    if (value == null) return null;
+    if (_ngayupstore is EqualUnmodifiableListView) return _ngayupstore;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final String? ngaykichhoat;
+  @override
+  final String? trangthai_hosting;
   final List<dynamic>? _lichsu_thanhtoan;
   @override
   List<dynamic>? get lichsu_thanhtoan {
@@ -588,6 +705,9 @@ class _$_ItemSearchResultModel
   @override
   final String? ghichu;
   @override
+  @JsonKey(name: 'info')
+  final L1_info? l1_info;
+  @override
   @JsonKey(name: 'khachhangId')
   final L1_khachhangId? l1_khachhangId;
   @override
@@ -608,39 +728,8 @@ class _$_ItemSearchResultModel
   }
 
   @override
-  final String? chucnang;
-  @override
-  final int? dungluong;
-  @override
-  final String? mota;
-  @override
-  final String? ngaybangiao;
-  @override
-  final String? ngaydangky;
-  @override
-  final String? ngayhethan;
-  @override
-  final String? ngaykichhoat;
-  final List<dynamic>? _ngayupstore;
-  @override
-  List<dynamic>? get ngayupstore {
-    final value = _ngayupstore;
-    if (value == null) return null;
-    if (_ngayupstore is EqualUnmodifiableListView) return _ngayupstore;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  final int? sonamdangky;
-  @override
-  final String? tenapp;
-  @override
-  final String? tenmien;
-
-  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ItemSearchResultModel(dichvuIds: $dichvuIds, files: $files, lichsu_thanhtoan: $lichsu_thanhtoan, id: $id, sohopdong: $sohopdong, namhopdong: $namhopdong, ngaykyhd: $ngaykyhd, loaihopdong: $loaihopdong, mahopdongcu: $mahopdongcu, mahopdong: $mahopdong, nhanvien: $nhanvien, ghichu: $ghichu, l1_khachhangId: $l1_khachhangId, tenhopdong: $tenhopdong, l1_lichsu_khoitao: $l1_lichsu_khoitao, tongtien: $tongtien, lichsu_capnhat: $lichsu_capnhat, chucnang: $chucnang, dungluong: $dungluong, mota: $mota, ngaybangiao: $ngaybangiao, ngaydangky: $ngaydangky, ngayhethan: $ngayhethan, ngaykichhoat: $ngaykichhoat, ngayupstore: $ngayupstore, sonamdangky: $sonamdangky, tenapp: $tenapp, tenmien: $tenmien)';
+    return 'ItemSearchResultModel(sohopdongcu: $sohopdongcu, dichvuIds: $dichvuIds, files: $files, ngayhethan: $ngayhethan, tenapp: $tenapp, tenmien: $tenmien, danhsachtenmien: $danhsachtenmien, chucnang: $chucnang, mota: $mota, dungluong: $dungluong, sonamdangky: $sonamdangky, ngaydangky: $ngaydangky, ngaybangiao: $ngaybangiao, ngayupstore: $ngayupstore, ngaykichhoat: $ngaykichhoat, trangthai_hosting: $trangthai_hosting, lichsu_thanhtoan: $lichsu_thanhtoan, id: $id, sohopdong: $sohopdong, namhopdong: $namhopdong, ngaykyhd: $ngaykyhd, loaihopdong: $loaihopdong, mahopdongcu: $mahopdongcu, mahopdong: $mahopdong, nhanvien: $nhanvien, ghichu: $ghichu, l1_info: $l1_info, l1_khachhangId: $l1_khachhangId, tenhopdong: $tenhopdong, l1_lichsu_khoitao: $l1_lichsu_khoitao, tongtien: $tongtien, lichsu_capnhat: $lichsu_capnhat)';
   }
 
   @override
@@ -648,8 +737,22 @@ class _$_ItemSearchResultModel
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ItemSearchResultModel'))
+      ..add(DiagnosticsProperty('sohopdongcu', sohopdongcu))
       ..add(DiagnosticsProperty('dichvuIds', dichvuIds))
       ..add(DiagnosticsProperty('files', files))
+      ..add(DiagnosticsProperty('ngayhethan', ngayhethan))
+      ..add(DiagnosticsProperty('tenapp', tenapp))
+      ..add(DiagnosticsProperty('tenmien', tenmien))
+      ..add(DiagnosticsProperty('danhsachtenmien', danhsachtenmien))
+      ..add(DiagnosticsProperty('chucnang', chucnang))
+      ..add(DiagnosticsProperty('mota', mota))
+      ..add(DiagnosticsProperty('dungluong', dungluong))
+      ..add(DiagnosticsProperty('sonamdangky', sonamdangky))
+      ..add(DiagnosticsProperty('ngaydangky', ngaydangky))
+      ..add(DiagnosticsProperty('ngaybangiao', ngaybangiao))
+      ..add(DiagnosticsProperty('ngayupstore', ngayupstore))
+      ..add(DiagnosticsProperty('ngaykichhoat', ngaykichhoat))
+      ..add(DiagnosticsProperty('trangthai_hosting', trangthai_hosting))
       ..add(DiagnosticsProperty('lichsu_thanhtoan', lichsu_thanhtoan))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('sohopdong', sohopdong))
@@ -660,22 +763,12 @@ class _$_ItemSearchResultModel
       ..add(DiagnosticsProperty('mahopdong', mahopdong))
       ..add(DiagnosticsProperty('nhanvien', nhanvien))
       ..add(DiagnosticsProperty('ghichu', ghichu))
+      ..add(DiagnosticsProperty('l1_info', l1_info))
       ..add(DiagnosticsProperty('l1_khachhangId', l1_khachhangId))
       ..add(DiagnosticsProperty('tenhopdong', tenhopdong))
       ..add(DiagnosticsProperty('l1_lichsu_khoitao', l1_lichsu_khoitao))
       ..add(DiagnosticsProperty('tongtien', tongtien))
-      ..add(DiagnosticsProperty('lichsu_capnhat', lichsu_capnhat))
-      ..add(DiagnosticsProperty('chucnang', chucnang))
-      ..add(DiagnosticsProperty('dungluong', dungluong))
-      ..add(DiagnosticsProperty('mota', mota))
-      ..add(DiagnosticsProperty('ngaybangiao', ngaybangiao))
-      ..add(DiagnosticsProperty('ngaydangky', ngaydangky))
-      ..add(DiagnosticsProperty('ngayhethan', ngayhethan))
-      ..add(DiagnosticsProperty('ngaykichhoat', ngaykichhoat))
-      ..add(DiagnosticsProperty('ngayupstore', ngayupstore))
-      ..add(DiagnosticsProperty('sonamdangky', sonamdangky))
-      ..add(DiagnosticsProperty('tenapp', tenapp))
-      ..add(DiagnosticsProperty('tenmien', tenmien));
+      ..add(DiagnosticsProperty('lichsu_capnhat', lichsu_capnhat));
   }
 
   @override
@@ -683,9 +776,34 @@ class _$_ItemSearchResultModel
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ItemSearchResultModel &&
+            (identical(other.sohopdongcu, sohopdongcu) ||
+                other.sohopdongcu == sohopdongcu) &&
             const DeepCollectionEquality()
                 .equals(other._dichvuIds, _dichvuIds) &&
             const DeepCollectionEquality().equals(other._files, _files) &&
+            (identical(other.ngayhethan, ngayhethan) ||
+                other.ngayhethan == ngayhethan) &&
+            (identical(other.tenapp, tenapp) || other.tenapp == tenapp) &&
+            (identical(other.tenmien, tenmien) || other.tenmien == tenmien) &&
+            const DeepCollectionEquality()
+                .equals(other._danhsachtenmien, _danhsachtenmien) &&
+            (identical(other.chucnang, chucnang) ||
+                other.chucnang == chucnang) &&
+            (identical(other.mota, mota) || other.mota == mota) &&
+            (identical(other.dungluong, dungluong) ||
+                other.dungluong == dungluong) &&
+            (identical(other.sonamdangky, sonamdangky) ||
+                other.sonamdangky == sonamdangky) &&
+            (identical(other.ngaydangky, ngaydangky) ||
+                other.ngaydangky == ngaydangky) &&
+            (identical(other.ngaybangiao, ngaybangiao) ||
+                other.ngaybangiao == ngaybangiao) &&
+            const DeepCollectionEquality()
+                .equals(other._ngayupstore, _ngayupstore) &&
+            (identical(other.ngaykichhoat, ngaykichhoat) ||
+                other.ngaykichhoat == ngaykichhoat) &&
+            (identical(other.trangthai_hosting, trangthai_hosting) ||
+                other.trangthai_hosting == trangthai_hosting) &&
             const DeepCollectionEquality()
                 .equals(other._lichsu_thanhtoan, _lichsu_thanhtoan) &&
             (identical(other.id, id) || other.id == id) &&
@@ -703,6 +821,7 @@ class _$_ItemSearchResultModel
                 other.mahopdong == mahopdong) &&
             const DeepCollectionEquality().equals(other._nhanvien, _nhanvien) &&
             (identical(other.ghichu, ghichu) || other.ghichu == ghichu) &&
+            (identical(other.l1_info, l1_info) || other.l1_info == l1_info) &&
             (identical(other.l1_khachhangId, l1_khachhangId) ||
                 other.l1_khachhangId == l1_khachhangId) &&
             (identical(other.tenhopdong, tenhopdong) ||
@@ -712,34 +831,29 @@ class _$_ItemSearchResultModel
             (identical(other.tongtien, tongtien) ||
                 other.tongtien == tongtien) &&
             const DeepCollectionEquality()
-                .equals(other._lichsu_capnhat, _lichsu_capnhat) &&
-            (identical(other.chucnang, chucnang) ||
-                other.chucnang == chucnang) &&
-            (identical(other.dungluong, dungluong) ||
-                other.dungluong == dungluong) &&
-            (identical(other.mota, mota) || other.mota == mota) &&
-            (identical(other.ngaybangiao, ngaybangiao) ||
-                other.ngaybangiao == ngaybangiao) &&
-            (identical(other.ngaydangky, ngaydangky) ||
-                other.ngaydangky == ngaydangky) &&
-            (identical(other.ngayhethan, ngayhethan) ||
-                other.ngayhethan == ngayhethan) &&
-            (identical(other.ngaykichhoat, ngaykichhoat) ||
-                other.ngaykichhoat == ngaykichhoat) &&
-            const DeepCollectionEquality()
-                .equals(other._ngayupstore, _ngayupstore) &&
-            (identical(other.sonamdangky, sonamdangky) ||
-                other.sonamdangky == sonamdangky) &&
-            (identical(other.tenapp, tenapp) || other.tenapp == tenapp) &&
-            (identical(other.tenmien, tenmien) || other.tenmien == tenmien));
+                .equals(other._lichsu_capnhat, _lichsu_capnhat));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        sohopdongcu,
         const DeepCollectionEquality().hash(_dichvuIds),
         const DeepCollectionEquality().hash(_files),
+        ngayhethan,
+        tenapp,
+        tenmien,
+        const DeepCollectionEquality().hash(_danhsachtenmien),
+        chucnang,
+        mota,
+        dungluong,
+        sonamdangky,
+        ngaydangky,
+        ngaybangiao,
+        const DeepCollectionEquality().hash(_ngayupstore),
+        ngaykichhoat,
+        trangthai_hosting,
         const DeepCollectionEquality().hash(_lichsu_thanhtoan),
         id,
         sohopdong,
@@ -750,22 +864,12 @@ class _$_ItemSearchResultModel
         mahopdong,
         const DeepCollectionEquality().hash(_nhanvien),
         ghichu,
+        l1_info,
         l1_khachhangId,
         tenhopdong,
         l1_lichsu_khoitao,
         tongtien,
-        const DeepCollectionEquality().hash(_lichsu_capnhat),
-        chucnang,
-        dungluong,
-        mota,
-        ngaybangiao,
-        ngaydangky,
-        ngayhethan,
-        ngaykichhoat,
-        const DeepCollectionEquality().hash(_ngayupstore),
-        sonamdangky,
-        tenapp,
-        tenmien
+        const DeepCollectionEquality().hash(_lichsu_capnhat)
       ]);
 
   @JsonKey(ignore: true)
@@ -785,8 +889,22 @@ class _$_ItemSearchResultModel
 
 abstract class _ItemSearchResultModel implements ItemSearchResultModel {
   const factory _ItemSearchResultModel(
-      {final List<dynamic>? dichvuIds,
+      {final String? sohopdongcu,
+      final List<dynamic>? dichvuIds,
       final List<dynamic>? files,
+      final String? ngayhethan,
+      final String? tenapp,
+      final String? tenmien,
+      final List<dynamic>? danhsachtenmien,
+      final String? chucnang,
+      final String? mota,
+      final int? dungluong,
+      final int? sonamdangky,
+      final String? ngaydangky,
+      final String? ngaybangiao,
+      final List<dynamic>? ngayupstore,
+      final String? ngaykichhoat,
+      final String? trangthai_hosting,
       final List<dynamic>? lichsu_thanhtoan,
       @JsonKey(name: '_id') final String? id,
       final String? sohopdong,
@@ -797,31 +915,49 @@ abstract class _ItemSearchResultModel implements ItemSearchResultModel {
       final String? mahopdong,
       final List<dynamic>? nhanvien,
       final String? ghichu,
+      @JsonKey(name: 'info') final L1_info? l1_info,
       @JsonKey(name: 'khachhangId') final L1_khachhangId? l1_khachhangId,
       final String? tenhopdong,
       @JsonKey(name: 'lichsu_khoitao')
       final L1_lichsu_khoitao? l1_lichsu_khoitao,
       final int? tongtien,
-      final List<dynamic>? lichsu_capnhat,
-      final String? chucnang,
-      final int? dungluong,
-      final String? mota,
-      final String? ngaybangiao,
-      final String? ngaydangky,
-      final String? ngayhethan,
-      final String? ngaykichhoat,
-      final List<dynamic>? ngayupstore,
-      final int? sonamdangky,
-      final String? tenapp,
-      final String? tenmien}) = _$_ItemSearchResultModel;
+      final List<dynamic>? lichsu_capnhat}) = _$_ItemSearchResultModel;
 
   factory _ItemSearchResultModel.fromJson(Map<String, dynamic> json) =
       _$_ItemSearchResultModel.fromJson;
 
   @override
+  String? get sohopdongcu;
+  @override
   List<dynamic>? get dichvuIds;
   @override
   List<dynamic>? get files;
+  @override
+  String? get ngayhethan;
+  @override
+  String? get tenapp;
+  @override
+  String? get tenmien;
+  @override
+  List<dynamic>? get danhsachtenmien;
+  @override
+  String? get chucnang;
+  @override
+  String? get mota;
+  @override
+  int? get dungluong;
+  @override
+  int? get sonamdangky;
+  @override
+  String? get ngaydangky;
+  @override
+  String? get ngaybangiao;
+  @override
+  List<dynamic>? get ngayupstore;
+  @override
+  String? get ngaykichhoat;
+  @override
+  String? get trangthai_hosting;
   @override
   List<dynamic>? get lichsu_thanhtoan;
   @override
@@ -844,6 +980,9 @@ abstract class _ItemSearchResultModel implements ItemSearchResultModel {
   @override
   String? get ghichu;
   @override
+  @JsonKey(name: 'info')
+  L1_info? get l1_info;
+  @override
   @JsonKey(name: 'khachhangId')
   L1_khachhangId? get l1_khachhangId;
   @override
@@ -856,30 +995,148 @@ abstract class _ItemSearchResultModel implements ItemSearchResultModel {
   @override
   List<dynamic>? get lichsu_capnhat;
   @override
-  String? get chucnang;
-  @override
-  int? get dungluong;
-  @override
-  String? get mota;
-  @override
-  String? get ngaybangiao;
-  @override
-  String? get ngaydangky;
-  @override
-  String? get ngayhethan;
-  @override
-  String? get ngaykichhoat;
-  @override
-  List<dynamic>? get ngayupstore;
-  @override
-  int? get sonamdangky;
-  @override
-  String? get tenapp;
-  @override
-  String? get tenmien;
-  @override
   @JsonKey(ignore: true)
   _$$_ItemSearchResultModelCopyWith<_$_ItemSearchResultModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+L1_info _$L1_infoFromJson(Map<String, dynamic> json) {
+  return _L1_info.fromJson(json);
+}
+
+/// @nodoc
+mixin _$L1_info {
+  String? get chucnang => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $L1_infoCopyWith<L1_info> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $L1_infoCopyWith<$Res> {
+  factory $L1_infoCopyWith(L1_info value, $Res Function(L1_info) then) =
+      _$L1_infoCopyWithImpl<$Res, L1_info>;
+  @useResult
+  $Res call({String? chucnang});
+}
+
+/// @nodoc
+class _$L1_infoCopyWithImpl<$Res, $Val extends L1_info>
+    implements $L1_infoCopyWith<$Res> {
+  _$L1_infoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chucnang = freezed,
+  }) {
+    return _then(_value.copyWith(
+      chucnang: freezed == chucnang
+          ? _value.chucnang
+          : chucnang // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_L1_infoCopyWith<$Res> implements $L1_infoCopyWith<$Res> {
+  factory _$$_L1_infoCopyWith(
+          _$_L1_info value, $Res Function(_$_L1_info) then) =
+      __$$_L1_infoCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? chucnang});
+}
+
+/// @nodoc
+class __$$_L1_infoCopyWithImpl<$Res>
+    extends _$L1_infoCopyWithImpl<$Res, _$_L1_info>
+    implements _$$_L1_infoCopyWith<$Res> {
+  __$$_L1_infoCopyWithImpl(_$_L1_info _value, $Res Function(_$_L1_info) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chucnang = freezed,
+  }) {
+    return _then(_$_L1_info(
+      chucnang: freezed == chucnang
+          ? _value.chucnang
+          : chucnang // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_L1_info with DiagnosticableTreeMixin implements _L1_info {
+  const _$_L1_info({this.chucnang});
+
+  factory _$_L1_info.fromJson(Map<String, dynamic> json) =>
+      _$$_L1_infoFromJson(json);
+
+  @override
+  final String? chucnang;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'L1_info(chucnang: $chucnang)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'L1_info'))
+      ..add(DiagnosticsProperty('chucnang', chucnang));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_L1_info &&
+            (identical(other.chucnang, chucnang) ||
+                other.chucnang == chucnang));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, chucnang);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_L1_infoCopyWith<_$_L1_info> get copyWith =>
+      __$$_L1_infoCopyWithImpl<_$_L1_info>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_L1_infoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _L1_info implements L1_info {
+  const factory _L1_info({final String? chucnang}) = _$_L1_info;
+
+  factory _L1_info.fromJson(Map<String, dynamic> json) = _$_L1_info.fromJson;
+
+  @override
+  String? get chucnang;
+  @override
+  @JsonKey(ignore: true)
+  _$$_L1_infoCopyWith<_$_L1_info> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -903,6 +1160,8 @@ mixin _$L1_khachhangId {
   String? get masothue => throw _privateConstructorUsedError;
   String? get diachi => throw _privateConstructorUsedError;
   String? get cccd => throw _privateConstructorUsedError;
+  @JsonKey(name: 'info')
+  L2_info? get l2_info => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -929,7 +1188,10 @@ abstract class $L1_khachhangIdCopyWith<$Res> {
       String? congty,
       String? masothue,
       String? diachi,
-      String? cccd});
+      String? cccd,
+      @JsonKey(name: 'info') L2_info? l2_info});
+
+  $L2_infoCopyWith<$Res>? get l2_info;
 }
 
 /// @nodoc
@@ -958,6 +1220,7 @@ class _$L1_khachhangIdCopyWithImpl<$Res, $Val extends L1_khachhangId>
     Object? masothue = freezed,
     Object? diachi = freezed,
     Object? cccd = freezed,
+    Object? l2_info = freezed,
   }) {
     return _then(_value.copyWith(
       ghichu: freezed == ghichu
@@ -1012,7 +1275,23 @@ class _$L1_khachhangIdCopyWithImpl<$Res, $Val extends L1_khachhangId>
           ? _value.cccd
           : cccd // ignore: cast_nullable_to_non_nullable
               as String?,
+      l2_info: freezed == l2_info
+          ? _value.l2_info
+          : l2_info // ignore: cast_nullable_to_non_nullable
+              as L2_info?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $L2_infoCopyWith<$Res>? get l2_info {
+    if (_value.l2_info == null) {
+      return null;
+    }
+
+    return $L2_infoCopyWith<$Res>(_value.l2_info!, (value) {
+      return _then(_value.copyWith(l2_info: value) as $Val);
+    });
   }
 }
 
@@ -1037,7 +1316,11 @@ abstract class _$$_L1_khachhangIdCopyWith<$Res>
       String? congty,
       String? masothue,
       String? diachi,
-      String? cccd});
+      String? cccd,
+      @JsonKey(name: 'info') L2_info? l2_info});
+
+  @override
+  $L2_infoCopyWith<$Res>? get l2_info;
 }
 
 /// @nodoc
@@ -1064,6 +1347,7 @@ class __$$_L1_khachhangIdCopyWithImpl<$Res>
     Object? masothue = freezed,
     Object? diachi = freezed,
     Object? cccd = freezed,
+    Object? l2_info = freezed,
   }) {
     return _then(_$_L1_khachhangId(
       ghichu: freezed == ghichu
@@ -1118,6 +1402,10 @@ class __$$_L1_khachhangIdCopyWithImpl<$Res>
           ? _value.cccd
           : cccd // ignore: cast_nullable_to_non_nullable
               as String?,
+      l2_info: freezed == l2_info
+          ? _value.l2_info
+          : l2_info // ignore: cast_nullable_to_non_nullable
+              as L2_info?,
     ));
   }
 }
@@ -1140,7 +1428,8 @@ class _$_L1_khachhangId
       this.congty,
       this.masothue,
       this.diachi,
-      this.cccd})
+      this.cccd,
+      @JsonKey(name: 'info') this.l2_info})
       : _lichsu_capnhat = lichsu_capnhat;
 
   factory _$_L1_khachhangId.fromJson(Map<String, dynamic> json) =>
@@ -1181,10 +1470,13 @@ class _$_L1_khachhangId
   final String? diachi;
   @override
   final String? cccd;
+  @override
+  @JsonKey(name: 'info')
+  final L2_info? l2_info;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'L1_khachhangId(ghichu: $ghichu, lichsu_khoitao: $lichsu_khoitao, lichsu_capnhat: $lichsu_capnhat, id: $id, makhachhang: $makhachhang, type: $type, hoten: $hoten, phone: $phone, email: $email, congty: $congty, masothue: $masothue, diachi: $diachi, cccd: $cccd)';
+    return 'L1_khachhangId(ghichu: $ghichu, lichsu_khoitao: $lichsu_khoitao, lichsu_capnhat: $lichsu_capnhat, id: $id, makhachhang: $makhachhang, type: $type, hoten: $hoten, phone: $phone, email: $email, congty: $congty, masothue: $masothue, diachi: $diachi, cccd: $cccd, l2_info: $l2_info)';
   }
 
   @override
@@ -1204,7 +1496,8 @@ class _$_L1_khachhangId
       ..add(DiagnosticsProperty('congty', congty))
       ..add(DiagnosticsProperty('masothue', masothue))
       ..add(DiagnosticsProperty('diachi', diachi))
-      ..add(DiagnosticsProperty('cccd', cccd));
+      ..add(DiagnosticsProperty('cccd', cccd))
+      ..add(DiagnosticsProperty('l2_info', l2_info));
   }
 
   @override
@@ -1228,7 +1521,8 @@ class _$_L1_khachhangId
             (identical(other.masothue, masothue) ||
                 other.masothue == masothue) &&
             (identical(other.diachi, diachi) || other.diachi == diachi) &&
-            (identical(other.cccd, cccd) || other.cccd == cccd));
+            (identical(other.cccd, cccd) || other.cccd == cccd) &&
+            (identical(other.l2_info, l2_info) || other.l2_info == l2_info));
   }
 
   @JsonKey(ignore: true)
@@ -1247,7 +1541,8 @@ class _$_L1_khachhangId
       congty,
       masothue,
       diachi,
-      cccd);
+      cccd,
+      l2_info);
 
   @JsonKey(ignore: true)
   @override
@@ -1277,7 +1572,8 @@ abstract class _L1_khachhangId implements L1_khachhangId {
       final String? congty,
       final String? masothue,
       final String? diachi,
-      final String? cccd}) = _$_L1_khachhangId;
+      final String? cccd,
+      @JsonKey(name: 'info') final L2_info? l2_info}) = _$_L1_khachhangId;
 
   factory _L1_khachhangId.fromJson(Map<String, dynamic> json) =
       _$_L1_khachhangId.fromJson;
@@ -1309,6 +1605,9 @@ abstract class _L1_khachhangId implements L1_khachhangId {
   String? get diachi;
   @override
   String? get cccd;
+  @override
+  @JsonKey(name: 'info')
+  L2_info? get l2_info;
   @override
   @JsonKey(ignore: true)
   _$$_L1_khachhangIdCopyWith<_$_L1_khachhangId> get copyWith =>
@@ -1575,6 +1874,145 @@ abstract class _L1_lichsu_khoitao implements L1_lichsu_khoitao {
   @override
   @JsonKey(ignore: true)
   _$$_L1_lichsu_khoitaoCopyWith<_$_L1_lichsu_khoitao> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+L2_info _$L2_infoFromJson(Map<String, dynamic> json) {
+  return _L2_info.fromJson(json);
+}
+
+/// @nodoc
+mixin _$L2_info {
+  String? get fax => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $L2_infoCopyWith<L2_info> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $L2_infoCopyWith<$Res> {
+  factory $L2_infoCopyWith(L2_info value, $Res Function(L2_info) then) =
+      _$L2_infoCopyWithImpl<$Res, L2_info>;
+  @useResult
+  $Res call({String? fax});
+}
+
+/// @nodoc
+class _$L2_infoCopyWithImpl<$Res, $Val extends L2_info>
+    implements $L2_infoCopyWith<$Res> {
+  _$L2_infoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? fax = freezed,
+  }) {
+    return _then(_value.copyWith(
+      fax: freezed == fax
+          ? _value.fax
+          : fax // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_L2_infoCopyWith<$Res> implements $L2_infoCopyWith<$Res> {
+  factory _$$_L2_infoCopyWith(
+          _$_L2_info value, $Res Function(_$_L2_info) then) =
+      __$$_L2_infoCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? fax});
+}
+
+/// @nodoc
+class __$$_L2_infoCopyWithImpl<$Res>
+    extends _$L2_infoCopyWithImpl<$Res, _$_L2_info>
+    implements _$$_L2_infoCopyWith<$Res> {
+  __$$_L2_infoCopyWithImpl(_$_L2_info _value, $Res Function(_$_L2_info) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? fax = freezed,
+  }) {
+    return _then(_$_L2_info(
+      fax: freezed == fax
+          ? _value.fax
+          : fax // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_L2_info with DiagnosticableTreeMixin implements _L2_info {
+  const _$_L2_info({this.fax});
+
+  factory _$_L2_info.fromJson(Map<String, dynamic> json) =>
+      _$$_L2_infoFromJson(json);
+
+  @override
+  final String? fax;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'L2_info(fax: $fax)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'L2_info'))
+      ..add(DiagnosticsProperty('fax', fax));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_L2_info &&
+            (identical(other.fax, fax) || other.fax == fax));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, fax);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_L2_infoCopyWith<_$_L2_info> get copyWith =>
+      __$$_L2_infoCopyWithImpl<_$_L2_info>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_L2_infoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _L2_info implements L2_info {
+  const factory _L2_info({final String? fax}) = _$_L2_info;
+
+  factory _L2_info.fromJson(Map<String, dynamic> json) = _$_L2_info.fromJson;
+
+  @override
+  String? get fax;
+  @override
+  @JsonKey(ignore: true)
+  _$$_L2_infoCopyWith<_$_L2_info> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
