@@ -15,7 +15,9 @@ import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 import '../../../../../packages/textfield_tags/src/models.dart';
 
+import '../models/customerupdate_model.dart';
 import '../models/searchcustomer_model.dart';
+import '../providers/ds_hd_provider.dart';
 import '../providers/files_hd_provider.dart';
 import '../providers/form_khach_hang_moi_provider.dart';
 import '../providers/kiem_tra_khach_hang_provider.dart';
@@ -50,12 +52,62 @@ class ThemHopDongKyMoi extends ConsumerStatefulWidget {
   static const pathName = 'them-hop-dong-moi';
   //final SearchCustomerModel item;
 
+
+
   @override
   ConsumerState createState() => _ThemHopDongKyMoiState();
 }
 
 class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUIMixins {
+
+  bool isLoading = true;
+  Map<String, TextEditingController> listController = {};
+  String typeKH='ca-nhan';
+
+  Map<String, FocusNode> listFocusNode = {};
+  final String _typeData = 'khachhang';
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ['makhachhang', 'email', 'email_phu', 'hoten', 'phone', 'congty', 'nguoidaidienmoi', 'dienthoaicoquan', 'masothue', 'cccd', 'diachi', 'ghichu'].forEach((item) {
+      listController[item] = TextEditingController();
+      listFocusNode[item] = FocusNode();
+    });
+
+    Future.delayed(Duration.zero, () async {
+      print("${widget.id}+widget.id");
+      await ref.read(dshdProvider.notifier).getCustomerById(widget.id.toString());
+      var res = ref.watch(dshdProvider.notifier);
+      CustomerUpdateModel? data = res.state.customer;
+
+      setState(() {
+       // _listMedia = res.state.media!;
+      });
+
+      typeKH = data!.type!;
+      print("${data?.makhachhang!.toString()}+makhachhang");
+
+      listController!['makhachhang']!.text = data!.makhachhang!.toString();
+      listController!['email']!.text = data!.email!.toString();
+      listController!['email_phu']!.text = data!.l1_info!.email_phu.toString();
+      listController!['hoten']!.text = data!.hoten!;
+      listController!['phone']!.text = data!.phone!;
+
+
+      listController!['congty']!.text = data!.congty!;
+      listController!['nguoidaidienmoi']!.text = data!.l1_info!.nguoidaidienmoi!;
+      listController!['dienthoaicoquan']!.text = data!.l1_info!.dienthoaicoquan!;
+
+      listController!['masothue']!.text = data!.masothue!;
+      listController!['cccd']!.text = data!.cccd!;
+      listController!['diachi']!.text = data!.diachi!;
+      listController!['ghichu']!.text = data!.ghichu!;
+
+    });
+  }
+
+
   Widget build(BuildContext context) {
     ref.listen(formKhachHangMoiProvider.select((value) => value.formStatus),
             (previous, next) {

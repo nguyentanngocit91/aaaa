@@ -99,7 +99,7 @@ ShellRoute addShellRouterMain(String strKey) {
 
         // DS HOP DONG
 
-        addGoRouter(const ThemHopDongKyMoi(), isSubModule: false,pathParams: ":id"),
+        addGoRouter(const ThemHopDongKyMoi(), isSubModule: false, pathParams: "/:id"),
 
         addGoRouter(const DanhSachHDLayout(), isSubModule: false),
 
