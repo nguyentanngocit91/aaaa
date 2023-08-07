@@ -10,7 +10,7 @@ class DanhSachHopDongState{
   final List<HopDongModel>? data;
   final bool? isLoading;
 
-  DanhSachHopDongState({this.totalRow=0, this.currentPage=1, this.pageSize=10, this.data, this.isLoading=false});
+  DanhSachHopDongState({this.totalRow=0, this.currentPage=1, this.pageSize=15, this.data, this.isLoading=false});
 
   DanhSachHopDongState copyWith({int? totalRow, int? currentPage, int? pageSize, List<HopDongModel>? data, bool? isLoading}){
     return DanhSachHopDongState(
