@@ -82,10 +82,10 @@ class _DanhSachLayoutState extends ConsumerState<DanhSachLayout>
                             }else{
                               showDialog(context: context, builder: (context) {
                                 return AlertDialog(
-                                  title: Text("Thông Báo"),
-                                  content: Text('Vui lòng nhập Số Hợp Đồng hoặc Tên Hợp Đồng !'),
+                                  title: const Text("Thông Báo"),
+                                  content: const Text('Vui lòng nhập Số Hợp Đồng hoặc Tên Hợp Đồng !'),
                                   actions: [
-                                    FilledButton(onPressed: (){Navigator.pop(context);}, child: Text('Đã hiểu'))
+                                    FilledButton(onPressed: (){Navigator.pop(context);}, child: const Text('Đã hiểu'))
                                   ],
                                 );
                               },);
@@ -95,7 +95,7 @@ class _DanhSachLayoutState extends ConsumerState<DanhSachLayout>
                             FontAwesomeIcons.magnifyingGlass,
                             size: 15,
                           ),
-                          label: Text('Tìm kiếm')),
+                          label: const Text('Tìm kiếm')),
                     ),
                     const SizedBox(
                       width: 16,
@@ -112,7 +112,7 @@ class _DanhSachLayoutState extends ConsumerState<DanhSachLayout>
                             FontAwesomeIcons.xmark,
                             size: 15,
                           ),
-                          label: Text('Reset')),
+                          label: const Text('Reset')),
                     ),
                   ],
                 ),
@@ -142,9 +142,9 @@ class _DanhSachLayoutState extends ConsumerState<DanhSachLayout>
                         color: MaterialStateColor.resolveWith(
                               (states) {
                             if (index % 2 == 0) {
-                              return Colors.grey.shade100;
-                            } else {
                               return Colors.white;
+                            } else {
+                              return Colors.grey.shade100;
                             }
                           },
                         ),
