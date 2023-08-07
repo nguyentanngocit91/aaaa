@@ -44,6 +44,7 @@ class ApiUrl {
   //PHIẾU THU
   static const String danhSachPhieuThu = '$baseUrl/phieu-thu';
   static const String phieuThuMoi = '$baseUrl/phieu-thu-moi';
+  static const String phieuThuMoiNC = '$baseUrl/phieu-thu-hop-dong/';
 
   //BÀN GIAO
   static const String danhSachHDTheoSoHD = '$baseUrl/hop-dong';

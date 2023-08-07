@@ -305,7 +305,7 @@ class _FormThongTinPhieuThuWidgetState
                         onChanged: (value) {
                           ref.read(formKhachHangMoiProvider.notifier)
                               .changeData(
-                              type: _typeData, key: 'manhanvien', value: value);
+                              type: _typeData, key: 'phiweb', value: value);
                         },
                       ),
                     ],
@@ -330,7 +330,7 @@ class _FormThongTinPhieuThuWidgetState
                         onChanged: (value) {
                           ref.read(formKhachHangMoiProvider.notifier)
                               .changeData(
-                              type: _typeData, key: 'phincweb', value: value);
+                              type: _typeData, key: 'phinangcapweb', value: value);
                         },
                       ),
                     ],
@@ -355,7 +355,7 @@ class _FormThongTinPhieuThuWidgetState
                         onChanged: (value) {
                           ref.read(formKhachHangMoiProvider.notifier)
                               .changeData(
-                              type: _typeData, key: 'phihost', value: value);
+                              type: _typeData, key: 'phihosting', value: value);
                         },
                       ),
                     ],
@@ -380,7 +380,7 @@ class _FormThongTinPhieuThuWidgetState
                         onChanged: (value) {
                           ref.read(formKhachHangMoiProvider.notifier)
                               .changeData(
-                              type: _typeData, key: 'phinchost', value: value);
+                              type: _typeData, key: 'phinangcaphosting', value: value);
                         },
                       ),
                     ],
@@ -405,7 +405,7 @@ class _FormThongTinPhieuThuWidgetState
                         onChanged: (value) {
                           ref.read(formKhachHangMoiProvider.notifier)
                               .changeData(
-                              type: _typeData, key: 'phidomain', value: value);
+                              type: _typeData, key: 'phitenmien', value: value);
                         },
                       ),
                     ],
@@ -474,7 +474,13 @@ class _FormThongTinPhieuThuWidgetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       lableTextForm('Ghi chú'),
-                      TextFormField(),
+                      TextFormField(
+                        onChanged: (value) {
+                          ref.read(formKhachHangMoiProvider.notifier)
+                              .changeData(
+                              type: _typeData, key: 'ghichu', value: value);
+                        },
+                      ),
                     ],
                   ),
                 ),

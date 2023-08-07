@@ -45,6 +45,7 @@ Map<String, String> _loaiPhiethu = {
 GlobalKey<FormState> _formKey = GlobalKey();
 final String _typeData = 'website';
 List<Map> _resultFile = [];
+List<PlatformFile> _files = [];
 List<MediaModel> _listMedia = [];
 Map<String, TextEditingController> _listController = {};
 Map<String, FocusNode> _listFocusNode = {};
@@ -108,6 +109,10 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
           type: _typeData,
           key: 'tenhopdong',
           value: '${data!.l1_data!.tenhopdong} (Nâng cấp/ Phụ lục)');
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData,
+          key: 'idkhachhang',
+          value: data!.l1_data!.khachhangId);
 
       setState(() {
         _listMedia = res.state.media!;

@@ -16,7 +16,7 @@ class _FormThongTinWebsiteWidgetState
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formKhachHangMoiProvider);
-    print(formState.dataWebsite);
+
     return Column(children: [
       ndGapH40(),
       titleForm(context, title: 'Thông tin Website'),
@@ -175,7 +175,7 @@ class _FormThongTinWebsiteWidgetState
                       maxLines: 3,
                       onChanged: (value) {
                         ref.read(formKhachHangMoiProvider.notifier).changeData(
-                            type: _typeData, key: 'ghichu', value: value);
+                            type: _typeData, key: 'mota', value: value);
                       },
                     ),
                   ],

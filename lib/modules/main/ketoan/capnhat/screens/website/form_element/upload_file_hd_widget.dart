@@ -17,7 +17,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
     with FormUIMixins {
   TextEditingController _uploadController = new TextEditingController();
   TextEditingController _noteController = new TextEditingController();
-  List<PlatformFile> _files = [];
+
 
   String _radioValue = '';
 
