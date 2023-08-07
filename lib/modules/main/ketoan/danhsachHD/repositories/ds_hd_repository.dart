@@ -35,14 +35,19 @@ class DSHDRepository{
         result['message'] = "Success";
         result['khachhang'] = SearchCustomerModel.fromJson(res['khachhang']);
 
-    //print("${result['khachhang']}+SEARCH khachhang");
+    print("${result['khachhang']}+SEARCH khachhang");
+
+
+        // print("${res['hopdongs']}+SEARCH hopdongs");
 
        for (var item in res['hopdongs']) {
           list.add(SearchCustomerContractModel.fromJson(item));
         }
+
+
         result['hopdongs'] = list;
 
-      //  print("${result['hopdongs']}+SEARCH hopdongs");
+        //print("${result['hopdongs']}+SEARCH hopdongs");
 
       }
     }

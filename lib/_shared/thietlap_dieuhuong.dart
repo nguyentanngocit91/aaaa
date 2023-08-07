@@ -77,6 +77,7 @@ GoRoute addGoRouter(Widget modules,
   String strPath = strName;
   if (!isSubModule) strPath = "/$strPath";
   if (pathParams != null) strPath += pathParams;
+
   return GoRoute(
     name: strName,
     path: strPath,
@@ -92,6 +93,7 @@ ShellRoute addShellRouterMain(String strKey) {
       pageBuilder: (context, state, child) {
         return effectTransitionFade(context, state, MainLayout(child: child));
       },
+
       routes: [
         addGoRouter(const DashboardLayout(), isSubModule: false,),
 

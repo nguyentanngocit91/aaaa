@@ -1,96 +1,289 @@
+class SearchCustomerContractModel {
+  String? sohopdongcu;
+  String? trangthaiHosting;
+  String? id;
+  String? sohopdong;
+  String? namhopdong;
+  String? ngaykyhd;
+  String? loaihopdong;
+  String? mahopdongcu;
+  String? mahopdong;
+  String? ghichu;
+  String? khachhangId;
+  String? tenhopdong;
+  int? tongtien;
+  String? chucnang;
+  int? dungluong;
+  String? mota;
+  String? ngaybangiao;
+  String? ngaydangky;
+  String? ngayhethan;
+  String? ngaykichhoat;
+  int? sonamdangky;
+  String? tenapp;
+  String? tenmien;
 
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+  /*
+  List<dynamic>? dichvuIds;
+  List<dynamic>? files;
+  List<dynamic>? danhsachtenmien;
+  List<dynamic>? lichsuThanhtoan;
+  List<dynamic>? ngayupstore;
+  List<LichsuCapnhat>? lichsuCapnhat;
+  List<Nhanvien>? nhanvien;
+    Nhanvien? lichsuKhoitao;
+      Info? info;
+  */
 
-part 'searchcustomercontract_model.freezed.dart';
-part 'searchcustomercontract_model.g.dart';
+  SearchCustomerContractModel(
+      {this.sohopdongcu,
 
-// **************************************************************************
-// Đây là nội dung được tạo tự động bằng NextDEV Tool
-// Đề nghị không chỉnh sửa nội dung file này
-// Hãy đảm bảo các gói này được thêm vào file pubspec.yaml
-// dependencies: 
-// 	freezed_annotation: <lastest_version>
-// 	json_annotation: <lastest_version>
-// dev_dependencies:
-// 	build_runner: <lastest_version>
-// 	freezed: <lastest_version>
-// 	json_serializable: <lastest_version>
-// Bằng câu lệnh : 
-// 	flutter pub add freezed_annotation json_annotation
-// 	flutter pub add build_runner freezed json_serializable --dev
-// Chạy câu lệnh sau để build file freezed:
-// 	flutter pub run build_runner build
-// Version : 1.0.1 Beta
-// **************************************************************************
+        this.trangthaiHosting,
 
-@freezed
-class SearchCustomerContractModel with _$SearchCustomerContractModel {
-	const factory SearchCustomerContractModel({
-		String? sohopdongcu,
-		List<dynamic>? dichvuIds,
-		List<dynamic>? files,
-		String? ngayhethan,
-		String? tenapp,
-		String? tenmien,
-		List<dynamic>? danhsachtenmien,
-		String? chucnang,
-		String? mota,
-		int? dungluong,
-		int? sonamdangky,
-		String? ngaydangky,
-		String? ngaybangiao,
-		List<dynamic>? ngayupstore,
-		String? ngaykichhoat,
-		String? trangthai_hosting,
-		List<dynamic>? lichsu_thanhtoan,
-		@JsonKey(name: '_id') @required String? id,
-		String? sohopdong,
-		String? namhopdong,
-		String? ngaykyhd,
-		String? loaihopdong,
-		String? mahopdongcu,
-		String? mahopdong,
-		List<dynamic>? nhanvien,
-		String? ghichu,
-		@JsonKey(name: 'info') L1_info? l1_info,
-		String? khachhangId,
-		String? tenhopdong,
-		@JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
-		int? tongtien,
-		List<dynamic>? lichsu_capnhat}) = _SearchCustomerContractModel;
+        this.id,
+        this.sohopdong,
+        this.namhopdong,
+        this.ngaykyhd,
+        this.loaihopdong,
+        this.mahopdongcu,
+        this.mahopdong,
 
-	factory SearchCustomerContractModel.fromJson(Map<String, dynamic> json) => _$SearchCustomerContractModelFromJson(json);
+        this.ghichu,
+
+        this.khachhangId,
+        this.tenhopdong,
+
+        this.tongtien,
+
+        this.chucnang,
+        this.dungluong,
+        this.mota,
+        this.ngaybangiao,
+        this.ngaydangky,
+        this.ngayhethan,
+        this.ngaykichhoat,
+
+        this.sonamdangky,
+        this.tenapp,
+        this.tenmien
+
+      /*
+        this.ngayupstore,
+       this.lichsuCapnhat,
+      this.dichvuIds,
+        this.files,
+        this.danhsachtenmien,
+        this.lichsuThanhtoan,
+
+        this.lichsuKhoitao,
+        this.info,
+                this.nhanvien,
+       */
+
+      });
+
+
+    SearchCustomerContractModel.fromJson(Map<String, dynamic> json) {
+    sohopdongcu = json['sohopdongcu'];
+    trangthaiHosting = json['trangthai_hosting'];
+    id = json['_id'];
+    sohopdong = json['sohopdong'];
+    namhopdong = json['namhopdong'];
+    ngaykyhd = json['ngaykyhd'];
+    loaihopdong = json['loaihopdong'];
+    mahopdongcu = json['mahopdongcu'];
+    mahopdong = json['mahopdong'];
+   /* if (json['nhanvien'] != null) {
+      nhanvien = <Nhanvien>[];
+      json['nhanvien'].forEach((v) {
+        nhanvien!.add(Nhanvien.fromJson(v));
+      });
+    }*/
+    ghichu = json['ghichu'];
+   // info = json['info'] != null ?  Info.fromJson(json['info']) : null;
+    khachhangId = json['khachhangId'];
+    tenhopdong = json['tenhopdong'];
+   /* lichsuKhoitao = json['lichsu_khoitao'] != null
+        ?  Nhanvien.fromJson(json['lichsu_khoitao'])
+        : null;*/
+    tongtien = json['tongtien'];
+
+
+    chucnang = json['chucnang'];
+    dungluong = json['dungluong'];
+    mota = json['mota'];
+    ngaybangiao = json['ngaybangiao'];
+    ngaydangky = json['ngaydangky'];
+    ngayhethan = json['ngayhethan'];
+    ngaykichhoat = json['ngaykichhoat'];
+
+    sonamdangky = json['sonamdangky'];
+    tenapp = json['tenapp'];
+    tenmien = json['tenmien'];
+  }
+
+
+    Map<String, dynamic> toJson() {
+      final Map<String, dynamic> data = <String, dynamic>{};
+
+    data['sohopdongcu'] = this.sohopdongcu;
+
+
+    data['trangthai_hosting'] = this.trangthaiHosting;
+    data['_id'] = this.id;
+    data['sohopdong'] = this.sohopdong;
+    data['namhopdong'] = this.namhopdong;
+    data['ngaykyhd'] = this.ngaykyhd;
+    data['loaihopdong'] = this.loaihopdong;
+    data['mahopdongcu'] = this.mahopdongcu;
+    data['mahopdong'] = this.mahopdong;
+    /*if (this.nhanvien != null) {
+      data['nhanvien'] = this.nhanvien!.map((v) => v.toJson()).toList();
+    }*/
+    data['ghichu'] = this.ghichu;
+   /* if (this.info != null) {
+      data['info'] = this.info!.toJson();
+    }*/
+    data['khachhangId'] = this.khachhangId;
+    data['tenhopdong'] = this.tenhopdong;
+    /*if (this.lichsuKhoitao != null) {
+      data['lichsu_khoitao'] = this.lichsuKhoitao!.toJson();
+    }*/
+    data['tongtien'] = this.tongtien;
+
+    data['chucnang'] = this.chucnang;
+    data['dungluong'] = this.dungluong;
+    data['mota'] = this.mota;
+    data['ngaybangiao'] = this.ngaybangiao;
+    data['ngaydangky'] = this.ngaydangky;
+    data['ngayhethan'] = this.ngayhethan;
+    data['ngaykichhoat'] = this.ngaykichhoat;
+    data['sonamdangky'] = this.sonamdangky;
+    data['tenapp'] = this.tenapp;
+    data['tenmien'] = this.tenmien;
+    return data;
+  }
+
+
 }
 
-@freezed
-class L1_info with _$L1_info {
-	const factory L1_info({
-		String? chucnang}) = _L1_info;
 
-	factory L1_info.fromJson(Map<String, dynamic> json) => _$L1_infoFromJson(json);
+
+class Nhanvien {
+  PhongbanId? phongbanId;
+  String? manhanvien;
+  String? parentId;
+  String? sId;
+  String? hoten;
+
+  Nhanvien(
+      {this.phongbanId, this.manhanvien, this.parentId, this.sId, this.hoten});
+
+  Nhanvien.fromJson(Map<String, dynamic> json) {
+    phongbanId = json['phongbanId'] != null
+        ? new PhongbanId.fromJson(json['phongbanId'])
+        : null;
+    manhanvien = json['manhanvien'];
+    parentId = json['parentId'];
+    sId = json['_id'];
+    hoten = json['hoten'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.phongbanId != null) {
+      data['phongbanId'] = this.phongbanId!.toJson();
+    }
+    data['manhanvien'] = this.manhanvien;
+    data['parentId'] = this.parentId;
+    data['_id'] = this.sId;
+    data['hoten'] = this.hoten;
+    return data;
+  }
 }
 
-@freezed
-class L1_lichsu_khoitao with _$L1_lichsu_khoitao {
-	const factory L1_lichsu_khoitao({
-		@JsonKey(name: '_id') @required String? id,
-		String? parentId,
-		String? manhanvien,
-		String? hoten,
-		@JsonKey(name: 'phongbanId') L2_phongbanId? l2_phongbanId}) = _L1_lichsu_khoitao;
 
-	factory L1_lichsu_khoitao.fromJson(Map<String, dynamic> json) => _$L1_lichsu_khoitaoFromJson(json);
+class PhongbanId {
+  String? sId;
+  String? maphongban;
+  String? manhanh;
+  String? tenphongban;
+
+  PhongbanId({this.sId, this.maphongban, this.manhanh, this.tenphongban});
+
+  PhongbanId.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    maphongban = json['maphongban'];
+    manhanh = json['manhanh'];
+    tenphongban = json['tenphongban'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['maphongban'] = this.maphongban;
+    data['manhanh'] = this.manhanh;
+    data['tenphongban'] = this.tenphongban;
+    return data;
+  }
 }
 
-@freezed
-class L2_phongbanId with _$L2_phongbanId {
-	const factory L2_phongbanId({
-		@JsonKey(name: '_id') @required String? id,
-		String? maphongban,
-		String? manhanh,
-		String? tenphongban}) = _L2_phongbanId;
 
-	factory L2_phongbanId.fromJson(Map<String, dynamic> json) => _$L2_phongbanIdFromJson(json);
+class Info {
+  String? chucnang;
+  String? dungluong;
+  String? ngayhethan;
+  List<String>? domain;
+
+  Info({this.chucnang, this.dungluong, this.ngayhethan, this.domain});
+
+  Info.fromJson(Map<String, dynamic> json) {
+    chucnang = json['chucnang'];
+    dungluong = json['dungluong'];
+    ngayhethan = json['ngayhethan'];
+    domain = json['domain'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['chucnang'] = this.chucnang;
+    data['dungluong'] = this.dungluong;
+    data['ngayhethan'] = this.ngayhethan;
+    data['domain'] = this.domain;
+    return data;
+  }
 }
 
+
+class LichsuCapnhat {
+  String? sId;
+  String? manhanvien;
+  String? hoten;
+  String? phongbanId;
+  String? ngaycapnhat;
+
+  LichsuCapnhat(
+      {this.sId,
+        this.manhanvien,
+        this.hoten,
+        this.phongbanId,
+        this.ngaycapnhat});
+
+  LichsuCapnhat.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    manhanvien = json['manhanvien'];
+    hoten = json['hoten'];
+    phongbanId = json['phongbanId'];
+    ngaycapnhat = json['ngaycapnhat'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['manhanvien'] = this.manhanvien;
+    data['hoten'] = this.hoten;
+    data['phongbanId'] = this.phongbanId;
+    data['ngaycapnhat'] = this.ngaycapnhat;
+    return data;
+  }
+}
