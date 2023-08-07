@@ -1,4 +1,5 @@
 /// Lưu ý : Import đường dẫn các module theo Relative
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +8,8 @@ import '../modules/main/ketoan/capnhat/screens/app/list.dart';
 import '../modules/main/ketoan/capnhat/screens/domain/list.dart';
 import '../modules/main/ketoan/capnhat/screens/hosting/list.dart';
 import '../modules/main/ketoan/danh_sach_domain_moi/dsdomain_layout.dart';
+import '../modules/main/ketoan/danhsachHD/models/searchcustomer_model.dart';
+import '../modules/main/ketoan/danhsachHD/screen/them_hopdong_moi.dart';
 import '../modules/main/ketoan/ds_moi_pending/ds_moi_pending_layout.dart';
 import 'providers/app_provider.dart';
 import 'thietlap_media.dart';
@@ -90,9 +93,12 @@ ShellRoute addShellRouterMain(String strKey) {
         return effectTransitionFade(context, state, MainLayout(child: child));
       },
       routes: [
-        addGoRouter(const DashboardLayout(), isSubModule: false),
+        addGoRouter(const DashboardLayout(), isSubModule: false,),
 
         // DS HOP DONG
+
+        addGoRouter(const ThemHopDongKyMoi(), isSubModule: false,pathParams: ":id"),
+
         addGoRouter(const DanhSachHDLayout(), isSubModule: false),
 
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
