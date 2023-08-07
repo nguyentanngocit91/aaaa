@@ -27,20 +27,20 @@ part 'searchcustomer_model.g.dart';
 @freezed
 class SearchCustomerModel with _$SearchCustomerModel {
 	const factory SearchCustomerModel({
+		List<dynamic>? lichsu_khoitao,
 		@JsonKey(name: '_id') @required String? id,
 		String? makhachhang,
+		String? type,
 		String? hoten,
-		String? congty,
-		String? masothue,
-		String? cccd,
 		String? phone,
 		String? email,
+		String? congty,
+		String? masothue,
 		String? diachi,
+		String? cccd,
 		@JsonKey(name: 'info') L1_info? l1_info,
 		String? ghichu,
-		@JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
-		List<dynamic>? lichsu_capnhat,
-		String? type}) = _SearchCustomerModel;
+		List<dynamic>? lichsu_capnhat}) = _SearchCustomerModel;
 
 	factory SearchCustomerModel.fromJson(Map<String, dynamic> json) => _$SearchCustomerModelFromJson(json);
 }
@@ -50,22 +50,8 @@ class L1_info with _$L1_info {
 	const factory L1_info({
 		String? email_phu,
 		String? nguoidaidienmoi,
-		String? dienthoaicoquan,
-		String? fax}) = _L1_info;
+		String? dienthoaicoquan}) = _L1_info;
 
 	factory L1_info.fromJson(Map<String, dynamic> json) => _$L1_infoFromJson(json);
-}
-
-@freezed
-class L1_lichsu_khoitao with _$L1_lichsu_khoitao {
-	const factory L1_lichsu_khoitao({
-		@JsonKey(name: '_id') @required String? id,
-		String? parentId,
-		String? manhanvien,
-		String? hoten,
-		String? phongbanId,
-		String? ngaykhoitao}) = _L1_lichsu_khoitao;
-
-	factory L1_lichsu_khoitao.fromJson(Map<String, dynamic> json) => _$L1_lichsu_khoitaoFromJson(json);
 }
 
