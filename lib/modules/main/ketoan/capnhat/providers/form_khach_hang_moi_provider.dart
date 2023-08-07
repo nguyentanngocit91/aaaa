@@ -235,15 +235,15 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     data["HopDong"] = state.dataHopDong;
     data["PhieuThu"] = state.dataPhieuThu;
 
-
-    final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
-
-    if(result){
-      final uploadedFile = await _saveFileHD();
-      state = state.copyWith(formStatus: FormStatus.submissionSuccess);
-    }else {
-      state = state.copyWith(formStatus: FormStatus.submissionFailure);
-    }
+    print(data);
+    final result = await _khachHangMoiRepository.nangcapHD(data: data);
+    //
+    // if(result){
+    //   final uploadedFile = await _saveFileHD();
+    //   state = state.copyWith(formStatus: FormStatus.submissionSuccess);
+    // }else {
+    //   state = state.copyWith(formStatus: FormStatus.submissionFailure);
+    // }
 
   }
 
