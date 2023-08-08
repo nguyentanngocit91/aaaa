@@ -127,7 +127,6 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     } else {
       data["KhachHang"] = thongTinKhachHangCu;
     }
-
     print("${data["KhachHang"]}++data KHACH HANG--000");
     // Danh sách nhân viên phụ trách
     final nhanViens = ref.read(nhanVienPhuTrachProvider).maNhanViens;
