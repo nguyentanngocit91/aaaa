@@ -205,13 +205,8 @@ class _ItemMenu extends ConsumerWidget {
         style:
             const TextStyle(fontSize: _fontSize, fontWeight: FontWeight.normal),
       ),
-<<<<<<< HEAD
-      textColor: (viTri == '/$pathName' ) ? Colors.red : textColor ?? _textColor,
-      iconColor: (viTri == '/$pathName') ? Colors.red : iconColor ?? _iconColor,
-=======
       textColor: (viTri.contains(pathName.toString())) ? Colors.red : textColor ?? _textColor,
       iconColor: (viTri.contains(pathName.toString())) ? Colors.red : iconColor ?? _iconColor,
->>>>>>> ccb6d5ac7d3c74239edc7ad93f2fe312163eb3f2
       minLeadingWidth: 8,
       contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
       onTap: () {

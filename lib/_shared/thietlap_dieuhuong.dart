@@ -98,20 +98,10 @@ ShellRoute addShellRouterMain(String strKey) {
         return effectTransitionFade(context, state, MainLayout(child: child));
       },
       routes: [
-<<<<<<< HEAD
+
         addGoRouter(const DashboardLayout(), isSubModule: false,),
         // DS HOP DONG
         addGoRouter(const ThemHopDongKyMoi(), isSubModule: false, pathParams: "/:id"),
-=======
-        addGoRouter(
-          const DashboardLayout(),
-          isSubModule: false,
-        ),
-
-        // DS HOP DONG
-        addGoRouter(const ThemHopDongKyMoi(),
-            isSubModule: false, pathParams: "/:id"),
->>>>>>> ccb6d5ac7d3c74239edc7ad93f2fe312163eb3f2
 
         addGoRouter(const DanhSachHDLayout(), isSubModule: false),
 
