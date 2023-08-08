@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../../_shared/extensions/date_time_extention.dart';
+import '../../../../../_shared/extensions/string.dart';
 import '../../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../../_shared/utils/debouncer.dart';
@@ -15,6 +16,7 @@ import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 import '../../../../../packages/textfield_tags/src/models.dart';
 
+import '../danh_sach_hd_layout.dart';
 import '../models/customerupdate_model.dart';
 import '../models/searchcustomer_model.dart';
 import '../providers/ds_hd_provider.dart';
@@ -45,70 +47,25 @@ part '../widgets/upload_file_hd_widget.dart';
 final GlobalKey<FormState> _formKey = GlobalKey();
 
 class ThemHopDongKyMoi extends ConsumerStatefulWidget {
-  const ThemHopDongKyMoi({Key? key,this.id}) : super(key: const Key(pathName));
+  const ThemHopDongKyMoi({Key? key}) : super(key: const Key(pathName));
 
-  final String? id;
+
 
   static const pathName = 'them-hop-dong-moi';
   //final SearchCustomerModel item;
-
-
-
   @override
   ConsumerState createState() => _ThemHopDongKyMoiState();
 }
 
 class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUIMixins {
 
-  bool isLoading = true;
-  Map<String, TextEditingController> listController = {};
-  String typeKH='ca-nhan';
 
-  Map<String, FocusNode> listFocusNode = {};
-  final String _typeData = 'khachhang';
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    ['makhachhang', 'email', 'email_phu', 'hoten', 'phone', 'congty', 'nguoidaidienmoi', 'dienthoaicoquan', 'masothue', 'cccd', 'diachi', 'ghichu'].forEach((item) {
-      listController[item] = TextEditingController();
-      listFocusNode[item] = FocusNode();
-    });
-
-    Future.delayed(Duration.zero, () async {
-      print("${widget.id}+widget.id");
-      await ref.read(dshdProvider.notifier).getCustomerById(widget.id.toString());
-      var res = ref.watch(dshdProvider.notifier);
-      CustomerUpdateModel? data = res.state.customer;
-
-      setState(() {
-       // _listMedia = res.state.media!;
-      });
-
-      typeKH = data!.type!;
-      print("${data?.makhachhang!.toString()}+makhachhang");
-
-      listController!['makhachhang']!.text = data!.makhachhang!.toString();
-      listController!['email']!.text = data!.email!.toString();
-      listController!['email_phu']!.text = data!.l1_info!.email_phu.toString();
-      listController!['hoten']!.text = data!.hoten!;
-      listController!['phone']!.text = data!.phone!;
-
-
-      listController!['congty']!.text = data!.congty!;
-      listController!['nguoidaidienmoi']!.text = data!.l1_info!.nguoidaidienmoi!;
-      listController!['dienthoaicoquan']!.text = data!.l1_info!.dienthoaicoquan!;
-
-      listController!['masothue']!.text = data!.masothue!;
-      listController!['cccd']!.text = data!.cccd!;
-      listController!['diachi']!.text = data!.diachi!;
-      listController!['ghichu']!.text = data!.ghichu!;
-
-    });
-  }
-
-
   Widget build(BuildContext context) {
+
+    final String id= GoRouterState.of(context).pathParameters.values.single.toString();
+
+
     ref.listen(formKhachHangMoiProvider.select((value) => value.formStatus),
             (previous, next) {
           if (next == FormStatus.submissionInProgress) {
@@ -138,7 +95,7 @@ class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUI
             );
           }
           if (next == FormStatus.submissionSuccess) {
-            _resetForm(ref);
+            //_resetForm(ref);
             Loading(context).stop();
             showDialog(
               context: context,
@@ -149,6 +106,7 @@ class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUI
                   actions: [
                     FilledButton(
                       onPressed: () {
+                        context.go('/${DanhSachHDLayout.pathName}');
                         Navigator.of(context).pop();
                       },
                       child: Text('Ok'),
@@ -166,9 +124,24 @@ class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUI
         child: SingleChildScrollView(
           child: Column(
             children: [
+
+              Container(
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.all(0.0),
+                child: Text(
+                  'Thêm hợp đồng mới cho khách hàng'.toUpperCase(),
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                ),
+              ),
+
+              const Divider(),
+
+              ndGapH24(),
+
               titleForm(context, title: 'Thông tin khách hàng'),
               bodyForm(
-                child: const FormThongTinKhachHangWidget(),
+                child: FormThongTinKhachHangWidget(id: id.toString()),
               ),
               ndGapH40(),
               titleForm(context, title: 'Thông tin hợp đồng'),

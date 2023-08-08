@@ -36,6 +36,7 @@ class _DanhSachLayoutState extends ConsumerState<DanhSachLayout>
   Widget build(BuildContext context) {
     final danhSachHopDongState = ref.watch(danhSachHopDongProvider);
     final danhSanh = danhSachHopDongState.dataPhieuThu ?? [];
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

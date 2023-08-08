@@ -196,6 +196,7 @@ class _ItemMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String viTri = GoRouterState.of(context).location;
+
     return ListTile(
       dense: true,
       leading: icon ?? _faIcon,
@@ -204,7 +205,7 @@ class _ItemMenu extends ConsumerWidget {
         style:
             const TextStyle(fontSize: _fontSize, fontWeight: FontWeight.normal),
       ),
-      textColor: (viTri == '/$pathName') ? Colors.red : textColor ?? _textColor,
+      textColor: (viTri == '/$pathName' ) ? Colors.red : textColor ?? _textColor,
       iconColor: (viTri == '/$pathName') ? Colors.red : iconColor ?? _iconColor,
       minLeadingWidth: 8,
       contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
