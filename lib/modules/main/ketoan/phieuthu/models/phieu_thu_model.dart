@@ -44,7 +44,7 @@ class PhieuThuModel {
         });
 
   PhieuThuModel.fromJson(Map<String, dynamic> json) {
-    phiweb = json['phiweb'].toDouble();
+    phiweb = (json['phiweb']!=null)?json['phiweb'].toDouble():0;
     phinangcapweb = json['phinangcapweb'].toDouble();
     phihosting = json['phihosting'].toDouble();
     phinangcaphosting = json['phinangcaphosting'].toDouble();
