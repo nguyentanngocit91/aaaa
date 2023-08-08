@@ -10,6 +10,7 @@ import '../modules/main/ketoan/capnhat/screens/hosting/list.dart';
 import '../modules/main/ketoan/danh_sach_domain_moi/dsdomain_layout.dart';
 import '../modules/main/ketoan/danhsachHD/models/searchcustomer_model.dart';
 import '../modules/main/ketoan/danhsachHD/screen/them_hopdong_moi.dart';
+import '../modules/main/ketoan/ds_moi_pending/sua_phieu_thu_layout.dart';
 import '../modules/main/ketoan/ds_moi_pending/ds_moi_pending_layout.dart';
 import 'providers/app_provider.dart';
 import 'thietlap_media.dart';
@@ -27,7 +28,6 @@ import '../modules/main/ketoan/capnhat/screens/website/update.dart';
 import '../modules/main/ketoan/data20152019/screens/data_2015_2019_layout.dart';
 import '../modules/main/ketoan/khach_hang_moi/khach_hang_moi_layout.dart';
 import '../modules/main/ketoan/thongkebangiao/screens/thong_ke_ban_giao_layout.dart';
-
 
 import '../modules/main/ketoan/danhsachHD/danh_sach_hd_layout.dart';
 
@@ -72,17 +72,21 @@ List<RouteBase> danhsachRoute = [
 ];
 
 GoRoute addGoRouter(Widget modules,
-    {bool isSubModule = true, String? pathParams}) {
+    {String? nameRoute,
+      String? pathRoute,
+      bool isSubModule = true,
+    String? pathParams,
+    List<RouteBase> routes = const <RouteBase>[]}) {
   String strName = Helper.convertName(modules.key);
   String strPath = strName;
   if (!isSubModule) strPath = "/$strPath";
   if (pathParams != null) strPath += pathParams;
-
   return GoRoute(
-    name: strName,
-    path: strPath,
+    name: nameRoute ?? strName,
+    path: pathRoute ?? strPath,
     pageBuilder: (context, state) =>
         effectTransitionFade(context, state, modules),
+    routes: routes,
   );
 }
 
@@ -93,20 +97,28 @@ ShellRoute addShellRouterMain(String strKey) {
       pageBuilder: (context, state, child) {
         return effectTransitionFade(context, state, MainLayout(child: child));
       },
-
       routes: [
-        addGoRouter(const DashboardLayout(), isSubModule: false,),
+        addGoRouter(
+          const DashboardLayout(),
+          isSubModule: false,
+        ),
 
         // DS HOP DONG
-
-        addGoRouter(const ThemHopDongKyMoi(), isSubModule: false, pathParams: "/:id"),
+        addGoRouter(const ThemHopDongKyMoi(),
+            isSubModule: false, pathParams: "/:id"),
 
         addGoRouter(const DanhSachHDLayout(), isSubModule: false),
 
         addGoRouter(const CapMaHDLayout(), isSubModule: false),
 
         // Danh sách mới cập nhật và pending
-        addGoRouter(const DanhSachMoiPendingLayout(), isSubModule: false),
+        addGoRouter(
+          const DanhSachMoiPendingLayout(),
+          isSubModule: false,
+          routes: [
+            addGoRouter(const SuaPhieuThuLayout(), nameRoute: SuaPhieuThuLayout.nameRoute, pathRoute: SuaPhieuThuLayout.pathRoute),
+          ]
+        ),
 
         //DANH SACH DOMAIN MOI
         addGoRouter(const DanhSachDomainMoiKy(), isSubModule: false),
@@ -123,13 +135,13 @@ ShellRoute addShellRouterMain(String strKey) {
         addGoRouter(const UpgradeHostingListLayout(), isSubModule: false),
         addGoRouter(const UpgradeDomainListLayout(), isSubModule: false),
 
-
         addGoRouter(const KhachHangMoi(), isSubModule: false),
         addGoRouter(DanhSachBlacklistLayout(), isSubModule: false),
         addGoRouter(const ThongKeBanGiao(), isSubModule: false),
         addGoRouter(const Data20152019(), isSubModule: false),
       ]);
 }
+
 CustomTransitionPage effectTransitionFade(
     BuildContext context, GoRouterState state, Widget child) {
   return CustomTransitionPage(
@@ -144,4 +156,3 @@ CustomTransitionPage effectTransitionFade(
     },
   );
 }
-

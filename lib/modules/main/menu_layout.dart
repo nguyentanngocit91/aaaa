@@ -42,7 +42,7 @@ class MenuLayout extends ConsumerWidget {
                 onTap: () {
                   context.go('/${DashboardLayout.pathName}');
                 }),
-            showMenuGroup(
+            _showMenuGroup(
               title: 'Kế Toán',
               children: [
                 const _ItemMenu(
@@ -121,7 +121,7 @@ class MenuLayout extends ConsumerWidget {
     );
   }
 
-  Widget showMenuGroup(
+  Widget _showMenuGroup(
       {required String title,
       Widget? icon,
       Color? textColor,
