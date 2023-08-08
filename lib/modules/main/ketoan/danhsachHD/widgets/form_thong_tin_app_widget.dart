@@ -1,4 +1,4 @@
-part of '../upgrade.dart';
+part of '../screen/them_hopdong_moi.dart';
 
 class FormThongTinAppWidget extends ConsumerStatefulWidget {
   const FormThongTinAppWidget({super.key});
@@ -42,7 +42,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                             ),
                             readOnly: true,
                             controller: TextEditingController(
-                                text: '${formState.maHopDong}A'),
+                                text: '${formState.soHopDong}A'),
                           ),
                         ],
                       ),
@@ -81,22 +81,22 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                           TextFormField(
                             readOnly: true,
                             controller: TextEditingController(
-                                text: ngayDangKy.formatDateTime(formatString: 'dd-MM-yyyy')),
+                                text: ngayDangKy.formatDateTime()),
                             onTap: () async {
                               final DateTime? selDate =
                                   await Helper.onSelectDate(context,
                                       initialDate: ngayDangKy);
                               String txtDate =
-                                  DateTime.now().formatDateTime(formatString: 'dd-MM-yyyy');
+                                  DateTime.now().formatDateTime();
                               if (selDate != null) {
-                                txtDate = selDate.formatDateTime(formatString: 'dd-MM-yyyy');
+                                txtDate = selDate.formatDateTime();
+                                ref
+                                    .read(formKhachHangMoiProvider.notifier)
+                                    .changeData(
+                                    type: _typeData,
+                                    key: 'ngaykyhd',
+                                    value: selDate);
                               }
-                              ref
-                                  .read(formKhachHangMoiProvider.notifier)
-                                  .changeData(
-                                      type: _typeData,
-                                      key: 'ngayky',
-                                      value: txtDate);
                               setState(() {
                                 ngayDangKy = selDate ?? ngayDangKy;
                               });
@@ -118,7 +118,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                               controller: TextEditingController(
                                   text: (ngayBanGiao != null)
                                       ? ngayBanGiao!
-                                          .formatDateTime(formatString: 'dd-MM-yyyy')
+                                          .formatDateTime()
                                       : null),
                               onTap: () async {
                                 final DateTime? selDate =
@@ -127,15 +127,15 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                                 String txtDate = '';
                                 if (selDate != null) {
                                   txtDate =
-                                      selDate.formatDateTime(formatString: 'dd-MM-yyyy');
+                                      selDate.formatDateTime();
+                                  ref
+                                      .read(formKhachHangMoiProvider.notifier)
+                                      .changeData(
+                                      type: _typeData,
+                                      key: 'ngaybangiao',
+                                      value: selDate);
                                 }
-                                ref
-                                    .read(formKhachHangMoiProvider.notifier)
-                                    .changeData(
-                                        type: _typeData,
-                                        key: 'ngaybangiao',
-                                        value: txtDate);
-                                setState(() {
+                                 setState(() {
                                   ngayBanGiao = selDate ?? ngayBanGiao;
                                 });
                               }),

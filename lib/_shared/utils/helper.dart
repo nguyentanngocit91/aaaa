@@ -18,12 +18,12 @@ class Helper {
     );
   }
   static padding(){
-    return EdgeInsets.all(5);
+    return const EdgeInsets.only(left:10.0,right:10.0,top:7.0,bottom:7.0);
   }
   InputDecoration disabledInput(){
     return  InputDecoration(
-      filled: true, //<-- SEE HERE
-      fillColor: Colors.black12, //<-- SEE HERE
+      filled: true,
+      fillColor: Colors.black12,
     );
   }
   static String convertName(Key? key) {
@@ -45,8 +45,8 @@ class Helper {
     print(prettyprint);
   }
 
-  static String numberFormat(double num) {
-    var numFormat = NumberFormat.currency(locale: "vi_VN", symbol: "đ");
+  static String numberFormat(double num, {String? symbol = "đ"}) {
+    var numFormat = NumberFormat.currency(locale: "vi_VN", symbol: symbol);
     return numFormat.format(num);
   }
 
@@ -65,6 +65,8 @@ class Helper {
   }
 
   static parseDate(String text, String s) {
+    if(text=="")
+      return null;
     final f = new DateFormat(s);
     return f.parse(text);
   }

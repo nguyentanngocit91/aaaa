@@ -1,0 +1,17 @@
+name: number_paginator
+description: A Flutter paginator widget for switching between page numbers.
+version: 0.3.2
+homepage: https://github.com/WieFel/number_paginator
+
+environment:
+  sdk: '>=2.12.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+  flutter_test:
+    sdk: flutter

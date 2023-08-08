@@ -41,7 +41,7 @@ dependencies:
   hive_flutter: ^1.1.0
   freezed: ^2.3.2
   flex_color_scheme: ^7.1.0
-  internet_connection_checker: ^1.0.0+1
+  internet_connection_checker_plus: ^2.0.0
   dio: ^5.1.1
   uuid: ^3.0.7
   regexpattern: ^2.5.0

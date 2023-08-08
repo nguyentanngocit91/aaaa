@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import '../../_shared/app_config/data_box.dart';
+import '../../_shared/providers/app_provider.dart';
 import '../../_shared/thietlap_dieuhuong.dart';
 import '../auth/providers/auth_provider.dart';
 
@@ -69,7 +70,6 @@ class AppRouterNotifier extends AsyncNotifier<void> implements Listenable {
     authStatus = ref.watch(authProvider.select((value) => value.authStatus));
   }
 
-
   /// Định tuyên
   Future<String?> thoiGianChoSplashScreen() async {
     await Future.delayed(const Duration(seconds: 3),() async {});
@@ -132,18 +132,18 @@ class InternetNotifier extends StateNotifier<bool> {
   }
 
   checkInternetStatus() async {
-    state = await InternetConnectionChecker().hasConnection;
+    state = await InternetConnection().hasInternetAccess;
   }
 
   _listenInternetStatus() {
-    InternetConnectionChecker().onStatusChange.listen(
-      (InternetConnectionStatus status) {
+    InternetConnection().onStatusChange.listen(
+      (InternetStatus status) {
         bool isConnected = state;
         switch (status) {
-          case InternetConnectionStatus.connected:
+          case InternetStatus.connected:
             isConnected = true;
             break;
-          case InternetConnectionStatus.disconnected:
+          case InternetStatus.disconnected:
             isConnected = false;
             break;
         }

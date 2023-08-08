@@ -3,10 +3,12 @@ import 'package:bs_flutter_alert/bs_flutter_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/capnhat_hopdong_screen.dart';
 import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/capnhat_thongtin_kh_screen.dart';
 import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/ds_phieuthu_screen.dart';
+import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/them_hopdong_moi.dart';
 import 'package:nn_phanmem/modules/main/ketoan/danhsachHD/screen/them_phieuthu_screen.dart';
 
 import '../../../../_shared/utils/helper.dart';
@@ -554,14 +556,17 @@ class InfoListCustomer extends StatelessWidget {
                     children: [
 
                       GestureDetector(
-                        onTap: () {},
+
+                        onTap: () {
+                            context.go('/${ThemHopDongKyMoi.pathName}/${item.id.toString()}');
+                        },
+
                         child: Container(
                           padding: EdgeInsets.all(5),
                           color: Color(0xFFF29596a),
                           child: Text("Thêm HĐ ký mới",style: TextStyle(color: Colors.white),),
                         ),
                       ),
-
                       SizedBox(height: 3,),
 
                       GestureDetector(

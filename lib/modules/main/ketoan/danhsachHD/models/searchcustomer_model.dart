@@ -1,55 +1,87 @@
+class SearchCustomerModel {
+  String? id;
+  String? makhachhang;
+  String? type;
+  String? hoten;
+  String? phone;
+  String? email;
+  String? congty;
+  String? masothue;
+  String? diachi;
+  String? cccd;
+  Info? info;
+  String? ghichu;
 
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+  SearchCustomerModel(
+      {
+        this.id,
+        this.makhachhang,
+        this.type,
+        this.hoten,
+        this.phone,
+        this.email,
+        this.congty,
+        this.masothue,
+        this.diachi,
+        this.cccd,
+        this.info,
+        this.ghichu
+      });
+  SearchCustomerModel.fromJson(Map<String, dynamic> json) {
+    id = json['_id'];
+    makhachhang = json['makhachhang'];
+    type = json['type'];
+    hoten = json['hoten'];
+    phone = json['phone'];
+    email = json['email'];
+    congty = json['congty'];
+    masothue = json['masothue'];
+    diachi = json['diachi'];
+    cccd = json['cccd'];
+    info = json['info'] != null ?  Info.fromJson(json['info']) : null;
+    ghichu = json['ghichu'];
 
-part 'searchcustomer_model.freezed.dart';
-part 'searchcustomer_model.g.dart';
+  }
 
-// **************************************************************************
-// Đây là nội dung được tạo tự động bằng NextDEV Tool
-// Đề nghị không chỉnh sửa nội dung file này
-// Hãy đảm bảo các gói này được thêm vào file pubspec.yaml
-// dependencies: 
-// 	freezed_annotation: <lastest_version>
-// 	json_annotation: <lastest_version>
-// dev_dependencies:
-// 	build_runner: <lastest_version>
-// 	freezed: <lastest_version>
-// 	json_serializable: <lastest_version>
-// Bằng câu lệnh : 
-// 	flutter pub add freezed_annotation json_annotation
-// 	flutter pub add build_runner freezed json_serializable --dev
-// Chạy câu lệnh sau để build file freezed:
-// 	flutter pub run build_runner build
-// Version : 1.0.1 Beta
-// **************************************************************************
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-@freezed
-class SearchCustomerModel with _$SearchCustomerModel {
-	const factory SearchCustomerModel({
-		List<dynamic>? lichsu_khoitao,
-		@JsonKey(name: '_id') @required String? id,
-		String? makhachhang,
-		String? type,
-		String? hoten,
-		String? phone,
-		String? email,
-		String? congty,
-		String? masothue,
-		String? diachi,
-		String? cccd,
-		@JsonKey(name: 'info') L1_info? l1_info,
-		String? ghichu,
-		List<dynamic>? lichsu_capnhat}) = _SearchCustomerModel;
-
-	factory SearchCustomerModel.fromJson(Map<String, dynamic> json) => _$SearchCustomerModelFromJson(json);
+    data['_id'] = this.id;
+    data['makhachhang'] = this.makhachhang;
+    data['type'] = this.type;
+    data['hoten'] = this.hoten;
+    data['phone'] = this.phone;
+    data['email'] = this.email;
+    data['congty'] = this.congty;
+    data['masothue'] = this.masothue;
+    data['diachi'] = this.diachi;
+    data['cccd'] = this.cccd;
+    if (this.info != null) {
+      data['info'] = this.info!.toJson();
+    }
+    data['ghichu'] = this.ghichu;
+    return data;
+  }
 }
 
-@freezed
-class L1_info with _$L1_info {
-	const factory L1_info({
-		String? key}) = _L1_info;
+class Info {
+  String? emailPhu;
+  String? nguoidaidienmoi;
+  String? dienthoaicoquan;
 
-	factory L1_info.fromJson(Map<String, dynamic> json) => _$L1_infoFromJson(json);
+  Info({this.emailPhu, this.nguoidaidienmoi, this.dienthoaicoquan});
+
+  Info.fromJson(Map<String, dynamic> json) {
+    emailPhu = json['email_phu'];
+    nguoidaidienmoi = json['nguoidaidienmoi'];
+    dienthoaicoquan = json['dienthoaicoquan'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['email_phu'] = this.emailPhu;
+    data['nguoidaidienmoi'] = this.nguoidaidienmoi;
+    data['dienthoaicoquan'] = this.dienthoaicoquan;
+    return data;
+  }
 }
-
