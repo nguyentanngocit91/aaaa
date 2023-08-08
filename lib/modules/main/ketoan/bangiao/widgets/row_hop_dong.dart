@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/ban_giao_model.dart';
+import '../providers/list_file_provider.dart';
 import 'list_file_of_hop_dong.dart';
 import 'row_app.dart';
 import 'row_domain.dart';
@@ -64,16 +65,16 @@ class RowHopDong extends StatelessWidget {
                         context: context,
                         barrierDismissible: false, // user must tap button!
                         builder: (BuildContext context) {
-                          return const ListFileOfHopDong();
+                          return Center(child: const ListFileOfHopDong());
                         },
                       );
                     },
                     style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFF03a9f4)),
-                    child: const Text(
+                    child: const SelectionContainer.disabled(child: Text(
                       'Xem file HĐ',
                       style: TextStyle(color: Colors.white),
-                    ),
+                    ),),
                   )
                 ],
               ),

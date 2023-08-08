@@ -13,4 +13,15 @@ class BanGiaoRepository {
     }
     return null;
   }
+
+  Future<Map?> getListFileBySoHD({required String soHD}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.listFile}?sohopdong=$soHD');
+    if(response.statusCode==200){
+      if(response.data['success']==true){
+        return response.data;
+      }
+    }
+    return null;
+  }
+
 }

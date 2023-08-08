@@ -174,35 +174,37 @@ class RowInfoPhieuThu extends StatelessWidget {
             color: (isPending != null && isPending)
                 ? Colors.red.withOpacity(0.1)
                 : Colors.transparent,
-            border:Border(bottom:BorderSide(width:1,color:Colors.black12))
+            border:const Border(bottom:BorderSide(width:1,color:Colors.black12))
           ),
           child: Row(
             children: [
               Expanded(
                 flex: 2,
-                child: Text('$index'),
+                child: Text('$index',style: AppTextStyles.defaultTextStyle,),
               ),
               Expanded(
                 flex: 5,
                 child: (ngayNop != null)
-                    ? Text(DateFormat('yMd').format(DateTime.parse(ngayNop)))
+                    ? Text(DateFormat('yMd').format(DateTime.parse(ngayNop),
+                ),style: AppTextStyles.defaultTextStyle,
+                )
                     : const Text('-'),
               ),
               Expanded(
                 flex: 5,
                 child:
-                    (maKhachHang != null) ? Text(maKhachHang) : const Text('-'),
+                    (maKhachHang != null) ? Text(maKhachHang,style: AppTextStyles.defaultTextStyle,) : const Text('-'),
               ),
               Expanded(
                 flex: 5,
                 child: (maHopDong != null)
-                    ? Text(maHopDong.replaceAll(RegExp(r'[^0-9]'), ''))
+                    ? Text(maHopDong.replaceAll(RegExp(r'[^0-9]'), ''),style: AppTextStyles.defaultTextStyle,)
                     : const Text('-'),
               ),
               Expanded(
                 flex: 5,
                 child:
-                    (maPhieuThu != null) ? Text(maPhieuThu) : const Text('-'),
+                    (maPhieuThu != null) ? Text(maPhieuThu,style: AppTextStyles.defaultTextStyle,) : const Text('-'),
               ),
               Expanded(
                 flex: 5,
@@ -229,41 +231,41 @@ class RowInfoPhieuThu extends StatelessWidget {
               Expanded(
                 flex: 5,
                 child: (item.httt == 'cod')
-                    ? const Text('Tiền mặt')
-                    : const Text('Chuyển khoản'),
+                    ? const Text('Tiền mặt',style: AppTextStyles.defaultTextStyle,)
+                    : const Text('Chuyển khoản',style: AppTextStyles.defaultTextStyle,),
               ),
               Expanded(
                 flex: 5,
-                child: Text(Helper.numberFormat(item.tongtien!)),
+                child: Text(Helper.numberFormat(item.tongtien!),style: AppTextStyles.defaultTextStyle,),
               ),
               Expanded(
                 flex: 5,
                 child: (phiWeb != null)
-                    ? Text(Helper.numberFormat(phiWeb))
+                    ? Text(Helper.numberFormat(phiWeb),style: AppTextStyles.defaultTextStyle,)
                     : const Text('0 đ'),
               ),
               Expanded(
                 flex: 5,
                 child: (phiNCWeb != null)
-                    ? Text(Helper.numberFormat(phiNCWeb))
+                    ? Text(Helper.numberFormat(phiNCWeb),style: AppTextStyles.defaultTextStyle,)
                     : const Text('0 đ'),
               ),
               Expanded(
                 flex: 5,
                 child: (phiHosting != null)
-                    ? Text(Helper.numberFormat(phiHosting))
+                    ? Text(Helper.numberFormat(phiHosting),style: AppTextStyles.defaultTextStyle,)
                     : const Text('0 đ'),
               ),
               Expanded(
                 flex: 5,
                 child: (phiNCHosting != null)
-                    ? Text(Helper.numberFormat(phiNCHosting))
+                    ? Text(Helper.numberFormat(phiNCHosting),style: AppTextStyles.defaultTextStyle,)
                     : const Text('0 đ'),
               ),
               Expanded(
                 flex: 5,
                 child: (phiDomain != null)
-                    ? Text(Helper.numberFormat(phiDomain))
+                    ? Text(Helper.numberFormat(phiDomain),style: AppTextStyles.defaultTextStyle,)
                     : const Text('0 đ'),
               ),
                 Expanded(
@@ -416,7 +418,7 @@ class ShowTenNhanVien extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     String? hoTen = list[index].hoten;
-                    return (hoTen != null) ? Text(hoTen) : const Text('-');
+                    return (hoTen != null) ? Text(hoTen,style: AppTextStyles.defaultTextStyle,) : const Text('-');
                   })
             ],
           )
@@ -440,7 +442,7 @@ class ShowMaNhanVien extends StatelessWidget {
                   itemBuilder: (context, index) {
                     String? maNhanVien = list[index].manhanvien;
                     return (maNhanVien != null)
-                        ? Text(maNhanVien)
+                        ? Text(maNhanVien,style: AppTextStyles.defaultTextStyle,)
                         : const Text('-');
                   })
             ],
@@ -465,7 +467,7 @@ class ShowKhuVuc extends StatelessWidget {
                   itemBuilder: (context, index) {
                     String? maPhongBan = list[index].phongbanId?.maphongban;
                     return (maPhongBan != null)
-                        ? Text(maPhongBan)
+                        ? Text(maPhongBan,style: AppTextStyles.defaultTextStyle,)
                         : const Text('-');
                   })
             ],
@@ -473,3 +475,12 @@ class ShowKhuVuc extends StatelessWidget {
         : const Text('-');
   }
 }
+
+class AppTextStyles {
+  static const TextStyle defaultTextStyle = TextStyle(
+    fontSize: 13,
+    color: Colors.black,
+    // Thêm các thuộc tính khác tùy theo yêu cầu
+  );
+}
+
