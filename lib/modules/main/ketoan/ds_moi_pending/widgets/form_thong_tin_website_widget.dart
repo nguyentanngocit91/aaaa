@@ -1,4 +1,4 @@
-part of '../khach_hang_moi_layout.dart';
+part of '../sua_phieu_thu_layout.dart';
 
 class FormThongTinWebsiteWidget extends ConsumerStatefulWidget {
   const FormThongTinWebsiteWidget({super.key});
@@ -16,7 +16,7 @@ class _FormThongTinWebsiteWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final formState = ref.watch(formKhachHangMoiProvider);
+    final formState = ref.watch(formPhieuThuProvider);
 
     return Visibility(
       visible: formState.isHopDongWebsite,
@@ -58,7 +58,7 @@ class _FormThongTinWebsiteWidgetState
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               ref
-                                  .read(formKhachHangMoiProvider.notifier)
+                                  .read(formPhieuThuProvider.notifier)
                                   .changeData(type: _typeData ,key: 'chucnang', value: value);
                             },
                             validator: FormBuilderValidators.compose([
@@ -80,8 +80,11 @@ class _FormThongTinWebsiteWidgetState
                             controller: TextEditingController(text: ngayDangKy.formatDateTime()),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayDangKy);
+                              String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                txtDate = selDate.formatDateTime();
+                                print(selDate);
+                                ref.read(formPhieuThuProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
                               setState(() {
@@ -104,8 +107,10 @@ class _FormThongTinWebsiteWidgetState
                             controller: TextEditingController(text: (ngayBanGiao!=null) ? ngayBanGiao!.formatDateTime() : null),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayBanGiao);
+                              String txtDate = '';
                               if(selDate!=null){
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                txtDate = selDate.formatDateTime();
+                                ref.read(formPhieuThuProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaybangiao', value: selDate);
                               }
                               setState(() {
@@ -160,7 +165,7 @@ class _FormThongTinWebsiteWidgetState
                             maxLines: 3,
                             onChanged: (value) {
                               ref
-                                  .read(formKhachHangMoiProvider.notifier)
+                                  .read(formPhieuThuProvider.notifier)
                                   .changeData(type: _typeData ,key: 'ghichu', value: value);
                             },
                           ),

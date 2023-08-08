@@ -48,6 +48,4 @@ class HopDongRepository{
       'data' : list,
     };
   }
-
-
 }

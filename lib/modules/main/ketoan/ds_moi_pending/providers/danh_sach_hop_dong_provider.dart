@@ -20,7 +20,7 @@ class DanhSachHopDongState {
       this.data,
       this.dataPhieuThu,
       this.filters,
-      this.isLoading = false});
+      this.isLoading = true});
 
   DanhSachHopDongState copyWith(
       {int? totalRow,
@@ -57,7 +57,6 @@ class DanhSachHopDongNotifier
   }
 
   Future<void> fetchData() async {
-    state = state.copyWith(isLoading: true);
     final result = await _hopDongRepository.layDanhSachPhieuThu(
         currentPage: state.currentPage,
         pageSize: state.pageSize,

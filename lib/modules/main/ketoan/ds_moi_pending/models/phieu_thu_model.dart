@@ -47,8 +47,7 @@ class PhieuThuModel with _$PhieuThuModel {
     String? httt,
     String? ghichu,
     String? loaiphieuthu,
-    bool? is_pending,
-    List<dynamic>? lichsu_pending,}) = _PhieuThuModel;
+    bool? is_pending,}) = _PhieuThuModel;
 
   factory PhieuThuModel.fromJson(Map<String, dynamic> json) => _$PhieuThuModelFromJson(json);
 }
@@ -60,18 +59,5 @@ class L1_khachhangId with _$L1_khachhangId {
     String? makhachhang}) = _L1_khachhangId;
 
   factory L1_khachhangId.fromJson(Map<String, dynamic> json) => _$L1_khachhangIdFromJson(json);
-}
-
-@freezed
-class L1_lichsu_khoitao with _$L1_lichsu_khoitao {
-  const factory L1_lichsu_khoitao({
-    @JsonKey(name: '_id') @required String? id,
-    String? parentId,
-    String? manhanvien,
-    String? hoten,
-    String? phongbanId,
-    String? ngaykhoitao}) = _L1_lichsu_khoitao;
-
-  factory L1_lichsu_khoitao.fromJson(Map<String, dynamic> json) => _$L1_lichsu_khoitaoFromJson(json);
 }
 

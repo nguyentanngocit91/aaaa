@@ -1,4 +1,4 @@
-part of '../khach_hang_moi_layout.dart';
+part of '../sua_phieu_thu_layout.dart';
 
 
 class FormThongTinHostingWidget extends ConsumerStatefulWidget {
@@ -17,7 +17,7 @@ class _FormThongTinHostingWidgetState
   
   @override
   Widget build(BuildContext context) {
-    final formState = ref.watch(formKhachHangMoiProvider);
+    final formState = ref.watch(formPhieuThuProvider);
 
     return Visibility(
       visible: formState.isHopDongHosting,
@@ -63,7 +63,7 @@ class _FormThongTinHostingWidgetState
                                 AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               ref
-                                  .read(formKhachHangMoiProvider.notifier)
+                                  .read(formPhieuThuProvider.notifier)
                                   .changeData(
                                       type: _typeData,
                                       key: 'dungluong',
@@ -96,8 +96,10 @@ class _FormThongTinHostingWidgetState
                             controller: TextEditingController(text: ngayDangKy.formatDateTime()),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayDangKy);
+                              String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                txtDate = selDate.formatDateTime();
+                                ref.read(formPhieuThuProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
                               setState(() {
@@ -125,8 +127,10 @@ class _FormThongTinHostingWidgetState
                             controller: TextEditingController(text: (ngayHetHan!=null) ? ngayHetHan!.formatDateTime() : ''),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayHetHan);
+                              String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                txtDate = selDate.formatDateTime();
+                                ref.read(formPhieuThuProvider.notifier).changeData(
                                     type: _typeData, key: 'ngayhethan', value: selDate);
                               }
                               setState(() {
@@ -181,7 +185,7 @@ class _TrangThaiHostingWidgetState
                     value: 'kymoi',
                     groupValue: _trangThaiHosting,
                     onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                      ref.read(formPhieuThuProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -193,7 +197,7 @@ class _TrangThaiHostingWidgetState
                     value: 'phuchoi',
                     groupValue: _trangThaiHosting,
                     onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                      ref.read(formPhieuThuProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -205,7 +209,7 @@ class _TrangThaiHostingWidgetState
                     value: 'nangcap',
                     groupValue: _trangThaiHosting,
                     onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                      ref.read(formPhieuThuProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -217,7 +221,7 @@ class _TrangThaiHostingWidgetState
                     value: 'chuyendoi',
                     groupValue: _trangThaiHosting,
                     onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                      ref.read(formPhieuThuProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -240,7 +244,7 @@ class _TrangThaiHostingWidgetState
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   onChanged: (value) {
-                    ref.read(formKhachHangMoiProvider.notifier)
+                    ref.read(formPhieuThuProvider.notifier)
                         .changeData(
                         type: 'hopdong',
                         key: 'sohopdongcu',
@@ -268,7 +272,7 @@ class _TrangThaiHostingWidgetState
                 ),
                 onChanged: (value) {
                   ref
-                      .read(formKhachHangMoiProvider.notifier)
+                      .read(formPhieuThuProvider.notifier)
                       .changeData(
                       type: _typeData,
                       key: 'ghichu',

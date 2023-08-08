@@ -33,7 +33,6 @@ _$_PhieuThuModel _$$_PhieuThuModelFromJson(Map<String, dynamic> json) =>
       ghichu: json['ghichu'] as String?,
       loaiphieuthu: json['loaiphieuthu'] as String?,
       is_pending: json['is_pending'] as bool?,
-      lichsu_pending: json['lichsu_pending'] as List<dynamic>?,
     );
 
 Map<String, dynamic> _$$_PhieuThuModelToJson(_$_PhieuThuModel instance) =>
@@ -60,7 +59,6 @@ Map<String, dynamic> _$$_PhieuThuModelToJson(_$_PhieuThuModel instance) =>
       'ghichu': instance.ghichu,
       'loaiphieuthu': instance.loaiphieuthu,
       'is_pending': instance.is_pending,
-      'lichsu_pending': instance.lichsu_pending,
     };
 
 _$_L1_khachhangId _$$_L1_khachhangIdFromJson(Map<String, dynamic> json) =>
@@ -73,25 +71,4 @@ Map<String, dynamic> _$$_L1_khachhangIdToJson(_$_L1_khachhangId instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'makhachhang': instance.makhachhang,
-    };
-
-_$_L1_lichsu_khoitao _$$_L1_lichsu_khoitaoFromJson(Map<String, dynamic> json) =>
-    _$_L1_lichsu_khoitao(
-      id: json['_id'] as String?,
-      parentId: json['parentId'] as String?,
-      manhanvien: json['manhanvien'] as String?,
-      hoten: json['hoten'] as String?,
-      phongbanId: json['phongbanId'] as String?,
-      ngaykhoitao: json['ngaykhoitao'] as String?,
-    );
-
-Map<String, dynamic> _$$_L1_lichsu_khoitaoToJson(
-        _$_L1_lichsu_khoitao instance) =>
-    <String, dynamic>{
-      '_id': instance.id,
-      'parentId': instance.parentId,
-      'manhanvien': instance.manhanvien,
-      'hoten': instance.hoten,
-      'phongbanId': instance.phongbanId,
-      'ngaykhoitao': instance.ngaykhoitao,
     };
