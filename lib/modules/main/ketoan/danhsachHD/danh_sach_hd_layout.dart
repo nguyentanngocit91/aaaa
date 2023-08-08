@@ -558,7 +558,9 @@ class InfoListCustomer extends StatelessWidget {
                       GestureDetector(
 
                         onTap: () {
-                            context.go('/${ThemHopDongKyMoi.pathName}/${item.id.toString()}');
+                           // context.go('/${ThemHopDongKyMoi.pathName}/${item.id.toString()}');
+                            context.go(
+                                '${GoRouterState.of(context).location}/${item.id.toString()}');
                         },
 
                         child: Container(
