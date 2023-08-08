@@ -107,7 +107,7 @@ class RowInfoDomain extends StatelessWidget {
     String? domain = item.tenmien;
     int? soNam = item.sonamdangky;
     String? soHD  = item.sohopdong;
-    String? ngayKy = item.ngaydangky;
+    String? ngayKy = item.ngaykyhd;
     return Container(
       padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
       decoration:  BoxDecoration(
@@ -130,7 +130,7 @@ class RowInfoDomain extends StatelessWidget {
                      context: context,
                      barrierDismissible: false, // user must tap button!
                      builder: (BuildContext context) {
-                       return DetailDomain();
+                       return DetailDomain(item: item,);
                      },
                    );
 
