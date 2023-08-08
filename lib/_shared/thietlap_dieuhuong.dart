@@ -115,7 +115,6 @@ ShellRoute addShellRouterMain(String strKey) {
             addGoRouter(const SuaPhieuThuLayout(), nameRoute: SuaPhieuThuLayout.nameRoute, pathRoute: SuaPhieuThuLayout.pathRoute),
           ]
         ),
-
         //DANH SACH DOMAIN MOI
         addGoRouter(const DanhSachDomainMoiKy(), isSubModule: false),
 
