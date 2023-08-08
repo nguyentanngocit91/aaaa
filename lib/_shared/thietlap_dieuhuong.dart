@@ -90,16 +90,11 @@ ShellRoute addShellRouterMain(String strKey) {
   final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: strKey);
   return ShellRoute(
       navigatorKey: shellNavigatorKey,
-
       pageBuilder: (context, state, child) {
         return effectTransitionFade(context, state, MainLayout(child: child));
       },
-
-
-
       routes: [
         addGoRouter(const DashboardLayout(), isSubModule: false,),
-
         // DS HOP DONG
         addGoRouter(const ThemHopDongKyMoi(), isSubModule: false, pathParams: "/:id"),
 
