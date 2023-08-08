@@ -47,11 +47,9 @@ part '../widgets/upload_file_hd_widget.dart';
 final GlobalKey<FormState> _formKey = GlobalKey();
 
 class ThemHopDongKyMoi extends ConsumerStatefulWidget {
-  const ThemHopDongKyMoi({Key? key}) : super(key: const Key(pathName));
-
-
-
-  static const pathName = 'them-hop-dong-moi';
+  const ThemHopDongKyMoi({Key? key}) : super(key: const Key(nameRoute));
+  static const String nameRoute = 'them-hop-dong-moi';
+  static const String pathRoute = ':makhachang';
   //final SearchCustomerModel item;
   @override
   ConsumerState createState() => _ThemHopDongKyMoiState();
@@ -61,6 +59,14 @@ class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUI
 
 
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 0),(){
+      //ref.read(formPhieuThuProvider.notifier).initData( maPhieuThu: GoRouterState.of(context).pathParameters['makhachang'] ?? '');
+    });
+  }
+
+
   Widget build(BuildContext context) {
 
     final String id= GoRouterState.of(context).pathParameters.values.single.toString();
