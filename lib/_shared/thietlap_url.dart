@@ -39,7 +39,6 @@ class ApiUrl {
 
   //DOMAIN
   static const String danhSachDomain = '$baseUrl/domain';
-  static const String updateDomain = '$baseUrl/update-domain';
 
   //PHIẾU THU
   static const String danhSachPhieuThu = '$baseUrl/phieu-thu';
