@@ -15,6 +15,7 @@ class FormKhachHangMoiState {
   final bool isHopDongDomain;
   final bool isHopDongHosting;
   final bool isHopDongApp;
+  final CustomerUpdateModel? customer;
 
   FormKhachHangMoiState({
     this.formStatus = FormStatus.pure,
@@ -31,6 +32,7 @@ class FormKhachHangMoiState {
     this.isHopDongApp = false,
     this.isHopDongDomain = false,
     this.isHopDongHosting = false,
+    this.customer,
   });
 
   copyWith(
@@ -47,7 +49,7 @@ class FormKhachHangMoiState {
       bool? isHopDongWebsite,
       bool? isHopDongApp,
       bool? isHopDongDomain,
-      bool? isHopDongHosting}) {
+      bool? isHopDongHosting, CustomerUpdateModel? customer}) {
     return FormKhachHangMoiState(
       formStatus: formStatus ?? this.formStatus,
       soHopDong: soHopDong ?? this.soHopDong,
@@ -63,6 +65,7 @@ class FormKhachHangMoiState {
       isHopDongWebsite: isHopDongWebsite ?? this.isHopDongWebsite,
       isHopDongDomain: isHopDongDomain ?? this.isHopDongDomain,
       isHopDongHosting: isHopDongHosting ?? this.isHopDongHosting,
+      customer: customer ?? this.customer,
     );
   }
 }

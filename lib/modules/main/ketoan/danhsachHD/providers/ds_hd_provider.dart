@@ -90,10 +90,12 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
   }
 
 
+
+
   getCustomerById(String id) async {
     state = state.copyWith(customer: null);
     final jsonResult = await _dsHDRepository.getInfoCustomer(id);
-   // print("${jsonResult['data']}+ customer");
+    print("${jsonResult['data']}+ customer");
 
 
     //print("${jsonResult['media']}+ media");

@@ -53,9 +53,9 @@ class _KhachHangMoiState extends ConsumerState<KhachHangMoi> with FormUIMixins {
   Widget build(BuildContext context) {
     ref.listen(formKhachHangMoiProvider.select((value) => value.formStatus),
         (previous, next) {
-      if (next == FormStatus.submissionInProgress) {
-        Loading(context).start();
-      }
+      // if (next == FormStatus.submissionInProgress) {
+      //   Loading(context).start();
+      // }
       if (next == FormStatus.submissionCanceled) {
         Loading(context).stop();
       }

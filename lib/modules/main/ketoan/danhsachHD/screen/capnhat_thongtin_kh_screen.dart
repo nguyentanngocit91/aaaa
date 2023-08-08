@@ -71,14 +71,14 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
 
       listController!['makhachhang']!.text = data!.makhachhang!.toString();
       listController!['email']!.text = data!.email!.toString();
-      listController!['email_phu']!.text = data!.l1_info!.email_phu.toString();
+      listController!['email_phu']!.text = data!.info!.emailPhu.toString();
       listController!['hoten']!.text = data!.hoten!;
       listController!['phone']!.text = data!.phone!;
 
 
       listController!['congty']!.text = data!.congty!;
-      listController!['nguoidaidienmoi']!.text = data!.l1_info!.nguoidaidienmoi!;
-      listController!['dienthoaicoquan']!.text = data!.l1_info!.dienthoaicoquan!;
+      listController!['nguoidaidienmoi']!.text = data!.info!.nguoidaidienmoi!;
+      listController!['dienthoaicoquan']!.text = data!.info!.dienthoaicoquan!;
 
       listController!['masothue']!.text = data!.masothue!;
       listController!['cccd']!.text = data!.cccd!;

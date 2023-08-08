@@ -196,6 +196,7 @@ class _ItemMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String viTri = GoRouterState.of(context).location;
+
     return ListTile(
       dense: true,
       leading: icon ?? _faIcon,

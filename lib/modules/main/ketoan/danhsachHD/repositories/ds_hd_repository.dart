@@ -121,6 +121,9 @@ class DSHDRepository{
 
   }
 
+
+
+
   getInfoCustomer(String id) async {
     List<MediaCustomerModel> listMedia = [];
     final response =
@@ -157,7 +160,7 @@ class DSHDRepository{
       "loaimedia": "khachhang",
       "khachhangId": id
     });
-   // print("${medias}+ load medias000");
+    print("${medias}+ load medias000");
 
     if(medias.statusCode == 200){
       final mediaRes  = medias.data;
@@ -169,7 +172,7 @@ class DSHDRepository{
     }
 
     result['media'] = listMedia;
-  //  print("${result['media']}+ load result['media']");
+    print("${result['media']}+ load result['media']");
     return result;
   }
 

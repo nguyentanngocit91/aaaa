@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../../../../_shared/app_config/app.dart';
 import '../../../../../_shared/thietlap_url.dart';
+import '../models/customerupdate_model.dart';
 import '../providers/files_hd_provider.dart';
 
 class KhachHangMoiRepository {
@@ -26,8 +27,8 @@ class KhachHangMoiRepository {
     return null;
   }
 
-  Future<Map?> thongTinKhachHang({required String email, String? type}) async {
-    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email$type');
+  Future<Map?> thongTinKhachHang({required String id}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.infoUpdateCustomer}$id');
     if(response.statusCode==200){
       if(response.data['success']==true){
         if(response.data['data']!=null) return response.data['data'];
@@ -36,6 +37,17 @@ class KhachHangMoiRepository {
     }
     return null;
   }
+
+  /*Future<Map?> thongTinKhachHang({required String email, String? type}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email$type');
+    if(response.statusCode==200){
+      if(response.data['success']==true){
+        if(response.data['data']!=null) return response.data['data'];
+        return null;
+      }
+    }
+    return null;
+  }*/
 
   Future<Map?> thongTinNhanVien({required String maNhanVien}) async {
     final Response response = await App.dioClient.get('${ApiUrl.danhSachNhanVien}?manhanvien=$maNhanVien');
@@ -81,4 +93,34 @@ class KhachHangMoiRepository {
     }
     return false;
   }
+
+
+  getInfoCustomerByID(String id) async {
+    final response =
+    await App.dioClient.get("${ApiUrl.infoUpdateCustomer}${id}");
+
+    // print("${response}+ infoUpdateCustomer");
+
+    var result = {
+      "status": false,
+      "message": "Lỗi",
+      "data": {},
+    };
+    if (response.statusCode == 200) {
+      final res = response.data;
+      // print("${res}+ load CustomerUpdateModel");
+      if (res['success'] == false) {
+        result['status'] = true;
+        result['message'] = "Không tìm thấy dữ liệu";
+      } else {
+        result['status'] = true;
+        result['message'] = "Success";
+        result['data'] = CustomerUpdateModel.fromJson(res["data"]);
+        // print("${result['data'] }+ load CustomerUpdateModel");
+      }
+    }
+    return result;
+  }
+
+
 }
