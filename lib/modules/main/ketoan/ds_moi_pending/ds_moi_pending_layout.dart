@@ -192,10 +192,8 @@ class _DanhSachMoiPendingLayoutState
                                   DataCell(
                                     IconButton(
                                         onPressed: () {
-                                          print(
-                                              '${GoRouterState.of(context).location}/${item.id}');
                                           context.go(
-                                              '${GoRouterState.of(context).location}/${item.id}');
+                                              '${GoRouterState.of(context).location}/${item.maphieuthu}');
                                         },
                                         icon: const FaIcon(
                                           FontAwesomeIcons.pencil,

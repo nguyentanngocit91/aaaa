@@ -111,7 +111,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
 
   saveForm() async {
     // data
-    final Map<String,dynamic> data = {};
+    final Map<String, dynamic> data = {};
 
     // format date
     const String formatDate = 'yyyy-MM-dd';
@@ -140,7 +140,8 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
           DateTime.now().formatDateTime(formatString: formatDate);
     } else {
       state.dataPhieuThu?['ngaynopcty'] =
-          DateTime.parse(state.dataPhieuThu?['ngaynopcty']).formatDateTime(formatString: formatDate);
+          (state.dataPhieuThu?['ngaynopcty'] as DateTime)
+              .formatDateTime(formatString: formatDate);
     }
     state.dataPhieuThu?['manhanvien'] = dsNhanVienPhuTrach;
 
@@ -151,12 +152,12 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
             DateTime.now().formatDateTime(formatString: formatDate);
       } else {
         state.dataWebsite?['ngaykyhd'] =
-            DateTime.parse(state.dataWebsite?['ngaykyhd'])
+            (state.dataWebsite?['ngaykyhd'] as DateTime)
                 .formatDateTime(formatString: formatDate);
       }
       if (state.dataWebsite?['ngaybangiao'] != null) {
         state.dataWebsite?['ngaybangiao'] =
-            DateTime.parse(state.dataWebsite?['ngaybangiao'])
+            (state.dataWebsite?['ngaybangiao'] as DateTime)
                 .formatDateTime(formatString: formatDate);
       }
       data["Web"] = state.dataWebsite;
@@ -180,12 +181,12 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
             DateTime.now().formatDateTime(formatString: formatDate);
       } else {
         state.dataHosting?['ngaykyhd'] =
-            DateTime.parse(state.dataHosting?['ngaykyhd'])
+            (state.dataHosting?['ngaykyhd'] as DateTime)
                 .formatDateTime(formatString: formatDate);
       }
       if (state.dataHosting?['ngayhethan'] != null) {
         state.dataHosting?['ngayhethan'] =
-            DateTime.parse(state.dataHosting?['ngayhethan'])
+            (state.dataHosting?['ngayhethan'] as DateTime)
                 .formatDateTime(formatString: formatDate);
       }
       if (state.dataHosting?['trangthaihosting'] == null) {
@@ -200,7 +201,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
         state.dataApp?['ngaykyhd'] =
             DateTime.now().formatDateTime(formatString: formatDate);
       } else {
-        state.dataApp?['ngaykyhd'] = DateTime.parse(state.dataApp?['ngaykyhd'])
+        state.dataApp?['ngaykyhd'] = (state.dataApp?['ngaykyhd'] as DateTime)
             .formatDateTime(formatString: formatDate);
       }
       if (state.dataApp?['ngaybangiao'] != null) {
@@ -216,19 +217,20 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
 
     final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
 
-    if(result){
+    if (result) {
       final uploadedFile = await _saveFileHD();
       state = state.copyWith(formStatus: FormStatus.submissionSuccess);
-    }else {
+    } else {
       state = state.copyWith(formStatus: FormStatus.submissionFailure);
     }
-
   }
 
   Future<bool> _saveFileHD() async {
     final infoFile = ref.read(fileHDProvider);
     if (infoFile.fileUpload?.path != null) {
-      return await _khachHangMoiRepository.updateFile(fileHDModel: infoFile, soHopDong: state.soHopDong.toString() ?? '011111');
+      return await _khachHangMoiRepository.updateFile(
+          fileHDModel: infoFile,
+          soHopDong: state.soHopDong.toString() ?? '011111');
     }
     return false;
   }
