@@ -159,9 +159,9 @@ class KhachhangId {
 }
 
 class Nhanvien {
+  ParentId? parentId;
   PhongbanId? phongbanId;
   String? manhanvien;
-  String? parentId;
   String? sId;
   String? hoten;
 
@@ -172,8 +172,12 @@ class Nhanvien {
     phongbanId = json['phongbanId'] != null
         ? PhongbanId.fromJson(json['phongbanId'])
         : null;
+
+    parentId = json['parentId'] != null
+        ? ParentId.fromJson(json['parentId'])
+        : null;
+
     manhanvien = json['manhanvien'];
-    parentId = json['parentId'];
     sId = json['_id'];
     hoten = json['hoten'];
   }
@@ -183,13 +187,42 @@ class Nhanvien {
     if (phongbanId != null) {
       data['phongbanId'] = phongbanId!.toJson();
     }
+    if (parentId != null) {
+      data['parentId'] = parentId!.toJson();
+    }
     data['manhanvien'] = manhanvien;
-    data['parentId'] = parentId;
     data['_id'] = sId;
     data['hoten'] = hoten;
     return data;
   }
 }
+
+class ParentId {
+
+  String? sId;
+  String? manhanvien;
+  String? hoten;
+
+  ParentId({this.sId, this.manhanvien, this.hoten});
+
+  ParentId.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    manhanvien = json['manhanvien'];
+    hoten = json['hoten'];
+
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['manhanvien'] = manhanvien;
+    data['hoten'] = hoten;
+    return data;
+  }
+
+
+}
+
 
 class PhongbanId {
   String? sId;
