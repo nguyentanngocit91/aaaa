@@ -47,7 +47,7 @@ class SuaPhieuThuLayout extends ConsumerStatefulWidget {
   const SuaPhieuThuLayout() : super(key: const Key(nameRoute));
 
   static const String nameRoute = 'sua-phieu-thu';
-  static const String pathRoute = ':maphieuthu';
+  static const String pathRoute = ':id';
 
   @override
   ConsumerState createState() => _SuaPhieuThuLayoutState();
@@ -59,7 +59,8 @@ class _SuaPhieuThuLayoutState extends ConsumerState<SuaPhieuThuLayout> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 0),(){
-      ref.read(formPhieuThuProvider.notifier).initData( maPhieuThu: GoRouterState.of(context).pathParameters['maphieuthu'] ?? '');
+      print(GoRouterState.of(context).pathParameters['id']);
+      ref.read(formPhieuThuProvider.notifier).initData( id: GoRouterState.of(context).pathParameters['id'] ?? '');
     });
   }
 

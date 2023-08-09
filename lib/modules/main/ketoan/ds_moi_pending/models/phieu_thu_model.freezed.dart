@@ -20,7 +20,6 @@ PhieuThuModel _$PhieuThuModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PhieuThuModel {
-  String? get info => throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
   String? get maphieuthu => throw _privateConstructorUsedError;
@@ -44,6 +43,9 @@ mixin _$PhieuThuModel {
   String? get ghichu => throw _privateConstructorUsedError;
   String? get loaiphieuthu => throw _privateConstructorUsedError;
   bool? get is_pending => throw _privateConstructorUsedError;
+  List<dynamic>? get lichsu_pending => throw _privateConstructorUsedError;
+  Map<dynamic, dynamic>? get info => throw _privateConstructorUsedError;
+  List<dynamic>? get lichsu_capnhat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -58,8 +60,7 @@ abstract class $PhieuThuModelCopyWith<$Res> {
       _$PhieuThuModelCopyWithImpl<$Res, PhieuThuModel>;
   @useResult
   $Res call(
-      {String? info,
-      @JsonKey(name: '_id') String? id,
+      {@JsonKey(name: '_id') String? id,
       String? maphieuthu,
       @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
       List<dynamic>? nhanvien,
@@ -79,7 +80,10 @@ abstract class $PhieuThuModelCopyWith<$Res> {
       String? httt,
       String? ghichu,
       String? loaiphieuthu,
-      bool? is_pending});
+      bool? is_pending,
+      List<dynamic>? lichsu_pending,
+      Map<dynamic, dynamic>? info,
+      List<dynamic>? lichsu_capnhat});
 
   $L1_khachhangIdCopyWith<$Res>? get l1_khachhangId;
 }
@@ -97,7 +101,6 @@ class _$PhieuThuModelCopyWithImpl<$Res, $Val extends PhieuThuModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? info = freezed,
     Object? id = freezed,
     Object? maphieuthu = freezed,
     Object? l1_khachhangId = freezed,
@@ -119,12 +122,11 @@ class _$PhieuThuModelCopyWithImpl<$Res, $Val extends PhieuThuModel>
     Object? ghichu = freezed,
     Object? loaiphieuthu = freezed,
     Object? is_pending = freezed,
+    Object? lichsu_pending = freezed,
+    Object? info = freezed,
+    Object? lichsu_capnhat = freezed,
   }) {
     return _then(_value.copyWith(
-      info: freezed == info
-          ? _value.info
-          : info // ignore: cast_nullable_to_non_nullable
-              as String?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -209,6 +211,18 @@ class _$PhieuThuModelCopyWithImpl<$Res, $Val extends PhieuThuModel>
           ? _value.is_pending
           : is_pending // ignore: cast_nullable_to_non_nullable
               as bool?,
+      lichsu_pending: freezed == lichsu_pending
+          ? _value.lichsu_pending
+          : lichsu_pending // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      info: freezed == info
+          ? _value.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>?,
+      lichsu_capnhat: freezed == lichsu_capnhat
+          ? _value.lichsu_capnhat
+          : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
     ) as $Val);
   }
 
@@ -234,8 +248,7 @@ abstract class _$$_PhieuThuModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? info,
-      @JsonKey(name: '_id') String? id,
+      {@JsonKey(name: '_id') String? id,
       String? maphieuthu,
       @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
       List<dynamic>? nhanvien,
@@ -255,7 +268,10 @@ abstract class _$$_PhieuThuModelCopyWith<$Res>
       String? httt,
       String? ghichu,
       String? loaiphieuthu,
-      bool? is_pending});
+      bool? is_pending,
+      List<dynamic>? lichsu_pending,
+      Map<dynamic, dynamic>? info,
+      List<dynamic>? lichsu_capnhat});
 
   @override
   $L1_khachhangIdCopyWith<$Res>? get l1_khachhangId;
@@ -272,7 +288,6 @@ class __$$_PhieuThuModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? info = freezed,
     Object? id = freezed,
     Object? maphieuthu = freezed,
     Object? l1_khachhangId = freezed,
@@ -294,12 +309,11 @@ class __$$_PhieuThuModelCopyWithImpl<$Res>
     Object? ghichu = freezed,
     Object? loaiphieuthu = freezed,
     Object? is_pending = freezed,
+    Object? lichsu_pending = freezed,
+    Object? info = freezed,
+    Object? lichsu_capnhat = freezed,
   }) {
     return _then(_$_PhieuThuModel(
-      info: freezed == info
-          ? _value.info
-          : info // ignore: cast_nullable_to_non_nullable
-              as String?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -384,6 +398,18 @@ class __$$_PhieuThuModelCopyWithImpl<$Res>
           ? _value.is_pending
           : is_pending // ignore: cast_nullable_to_non_nullable
               as bool?,
+      lichsu_pending: freezed == lichsu_pending
+          ? _value._lichsu_pending
+          : lichsu_pending // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      info: freezed == info
+          ? _value._info
+          : info // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>?,
+      lichsu_capnhat: freezed == lichsu_capnhat
+          ? _value._lichsu_capnhat
+          : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
     ));
   }
 }
@@ -392,8 +418,7 @@ class __$$_PhieuThuModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
   const _$_PhieuThuModel(
-      {this.info,
-      @JsonKey(name: '_id') this.id,
+      {@JsonKey(name: '_id') this.id,
       this.maphieuthu,
       @JsonKey(name: 'khachhangId') this.l1_khachhangId,
       final List<dynamic>? nhanvien,
@@ -413,16 +438,20 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
       this.httt,
       this.ghichu,
       this.loaiphieuthu,
-      this.is_pending})
+      this.is_pending,
+      final List<dynamic>? lichsu_pending,
+      final Map<dynamic, dynamic>? info,
+      final List<dynamic>? lichsu_capnhat})
       : _nhanvien = nhanvien,
         _hopdong = hopdong,
-        _files = files;
+        _files = files,
+        _lichsu_pending = lichsu_pending,
+        _info = info,
+        _lichsu_capnhat = lichsu_capnhat;
 
   factory _$_PhieuThuModel.fromJson(Map<String, dynamic> json) =>
       _$$_PhieuThuModelFromJson(json);
 
-  @override
-  final String? info;
   @override
   @JsonKey(name: '_id')
   final String? id;
@@ -491,10 +520,39 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
   final String? loaiphieuthu;
   @override
   final bool? is_pending;
+  final List<dynamic>? _lichsu_pending;
+  @override
+  List<dynamic>? get lichsu_pending {
+    final value = _lichsu_pending;
+    if (value == null) return null;
+    if (_lichsu_pending is EqualUnmodifiableListView) return _lichsu_pending;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final Map<dynamic, dynamic>? _info;
+  @override
+  Map<dynamic, dynamic>? get info {
+    final value = _info;
+    if (value == null) return null;
+    if (_info is EqualUnmodifiableMapView) return _info;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  final List<dynamic>? _lichsu_capnhat;
+  @override
+  List<dynamic>? get lichsu_capnhat {
+    final value = _lichsu_capnhat;
+    if (value == null) return null;
+    if (_lichsu_capnhat is EqualUnmodifiableListView) return _lichsu_capnhat;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PhieuThuModel(info: $info, id: $id, maphieuthu: $maphieuthu, l1_khachhangId: $l1_khachhangId, nhanvien: $nhanvien, hopdong: $hopdong, files: $files, tongtien: $tongtien, phiweb: $phiweb, phinangcapweb: $phinangcapweb, phihosting: $phihosting, phinangcaphosting: $phinangcaphosting, phitenmien: $phitenmien, phiapp: $phiapp, phinangcapapp: $phinangcapapp, vat: $vat, ngaytao: $ngaytao, ngaynopcty: $ngaynopcty, httt: $httt, ghichu: $ghichu, loaiphieuthu: $loaiphieuthu, is_pending: $is_pending)';
+    return 'PhieuThuModel(id: $id, maphieuthu: $maphieuthu, l1_khachhangId: $l1_khachhangId, nhanvien: $nhanvien, hopdong: $hopdong, files: $files, tongtien: $tongtien, phiweb: $phiweb, phinangcapweb: $phinangcapweb, phihosting: $phihosting, phinangcaphosting: $phinangcaphosting, phitenmien: $phitenmien, phiapp: $phiapp, phinangcapapp: $phinangcapapp, vat: $vat, ngaytao: $ngaytao, ngaynopcty: $ngaynopcty, httt: $httt, ghichu: $ghichu, loaiphieuthu: $loaiphieuthu, is_pending: $is_pending, lichsu_pending: $lichsu_pending, info: $info, lichsu_capnhat: $lichsu_capnhat)';
   }
 
   @override
@@ -502,7 +560,6 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'PhieuThuModel'))
-      ..add(DiagnosticsProperty('info', info))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('maphieuthu', maphieuthu))
       ..add(DiagnosticsProperty('l1_khachhangId', l1_khachhangId))
@@ -523,7 +580,10 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
       ..add(DiagnosticsProperty('httt', httt))
       ..add(DiagnosticsProperty('ghichu', ghichu))
       ..add(DiagnosticsProperty('loaiphieuthu', loaiphieuthu))
-      ..add(DiagnosticsProperty('is_pending', is_pending));
+      ..add(DiagnosticsProperty('is_pending', is_pending))
+      ..add(DiagnosticsProperty('lichsu_pending', lichsu_pending))
+      ..add(DiagnosticsProperty('info', info))
+      ..add(DiagnosticsProperty('lichsu_capnhat', lichsu_capnhat));
   }
 
   @override
@@ -531,7 +591,6 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PhieuThuModel &&
-            (identical(other.info, info) || other.info == info) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.maphieuthu, maphieuthu) ||
                 other.maphieuthu == maphieuthu) &&
@@ -563,14 +622,18 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
             (identical(other.loaiphieuthu, loaiphieuthu) ||
                 other.loaiphieuthu == loaiphieuthu) &&
             (identical(other.is_pending, is_pending) ||
-                other.is_pending == is_pending));
+                other.is_pending == is_pending) &&
+            const DeepCollectionEquality()
+                .equals(other._lichsu_pending, _lichsu_pending) &&
+            const DeepCollectionEquality().equals(other._info, _info) &&
+            const DeepCollectionEquality()
+                .equals(other._lichsu_capnhat, _lichsu_capnhat));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        info,
         id,
         maphieuthu,
         l1_khachhangId,
@@ -591,7 +654,10 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
         httt,
         ghichu,
         loaiphieuthu,
-        is_pending
+        is_pending,
+        const DeepCollectionEquality().hash(_lichsu_pending),
+        const DeepCollectionEquality().hash(_info),
+        const DeepCollectionEquality().hash(_lichsu_capnhat)
       ]);
 
   @JsonKey(ignore: true)
@@ -610,8 +676,7 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
 
 abstract class _PhieuThuModel implements PhieuThuModel {
   const factory _PhieuThuModel(
-      {final String? info,
-      @JsonKey(name: '_id') final String? id,
+      {@JsonKey(name: '_id') final String? id,
       final String? maphieuthu,
       @JsonKey(name: 'khachhangId') final L1_khachhangId? l1_khachhangId,
       final List<dynamic>? nhanvien,
@@ -631,13 +696,14 @@ abstract class _PhieuThuModel implements PhieuThuModel {
       final String? httt,
       final String? ghichu,
       final String? loaiphieuthu,
-      final bool? is_pending}) = _$_PhieuThuModel;
+      final bool? is_pending,
+      final List<dynamic>? lichsu_pending,
+      final Map<dynamic, dynamic>? info,
+      final List<dynamic>? lichsu_capnhat}) = _$_PhieuThuModel;
 
   factory _PhieuThuModel.fromJson(Map<String, dynamic> json) =
       _$_PhieuThuModel.fromJson;
 
-  @override
-  String? get info;
   @override
   @JsonKey(name: '_id')
   String? get id;
@@ -683,6 +749,12 @@ abstract class _PhieuThuModel implements PhieuThuModel {
   @override
   bool? get is_pending;
   @override
+  List<dynamic>? get lichsu_pending;
+  @override
+  Map<dynamic, dynamic>? get info;
+  @override
+  List<dynamic>? get lichsu_capnhat;
+  @override
   @JsonKey(ignore: true)
   _$$_PhieuThuModelCopyWith<_$_PhieuThuModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -697,6 +769,16 @@ mixin _$L1_khachhangId {
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
   String? get makhachhang => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get hoten => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get congty => throw _privateConstructorUsedError;
+  String? get masothue => throw _privateConstructorUsedError;
+  String? get diachi => throw _privateConstructorUsedError;
+  String? get cccd => throw _privateConstructorUsedError;
+  Map<dynamic, dynamic>? get info => throw _privateConstructorUsedError;
+  String? get ghichu => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -710,7 +792,19 @@ abstract class $L1_khachhangIdCopyWith<$Res> {
           L1_khachhangId value, $Res Function(L1_khachhangId) then) =
       _$L1_khachhangIdCopyWithImpl<$Res, L1_khachhangId>;
   @useResult
-  $Res call({@JsonKey(name: '_id') String? id, String? makhachhang});
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String? makhachhang,
+      String? type,
+      String? hoten,
+      String? phone,
+      String? email,
+      String? congty,
+      String? masothue,
+      String? diachi,
+      String? cccd,
+      Map<dynamic, dynamic>? info,
+      String? ghichu});
 }
 
 /// @nodoc
@@ -728,6 +822,16 @@ class _$L1_khachhangIdCopyWithImpl<$Res, $Val extends L1_khachhangId>
   $Res call({
     Object? id = freezed,
     Object? makhachhang = freezed,
+    Object? type = freezed,
+    Object? hoten = freezed,
+    Object? phone = freezed,
+    Object? email = freezed,
+    Object? congty = freezed,
+    Object? masothue = freezed,
+    Object? diachi = freezed,
+    Object? cccd = freezed,
+    Object? info = freezed,
+    Object? ghichu = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -737,6 +841,46 @@ class _$L1_khachhangIdCopyWithImpl<$Res, $Val extends L1_khachhangId>
       makhachhang: freezed == makhachhang
           ? _value.makhachhang
           : makhachhang // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hoten: freezed == hoten
+          ? _value.hoten
+          : hoten // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      congty: freezed == congty
+          ? _value.congty
+          : congty // ignore: cast_nullable_to_non_nullable
+              as String?,
+      masothue: freezed == masothue
+          ? _value.masothue
+          : masothue // ignore: cast_nullable_to_non_nullable
+              as String?,
+      diachi: freezed == diachi
+          ? _value.diachi
+          : diachi // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cccd: freezed == cccd
+          ? _value.cccd
+          : cccd // ignore: cast_nullable_to_non_nullable
+              as String?,
+      info: freezed == info
+          ? _value.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>?,
+      ghichu: freezed == ghichu
+          ? _value.ghichu
+          : ghichu // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -750,7 +894,19 @@ abstract class _$$_L1_khachhangIdCopyWith<$Res>
       __$$_L1_khachhangIdCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: '_id') String? id, String? makhachhang});
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String? makhachhang,
+      String? type,
+      String? hoten,
+      String? phone,
+      String? email,
+      String? congty,
+      String? masothue,
+      String? diachi,
+      String? cccd,
+      Map<dynamic, dynamic>? info,
+      String? ghichu});
 }
 
 /// @nodoc
@@ -766,6 +922,16 @@ class __$$_L1_khachhangIdCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? makhachhang = freezed,
+    Object? type = freezed,
+    Object? hoten = freezed,
+    Object? phone = freezed,
+    Object? email = freezed,
+    Object? congty = freezed,
+    Object? masothue = freezed,
+    Object? diachi = freezed,
+    Object? cccd = freezed,
+    Object? info = freezed,
+    Object? ghichu = freezed,
   }) {
     return _then(_$_L1_khachhangId(
       id: freezed == id
@@ -776,6 +942,46 @@ class __$$_L1_khachhangIdCopyWithImpl<$Res>
           ? _value.makhachhang
           : makhachhang // ignore: cast_nullable_to_non_nullable
               as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hoten: freezed == hoten
+          ? _value.hoten
+          : hoten // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      congty: freezed == congty
+          ? _value.congty
+          : congty // ignore: cast_nullable_to_non_nullable
+              as String?,
+      masothue: freezed == masothue
+          ? _value.masothue
+          : masothue // ignore: cast_nullable_to_non_nullable
+              as String?,
+      diachi: freezed == diachi
+          ? _value.diachi
+          : diachi // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cccd: freezed == cccd
+          ? _value.cccd
+          : cccd // ignore: cast_nullable_to_non_nullable
+              as String?,
+      info: freezed == info
+          ? _value._info
+          : info // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>?,
+      ghichu: freezed == ghichu
+          ? _value.ghichu
+          : ghichu // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -785,7 +991,20 @@ class __$$_L1_khachhangIdCopyWithImpl<$Res>
 class _$_L1_khachhangId
     with DiagnosticableTreeMixin
     implements _L1_khachhangId {
-  const _$_L1_khachhangId({@JsonKey(name: '_id') this.id, this.makhachhang});
+  const _$_L1_khachhangId(
+      {@JsonKey(name: '_id') this.id,
+      this.makhachhang,
+      this.type,
+      this.hoten,
+      this.phone,
+      this.email,
+      this.congty,
+      this.masothue,
+      this.diachi,
+      this.cccd,
+      final Map<dynamic, dynamic>? info,
+      this.ghichu})
+      : _info = info;
 
   factory _$_L1_khachhangId.fromJson(Map<String, dynamic> json) =>
       _$$_L1_khachhangIdFromJson(json);
@@ -795,10 +1014,38 @@ class _$_L1_khachhangId
   final String? id;
   @override
   final String? makhachhang;
+  @override
+  final String? type;
+  @override
+  final String? hoten;
+  @override
+  final String? phone;
+  @override
+  final String? email;
+  @override
+  final String? congty;
+  @override
+  final String? masothue;
+  @override
+  final String? diachi;
+  @override
+  final String? cccd;
+  final Map<dynamic, dynamic>? _info;
+  @override
+  Map<dynamic, dynamic>? get info {
+    final value = _info;
+    if (value == null) return null;
+    if (_info is EqualUnmodifiableMapView) return _info;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  @override
+  final String? ghichu;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'L1_khachhangId(id: $id, makhachhang: $makhachhang)';
+    return 'L1_khachhangId(id: $id, makhachhang: $makhachhang, type: $type, hoten: $hoten, phone: $phone, email: $email, congty: $congty, masothue: $masothue, diachi: $diachi, cccd: $cccd, info: $info, ghichu: $ghichu)';
   }
 
   @override
@@ -807,7 +1054,17 @@ class _$_L1_khachhangId
     properties
       ..add(DiagnosticsProperty('type', 'L1_khachhangId'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('makhachhang', makhachhang));
+      ..add(DiagnosticsProperty('makhachhang', makhachhang))
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('hoten', hoten))
+      ..add(DiagnosticsProperty('phone', phone))
+      ..add(DiagnosticsProperty('email', email))
+      ..add(DiagnosticsProperty('congty', congty))
+      ..add(DiagnosticsProperty('masothue', masothue))
+      ..add(DiagnosticsProperty('diachi', diachi))
+      ..add(DiagnosticsProperty('cccd', cccd))
+      ..add(DiagnosticsProperty('info', info))
+      ..add(DiagnosticsProperty('ghichu', ghichu));
   }
 
   @override
@@ -817,12 +1074,36 @@ class _$_L1_khachhangId
             other is _$_L1_khachhangId &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.makhachhang, makhachhang) ||
-                other.makhachhang == makhachhang));
+                other.makhachhang == makhachhang) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.hoten, hoten) || other.hoten == hoten) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.congty, congty) || other.congty == congty) &&
+            (identical(other.masothue, masothue) ||
+                other.masothue == masothue) &&
+            (identical(other.diachi, diachi) || other.diachi == diachi) &&
+            (identical(other.cccd, cccd) || other.cccd == cccd) &&
+            const DeepCollectionEquality().equals(other._info, _info) &&
+            (identical(other.ghichu, ghichu) || other.ghichu == ghichu));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, makhachhang);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      makhachhang,
+      type,
+      hoten,
+      phone,
+      email,
+      congty,
+      masothue,
+      diachi,
+      cccd,
+      const DeepCollectionEquality().hash(_info),
+      ghichu);
 
   @JsonKey(ignore: true)
   @override
@@ -841,7 +1122,17 @@ class _$_L1_khachhangId
 abstract class _L1_khachhangId implements L1_khachhangId {
   const factory _L1_khachhangId(
       {@JsonKey(name: '_id') final String? id,
-      final String? makhachhang}) = _$_L1_khachhangId;
+      final String? makhachhang,
+      final String? type,
+      final String? hoten,
+      final String? phone,
+      final String? email,
+      final String? congty,
+      final String? masothue,
+      final String? diachi,
+      final String? cccd,
+      final Map<dynamic, dynamic>? info,
+      final String? ghichu}) = _$_L1_khachhangId;
 
   factory _L1_khachhangId.fromJson(Map<String, dynamic> json) =
       _$_L1_khachhangId.fromJson;
@@ -851,6 +1142,26 @@ abstract class _L1_khachhangId implements L1_khachhangId {
   String? get id;
   @override
   String? get makhachhang;
+  @override
+  String? get type;
+  @override
+  String? get hoten;
+  @override
+  String? get phone;
+  @override
+  String? get email;
+  @override
+  String? get congty;
+  @override
+  String? get masothue;
+  @override
+  String? get diachi;
+  @override
+  String? get cccd;
+  @override
+  Map<dynamic, dynamic>? get info;
+  @override
+  String? get ghichu;
   @override
   @JsonKey(ignore: true)
   _$$_L1_khachhangIdCopyWith<_$_L1_khachhangId> get copyWith =>

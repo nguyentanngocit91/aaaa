@@ -50,7 +50,7 @@ class _FormThongTinWebsiteWidgetState
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Wrap(
                         children: [
                           lableTextForm('Chức năng'),
@@ -61,6 +61,33 @@ class _FormThongTinWebsiteWidgetState
                                   .read(formPhieuThuProvider.notifier)
                                   .changeData(type: _typeData ,key: 'chucnang', value: value);
                             },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 1,
+                      child: Wrap(
+                        children: [
+                          lableTextForm('Tổng giá trị Website'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formPhieuThuProvider.notifier)
+                                  .changeData(
+                                  type: _typeData,
+                                  key: 'tongtien',
+                                  value: value);
+                            },
+                            inputFormatters: [
+                              CurrencyTextInputFormatter(symbol: ''),
+                            ],
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(
                                   errorText: 'Không bỏ trống.'),

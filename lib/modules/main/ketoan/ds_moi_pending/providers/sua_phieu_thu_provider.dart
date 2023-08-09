@@ -95,8 +95,8 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
     return FormPhieuThuState();
   }
 
-  Future<PhieuThuModel?> initData({required String maPhieuThu}) async{
-    final phieuThu = await _phieuThuRepository.chiTietPhieuThu(maPhieuThu: maPhieuThu);
+  Future<PhieuThuModel?> initData({required String id}) async{
+    final phieuThu = await _phieuThuRepository.chiTietPhieuThu(id: id);
     phieuThuModel = phieuThu!;
     await loadKhachHang();
     await loadHopDong();
@@ -126,6 +126,9 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
 
   // Hợp đồng
   loadHopDong() async{
+    final dataHopDong = {
+      "tenhopdong":phieuThuModel.hopdong![0]['tenhopdong']
+    };
     state = state.copyWith(soHopDong: phieuThuModel.hopdong![0]['sohopdong'],);
   }
 

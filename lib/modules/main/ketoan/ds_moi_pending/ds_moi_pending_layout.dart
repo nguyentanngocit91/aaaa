@@ -156,7 +156,7 @@ class _DanhSachMoiPendingLayoutState
                         DataColumn(label: Text('Tên Hợp Đồng'.toUpperCase())),
                         DataColumn(label: Text('Ngày ký'.toUpperCase())),
                         DataColumn(label: Text('Tổng giá trị'.toUpperCase())),
-                        DataColumn(label: Text(''.toUpperCase())),
+                        DataColumn(label: Text('Sửa'.toUpperCase())),
                       ],
                       rows: (danhSanh.isNotEmpty)
                           ? List.generate(danhSanh.length, (index) {
@@ -173,8 +173,7 @@ class _DanhSachMoiPendingLayoutState
                                   },
                                 ),
                                 cells: [
-                                  DataCell(Text(item.l1_khachhangId!.makhachhang
-                                      .toString())),
+                                  DataCell(Text((item.l1_khachhangId!=null) ? item.l1_khachhangId!.makhachhang.toString() : '')),
                                   DataCell(Text(item.hopdong![0]['sohopdong']
                                       .toString())),
                                   DataCell(Text(
@@ -191,15 +190,16 @@ class _DanhSachMoiPendingLayoutState
                                       symbol: ''))),
                                   DataCell(
                                     IconButton(
-                                        onPressed: () {
-                                          context.go(
-                                              '${GoRouterState.of(context).location}/${item.maphieuthu}');
-                                        },
-                                        icon: const FaIcon(
-                                          FontAwesomeIcons.pencil,
-                                          color: Colors.blue,
-                                          size: 17,
-                                        )),
+                                      onPressed: () {
+                                        context.go(
+                                            '${GoRouterState.of(context).location}/${item.id}');
+                                      },
+                                      icon: const FaIcon(
+                                        FontAwesomeIcons.pencil,
+                                        color: Colors.blue,
+                                        size: 17,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               );

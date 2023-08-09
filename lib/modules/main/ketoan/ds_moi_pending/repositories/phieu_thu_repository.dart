@@ -6,11 +6,11 @@ import '../models/phieu_thu_model.dart';
 import '../providers/files_hd_provider.dart';
 
 class PhieuThuRepository{
-  Future<PhieuThuModel?> chiTietPhieuThu({required String maPhieuThu}) async {
-    final response = await App.dioClient.get('${ApiUrl.danhSachPhieuThu}?maphieuthu=$maPhieuThu');
+  Future<PhieuThuModel?> chiTietPhieuThu({required String id}) async {
+    final response = await App.dioClient.get('${ApiUrl.danhSachPhieuThu}/$id');
     if(response.statusCode==200){
       if(response.data['success']==true){
-        if((response.data['data'] as List).isNotEmpty) return PhieuThuModel.fromJson(response.data['data'][0]);
+        return PhieuThuModel.fromJson(response.data['PhieuThu']);
       }
     }
     return null;
