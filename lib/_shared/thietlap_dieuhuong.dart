@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../modules/main/ketoan/capnhat/screens/app/list.dart';
 import '../modules/main/ketoan/capnhat/screens/domain/list.dart';
 import '../modules/main/ketoan/capnhat/screens/hosting/list.dart';
+import '../modules/main/ketoan/capnhat/screens/hosting/upgrade.dart';
 import '../modules/main/ketoan/danh_sach_domain_moi/dsdomain_layout.dart';
 import '../modules/main/ketoan/danhsachHD/models/searchcustomer_model.dart';
 import '../modules/main/ketoan/danhsachHD/screen/them_hopdong_moi.dart';

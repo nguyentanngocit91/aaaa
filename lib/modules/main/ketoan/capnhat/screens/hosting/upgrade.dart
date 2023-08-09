@@ -1,568 +1,581 @@
-// import 'package:awesome_dialog/awesome_dialog.dart';
-// import 'package:file_picker/file_picker.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:form_builder_validators/form_builder_validators.dart';
-// import 'package:intl/intl.dart';
-// import 'package:responsive_grid/responsive_grid.dart';
-// import 'package:responsive_ui/responsive_ui.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:bs_flutter_alert/bs_flutter_alert.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
+import 'package:regexpattern/regexpattern.dart';
+import 'package:responsive_grid/responsive_grid.dart';
+import '../../../../../../_shared/extensions/date_time_extention.dart';
+import '../../../../../../_shared/mixins/form_ui_mixins.dart';
+import '../../../../../../_shared/utils/currency_text_input_formatter.dart';
+import '../../../../../../_shared/utils/debouncer.dart';
+import '../../../../../../_shared/utils/helper.dart';
+import '../../../../../../_shared/utils/ndgap.dart';
+import '../../../../../../_shared/utils/show_ok_alert_dialog.dart';
+import '../../../../../../packages/textfield_tags/src/models.dart';
+import '../../../khach_hang_moi/providers/kiem_tra_khach_hang_provider.dart';
+import '../../../khach_hang_moi/widgets/tags_input_widget.dart';
+import '../../models/contract_model.dart';
+import '../../models/media_model.dart';
+import '../../providers/capnhat_provider.dart';
+import '../../providers/danh_sach_domain_provider.dart';
+import '../../providers/form_capnhat_provider.dart';
+import '../../providers/form_khach_hang_moi_provider.dart';
+import '../../providers/nhan_vien_phu_trach_provider.dart';
+
+// part 'form_element/form_thong_tin_khach_hang_widget.dart';
 //
-// import '../../../../../../_shared/mixins/form_ui_mixins.dart';
-// import '../../../../../../_shared/utils/helper.dart';
-// import '../../../../../../_shared/utils/ndgap.dart';
-// import '../../models/contract_model.dart';
-// import '../../providers/capnhat_provider.dart';
-// import '../../providers/form_capnhat_provider.dart';
+// part 'form_element/form_thong_tin_hop_dong_widget.dart';
 //
-// enum HinhThucThanhToan { cod, bank }
-//
-// enum LoaiPhieuThu { phieuthu, phieuthuBG, phieuthuApp, phieuthuBGApp }
-// GlobalKey<FormState> _formKey = GlobalKey();
-// String _updateType = 'web';
-// class UpgradeWebsite extends ConsumerStatefulWidget {
-//   UpgradeWebsite({Key? key, required this.id}) : super(key: key);
-//   final String id;
-//
-//   @override
-//   ConsumerState<UpgradeWebsite> createState() => _UpgradeWebsiteScreenState();
-//
-// }
-//
-// class _UpgradeWebsiteScreenState extends ConsumerState<UpgradeWebsite>
-//     with FormUIMixins {
-//   HinhThucThanhToan? _httt = HinhThucThanhToan.cod;
-//   LoaiPhieuThu? _loaiPT = LoaiPhieuThu.phieuthu;
-//   bool isLoading = true;
-//   Map<String,TextEditingController> listController = {};
-//   Map<String,FocusNode> listFocusNode = {};
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     ['mahopdong','ngaykyweb','ngaybangiao','chucnang','ghichu'].forEach( (item) {
-//       listController[item] = TextEditingController();
-//       listFocusNode[item] = FocusNode();
-//     });
-//     Future.delayed(Duration.zero,() async {
-//       await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
-//       ContractModel? data = ref.watch(capnhatProvider.select((value) => value.contract));
-//       listController!['mahopdong']!.text =
-//           data!.l1_data!.mahopdong.toString();
-//       listController!['ngaykyweb']!.text =
-//           Helper.dateFormat(data!.l1_data!.ngaykyhd.toString());
-//       listController!['ngaybangiao']!.text =
-//           Helper.dateFormat(data!.webs![0]['ngaybangiao']);
-//       listController!['chucnang']!.text = data!.webs![0]['chucnang'];
-//       listController!['ghichu']!.text = data!.l1_data!.ghichu.toString();
-//     });
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     var data = ref.read(formcapnhatProvider.notifier);
-//     ref.listen(formcapnhatProvider.select((value) => value.loading), (previous, next) {
-//       if(next==loadingStatus.START){
-//         Loading(context).start();
-//       }
-//       if(next==loadingStatus.STOP){
-//         Future.delayed(Duration(seconds: 1),() {
-//           ref.read(capnhatProvider.notifier).reload();
-//           Loading(context).stop();
-//           AwesomeDialog(
-//             context: context,
-//             width: 400.0,
-//             dialogType: data.state.success ? DialogType.success : DialogType
-//                 .error,
-//             animType: AnimType.scale,
-//             title: 'Thông báo',
-//             desc: data.state.message,
-//             btnCancelOnPress: () {},
-//             btnOkOnPress: () {},
-//           )
-//             ..show();
-//         });
-//
-//
-//       }
-//     });
-//
-//     return SimpleDialog(
-//       backgroundColor: Colors.white,
-//       contentPadding: const EdgeInsets.all(0),
-//       insetPadding: const EdgeInsets.all(30),
-//       elevation: 0,
-//       children: [
-//         const Padding(
-//           padding: const EdgeInsets.all(20.0),
-//           child: Text(
-//             'CẬP NHẬT WEBSITE',
-//             style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-//           ),
-//         ),
-//         const Divider(),
-//         Form(
-//           key: _formKey,
-//           child: Container(
-//             width: MediaQuery.of(context).size.width,
-//             padding: const EdgeInsets.all(20),
-//             child: Column(
-//               mainAxisSize: MainAxisSize.max,
-//               children: [
-//                 Row(
-//                   children: [
-//                     const Icon(
-//                       Icons.text_snippet_outlined,
-//                       color: Color(0xFF105a6c),
-//                     ),
-//                     const SizedBox(
-//                       width: 10,
-//                     ),
-//                     Text(
-//                       'Thông tin website'.toUpperCase(),
-//                       style: const TextStyle(color: Color(0xFF105a6c)),
-//                     ),
-//                   ],
-//                 ),
-//                 const SizedBox(
-//                   height: 10,
-//                 ),
-//                 Container(
-//                     padding: const EdgeInsets.all(10),
-//                     decoration: BoxDecoration(
-//                       color: const Color(0xFFf5f5f5),
-//                       border: Border.all(color: const Color(0xFFdcdbdb)),
-//                     ),
-//                     child: ResponsiveGridRow(
-//                       children: [
-//                         ResponsiveGridCol(
-//                           lg: 6,
-//                           xs: 12,
-//                           child: Container(
-//                             padding: Helper.padding(),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 const Text(
-//                                   'Mã hợp đồng',
-//                                   style: TextStyle(
-//                                       fontWeight: FontWeight.bold, fontSize: 12),
-//                                 ),
-//                                 const SizedBox(
-//                                   height: 5,
-//                                 ),
-//                                 TextField(
-//                                   controller: listController['mahopdong'],
-//                                   focusNode: listFocusNode['mahopdong'],
-//                                   readOnly: true,
-//                                   decoration: Helper().disabledInput(),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                         ResponsiveGridCol(
-//                           xs: 6,
-//                           md: 6,
-//                           lg: 3,
-//                           child: Container(
-//                             padding: Helper.padding(),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 const Text(
-//                                   'Ngày ký web',
-//                                   style: TextStyle(
-//                                       fontWeight: FontWeight.bold, fontSize: 12),
-//                                 ),
-//                                 const SizedBox(
-//                                   height: 5,
-//                                 ),
-//                                 TextFormField(
-//                                   readOnly: true,
-//                                   controller: listController['ngaykyweb'],
-//                                   focusNode: listFocusNode['ngaykyweb'],
-//                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-//                                   validator: FormBuilderValidators.compose([
-//                                     FormBuilderValidators.required(
-//                                         errorText: 'Không bỏ trống.'),
-//                                   ]),
-//                                   onTap: () async {
-//                                     final DateTime? selDate = await Helper.onSelectDate(context,initialDate: Helper.parseDate(listController['ngaykyweb']!.value.text,'dd-MM-yyyy'));
-//                                     if(selDate!=null){
-//                                       listController['ngaykyweb']!.text = Helper.dateFormat(selDate);
-//                                       DateTime date1 = Helper.parseDate(listController['ngaykyweb']!.value.text,'dd-MM-yyyy');
-//                                       DateTime date2 = Helper.parseDate(listController['ngaybangiao']!.value.text,'dd-MM-yyyy');
-//                                       if(date1.compareTo(date2) > 0){
-//                                         listController['ngaybangiao']!.text = Helper.dateFormat(selDate);
-//                                       }
-//
-//                                     }
-//                                   },
-//
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                         ResponsiveGridCol(
-//                           xs: 6,
-//                           md: 6,
-//                           lg: 3,
-//                           child: Container(
-//                             padding: Helper.padding(),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 const Text(
-//                                   'Ngày bàn giao',
-//                                   style: TextStyle(
-//                                       fontWeight: FontWeight.bold, fontSize: 12),
-//                                 ),
-//                                 const SizedBox(
-//                                   height: 5,
-//                                 ),
-//                                 TextFormField(
-//                                   readOnly: true,
-//                                   controller: listController['ngaybangiao'],
-//                                   focusNode: listFocusNode['ngaybangiao'],
-//                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-//                                   validator: FormBuilderValidators.compose([
-//                                     FormBuilderValidators.required(
-//                                         errorText: 'Không bỏ trống.'),
-//                                   ]),
-//                                   onTap: () async {
-//                                     final DateTime? selDate = await Helper.onSelectDate(context,initialDate: Helper.parseDate(listController['ngaybangiao']!.value.text,'dd-MM-yyyy'),firstDate: Helper.parseDate(listController['ngaykyweb']!.value.text,'dd-MM-yyyy'));
-//                                     if(selDate!=null){
-//                                       listController['ngaybangiao']!.text = Helper.dateFormat(selDate);
-//                                     }
-//                                   },
-//
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                         ResponsiveGridCol(
-//                           xs: 12,
-//                           child: Container(
-//                             padding: Helper.padding(),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 const Text(
-//                                   'Chức năng',
-//                                   style: TextStyle(
-//                                       fontWeight: FontWeight.bold, fontSize: 12),
-//                                 ),
-//                                 const SizedBox(
-//                                   height: 5,
-//                                 ),
-//                                 TextFormField(
-//                                   controller: listController['chucnang'],
-//                                   focusNode: listFocusNode['chucnang'],
-//                                   maxLines: 3,
-//                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-//                                   validator: FormBuilderValidators.compose([
-//                                     FormBuilderValidators.required(
-//                                         errorText: 'Không bỏ trống.'),
-//                                   ]),
-//
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                         ResponsiveGridCol(
-//                           xs: 12,
-//                           child: Container(
-//                             padding: Helper.padding(),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 const Text(
-//                                   'Ghi chú',
-//                                   style: TextStyle(
-//                                       fontWeight: FontWeight.bold, fontSize: 12),
-//                                 ),
-//                                 const SizedBox(
-//                                   height: 5,
-//                                 ),
-//                                 TextFormField(
-//                                   controller: listController['ghichu'],
-//                                   focusNode: listFocusNode['mahopdong'],
-//                                   maxLines: 3,
-//                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-//                                   validator: FormBuilderValidators.compose([
-//                                     FormBuilderValidators.required(
-//                                         errorText: 'Không bỏ trống.'),
-//                                   ]),
-//
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     )),
-//                 const SizedBox(
-//                   height: 20,
-//                 ),
-//                 const Row(
-//                   children: [
-//                     const Icon(
-//                       Icons.text_snippet_outlined,
-//                       color: Color(0xFF105a6c),
-//                     ),
-//                     const SizedBox(
-//                       width: 10,
-//                     ),
-//                     Text(
-//                       'UPLOAD FILE HĐ',
-//                       style: const TextStyle(color: Color(0xFF105a6c)),
-//                     ),
-//                   ],
-//                 ),
-//                 const SizedBox(
-//                   height: 10,
-//                 ),
-//                 Container(
-//                   padding: const EdgeInsets.all(10),
-//                   decoration: BoxDecoration(
-//                     color: const Color(0xFFf5f5f5),
-//                     border: Border.all(color: const Color(0xFFdcdbdb)),
-//                   ),
-//                   child: ResponsiveGridRow(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         ResponsiveGridCol(
-//                           lg: 12,
-//                           xl:4,
-//                           md:12,
-//                           xs: 12,
-//                           child: Container(
-//                             padding: Helper.padding(),
-//                             child: Row(
-//                               children: [
-//                                 const Text(
-//                                   'Loại file:',
-//                                   style: TextStyle(fontWeight: FontWeight.bold),
-//                                 ),
-//                                 Radio<HinhThucThanhToan>(
-//                                   value: HinhThucThanhToan.cod,
-//                                   groupValue: _httt,
-//                                   onChanged: (HinhThucThanhToan? value) {
-//                                     setState(() {
-//                                       _httt = value;
-//                                     });
-//                                   },
-//                                 ),
-//                                 const Text('Hợp đồng'),
-//                                 Radio<HinhThucThanhToan>(
-//                                   value: HinhThucThanhToan.bank,
-//                                   groupValue: _httt,
-//                                   onChanged: (HinhThucThanhToan? value) {
-//                                     setState(() {
-//                                       _httt = value;
-//                                     });
-//                                   },
-//                                 ),
-//                                 const Text('Chứng từ khác'),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                         ResponsiveGridCol(
-//                           lg: 6,
-//                           xl:4,
-//                           xs: 12,
-//                           child: Container(
-//                             padding: Helper.padding(),
-//                             child: SizedBox(
-//                               child: inputUploadFile(context,
-//                                   //   controller: textEditingController,
-//                                   validator: FormBuilderValidators.compose([
-//                                     //    FormBuilderValidators.required(errorText: 'Vui lòng chọn File.')
-//                                   ]), onTap: () async {
-//                                     String path = '';
-//                                     final result =
-//                                     await FilePicker.platform.pickFiles(
-//                                       type: FileType.custom,
-//                                       allowedExtensions: [
-//                                         'pdf',
-//                                         'doc',
-//                                         'docx',
-//                                         'xls',
-//                                         'xlsx'
-//                                       ],
-//                                     );
-//                                     if (result != null) {
-//                                       PlatformFile file = result.files.first;
-//                                       //   textEditingController.text = file.name;
-//                                     } else {
-//                                       // textEditingController.clear();
-//                                     }
-//                                   }),
-//                             ),
-//                           ),
-//                         ),
-//                         ResponsiveGridCol(
-//                           xs: 12,
-//                           lg: 6,
-//                           xl:4,
-//                           child: Container(
-//                             padding: Helper.padding(),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 TextField(
-//                                   decoration: InputDecoration(
-//                                     hintText:
-//                                     'Nhập nội dung ghi chú cho file upload',
-//                                   ),
-//                                   // controller: txtGhichu,
-//                                   maxLines: 3, //or null
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ]),
-//                 ),
-//
-//                 const SizedBox(
-//                   height: 10,
-//                 ),
-//                 Data(),
-//                 const SizedBox(
-//                   height: 10,
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.end,
-//                   children: [
-//                     TextButton(
-//                       onPressed: () {
-//
-//                         if (_formKey.currentState!.validate()) {
-//                           listController.forEach((key, value) {
-//                             ref.read(formcapnhatProvider.notifier).onChangeValue(key, value.text);
-//                           });
-//
-//                           ref.read(formcapnhatProvider.notifier).onSubmit(widget.id);
-//                         }else{
-//                           listFocusNode.forEach((key, value) {
-//                             value.requestFocus();
-//                           });
-//
-//                         }
-//
-//                       },
-//                       style: TextButton.styleFrom(
-//                           padding: const EdgeInsets.all(10),
-//                           backgroundColor: Colors.blueAccent),
-//                       child: const Text(
-//                         'Cập nhật',
-//                         style: TextStyle(
-//                             fontSize: 14,
-//                             fontWeight: FontWeight.w400,
-//                             color: Colors.white),
-//                       ),
-//                     ),
-//                     const SizedBox(
-//                       width: 10,
-//                     ),
-//                     TextButton(
-//                       onPressed: () {
-//                         Navigator.of(context).pop();
-//                       },
-//                       style: TextButton.styleFrom(
-//                           padding: const EdgeInsets.all(10),
-//                           backgroundColor: Colors.grey),
-//                       child: const Text(
-//                         'Thoát',
-//                         style: TextStyle(
-//                             fontSize: 14,
-//                             fontWeight: FontWeight.w400,
-//                             color: Colors.white),
-//                       ),
-//                     ),
-//                   ],
-//                 )
-//               ],
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//     ;
-//   }
-// }
-//
-// class Data extends ConsumerWidget {
-//   Data({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context,WidgetRef ref) {
-//     // var data = ref.watch(capnhatProvider.select((value) => value.result));
-//
-//     return SingleChildScrollView(
-//       child: Column(
-//         children: [
-//           Container(
-//             decoration: const BoxDecoration(
-//               color: Color(0xFF105A6C),
-//             ),
-//             child: const Row(
-//               children: [
-//                 Expanded(
-//                     flex:1,
-//                     child: HeaderRowItem(text: 'STT')),
-//                 Expanded(
-//                   flex:3,
-//                   child: HeaderRowItem(text: 'Ngày tháng'),
-//                 ),
-//
-//                 Expanded(
-//                   flex:3,
-//                   child: HeaderRowItem(text: 'User cập nhật'),
-//                 ),
-//                 Expanded(
-//                   flex:4,
-//                   child: HeaderRowItem(text: 'Loại file'),
-//                 ),
-//                 Expanded(
-//                   flex:3,
-//                   child: HeaderRowItem(text: 'Ghi chú'),
-//                 ),
-//                 Expanded(
-//                   flex:4,
-//                   child: HeaderRowItem(text: 'Thao tác'),
-//                 ),
-//
-//               ],
-//             ),
-//           ),
-//           // if(data!=null && data['data'].length > 0)...[
-//           //   ListView.builder(
-//           //       padding: const EdgeInsets.all(0),
-//           //       physics: const NeverScrollableScrollPhysics(),
-//           //       shrinkWrap: true,
-//           //       primary: true,
-//           //       itemCount: data['data'].length,
-//           //       itemBuilder: (BuildContext context, index) {
-//           //         InfoResponseModel info = data['info'];
-//           //         return InfoUpdate(item: data['data'][index], index: info.page! * info.limit! - (info.limit!)+index+1);
-//           //       }),
-//           //   GeneratePagin(data['info']),
-//           // ]else...[
-//           //   const BsAlert(
-//           //     closeButton: false,
-//           //     margin: EdgeInsets.only(bottom: 10.0),
-//           //     style: BsAlertStyle.danger,
-//           //     child: Text('Không có dữ liệu',textAlign: TextAlign.center),
-//           //   ),
-//           //
-//           // ],
-//         ],
-//       ),
-//     );
-//   }
-// }
+// part 'form_element/form_thong_tin_phieu_thu_widget.dart';
+// part 'form_element/form_thong_tin_website_widget.dart';
+// // part 'form_element/form_thong_tin_domain_widget.dart';
+// // part 'form_element/form_thong_tin_hosting_widget.dart';
+// // part 'form_element/form_thong_tin_app_widget.dart';
+// part 'form_element/upload_file_hd_widget.dart';
+
+Map<String, String> _loaiPhiethu = {
+  'hopdong': 'Hợp đồng',
+  'chungtu': 'Chứng từ'
+};
+GlobalKey<FormState> _formKey = GlobalKey();
+final String _typeData = 'website';
+List<Map> _resultFile = [];
+List<PlatformFile> _files = [];
+List<MediaModel> _listMedia = [];
+Map<String, TextEditingController> _listController = {};
+Map<String, FocusNode> _listFocusNode = {};
+
+class UpgradeHosting extends ConsumerStatefulWidget {
+  UpgradeHosting({Key? key, required this.id, required this.contractNumber})
+      : super(key: key);
+  final String id;
+  final String contractNumber;
+
+  @override
+  ConsumerState<UpgradeHosting> createState() => _UpdateWebsiteScreenState();
+}
+
+
+class _UpdateWebsiteScreenState extends ConsumerState<UpgradeHosting>
+    with FormUIMixins {
+  bool isLoading = true;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    _listController.forEach((key, value) {
+      _listController[key]!.dispose();
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ['sohopdong','tenhopdong','mahopdong','tonggiatri','tongno', 'ngaykyhd', 'ngaybangiao', 'chucnang', 'ghichu']
+        .forEach((item) {
+      _listController[item] = TextEditingController();
+      _listFocusNode[item] = FocusNode();
+
+    });
+
+    Future.delayed(Duration.zero, () async {
+      await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
+      var res = ref.watch(capnhatProvider.notifier);
+
+      ContractModel? data = await res.state.contract;
+
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData,
+          key: 'sohopdong',
+          value: data!.l1_data!.sohopdong);
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData,
+          key: 'mahopdong',
+          value: data!.l1_data!.mahopdong);
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData,
+          key: 'tenhopdong',
+          value: '${data!.l1_data!.tenhopdong} (Nâng cấp/ Phụ lục)');
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData,
+          key: 'idkhachhang',
+          value: data!.l1_data!.khachhangId);
+
+
+
+      // _listController!['ngaykyhd']!.text =
+      //     Helper.dateFormat(data!.l1_data!.ngaykyhd.toString());
+      // _listController!['ngaybangiao']!.text =
+      //     Helper.dateFormat(data!.l1_data!.ngaybangiao!);
+      // _listController!['chucnang']!.text = data!.l1_data!.chucnang!;
+      // _listController!['ghichu']!.text = data!.l1_data!.ghichu!;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    FormKhachHangMoiState data = ref.read(formKhachHangMoiProvider);
+    ref.listen(formKhachHangMoiProvider.select((value) => value.loading),
+            (previous, next) {
+          if (next == loadingStatus.START) {
+            Loading(context).start();
+          }
+          if (next == loadingStatus.STOP) {
+            Future.delayed(Duration(seconds: 1), () async {
+              //
+              // setState(() {
+              //   _listMedia = res.state.media!;
+              // });
+
+              Loading(context).stop();
+
+
+              List<Widget> _msg = [];
+
+              for(String item in data.response!['msg']){
+                _msg.add(Text(item.toString()));
+              }
+              AwesomeDialog(
+                context: context,
+                autoHide:Duration(seconds: 2),
+                width: 400.0,
+                dialogType:
+                data.response!['status']==true ? DialogType.success : DialogType.error,
+                animType: AnimType.scale,
+                title: data.response!['status']==true?'Thêm mới thành công':'Có lỗi',
+                autoDismiss:true,
+                body: _msg.length > 0 ?Column(children: _msg):null,
+                btnOk:Container(),
+                btnCancel:Container(),
+
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {},
+              )..show();
+
+            });
+            if(data.response!['status']==true){
+
+              Future.delayed(Duration(seconds: 2),() {
+                _resetForm(ref);
+                context.pop();
+              },);
+            }
+          }
+        });
+
+    return SimpleDialog(
+      backgroundColor: Colors.white,
+      contentPadding: const EdgeInsets.all(0),
+      insetPadding: const EdgeInsets.all(30),
+      elevation: 0,
+
+      children: [
+        const Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(
+            'NÂNG CẤP WEBSITE',
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+          ),
+        ),
+        const Divider(),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+
+                // titleForm(context, title: 'Thông tin hợp đồng'),
+                // bodyForm(
+                //   child: const FormThongTinHopDongWidget(),
+                // ),
+                // ndGapH40(),
+                // titleForm(context, title: 'Upload file HĐ'),
+                // bodyForm(
+                //   child: const UploadFileWidget(),
+                // ),
+                // ndGapH40(),
+                // titleForm(context, title: 'Thông tin phiếu thu'),
+                // bodyForm(
+                //   child: const FormThongTinPhieuThuWidget(),
+                // ),
+                // const FormThongTinWebsiteWidget(),
+
+
+                ndGapH24(),
+                const _BtnSubmit(),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+
+  }
+}
+
+
+class Data extends ConsumerWidget {
+  Data({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // var data = ref.watch(capnhatProvider.select((value) => value.result));
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: Color(0xFF105A6C),
+            ),
+            child: const Row(
+              children: [
+                Expanded(flex: 1, child: HeaderRowItem(text: 'STT')),
+                Expanded(
+                  flex: 3,
+                  child: HeaderRowItem(text: 'Ngày tháng'),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: HeaderRowItem(text: 'User cập nhật'),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: HeaderRowItem(text: 'Loại file'),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: HeaderRowItem(text: 'Ghi chú'),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: HeaderRowItem(text: 'Thao tác'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 13.0),
+          if (_listMedia.length > 0) ...[
+            ListView.builder(
+                padding: const EdgeInsets.all(0),
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                primary: true,
+                itemCount: _listMedia.length,
+                itemBuilder: (BuildContext context, index) {
+                  // InfoResponseModel info = data['info'];
+                  return MediaItem(
+                      item: _listMedia[index],
+                      index: index + 1,
+                      divider: (_listMedia.length - 1 > index));
+                }),
+          ] else ...[
+            const BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Không có dữ liệu', textAlign: TextAlign.center),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class MediaItem extends ConsumerStatefulWidget {
+  MediaItem(
+      {Key? key,
+        required this.item,
+        required this.index,
+        required this.divider})
+      : super(key: key);
+  late MediaModel item;
+  final int index;
+  final bool divider;
+
+  @override
+  ConsumerState<MediaItem> createState() => _MediaItemState();
+}
+
+class _MediaItemState extends ConsumerState<MediaItem> {
+  late String note = widget.item!.ghichu!;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: BodyRowItem(Text(widget.index.toString())),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(Helper.dateFormat(widget.item.createdAt))),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(widget.item!.l1_lichsu_khoitao!.hoten!)),
+          ),
+          Expanded(
+            flex: 4,
+            child: BodyRowItem(
+                Text(_loaiPhiethu[widget.item.loaifile!].toString())),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(widget.item.ghichu!)),
+          ),
+          Expanded(
+            flex: 2,
+            child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFF105A6C),
+                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  ),
+                  padding: EdgeInsets.only(
+                      left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      final _formKey = GlobalKey<FormState>();
+                      String _selected = widget.item.loaifile.toString();
+                      TextEditingController controller =
+                      new TextEditingController();
+                      controller.text = widget.item.ghichu!;
+
+                      Widget _widget = Container(
+                        width: 450,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Loại file'),
+                              ndGapH8(),
+                              DropdownButtonFormField2<String>(
+                                value: _selected,
+                                isExpanded: true,
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                hint: const Text(
+                                  'Chọn loại file',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                items: _loaiPhiethu.entries
+                                    .map((e) => DropdownMenuItem<String>(
+                                  value: e.key,
+                                  child: Text(
+                                    e.value,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ))
+                                    .toList(),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please select.';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selected = value.toString();
+                                  });
+                                },
+
+                                buttonStyleData: const ButtonStyleData(
+                                  padding: EdgeInsets.only(right: 8),
+                                ),
+                                iconStyleData: const IconStyleData(
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.black45,
+                                  ),
+                                  iconSize: 24,
+                                ),
+                                dropdownStyleData: DropdownStyleData(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                                menuItemStyleData: const MenuItemStyleData(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                ),
+                              ),
+                              ndGapH8(),
+                              const Text('Ghi chú'),
+                              ndGapH8(),
+                              TextFormField(
+                                controller: controller,
+                                maxLines: 3,
+                                autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: 'Không bỏ trống.'),
+                                ]),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      TextDialog alert = TextDialog(
+                        "Điều chỉnh file",
+                        "",
+                        _widget,
+                            () async {
+                          if (_formKey.currentState!.validate()) {
+
+
+                            var updateMedia = await ref.read(capnhatProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
+
+                            if(updateMedia['status']==true){
+                              Navigator.of(context).pop();
+                              setState(() {
+                                widget.item = MediaModel.fromJson(updateMedia['data']);
+
+                              });
+
+                            }
+                            AwesomeDialog(
+                              context: context,
+                              autoHide:Duration(seconds: 2),
+                              width: 400.0,
+                              dialogType:
+                              updateMedia['status'] ? DialogType.success : DialogType.error,
+                              animType: AnimType.scale,
+                              title: updateMedia['message'],
+                              autoDismiss:true,
+
+                              btnOk:Container(),
+                              btnCancel:Container(),
+
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {},
+                            )..show();
+
+
+                          }
+                        },
+                      );
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alert;
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'Cập nhật',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )),
+          ),
+        ],
+      ),
+      widget.divider ? const Divider() : Container()
+    ]);
+  }
+}
+
+class _BtnSubmit extends ConsumerWidget {
+  const _BtnSubmit({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        TextButton(
+          onPressed: () {
+            _submitForm(ref);
+            // if (_formKey.currentState!.validate()) {
+            //
+            //   _submitForm(ref);
+            //   // _listController.forEach((key, value) {
+            //   //   ref
+            //   //       .read(formcapnhatProvider.notifier)
+            //   //       .onChangeValue(key, value.text);
+            //   // });
+            //   //
+            //   // ref
+            //   //     .read(formcapnhatProvider.notifier)
+            //   //     .onSubmit(widget.id, widget.contractNumber);
+            // } else {
+            //   // _listFocusNode.forEach((key, value) {
+            //   //   value.requestFocus();
+            //   // });
+            // }
+          },
+          style: TextButton.styleFrom(
+              padding: const EdgeInsets.all(10),
+              backgroundColor: Colors.blueAccent),
+          child: const Text(
+            'Hoàn tất',
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.white),
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        TextButton(
+          onPressed: () {
+            _resetForm(ref);
+            Navigator.of(context,rootNavigator: true).pop();
+           // Navigator.of(context).pop();
+          },
+          style: TextButton.styleFrom(
+              padding: const EdgeInsets.all(10),
+              backgroundColor: Colors.grey),
+          child: const Text(
+            'Thoát',
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+_submitForm(WidgetRef ref) {
+  if (_formKey.currentState!.validate()) {
+    ref.read(formKhachHangMoiProvider.notifier).saveForm(_resultFile);
+  }
+}
+
+_resetForm(WidgetRef ref){
+  _formKey.currentState?.reset();
+  ref.refresh(formKhachHangMoiProvider); // reset dữ liệu toàn Form
+  ref.refresh(kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
+  ref.refresh(nhanVienPhuTrachProvider); // reset dữ liệu nhân viên phụ trách
+  Future.delayed(const Duration(milliseconds: 100),(){
+    ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach();
+  }); // reset danh sách domain
+}

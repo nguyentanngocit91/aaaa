@@ -119,7 +119,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
         const Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'CẬP NHẬT WEBSITE',
+            'CẬP NHẬT HOSTING',
             style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
           ),
         ),

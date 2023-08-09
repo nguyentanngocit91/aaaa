@@ -66,12 +66,6 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
   bool isLoading = true;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    //_resetForm(ref);
-  }
-
-  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
@@ -114,9 +108,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
           key: 'idkhachhang',
           value: data!.l1_data!.khachhangId);
 
-      setState(() {
-        _listMedia = res.state.media!;
-      });
+
 
       // _listController!['ngaykyhd']!.text =
       //     Helper.dateFormat(data!.l1_data!.ngaykyhd.toString());
@@ -129,46 +121,54 @@ class _UpdateWebsiteScreenState extends ConsumerState<Upgrade>
 
   @override
   Widget build(BuildContext context) {
-    // FormCapNhatNotifier data = ref.read(formcapnhatProvider.notifier);
-    // ref.listen(formcapnhatProvider.select((value) => value.loading),
-    //         (previous, next) {
-    //       if (next == loadingStatus.START) {
-    //         Loading(context).start();
-    //       }
-    //       if (next == loadingStatus.STOP) {
-    //         Future.delayed(Duration(seconds: 1), () async {
-    //           await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
-    //           var res = ref.watch(capnhatProvider.notifier);
-    //           setState(() {
-    //             _listMedia = res.state.media!;
-    //           });
-    //           Loading(context).stop();
-    //           if (data.state.success == true) {
-    //             setState(() {
-    //               _resultFile = [];
-    //             });
-    //
-    //           }
-    //           AwesomeDialog(
-    //             context: context,
-    //             autoHide:Duration(seconds: 2),
-    //             width: 400.0,
-    //             dialogType:
-    //             data.state.success ? DialogType.success : DialogType.error,
-    //             animType: AnimType.scale,
-    //             title: data.state.message,
-    //             autoDismiss:true,
-    //
-    //             btnOk:Container(),
-    //             btnCancel:Container(),
-    //
-    //             btnCancelOnPress: () {},
-    //             btnOkOnPress: () {},
-    //           )..show();
-    //
-    //         });
-    //       }
-    //     });
+    FormKhachHangMoiState data = ref.read(formKhachHangMoiProvider);
+    ref.listen(formKhachHangMoiProvider.select((value) => value.loading),
+            (previous, next) {
+          if (next == loadingStatus.START) {
+            Loading(context).start();
+          }
+          if (next == loadingStatus.STOP) {
+            Future.delayed(Duration(seconds: 1), () async {
+              //
+              // setState(() {
+              //   _listMedia = res.state.media!;
+              // });
+
+              Loading(context).stop();
+
+
+              List<Widget> _msg = [];
+
+              for(String item in data.response!['msg']){
+                _msg.add(Text(item.toString()));
+              }
+              AwesomeDialog(
+                context: context,
+                autoHide:Duration(seconds: 2),
+                width: 400.0,
+                dialogType:
+                data.response!['status']==true ? DialogType.success : DialogType.error,
+                animType: AnimType.scale,
+                title: data.response!['status']==true?'Thêm mới thành công':'Có lỗi',
+                autoDismiss:true,
+                body: _msg.length > 0 ?Column(children: _msg):null,
+                btnOk:Container(),
+                btnCancel:Container(),
+
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {},
+              )..show();
+
+            });
+            if(data.response!['status']==true){
+
+              Future.delayed(Duration(seconds: 2),() {
+                _resetForm(ref);
+                context.pop();
+              },);
+            }
+          }
+        });
 
     return SimpleDialog(
       backgroundColor: Colors.white,
@@ -532,7 +532,7 @@ class _BtnSubmit extends ConsumerWidget {
               padding: const EdgeInsets.all(10),
               backgroundColor: Colors.blueAccent),
           child: const Text(
-            'Cập nhật',
+            'Hoàn tất',
             style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
@@ -544,7 +544,7 @@ class _BtnSubmit extends ConsumerWidget {
         ),
         TextButton(
           onPressed: () {
-
+            _resetForm(ref);
             Navigator.of(context,rootNavigator: true).pop();
            // Navigator.of(context).pop();
           },
@@ -566,7 +566,7 @@ class _BtnSubmit extends ConsumerWidget {
 
 _submitForm(WidgetRef ref) {
   if (_formKey.currentState!.validate()) {
-    ref.read(formKhachHangMoiProvider.notifier).saveForm();
+    ref.read(formKhachHangMoiProvider.notifier).saveForm(_resultFile);
   }
 }
 

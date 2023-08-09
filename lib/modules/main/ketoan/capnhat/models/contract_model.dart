@@ -39,34 +39,38 @@ class ContractModel with _$ContractModel {
 @freezed
 class L1_data with _$L1_data {
   const factory L1_data({
-    List<dynamic>? dichvuIds,
-    List<dynamic>? files,
-    List<dynamic>? lichsu_thanhtoan,
+    @JsonKey(name: 'lichsu_khoitao') L2_lichsu_khoitao? l2_lichsu_khoitao,
     @JsonKey(name: '_id') @required String? id,
     String? sohopdong,
+    String? sohopdongcu,
     String? namhopdong,
-    String? ngaykyhd,
-    String? loaihopdong,
-    String? mahopdongcu,
     String? mahopdong,
+    String? loaihopdong,
+    String? ngaykyhd,
+    String? khachhangId,
     List<dynamic>? nhanvien,
     String? ghichu,
-    String? khachhangId,
+    @JsonKey(name: 'info') L2_info? l2_info,
+    List<dynamic>? dichvuIds,
     String? tenhopdong,
-    @JsonKey(name: 'lichsu_khoitao') L2_lichsu_khoitao? l2_lichsu_khoitao,
-    int? tongtien,
     List<dynamic>? lichsu_capnhat,
-    String? chucnang,
+    int? tongtien,
+    List<dynamic>? files,
+    String? tenhosting,
     int? dungluong,
-    String? mota,
-    String? ngaybangiao,
+    int? sonamdangky,
     String? ngaydangky,
     String? ngayhethan,
-    String? ngaykichhoat,
-    List<dynamic>? ngayupstore,
-    int? sonamdangky,
     String? tenapp,
-    String? tenmien}) = _L1_data;
+    String? tenmien,
+    List<dynamic>? danhsachtenmien,
+    String? chucnang,
+    String? mota,
+    String? trangthai_hosting,
+    List<dynamic>? lichsu_thanhtoan,
+    String? ngaybangiao,
+    String? ngaykichhoat,
+    List<dynamic>? ngayupstore}) = _L1_data;
 
   factory L1_data.fromJson(Map<String, dynamic> json) => _$L1_dataFromJson(json);
 }
@@ -74,13 +78,32 @@ class L1_data with _$L1_data {
 @freezed
 class L2_lichsu_khoitao with _$L2_lichsu_khoitao {
   const factory L2_lichsu_khoitao({
+    @JsonKey(name: 'parentId') L3_parentId? l3_parentId,
+    @JsonKey(name: 'phongbanId') L3_phongbanId? l3_phongbanId,
     @JsonKey(name: '_id') @required String? id,
-    String? parentId,
     String? manhanvien,
-    String? hoten,
-    @JsonKey(name: 'phongbanId') L3_phongbanId? l3_phongbanId}) = _L2_lichsu_khoitao;
+    String? hoten}) = _L2_lichsu_khoitao;
 
   factory L2_lichsu_khoitao.fromJson(Map<String, dynamic> json) => _$L2_lichsu_khoitaoFromJson(json);
+}
+
+@freezed
+class L2_info with _$L2_info {
+  const factory L2_info({
+    List<dynamic>? danhsachtenmien}) = _L2_info;
+
+  factory L2_info.fromJson(Map<String, dynamic> json) => _$L2_infoFromJson(json);
+}
+
+@freezed
+class L3_parentId with _$L3_parentId {
+  const factory L3_parentId({
+    @JsonKey(name: '_id') @required String? id,
+    String? manhanvien,
+    String? hoten,
+    String? manhanh}) = _L3_parentId;
+
+  factory L3_parentId.fromJson(Map<String, dynamic> json) => _$L3_parentIdFromJson(json);
 }
 
 @freezed

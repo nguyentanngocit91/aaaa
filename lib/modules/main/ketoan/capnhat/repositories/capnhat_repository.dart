@@ -21,6 +21,8 @@ class CapNhatRepository {
       "info": {},
       "data": []
     };
+    print(ApiUrl.searchContract);
+
     if (response.statusCode == 200) {
       final res = response.data;
 
@@ -32,6 +34,7 @@ class CapNhatRepository {
         result['message'] = "Success";
         result['info'] = InfoResponseModel.fromJson(res);
         for (var item in res['data']) {
+      
           list.add(ItemSearchResultModel.fromJson(item));
         }
         result['data'] = list;
@@ -124,34 +127,6 @@ class CapNhatRepository {
     }
     return result;
   }
-
-  uploadFile(
-      {required String sohopdong, required String hopdongId, required String loaifile, required String ghichu, required PlatformFile file}) async {
-    String fileName = file.path!.split('/').last;
-    FormData formData = FormData.fromMap({
-      "files": [
-        await MultipartFile.fromFile(file.path!, filename: fileName),
-      ],
-      'loaimedia':'hopdong',
-      'sohopdong': sohopdong,
-      'loaifile': loaifile,
-      'ghichu': ghichu,
-    });
-    final response =
-    await App.dioClient.post("${ApiUrl.uploadFile}", data: formData);
-    var result = {
-      "status": false,
-      "message": "Server error"
-    };
-
-    if (response.statusCode == 200) {
-      final res = response.data;
-      result['status'] = res['success'];
-      result['message'] = res['message'];
-    }
-    return result;
-  }
-
 
 
 }

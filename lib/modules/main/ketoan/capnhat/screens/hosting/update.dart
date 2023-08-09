@@ -14,40 +14,76 @@ import '../../models/contract_model.dart';
 import '../../models/media_model.dart';
 import '../../providers/capnhat_provider.dart';
 import '../../providers/form_capnhat_provider.dart';
-
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
   'chungtu': 'Chứng từ'
 };
+// enum TrangThaiHosting { kyMoi, phucHoi, nangCap, chuyenDoi }
+Map<String, String> _trangThaiHosting = {
+  'kymoi': 'Ký mới',
+  'phuchoi': 'Phục hồi',
+  'nangcap': 'Nâng cấp',
+  'chuyendoi': 'Chuyển đổi'
+};
 GlobalKey<FormState> _formKey = GlobalKey();
-String _updateType = 'web';
 List<Map> _resultFile = [];
 List<MediaModel> _listMedia = [];
+String _hostType = '';
 
-class UpdateWebsite extends ConsumerStatefulWidget {
-  UpdateWebsite({Key? key, required this.id, required this.contractNumber})
+class UpdateHosting extends ConsumerStatefulWidget {
+  UpdateHosting({Key? key, required this.id, required this.contractNumber})
       : super(key: key);
   final String id;
   final String contractNumber;
 
   @override
-  ConsumerState<UpdateWebsite> createState() => _UpdateWebsiteScreenState();
+  ConsumerState<UpdateHosting> createState() => _UpdateWebsiteScreenState();
 }
 
-class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
+class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
     with FormUIMixins {
   bool isLoading = true;
   Map<String, TextEditingController> listController = {};
   Map<String, FocusNode> listFocusNode = {};
 
+
+  List<Widget> _hostingAttribute() {
+    List<Widget> radioButtons = [];
+    _trangThaiHosting.forEach((key, value) {
+      radioButtons.add(
+        Row(
+          children: [
+            Radio<String>(
+              value: key,
+              groupValue: _hostType,
+              onChanged: (value) {
+                setState(() {
+                  _hostType = value!;
+                });
+              },
+            ),
+            GestureDetector(
+                child: Text(value),
+                onTap: () => setState(() {
+                  _hostType = key;
+                }))
+          ],
+        ),
+      );
+    });
+    return radioButtons;
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    ['mahopdong', 'ngaykyhd', 'ngaybangiao', 'chucnang', 'ghichu']
+    ['mahopdong', 'ngaydangky', 'ngayhethan', 'chucnang', 'ghichu','dungluong']
         .forEach((item) {
       listController[item] = TextEditingController();
       listFocusNode[item] = FocusNode();
+
     });
     Future.delayed(Duration.zero, () async {
       await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
@@ -55,15 +91,25 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
       ContractModel? data = res.state.contract;
       setState(() {
         _listMedia = res.state.media!;
+        _hostType = data!.l1_data!.trangthai_hosting.toString();
       });
 
+
+
+
       listController!['mahopdong']!.text = data!.l1_data!.mahopdong.toString();
-      listController!['ngaykyhd']!.text =
-          Helper.dateFormat(data!.l1_data!.ngaykyhd.toString());
-      listController!['ngaybangiao']!.text =
-          Helper.dateFormat(data!.l1_data!.ngaybangiao!);
-      listController!['chucnang']!.text = data!.l1_data!.chucnang!;
-      listController!['ghichu']!.text = data!.l1_data!.ghichu!;
+      listController!['ngaydangky']!.text =
+          Helper.dateFormat(data!.l1_data!.ngaydangky.toString());
+      listController!['ngayhethan']!.text =
+          Helper.dateFormat(data!.l1_data!.ngayhethan.toString());
+
+      listController!['dungluong']!.text =
+          data!.l1_data!.dungluong.toString();
+
+
+
+      listController!['chucnang']!.text = data!.l1_data!.chucnang!=null ? data!.l1_data!.chucnang!.toString():'';
+      listController!['ghichu']!.text = data!.l1_data!.ghichu!.toString();
     });
   }
 
@@ -87,25 +133,22 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
             setState(() {
               _resultFile = [];
             });
-
+            ref.read(capnhatProvider.notifier).reload();
           }
           AwesomeDialog(
             context: context,
-            autoHide:Duration(seconds: 2),
+            autoHide: Duration(seconds: 2),
             width: 400.0,
             dialogType:
-            data.state.success ? DialogType.success : DialogType.error,
+                data.state.success ? DialogType.success : DialogType.error,
             animType: AnimType.scale,
             title: data.state.message,
-            autoDismiss:true,
-
-            btnOk:Container(),
-            btnCancel:Container(),
-
+            autoDismiss: true,
+            btnOk: Container(),
+            btnCancel: Container(),
             btnCancelOnPress: () {},
             btnOkOnPress: () {},
           )..show();
-
         });
       }
     });
@@ -119,7 +162,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
         const Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'CẬP NHẬT WEBSITE',
+            'CẬP NHẬT HOSTING',
             style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
           ),
         ),
@@ -142,7 +185,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                       width: 10,
                     ),
                     Text(
-                      'Thông tin website'.toUpperCase(),
+                      'Thông tin hosting'.toUpperCase(),
                       style: const TextStyle(color: Color(0xFF105a6c)),
                     ),
                   ],
@@ -159,8 +202,9 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                     child: ResponsiveGridRow(
                       children: [
                         ResponsiveGridCol(
-                          lg: 6,
-                          xs: 12,
+                          xs: 6,
+                          md: 6,
+                          lg: 3,
                           child: Container(
                             padding: Helper.padding(),
                             child: Column(
@@ -195,7 +239,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Ngày ký web',
+                                  'Dung lượng',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12),
@@ -203,43 +247,10 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                TextFormField(
-                                  readOnly: true,
-                                  controller: listController['ngaykyhd'],
-                                  focusNode: listFocusNode['ngaykyhd'],
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(
-                                        errorText: 'Không bỏ trống.'),
-                                  ]),
-                                  onTap: () async {
-                                    final DateTime? selDate =
-                                        await Helper.onSelectDate(context,
-                                            initialDate: Helper.parseDate(
-                                                listController['ngaykyhd']!
-                                                    .value
-                                                    .text,
-                                                'dd-MM-yyyy'));
-                                    if (selDate != null) {
-                                      listController['ngaykyhd']!.text =
-                                          Helper.dateFormat(selDate);
-                                      DateTime date1 = Helper.parseDate(
-                                          listController['ngaykyhd']!
-                                              .value
-                                              .text,
-                                          'dd-MM-yyyy');
-                                      DateTime date2 = Helper.parseDate(
-                                          listController['ngaybangiao']!
-                                              .value
-                                              .text,
-                                          'dd-MM-yyyy');
-                                      if (date1.compareTo(date2) > 0) {
-                                        listController['ngaybangiao']!.text =
-                                            Helper.dateFormat(selDate);
-                                      }
-                                    }
-                                  },
+                                TextField(
+                                  controller: listController['dungluong'],
+                                  focusNode: listFocusNode['dungluong'],
+
                                 ),
                               ],
                             ),
@@ -255,7 +266,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Ngày bàn giao',
+                                  'Ngày đăng ký',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12),
@@ -265,33 +276,91 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
                                 ),
                                 TextFormField(
                                   readOnly: true,
-                                  controller: listController['ngaybangiao'],
-                                  focusNode: listFocusNode['ngaybangiao'],
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(
-                                        errorText: 'Không bỏ trống.'),
-                                  ]),
-                                  onTap: () async {
-                                    final DateTime? selDate =
-                                        await Helper.onSelectDate(
-                                            context,
-                                            initialDate: Helper.parseDate(
-                                                listController['ngaybangiao']!
-                                                    .value
-                                                    .text,
-                                                'dd-MM-yyyy'),
-                                            firstDate: Helper.parseDate(
-                                                listController['ngaykyhd']!
-                                                    .value
-                                                    .text,
-                                                'dd-MM-yyyy'));
-                                    if (selDate != null) {
-                                      listController['ngaybangiao']!.text =
-                                          Helper.dateFormat(selDate);
-                                    }
-                                  },
+                                  controller: listController['ngaydangky'],
+                                  focusNode: listFocusNode['ngaydangky'],
+                                  decoration: Helper().disabledInput(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ResponsiveGridCol(
+                          xs: 6,
+                          md: 6,
+                          lg: 3,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Ngày hết hạn',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextFormField(
+                                  readOnly: true,
+                                  controller: listController['ngayhethan'],
+                                  focusNode: listFocusNode['ngayhethan'],
+                                  decoration: Helper().disabledInput(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ResponsiveGridCol(
+                          xs: 12,
+                          md: 6,
+                          lg: 6,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Trạng thái',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: _hostingAttribute(),
+                                )
+
+                              ],
+                            ),
+                          ),
+                        ),
+                        ResponsiveGridCol(
+                          xs: 12,
+                          md: 6,
+                          lg: 6,
+                          child: Container(
+                            padding: Helper.padding(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Ghi chú',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextFormField(
+                                
+                                  controller: listController['ghichu'],
+                                  focusNode: listFocusNode['ghichu'],
+
                                 ),
                               ],
                             ),
@@ -624,19 +693,21 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                       .add(element['file'].path.toString());
                                 });
                               }
-
+                                print('1');
                               _files.forEach((element) {
+                                print(element);
                                 if (pathFiles.indexOf(element.path!) == -1) {
                                   _tmpFile.add(element);
                                 }
                               });
+                              print(_tmpFile);
                               if (_tmpFile.length == 0) {
                                 Helper.toast(
                                     messenge: 'Vui lòng chọn file tải lên',
                                     context: context);
                                 return;
                               }
-
+print('2');
                               setState(() {
                                 for (PlatformFile file in _tmpFile) {
                                   Map tmp = {
@@ -645,6 +716,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                     'note': _noteController.text,
                                     'file': file
                                   };
+                                  print(tmp);
                                   _resultFile.add(tmp);
                                 }
                                 _noteController.text = '';
@@ -878,7 +950,7 @@ class Data extends ConsumerWidget {
 }
 
 class MediaItem extends ConsumerStatefulWidget {
-   MediaItem(
+  MediaItem(
       {Key? key,
       required this.item,
       required this.index,
@@ -985,7 +1057,6 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                                     _selected = value.toString();
                                   });
                                 },
-
                                 buttonStyleData: const ButtonStyleData(
                                   padding: EdgeInsets.only(right: 8),
                                 ),
@@ -1028,36 +1099,36 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                         _widget,
                         () async {
                           if (_formKey.currentState!.validate()) {
+                            var updateMedia = await ref
+                                .read(capnhatProvider.notifier)
+                                .updateMedia({
+                              'id': widget.item.id,
+                              'ghichu': controller.text,
+                              'loaifile': _selected
+                            });
 
-
-                            var updateMedia = await ref.read(capnhatProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
-
-                            if(updateMedia['status']==true){
-                             Navigator.of(context).pop();
+                            if (updateMedia['status'] == true) {
+                              Navigator.of(context).pop();
                               setState(() {
-                                 widget.item = MediaModel.fromJson(updateMedia['data']);
-
+                                widget.item =
+                                    MediaModel.fromJson(updateMedia['data']);
                               });
-
                             }
                             AwesomeDialog(
                               context: context,
-                              autoHide:Duration(seconds: 2),
+                              autoHide: Duration(seconds: 2),
                               width: 400.0,
-                               dialogType:
-                               updateMedia['status'] ? DialogType.success : DialogType.error,
+                              dialogType: updateMedia['status']
+                                  ? DialogType.success
+                                  : DialogType.error,
                               animType: AnimType.scale,
                               title: updateMedia['message'],
-                              autoDismiss:true,
-
-                              btnOk:Container(),
-                              btnCancel:Container(),
-                              
+                              autoDismiss: true,
+                              btnOk: Container(),
+                              btnCancel: Container(),
                               btnCancelOnPress: () {},
                               btnOkOnPress: () {},
                             )..show();
-
-
                           }
                         },
                       );

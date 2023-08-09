@@ -7,6 +7,7 @@ import '../../../../../_shared/thietlap_ngonngu.dart';
 import '../../../../../_shared/utils/helper.dart';
 import '../models/contract_model.dart';
 import '../repositories/capnhat_repository.dart';
+import '../repositories/upload_reponsitory.dart';
 
 part 'form_capnhat_state.dart';
 
@@ -19,6 +20,7 @@ final formcapnhatProvider =
 
 class FormCapNhatNotifier extends StateNotifier<CapNhatState> {
   final CapNhatRepository _capNhatRepository = CapNhatRepository();
+  final UploadRepository _uploadRepository = UploadRepository();
 
   FormCapNhatNotifier() : super(const CapNhatState());
 
@@ -38,8 +40,8 @@ class FormCapNhatNotifier extends StateNotifier<CapNhatState> {
 
     if (uploadList !=null && uploadList.length > 0) {
       for (var item in uploadList) {
-        var jsonResult = await _capNhatRepository.uploadFile(
-            hopdongId: _id,
+        var jsonResult = await _uploadRepository.uploadFile(
+
             sohopdong: _contractNumber,
             ghichu: item['note'],
             loaifile: item['type'],
