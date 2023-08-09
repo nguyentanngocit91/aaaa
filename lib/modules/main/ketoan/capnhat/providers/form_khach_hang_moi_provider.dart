@@ -52,7 +52,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     if (isHopDongWebsite == true ||
         isHopDongDomain == true ||
         isHopDongHosting == true) {
-      isHopDongApp = false;
+        isHopDongApp = false;
     }
 
     state = state.copyWith(
@@ -115,8 +115,9 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     }
   }
 
-  saveForm() async {
+  saveForm(List uploadList) async {
     // data
+    state = state.copyWith(loading:loadingStatus.START);
     final Map<String,dynamic> data = {};
 
     // format date
@@ -235,8 +236,14 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     data["HopDong"] = state.dataHopDong;
     data["PhieuThu"] = state.dataPhieuThu;
 
-    print(data);
+    data['UploadList'] = uploadList;
+
     final result = await _khachHangMoiRepository.nangcapHD(data: data);
+
+    state = state.copyWith(loading:loadingStatus.STOP,response: result);
+    if(result['status']==false){
+
+    }
     //
     // if(result){
     //   final uploadedFile = await _saveFileHD();

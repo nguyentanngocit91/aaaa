@@ -35,8 +35,11 @@ class Helper {
 
 
   static dateFormat(var data){
-    DateTime date = DateTime.parse(data.toString());
-    return  "${date.day}-${date.month}-${date.year}";
+    if(data!=null) {
+      DateTime date = DateTime.parse(data.toString());
+      return "${date.day}-${date.month}-${date.year}";
+    }
+    return '';
   }
 
   static print2(json) {

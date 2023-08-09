@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../modules/main/ketoan/capnhat/screens/app/list.dart';
 import '../modules/main/ketoan/capnhat/screens/domain/list.dart';
 import '../modules/main/ketoan/capnhat/screens/hosting/list.dart';
+import '../modules/main/ketoan/capnhat/screens/hosting/upgrade.dart';
 import '../modules/main/ketoan/danh_sach_domain_moi/dsdomain_layout.dart';
 import '../modules/main/ketoan/ds_moi_pending/ds_moi_pending_layout.dart';
 import 'providers/app_provider.dart';

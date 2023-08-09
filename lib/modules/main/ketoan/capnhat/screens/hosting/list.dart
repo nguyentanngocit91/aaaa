@@ -15,26 +15,13 @@ import '../../models/item_search_result_model.dart';
 import '../../providers/capnhat_provider.dart';
 import '../../widgets/pagnination.dart';
 import 'update.dart';
-
+import 'upgrade.dart';
 String searchType = 'hosting';
-
-
-class UpgradeHostingListLayout extends ConsumerStatefulWidget {
+class UpgradeHostingListLayout extends ConsumerWidget {
   const UpgradeHostingListLayout() : super(key: const Key(pathName));
-
   static const String pathName = 'nang-cap-hosting';
-
-  ConsumerState createState() => _UpgradeHostingListLayoutState();
-}
-
-class _UpgradeHostingListLayoutState extends ConsumerState<UpgradeHostingListLayout> {
   @override
-  void dispose() {
-
-    super.dispose();
-  }
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: ListView(
         children: [
@@ -50,52 +37,48 @@ class _UpgradeHostingListLayoutState extends ConsumerState<UpgradeHostingListLay
     );
   }
 }
-
-
-
 class Data extends ConsumerWidget {
   Data({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var data = ref.watch(capnhatHostingProvider.select((value) => value.result));
-
+    var data = ref.watch(capnhatProvider.select((value) => value.result));
     if (data != null &&
         (data!['info'].page > data!['info'].lastPage &&
             data!['info'].total > 0)) {
       ref
-          .read(capnhatHostingProvider.notifier)
+          .read(capnhatProvider.notifier)
           .setPage(data!['info'].lastPage, searchType);
     }
     return SingleChildScrollView(
         child: Column(
-          children: [
-            _headerTable(),
-            if (data != null && data['data'].length > 0) ...[
-              ListView.builder(
-                  padding: const EdgeInsets.all(0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  primary: true,
-                  itemCount: data['data'].length,
-                  itemBuilder: (BuildContext context, index) {
-                    InfoResponseModel info = data['info'];
-                    return InfoUpdate(
-                        item: data['data'][index],
-                        index:
+      children: [
+        _headerTable(),
+        if (data != null && data['data'].length > 0) ...[
+          ListView.builder(
+              padding: const EdgeInsets.all(0),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              primary: true,
+              itemCount: data['data'].length,
+              itemBuilder: (BuildContext context, index) {
+                InfoResponseModel info = data['info'];
+                return InfoUpdate(
+                    item: data['data'][index],
+                    index:
                         info.page! * info.limit! - (info.limit!) + index + 1);
-                  }),
-              GeneratePagin(data['info']),
-            ] else ...[
-              const BsAlert(
-                closeButton: false,
-                margin: EdgeInsets.only(bottom: 10.0),
-                style: BsAlertStyle.danger,
-                child: Text('Không có dữ liệu', textAlign: TextAlign.center),
-              ),
-            ],
-          ],
-        ));
+              }),
+          GeneratePagin(data['info']),
+        ] else ...[
+          const BsAlert(
+            closeButton: false,
+            margin: EdgeInsets.only(bottom: 10.0),
+            style: BsAlertStyle.danger,
+            child: Text('Không có dữ liệu', textAlign: TextAlign.center),
+          ),
+        ],
+      ],
+    ));
   }
 }
 
@@ -124,12 +107,21 @@ class _headerTable extends StatelessWidget {
             child: HeaderRowItem(text: 'Email'),
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: HeaderRowItem(text: 'Ngày ký'),
           ),
+
           Expanded(
-            flex: 5,
-            child: HeaderRowItem(text: 'Chức năng'),
+            flex: 2,
+            child: HeaderRowItem(text: 'Ngày hết hạn'),
+          ),
+          Expanded(
+            flex: 2,
+            child: HeaderRowItem(text: 'Số năm'),
+          ),
+          Expanded(
+            flex: 2,
+            child: HeaderRowItem(text: 'Dung lượng'),
           ),
           Expanded(
             flex: 5,
@@ -166,59 +158,59 @@ class _GeneratePaginState extends ConsumerState<GeneratePagin> {
       setState(() {
         selectedPage = widget.data.lastPage!;
       });
-      ref.read(capnhatHostingProvider.notifier).setPage(selectedPage, searchType);
+      ref.read(capnhatProvider.notifier).setPage(selectedPage, searchType);
     }
     return widget.data.lastPage! < 2
         ? Container()
         : Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Pagination(
-          perPage: widget.data.limit!,
-          numOfPages: widget.data.lastPage!,
-          selectedPage: selectedPage,
-          pagesVisible: 5,
-          onPerPageChange: (page) {
-            ref
-                .read(capnhatHostingProvider.notifier)
-                .setPerPage(page, searchType);
-            // ref.read(capnhatHostingProvider.notifier).onSearch(searchType);
-            setState(() {
-              perPage = page;
-            });
-          },
-          onPageChanged: (page) {
-            ref.read(capnhatHostingProvider.notifier).setPage(page, null);
-            ref.read(capnhatHostingProvider.notifier).onSearch(searchType);
-            setState(() {
-              selectedPage = page;
-            });
-          },
-          activeTextStyle: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-          activeBtnStyle: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.blue),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Pagination(
+                perPage: widget.data.limit!,
+                numOfPages: widget.data.lastPage!,
+                selectedPage: selectedPage,
+                pagesVisible: 5,
+                onPerPageChange: (page) {
+                  ref
+                      .read(capnhatProvider.notifier)
+                      .setPerPage(page, searchType);
+                  // ref.read(capnhatProvider.notifier).onSearch(searchType);
+                  setState(() {
+                    perPage = page;
+                  });
+                },
+                onPageChanged: (page) {
+                  ref.read(capnhatProvider.notifier).setPage(page, null);
+                  ref.read(capnhatProvider.notifier).onSearch(searchType);
+                  setState(() {
+                    selectedPage = page;
+                  });
+                },
+                activeTextStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+                activeBtnStyle: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                inactiveBtnStyle: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                  )),
+                ),
+                inactiveTextStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            ),
-          ),
-          inactiveBtnStyle: ButtonStyle(
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2),
-            )),
-          ),
-          inactiveTextStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ],
-    );
+            ],
+          );
   }
 }
 
@@ -227,6 +219,7 @@ class InfoUpdate extends StatelessWidget {
       : super(key: key);
   final ItemSearchResultModel item;
   final int index;
+
 
   @override
   Widget build(BuildContext context) {
@@ -251,12 +244,20 @@ class InfoUpdate extends StatelessWidget {
             child: BodyRowItem(Text(item.l1_khachhangId!.email!)),
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: BodyRowItem(Text(Helper.dateFormat(item.ngaykyhd))),
           ),
           Expanded(
-            flex: 5,
-            child: BodyRowItem(Text(item.chucnang.toString())),
+            flex: 2,
+            child: BodyRowItem(Text(Helper.dateFormat(item.ngayhethan))),
+          ),
+          Expanded(
+            flex: 2,
+            child: BodyRowItem(Text(item.sonamdangky.toString())),
+          ),
+          Expanded(
+            flex: 2,
+            child: BodyRowItem(Text("${item.dungluong.toString()} GB")),
           ),
           Expanded(
             flex: 5,
@@ -272,19 +273,28 @@ class InfoUpdate extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: GestureDetector(
+                        onTap: () {
+                          showDialog<void>(
+                            context: context!,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return UpgradeHosting(id: item.id!,contractNumber: item.sohopdong!,);
+                            },
+                          );
+                        },
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFF105A6C),
-                            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                          ),
-                          padding: EdgeInsets.only(
-                              left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
-                          child: Text(
-                            'Nâng cấp',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        )),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF105A6C),
+                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                      ),
+                      padding: EdgeInsets.only(
+                          left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
+                      child: Text(
+                        'Nâng cấp',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )),
                   ),
                 ),
                 ResponsiveGridCol(
@@ -298,9 +308,8 @@ class InfoUpdate extends StatelessWidget {
                           showDialog<void>(
                             context: context!,
                             barrierDismissible: false,
-                            // user must tap button!
                             builder: (BuildContext context) {
-                              return UpdateWebsite(id: item.id!,contractNumber: item.sohopdong!,);
+                              return UpdateHosting(id: item.id!,contractNumber: item.sohopdong!,);
                             },
                           );
                         },
@@ -308,7 +317,7 @@ class InfoUpdate extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius:
-                            BorderRadius.all(Radius.circular(4.0)),
+                                BorderRadius.all(Radius.circular(4.0)),
                           ),
                           padding: EdgeInsets.only(
                               left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
@@ -327,10 +336,8 @@ class InfoUpdate extends StatelessWidget {
     ]);
   }
 }
-
 class filter extends ConsumerWidget {
   const filter({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
@@ -359,7 +366,7 @@ class filter extends ConsumerWidget {
                             title: 'Mã khách hàng',
                             onchange: (value) {
                               ref
-                                  .read(capnhatHostingProvider.notifier)
+                                  .read(capnhatProvider.notifier)
                                   .onChangeValue('MAKH', value);
                             }),
                       ],
@@ -377,7 +384,7 @@ class filter extends ConsumerWidget {
                             title: 'Số hợp đồng',
                             onchange: (value) {
                               ref
-                                  .read(capnhatHostingProvider.notifier)
+                                  .read(capnhatProvider.notifier)
                                   .onChangeValue('SOHD', value);
                             }),
                       ],
@@ -395,7 +402,7 @@ class filter extends ConsumerWidget {
                             title: 'Tên hợp đồng',
                             onchange: (value) {
                               ref
-                                  .read(capnhatHostingProvider.notifier)
+                                  .read(capnhatProvider.notifier)
                                   .onChangeValue('TENHD', value);
                             }),
                       ],
@@ -413,7 +420,7 @@ class filter extends ConsumerWidget {
                             title: 'Email',
                             onchange: (value) {
                               ref
-                                  .read(capnhatHostingProvider.notifier)
+                                  .read(capnhatProvider.notifier)
                                   .onChangeValue('EMAIL', value);
                             }),
                       ],
@@ -432,23 +439,23 @@ class filter extends ConsumerWidget {
                 ),
                 GestureDetector(
                     child: Container(
-                      padding: EdgeInsets.all(3.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                        color: Colors.blue,
-                      ),
-                      child: Icon(
-                        Icons.refresh,
-                        color: Colors.white,
-                      ),
-                    )),
+                  padding: EdgeInsets.all(3.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                    color: Colors.blue,
+                  ),
+                  child: Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                  ),
+                )),
                 const SizedBox(
                   width: 10,
                 ),
                 GestureDetector(
                     onTap: () {
-                      ref.read(capnhatHostingProvider.notifier).setPage(1, null);
-                      ref.read(capnhatHostingProvider.notifier).onSearch(searchType);
+                      ref.read(capnhatProvider.notifier).setPage(1, null);
+                      ref.read(capnhatProvider.notifier).onSearch(searchType);
                     },
                     child: Container(
                       padding: EdgeInsets.all(3.0),
