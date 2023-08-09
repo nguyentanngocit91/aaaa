@@ -13,7 +13,6 @@ class _FormThongTinKhachHangWidgetState
       Debouncer(delay: const Duration(seconds: 2));
 
   final String _typeData = 'khachhang';
-  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -341,7 +340,6 @@ class _FormThongTinKhachHangWidgetState
   @override
   dispose() {
     super.dispose();
-    _emailController.dispose();
     ref.invalidate(kiemTraKhachHangProvider);
   }
 }

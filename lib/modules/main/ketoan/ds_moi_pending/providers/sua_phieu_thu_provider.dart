@@ -92,7 +92,19 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
 
   @override
   FormPhieuThuState build() {
+    init();
     return FormPhieuThuState();
+  }
+
+  init() async {
+    await taoMaKhachHang();
+  }
+
+  Future<String?> taoMaKhachHang() async {
+    String? maKhachHang = await _phieuThuRepository.capMaKhachhang();
+    maKhachHang =
+    'NN$maKhachHang${DateTime.now().formatDateTime(formatString: 'yy')}';
+    state = state.copyWith(maKhachHang: maKhachHang);
   }
 
   Future<PhieuThuModel?> initData({required String id}) async{
@@ -121,7 +133,8 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
   //   "type": "ca-nhan" // 'ca-nhan', 'cong-ty'
   // },
   loadKhachHang() async {
-
+    final dataKhachHang = phieuThuModel.l1_khachhangId!.toJson();
+    state = state.copyWith(dataKhachHang: dataKhachHang);
   }
 
   // Hợp đồng
@@ -130,13 +143,6 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
       "tenhopdong":phieuThuModel.hopdong![0]['tenhopdong']
     };
     state = state.copyWith(soHopDong: phieuThuModel.hopdong![0]['sohopdong'],);
-  }
-
-  Future<String?> taoMaKhachHang() async {
-    String? maKhachHang = await _phieuThuRepository.capMaKhachhang();
-    maKhachHang =
-    'NN$maKhachHang${DateTime.now().formatDateTime(formatString: 'yy')}';
-    state = state.copyWith(maKhachHang: maKhachHang);
   }
 
   batDatSubmit() {

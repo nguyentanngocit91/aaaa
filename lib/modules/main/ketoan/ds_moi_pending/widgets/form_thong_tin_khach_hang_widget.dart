@@ -9,20 +9,35 @@ class FormThongTinKhachHangWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinKhachHangWidgetState
     extends ConsumerState<FormThongTinKhachHangWidget> with FormUIMixins {
+
   final Debouncer onSearchDebouncer =
       Debouncer(delay: const Duration(seconds: 2));
 
   final String _typeData = 'khachhang';
   final TextEditingController _emailController = TextEditingController();
+  Map thongTinKhachHang = {};
+
 
   @override
   Widget build(BuildContext context) {
-    final maKhachHang = ref
-        .watch(formPhieuThuProvider.select((value) => value.maKhachHang));
+    final formState = ref.watch(formPhieuThuProvider);
 
-    Map thongTinKhachHang = {};
-    thongTinKhachHang =
+    final maKhachHang = formState.dataKhachHang!['makhachhang'];
+
+    Map thongTinKhachHang = formState.dataKhachHang!;
+
+    final thongTinKhachHangCu =
         ref.watch(kiemTraKhachHangProvider.select((value) => value.data ?? {}));
+
+    if(formState.dataKhachHang!['email'] != formState.phieuThuModel!.l1_khachhangId!.email){
+      if(thongTinKhachHangCu.isNotEmpty){
+        thongTinKhachHang = thongTinKhachHangCu;
+      }else{
+        thongTinKhachHang = {"makhachhang":formState.maKhachHang};
+      }
+    }
+
+    // print('Khách hàng: ${formState.dataKhachHang}');
 
     ref.listen(kiemTraKhachHangProvider.select((value) => value.loading),
         (previous, next) {
@@ -56,6 +71,7 @@ class _FormThongTinKhachHangWidgetState
                       FormBuilderValidators.email(
                           errorText: 'Email không đúng định dạng.')
                     ]),
+                    initialValue: thongTinKhachHang['email'],
                     onChanged: (value) {
                       ref.read(formPhieuThuProvider.notifier).changeData(
                           key: 'email', value: value, type: _typeData);
