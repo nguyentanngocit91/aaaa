@@ -25,23 +25,23 @@ import '../providers/form_khach_hang_moi_provider.dart';
 import '../providers/kiem_tra_khach_hang_provider.dart';
 import '../providers/nhan_vien_phu_trach_provider.dart';
 import '../providers/danh_sach_domain_provider.dart';
-import '../widgets/tags_input_widget.dart';
+import '../widgets/form_them_hopdong_moi/tags_input_widget.dart';
 
-part '../widgets/form_thong_tin_khach_hang_widget.dart';
+part '../widgets/form_them_hopdong_moi/form_thong_tin_khach_hang_widget.dart';
 
-part '../widgets/form_thong_tin_hop_dong_widget.dart';
+part '../widgets/form_them_hopdong_moi/form_thong_tin_hop_dong_widget.dart';
 
-part '../widgets/form_thong_tin_phieu_thu_widget.dart';
+part '../widgets/form_them_hopdong_moi/form_thong_tin_phieu_thu_widget.dart';
 
-part '../widgets/form_thong_tin_website_widget.dart';
+part '../widgets/form_them_hopdong_moi/form_thong_tin_website_widget.dart';
 
-part '../widgets/form_thong_tin_domain_widget.dart';
+part '../widgets/form_them_hopdong_moi/form_thong_tin_domain_widget.dart';
 
-part '../widgets/form_thong_tin_hosting_widget.dart';
+part '../widgets/form_them_hopdong_moi/form_thong_tin_hosting_widget.dart';
 
-part '../widgets/form_thong_tin_app_widget.dart';
+part '../widgets/form_them_hopdong_moi/form_thong_tin_app_widget.dart';
 
-part '../widgets/upload_file_hd_widget.dart';
+part '../widgets/form_them_hopdong_moi/upload_file_hd_widget.dart';
 
 
 final GlobalKey<FormState> _formKey = GlobalKey();

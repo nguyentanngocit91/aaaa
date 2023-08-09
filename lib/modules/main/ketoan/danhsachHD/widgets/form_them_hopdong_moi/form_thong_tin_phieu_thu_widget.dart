@@ -1,4 +1,4 @@
-part of '../screen/them_hopdong_moi.dart';
+part of '../../screen/them_hopdong_moi.dart';
 
 enum HinhThucThanhToan { cod, bank }
 

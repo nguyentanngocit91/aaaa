@@ -1,4 +1,4 @@
-part of '../screen/them_hopdong_moi.dart';
+part of '../../screen/them_phieuthu_screen.dart';
 
 
 class UploadFileHDWidget extends ConsumerStatefulWidget {
@@ -64,39 +64,39 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
         ndGapW16(),
         Expanded(
           flex: 2,
-          child: SizedBox(
+          child:Container(
             width: 200,
             child: inputUploadFile(
-              context,
-              controller: textEditingController,
-              onTap: () async {
-                String path = '';
-                final result = await FilePicker.platform.pickFiles(
-                  allowMultiple: false,
-                  type: FileType.custom,
-                  allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
-                );
-                if (result != null) {
-                  for(PlatformFile file in result.files){
-                    ref.read(fileHDProvider.notifier).changeFile(file: file);
-                  }
-                  if(result.files.length>1){
-                    textEditingController.text = 'Đã chọn ${result.files.length} files';
+                context,
+                controller: textEditingController,
+                onTap: () async {
+                  String path = '';
+                  final result = await FilePicker.platform.pickFiles(
+                    allowMultiple: false,
+                    type: FileType.custom,
+                    allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
+                  );
+                  if (result != null) {
+                    for(PlatformFile file in result.files){
+                      ref.read(fileHDProvider.notifier).changeFile(file: file);
+                    }
+                    if(result.files.length>1){
+                      textEditingController.text = 'Đã chọn ${result.files.length} files';
+                    }else{
+                      textEditingController.text = result.files.first.name;
+                    }
                   }else{
-                    textEditingController.text = result.files.first.name;
+                    ref.read(fileHDProvider.notifier).clear();
+                    textEditingController.clear();
                   }
-                }else{
-                  ref.read(fileHDProvider.notifier).clear();
-                  textEditingController.clear();
                 }
-              }
             ),
           ),
         ),
         ndGapW32(),
         Expanded(
           flex: 3,
-          child: Wrap(
+          child: Column(
             children: [
               TextFormField(
                 decoration: const InputDecoration(

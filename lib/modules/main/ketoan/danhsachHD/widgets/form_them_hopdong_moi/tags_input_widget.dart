@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../packages/textfield_tags/textfield_tags.dart';
+import '../../../../../../packages/textfield_tags/textfield_tags.dart';
 
 class TagsInputWidget extends StatefulWidget {
   const TagsInputWidget(
