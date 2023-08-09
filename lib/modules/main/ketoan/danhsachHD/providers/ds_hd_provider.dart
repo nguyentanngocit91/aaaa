@@ -6,8 +6,6 @@ import '../models/mediacustomer_model.dart';
 import '../repositories/ds_hd_repository.dart';
 part 'ds_hd_state.dart';
 
-
-
 final dshdProvider =
 StateNotifierProvider.autoDispose<DSHDNotifier, DSHDState>(
       (ref) {
