@@ -11,15 +11,23 @@ import 'row_phieu_thu.dart';
 import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 
+Map<String, String> statusHosting = {
+  'kymoi': 'Ký mới',
+  'phuhoi': 'Phục hồi',
+  'nangcap': 'Nâng cấp',
+  'chuyendoi': 'Chuyển đổi',
+};
+
+
 class RowHopDong extends StatelessWidget {
-  const RowHopDong({Key? key, required this.index, required this.item})
+  const RowHopDong({Key? key, required this.index,required this.maKH, required this.item})
       : super(key: key);
   final int index;
+  final String maKH;
   final BanGiaoModel item;
 
   @override
   Widget build(BuildContext context) {
-    String? maKH = item.khachhangId?.makhachhang;
     String? maHD = item.mahopdong;
     String? soHD = item.sohopdong;
     String? tenHD = item.tenhopdong;
@@ -27,11 +35,20 @@ class RowHopDong extends StatelessWidget {
     String? ngayKyHopDong = item.ngaykyhd;
     String? loaiHopDong = item.loaihopdong;
 
+    String? ngayHetHan = item.ngayhethan;
+    String? trangThaiHosting = statusHosting[item.trangthaiHosting];
+    String? chucNang = item.chucnang;
+    double? dungLuong = item.dungluong;
+
+    List<Phieuthus>? listPhieuThu = item.phieuthus;
+
+    print(listPhieuThu?.length);
+
     return Column(
       children: [
         RowInfoHopDong(
           stt: index,
-          maKH: (maKH != null) ? maKH : '',
+          maKH: maKH,
           maHD: (maHD != null) ? maHD : '',
           tenHD: (tenHD != null) ? tenHD : '',
           giaTri: (giaTri != null) ? giaTri : 0.0,
@@ -74,7 +91,7 @@ class RowHopDong extends StatelessWidget {
                               'Danh sách file'.toUpperCase(),
                               style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                             ),
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
                               actions: <Widget>[
@@ -111,21 +128,21 @@ class RowHopDong extends StatelessWidget {
               ),
               ndGapH8(),
               (loaiHopDong != null && loaiHopDong == 'hosting')
-                  ? const RowHosting(
+                  ? RowHosting(
                       stt: 1,
-                      dungLuong: '5GB',
-                      ngayDangKy: '07/06/2023',
-                      ngayHetHan: '07/06/2024',
-                      trangThai: 'Ký mới',
+                      dungLuong: (dungLuong!=null)?'${Helper.convertMBtoGB(dungLuong)}GB':'',
+                      ngayDangKy: (ngayKyHopDong!=null)?DateFormat('dd-MM-yyyy').format(DateTime.parse(ngayKyHopDong)):'',
+                      ngayHetHan: (ngayHetHan!=null)?DateFormat('dd-MM-yyyy').format(DateTime.parse(ngayHetHan)):'',
+                      trangThai: (trangThaiHosting!=null)?trangThaiHosting:'',
                     )
                   : const SizedBox(),
               ndGapH8(),
               (loaiHopDong != null && loaiHopDong == 'web')
-                  ? const RowWebsite(
+                  ?  RowWebsite(
                       stt: 1,
                       chucNang:
-                          'CB-MOBILE- GIỎ HÀNG CB- SSL- ĐĂNG KÝ ĐĂNG NHẬP ĐÁNH GIÁ SAO- TÍNH PHI SHIP THEO GIA TỰ NHẬP- SẢN PHẨM SĂP RA MẮT BẢO VỀ EMAIL',
-                      ngayKy: '07/06/2023')
+                      (chucNang!=null)?chucNang:'',
+                      ngayKy: (ngayKyHopDong!=null)?DateFormat('dd-MM-yyyy').format(DateTime.parse(ngayKyHopDong)):'')
                   : const SizedBox(),
               ndGapH8(),
               (loaiHopDong != null && loaiHopDong == 'domain')
@@ -137,11 +154,11 @@ class RowHopDong extends StatelessWidget {
                   : const SizedBox(),
               ndGapH8(),
               (loaiHopDong != null && loaiHopDong == 'app')
-                  ? const RowApp(
+                  ? RowApp(
                       stt: 1,
                       chucNang:
-                          'CB-MOBILE- GIỎ HÀNG CB- SSL- ĐĂNG KÝ ĐĂNG NHẬP ĐÁNH GIÁ SAO- TÍNH PHI SHIP THEO GIA TỰ NHẬP- SẢN PHẨM SĂP RA MẮT BẢO VỀ EMAIL',
-                      ngayKy: '07/06/2023')
+                      (chucNang!=null)?chucNang:'',
+                      ngayKy: (ngayKyHopDong!=null)?DateFormat('dd-MM-yyyy').format(DateTime.parse(ngayKyHopDong)):'')
                   : const SizedBox(),
               ndGapH8(),
               Row(
@@ -163,37 +180,18 @@ class RowHopDong extends StatelessWidget {
                   ),
                 ],
               ),
-              ndGapH8(),
-              const RowPhieuThu(
-                soPhieuThu: '2360660',
-                maHD: '0833023',
-                maKH: 'NN0818023',
-                ngayNop: '07-06-2023',
-                loaiPhieuThu: 'Phiếu thu',
-                tenKD: 'NGUYỄN THỊ MAI',
-                maNV: '29765',
-                phong: 'Trọng',
-                khuVuc: '5',
-                hhtt: 'Tiền mặt',
-                tongThu: 5189900,
-                ghiChu: '',
-              ),
-              ndGapH8(),
-              const RowPhieuThu(
-                isBanGiao: true,
-                soPhieuThu: '2360660',
-                maHD: '0833023',
-                maKH: 'NN0818023',
-                ngayNop: '07-06-2023',
-                loaiPhieuThu: 'Phiếu thu',
-                tenKD: 'NGUYỄN THỊ MAI',
-                maNV: '29765',
-                phong: 'Trọng',
-                khuVuc: '5',
-                hhtt: 'Tiền mặt',
-                tongThu: 5189900,
-                ghiChu: '',
-              ),
+              (listPhieuThu!=null)?
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: listPhieuThu.length,
+                  itemBuilder: (context,index){
+                return RowPhieuThu(
+                 item: listPhieuThu[index],
+                );
+              }):const SizedBox(),
+
+
               ndGapH12(),
               Align(
                 alignment: Alignment.centerRight,

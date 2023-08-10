@@ -1,49 +1,68 @@
 class BanGiaoModel {
-  List<Null>? dichvuIds;
-  List<Null>? lichsuThanhtoan;
   String? sId;
   String? sohopdong;
+  String? sohopdongcu;
   String? namhopdong;
-  String? ngaykyhd;
-  String? loaihopdong;
-  String? mahopdongcu;
   String? mahopdong;
+  String? loaihopdong;
+  String? ngaykyhd;
+  String? khachhangId;
   List<Nhanvien>? nhanvien;
   String? ghichu;
-  KhachhangId? khachhangId;
   String? tenhopdong;
-  Nhanvien? lichsuKhoitao;
   double? tongtien;
-  List<Null>? lichsuCapnhat;
+  String? tenhosting;
+  double? dungluong;
+  int? sonamdangky;
+  String? ngaydangky;
+  String? ngayhethan;
+  String? tenapp;
+  String? tenmien;
+  List<TenMien>? danhsachtenmien;
+  String? chucnang;
+  String? mota;
+  String? trangthaiHosting;
+  String? ngaybangiao;
+  String? ngaykichhoat;
+  List<Phieuthus>? phieuthus;
 
   BanGiaoModel(
-      {this.dichvuIds,
-        this.lichsuThanhtoan,
-        this.sId,
+      {this.sId,
         this.sohopdong,
+        this.sohopdongcu,
         this.namhopdong,
-        this.ngaykyhd,
-        this.loaihopdong,
-        this.mahopdongcu,
         this.mahopdong,
+        this.loaihopdong,
+        this.ngaykyhd,
+        this.khachhangId,
         this.nhanvien,
         this.ghichu,
-        this.khachhangId,
         this.tenhopdong,
-        this.lichsuKhoitao,
         this.tongtien,
-        this.lichsuCapnhat});
+        this.tenhosting,
+        this.dungluong,
+        this.sonamdangky,
+        this.ngaydangky,
+        this.ngayhethan,
+        this.tenapp,
+        this.tenmien,
+        this.danhsachtenmien,
+        this.chucnang,
+        this.mota,
+        this.trangthaiHosting,
+        this.ngaybangiao,
+        this.ngaykichhoat,
+        this.phieuthus});
 
   BanGiaoModel.fromJson(Map<String, dynamic> json) {
-
-
     sId = json['_id'];
     sohopdong = json['sohopdong'];
+    sohopdongcu = json['sohopdongcu'];
     namhopdong = json['namhopdong'];
-    ngaykyhd = json['ngaykyhd'];
-    loaihopdong = json['loaihopdong'];
-    mahopdongcu = json['mahopdongcu'];
     mahopdong = json['mahopdong'];
+    loaihopdong = json['loaihopdong'];
+    ngaykyhd = json['ngaykyhd'];
+    khachhangId = json['khachhangId'];
     if (json['nhanvien'] != null) {
       nhanvien = <Nhanvien>[];
       json['nhanvien'].forEach((v) {
@@ -51,42 +70,65 @@ class BanGiaoModel {
       });
     }
     ghichu = json['ghichu'];
-    khachhangId = json['khachhangId'] != null
-        ? KhachhangId.fromJson(json['khachhangId'])
-        : null;
     tenhopdong = json['tenhopdong'];
-    lichsuKhoitao = json['lichsu_khoitao'] != null
-        ? Nhanvien.fromJson(json['lichsu_khoitao'])
-        : null;
-    tongtien = double.parse(json['tongtien'].toString());
-
+    tongtien = json['tongtien'].toDouble();
+    tenhosting = json['tenhosting'];
+    dungluong = json['dungluong'].toDouble();
+    sonamdangky = json['sonamdangky'];
+    ngaydangky = json['ngaydangky'];
+    ngayhethan = json['ngayhethan'];
+    tenapp = json['tenapp'];
+    tenmien = json['tenmien'];
+    if (json['danhsachtenmien'] != null) {
+      danhsachtenmien = <TenMien>[];
+      json['danhsachtenmien'].forEach((v) { danhsachtenmien!.add(TenMien.fromJson(v)); });
+    }
+    chucnang = json['chucnang'];
+    mota = json['mota'];
+    trangthaiHosting = json['trangthai_hosting'];
+    ngaybangiao = json['ngaybangiao'];
+    ngaykichhoat = json['ngaykichhoat'];
+    if (json['phieuthus'] != null) {
+      phieuthus = <Phieuthus>[];
+      json['phieuthus'].forEach((v) {
+        phieuthus!.add(Phieuthus.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-
-
     data['_id'] = sId;
     data['sohopdong'] = sohopdong;
+    data['sohopdongcu'] = sohopdongcu;
     data['namhopdong'] = namhopdong;
-    data['ngaykyhd'] = ngaykyhd;
-    data['loaihopdong'] = loaihopdong;
-    data['mahopdongcu'] = mahopdongcu;
     data['mahopdong'] = mahopdong;
+    data['loaihopdong'] = loaihopdong;
+    data['ngaykyhd'] = ngaykyhd;
+    data['khachhangId'] = khachhangId;
     if (nhanvien != null) {
       data['nhanvien'] = nhanvien!.map((v) => v.toJson()).toList();
     }
     data['ghichu'] = ghichu;
 
-    if (khachhangId != null) {
-      data['khachhangId'] = khachhangId!.toJson();
-    }
     data['tenhopdong'] = tenhopdong;
-    if (lichsuKhoitao != null) {
-      data['lichsu_khoitao'] = lichsuKhoitao!.toJson();
-    }
     data['tongtien'] = tongtien;
-
+    data['tenhosting'] = tenhosting;
+    data['dungluong'] = dungluong;
+    data['sonamdangky'] = sonamdangky;
+    data['ngaydangky'] = ngaydangky;
+    data['ngayhethan'] = ngayhethan;
+    data['tenapp'] = tenapp;
+    data['tenmien'] = tenmien;
+    data['danhsachtenmien'] = danhsachtenmien;
+    data['chucnang'] = chucnang;
+    data['mota'] = mota;
+    data['trangthai_hosting'] = trangthaiHosting;
+    data['ngaybangiao'] = ngaybangiao;
+    data['ngaykichhoat'] = ngaykichhoat;
+    if (phieuthus != null) {
+      data['phieuthus'] = phieuthus!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -179,86 +221,134 @@ class PhongbanId {
 }
 
 class Info {
-  String? chucnang;
-  String? dungluong;
-  String? domain;
+  List<String>? danhsachtenmien;
 
-  Info({this.chucnang,this.dungluong, this.domain
-  });
+  Info({this.danhsachtenmien});
 
   Info.fromJson(Map<String, dynamic> json) {
-    chucnang = json['chucnang'];
-    dungluong = json['dungluong'];
-    domain = json['domain'];
+    danhsachtenmien = json['danhsachtenmien'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['chucnang'] = chucnang;
-    data['dungluong'] = dungluong;
-    data['domain'] = domain;
+    data['danhsachtenmien'] = danhsachtenmien;
     return data;
   }
 }
 
-class KhachhangId {
+class Phieuthus {
+  double? phiweb;
+  double? phinangcapweb;
+  double? phihosting;
+  double? phinangcaphosting;
+  double? phitenmien;
+  double? phiapp;
+  double? phinangcapapp;
+  String? loaiphieuthu;
   String? sId;
-  String? makhachhang;
-  String? type;
-  String? hoten;
-  String? phone;
-  String? email;
-  String? congty;
-  String? masothue;
-  String? diachi;
-  String? cccd;
-  Info? info;
+  String? maphieuthu;
+  String? khachhangId;
+  List<Nhanvien>? nhanvien;
+  double? tongtien;
+  String? ngaytao;
+  String? ngaynopcty;
+  String? httt;
+  bool? isPending;
+  String? ghichu;
 
-  KhachhangId(
-      {
+  Phieuthus(
+      {this.phiweb,
+        this.phinangcapweb,
+        this.phihosting,
+        this.phinangcaphosting,
+        this.phitenmien,
+        this.phiapp,
+        this.phinangcapapp,
+        this.loaiphieuthu,
         this.sId,
-        this.makhachhang,
-        this.type,
-        this.hoten,
-        this.phone,
-        this.email,
-        this.congty,
-        this.masothue,
-        this.diachi,
-        this.cccd,
-        this.info});
+        this.maphieuthu,
+        this.khachhangId,
+        this.nhanvien,
+        this.tongtien,
+        this.ngaytao,
+        this.ngaynopcty,
+        this.httt,
+        this.isPending,
+        this.ghichu});
 
-  KhachhangId.fromJson(Map<String, dynamic> json) {
-
+  Phieuthus.fromJson(Map<String, dynamic> json) {
+    phiweb = json['phiweb'].toDouble();
+    phinangcapweb = json['phinangcapweb'].toDouble();
+    phihosting = json['phihosting'].toDouble();
+    phinangcaphosting = json['phinangcaphosting'].toDouble();
+    phitenmien = json['phitenmien'].toDouble();
+    phiapp = json['phiapp'].toDouble();
+    phinangcapapp = json['phinangcapapp'].toDouble();
+    loaiphieuthu = json['loaiphieuthu'];
     sId = json['_id'];
-    makhachhang = json['makhachhang'];
-    type = json['type'];
-    hoten = json['hoten'];
-    phone = json['phone'];
-    email = json['email'];
-    congty = json['congty'];
-    masothue = json['masothue'];
-    diachi = json['diachi'];
-    cccd = json['cccd'];
-    info = json['info'] != null ? Info.fromJson(json['info']) : null;
+    maphieuthu = json['maphieuthu'];
+    khachhangId = json['khachhangId'];
+    if (json['nhanvien'] != null) {
+      nhanvien = <Nhanvien>[];
+      json['nhanvien'].forEach((v) {
+        nhanvien!.add(Nhanvien.fromJson(v));
+      });
+    }
+    tongtien = json['tongtien'].toDouble();
+    ngaytao = json['ngaytao'];
+    ngaynopcty = json['ngaynopcty'];
+    httt = json['httt'];
+    isPending = json['is_pending'];
+    ghichu = json['ghichu'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-
+    data['phiweb'] = phiweb;
+    data['phinangcapweb'] = phinangcapweb;
+    data['phihosting'] = phihosting;
+    data['phinangcaphosting'] = phinangcaphosting;
+    data['phitenmien'] = phitenmien;
+    data['phiapp'] = phiapp;
+    data['phinangcapapp'] = phinangcapapp;
+    data['loaiphieuthu'] = loaiphieuthu;
     data['_id'] = sId;
-    data['makhachhang'] = makhachhang;
-    data['type'] = type;
-    data['hoten'] = hoten;
-    data['phone'] = phone;
-    data['email'] = email;
-    data['congty'] = congty;
-    data['masothue'] = masothue;
-    data['diachi'] = diachi;
-    data['cccd'] = cccd;
-    if (info != null) {
-      data['info'] = info!.toJson();
+    data['maphieuthu'] = maphieuthu;
+    data['khachhangId'] = khachhangId;
+    if (nhanvien != null) {
+      data['nhanvien'] = nhanvien!.map((v) => v.toJson()).toList();
     }
+    data['tongtien'] = tongtien;
+    data['ngaytao'] = ngaytao;
+    data['ngaynopcty'] = ngaynopcty;
+    data['httt'] = httt;
+    data['is_pending'] = isPending;
+    data['ghichu'] = ghichu;
+    return data;
+  }
+}
+
+class TenMien {
+  String? tenmien;
+  String? ngaykyhd;
+  int? sonamdangky;
+  String? ghichu;
+
+  TenMien({this.tenmien, this.ngaykyhd, this.sonamdangky, this.ghichu});
+
+  TenMien.fromJson(Map<String, dynamic> json) {
+    tenmien = json['tenmien'];
+    ngaykyhd = json['ngaykyhd'];
+    sonamdangky = json['sonamdangky'];
+    ghichu = json['ghichu'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['tenmien'] = tenmien;
+    data['ngaykyhd'] = ngaykyhd;
+    data['sonamdangky'] = sonamdangky;
+    data['ghichu'] = ghichu;
     return data;
   }
 }

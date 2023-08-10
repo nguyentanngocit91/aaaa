@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../_shared/utils/form_status.dart';
 import '../models/ban_giao_model.dart';
+import '../models/khach_hang_model.dart';
 import '../repositories/ban_giao_repository.dart';
 import 'ban_giao_state.dart';
 
@@ -50,33 +51,35 @@ class BanGiaoNotifier extends Notifier<BanGiaoState> {
   }
 
   void resetInputSearch(){
-    state = state.copyWith(maHD: '',tenHD: '',email: '',dienThoai: '',domain: '', listHD: []);
+    state = state.copyWith(maHD: '',tenHD: '',email: '',dienThoai: '',domain: '', listHD: [], khachHang: null);
 
   }
 
   Future<void> actionInputSearch() async {
     var soHD = state.maHD;
     var listHD = state.listHD;
-    state = state.copyWith(status: FormStatus.submissionInProgress,listHD: []);
+    var khachHang = state.khachHang;
+    final KhachHangModel khachHangTemp;
+    final List<BanGiaoModel> list = [];
+    state = state.copyWith(status: FormStatus.submissionInProgress,listHD: [], khachHang: null);
     if(soHD!= null ) {
-      var temp = await getListHopDong(soHD: soHD);
-      if(temp!=null) {
-        listHD = temp;
+      var response = await getListHopDong(soHD: soHD);
+      if(response!=null) {
+        for (var json in response['hopdongs']) {
+          list.add(BanGiaoModel.fromJson(json));
+        }
+        khachHangTemp = KhachHangModel.fromJson(response['khachhang']);
+        listHD = list;
+        khachHang = khachHangTemp;
       }
     }
     state = state.copyWith(status: FormStatus.submissionSuccess);
-    state = state.copyWith(listHD: listHD);
+    state = state.copyWith(listHD: listHD,khachHang: khachHang);
 
   }
-  Future<List<BanGiaoModel>?> getListHopDong({required String soHD}) async {
-    final List<BanGiaoModel> list = [];
+  Future<Map?> getListHopDong({required String soHD}) async {
+    
     final response = await _banGiaoRepository.getListHopDongBySoHD(soHD: soHD);
-    if(response!=null){
-      for (var json in response['hopdongs']) {
-        list.add(BanGiaoModel.fromJson(json));
-      }
-      return list;
-    }
-    return null;
+    return response;
   }
 }
