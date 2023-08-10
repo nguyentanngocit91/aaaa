@@ -2,18 +2,17 @@ import 'package:dio/dio.dart';
 
 import '../../../../../_shared/app_config/app.dart';
 import '../../../../../_shared/thietlap_url.dart';
-import '../models/phieu_thu_model.dart';
 import '../providers/files_hd_provider.dart';
 
 class PhieuThuRepository{
-  Future<PhieuThuModel?> chiTietPhieuThu({required String maPhieuThu}) async {
-    final response = await App.dioClient.get('${ApiUrl.danhSachPhieuThu}?maphieuthu=$maPhieuThu');
+  Future<Map> chiTietPhieuThu({required String id}) async {
+    final response = await App.dioClient.get('${ApiUrl.danhSachPhieuThu}/$id');
     if(response.statusCode==200){
       if(response.data['success']==true){
-        if((response.data['data'] as List).isNotEmpty) return PhieuThuModel.fromJson(response.data['data'][0]);
+        return response.data;
       }
     }
-    return null;
+    return {};
   }
 
   Future<String?> capMaKhachhang() async {
@@ -26,8 +25,8 @@ class PhieuThuRepository{
     return null;
   }
 
-  Future<Map?> thongTinKhachHang({required String email, String? type}) async {
-    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email$type');
+  Future<Map?> thongTinKhachHang({required List<String> emails, String? type}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$emails$type');
     if(response.statusCode==200){
       if(response.data['success']==true){
         if(response.data['data']!=null) return response.data['data'];

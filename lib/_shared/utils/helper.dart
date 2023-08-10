@@ -9,6 +9,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../_shared/thietlap_ngonngu.dart';
 enum loadingStatus {NONE,START,STOP}
 class Helper {
+
   static toast({required String messenge,required BuildContext context}) {
     showTopSnackBar(
       Overlay.of(context),
@@ -48,9 +49,9 @@ class Helper {
     print(prettyprint);
   }
 
-  static String numberFormat(double num, {String? symbol = "đ"}) {
+  static String numberFormat(double num, {String? symbol = ""}) {
     var numFormat = NumberFormat.currency(locale: "vi_VN", symbol: symbol);
-    return numFormat.format(num);
+    return numFormat.format(num ?? 0);
   }
 
   static Future<DateTime?> onSelectDate(BuildContext context,

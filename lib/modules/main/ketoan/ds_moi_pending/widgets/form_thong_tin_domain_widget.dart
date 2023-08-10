@@ -49,7 +49,35 @@ class _FormThongTinDomainWidgetState
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 5,
+                      flex: 1,
+                      child: Wrap(
+                        children: [
+                          lableTextForm('Tổng giá trị Domain'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formPhieuThuProvider.notifier)
+                                  .changeData(
+                                  type: 'phieuthu',
+                                  key: 'tongtiendomain',
+                                  value: value.replaceAll('.', ''));
+                            },
+                            inputFormatters: [
+                              CurrencyTextInputFormatter(symbol: ''),
+                            ],
+                            initialValue: Helper.numberFormat(double.parse(formState.dataPhieuThu!['tongtiendomain'].toString())),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 4,
                       child: Wrap(
                         children: [
                           lableTextForm(' '),
@@ -184,7 +212,6 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
                       : null),
               TextFormField(
                 controller: _nameController,
-                autofocus: true,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: (value) {
                   ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(domainName: value));
@@ -208,7 +235,7 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
                     text: selNgayKy.formatDateTime()),
                 onTap: () async {
                   final selDate = await Helper.onSelectDate(context,
-                      initialDate: selNgayDangKy);
+                      initialDate: selNgayKy);
                   if (selDate != null) {
                     ref.read(danhSachDomainProvider.notifier).updateDomain(rowIndex: rowIndex, newItem: widget.domainModel.copyWith(ngayKy: selDate));
                     setState(() {

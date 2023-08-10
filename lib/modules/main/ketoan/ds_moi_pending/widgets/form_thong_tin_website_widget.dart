@@ -12,11 +12,14 @@ class _FormThongTinWebsiteWidgetState
   
   final String _typeData = 'website';
   DateTime ngayDangKy = DateTime.now();
-  DateTime? ngayBanGiao = null;
+  DateTime? ngayBanGiao;
 
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formPhieuThuProvider);
+
+    ngayDangKy = formState.dataWebsite?['ngaykyhd'] ?? DateTime.now();
+    ngayBanGiao = formState.dataWebsite?['ngaybangiao'];
 
     return Visibility(
       visible: formState.isHopDongWebsite,
@@ -50,17 +53,46 @@ class _FormThongTinWebsiteWidgetState
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Wrap(
                         children: [
                           lableTextForm('Chức năng'),
                           TextFormField(
                             autovalidateMode: AutovalidateMode.onUserInteraction,
+                            initialValue: formState.dataWebsite?['chucnang'],
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)
                                   .changeData(type: _typeData ,key: 'chucnang', value: value);
                             },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 1,
+                      child: Wrap(
+                        children: [
+                          lableTextForm('Tổng giá trị Website'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            initialValue: Helper.numberFormat(double.parse(formState.dataWebsite!['tongtien'].toString())),
+                            onChanged: (value) {
+                              ref
+                                  .read(formPhieuThuProvider.notifier)
+                                  .changeData(
+                                  type: _typeData,
+                                  key: 'tongtien',
+                                  value: value.replaceAll('.',''));
+                            },
+                            inputFormatters: [
+                              CurrencyTextInputFormatter(symbol: ''),
+                            ],
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(
                                   errorText: 'Không bỏ trống.'),
@@ -83,7 +115,6 @@ class _FormThongTinWebsiteWidgetState
                               String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
                                 txtDate = selDate.formatDateTime();
-                                print(selDate);
                                 ref.read(formPhieuThuProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
@@ -163,6 +194,7 @@ class _FormThongTinWebsiteWidgetState
                           TextFormField(
                             minLines: 3,
                             maxLines: 3,
+                            initialValue: formState.dataWebsite?['ghichu'],
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)

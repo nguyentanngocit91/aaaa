@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
-import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../_shared/mixins/form_ui_mixins.dart';
@@ -47,7 +46,7 @@ class SuaPhieuThuLayout extends ConsumerStatefulWidget {
   const SuaPhieuThuLayout() : super(key: const Key(nameRoute));
 
   static const String nameRoute = 'sua-phieu-thu';
-  static const String pathRoute = ':maphieuthu';
+  static const String pathRoute = ':id';
 
   @override
   ConsumerState createState() => _SuaPhieuThuLayoutState();
@@ -59,7 +58,8 @@ class _SuaPhieuThuLayoutState extends ConsumerState<SuaPhieuThuLayout> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 0),(){
-      ref.read(formPhieuThuProvider.notifier).initData( maPhieuThu: GoRouterState.of(context).pathParameters['maphieuthu'] ?? '');
+      print(GoRouterState.of(context).pathParameters['id']);
+      ref.read(formPhieuThuProvider.notifier).initData( id: GoRouterState.of(context).pathParameters['id'] ?? '');
     });
   }
 
