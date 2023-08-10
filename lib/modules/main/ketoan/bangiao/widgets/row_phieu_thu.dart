@@ -1,53 +1,40 @@
 import 'package:flutter/material.dart';
 import '../../../../../_shared/utils/helper.dart';
+import '../models/ban_giao_model.dart';
 import 'item_row_info.dart';
 import 'rich_text_info.dart';
 
 class RowPhieuThu extends StatelessWidget {
   const RowPhieuThu({
     Key? key,
-    required this.soPhieuThu,
-    required this.maHD,
-    required this.maKH,
-    required this.ngayNop,
-    required this.loaiPhieuThu,
-    this.phiWeb = 0,
-    this.phiNCWeb = 0,
-    this.phiHosting = 0,
-    this.phiNCHosting = 0,
-    this.phiDomain = 0,
-    this.phiApp = 0,
-    required this.tenKD,
-    required this.maNV,
-    required this.phong,
-    required this.khuVuc,
-    required this.hhtt,
-    this.tongThu = 0,
-    required this.ghiChu,
-    this.isBanGiao = false,
+    required this.item,
   }) : super(key: key);
 
-  final String soPhieuThu;
-  final String maHD;
-  final String maKH;
-  final String ngayNop;
-  final String loaiPhieuThu;
-  final double phiWeb;
-  final double phiNCWeb;
-  final double phiHosting;
-  final double phiNCHosting;
-  final double phiDomain;
-  final double phiApp;
-  final String tenKD;
-  final String maNV;
-  final String phong;
-  final String khuVuc;
-  final String hhtt;
-  final double tongThu;
-  final String ghiChu;
-  final bool isBanGiao;
+  final Phieuthus item;
+
   @override
   Widget build(BuildContext context) {
+
+     String? soPhieuThu = item.maphieuthu;
+     String maHD = '';
+     String maKH = '';
+     String? ngayNop = item.ngaynopcty;
+     String? loaiPhieuThu = item.loaiphieuthu;
+     double? phiWeb = item.phiweb;
+     double? phiNCWeb = item.phinangcapweb;
+     double? phiHosting = item.phihosting;
+     double? phiNCHosting = item.phinangcaphosting;
+     double? phiDomain = item.phitenmien;
+     double? phiApp = item.phiapp;
+     String tenKD ='';
+     String maNV = '';
+     String phong = '';
+     String khuVuc = '';
+     String hhtt = '';
+     double? tongThu = item.tongtien;
+     String? ghiChu = item.ghichu;
+     bool isBanGiao = false;
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xFFCCCCCC)),
@@ -62,7 +49,7 @@ class RowPhieuThu extends StatelessWidget {
                   colorBG: Colors.black.withOpacity(0.05),
                   child: RichTextInfo(
                     title: 'Số PT',
-                    content: soPhieuThu,
+                    content: (soPhieuThu!=null)?soPhieuThu:'',
                   ),
                 ),
               ),

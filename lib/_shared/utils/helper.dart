@@ -77,6 +77,12 @@ class Helper {
   static saveDate(value) {
     return DateFormat("yyyy-MM-dd").format(DateFormat('dd-MM-yyyy').parse(value));
   }
+
+  static String convertMBtoGB(double megabytes) {
+    double gigabytes = megabytes / 1000;
+    return gigabytes.toStringAsFixed(0);
+  }
+
 }
 
 class Loading {

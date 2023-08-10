@@ -5,10 +5,7 @@ import '../../../../../_shared/thietlap_url.dart';
 
 class BanGiaoRepository {
   Future<Map?> getListHopDongBySoHD({required String soHD}) async {
-    print('${ApiUrl.danhSachHDTheoSoHD}?sohopdong=$soHD');
     final Response response = await App.dioClient.get('${ApiUrl.danhSachHDTheoSoHD}?sohopdong=$soHD');
-
-    print(response);
     if(response.statusCode==200){
       if(response.data['success']==true){
         return response.data;
@@ -16,7 +13,6 @@ class BanGiaoRepository {
     }
     return null;
   }
-
   Future<Map?> getListFileBySoHD({required String soHD}) async {
     final Response response = await App.dioClient.get('${ApiUrl.listFile}?sohopdong=$soHD');
     if(response.statusCode==200){
