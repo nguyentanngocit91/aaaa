@@ -8,7 +8,6 @@ final BanGiaoRepository _bangiaoRepository = BanGiaoRepository();
 final futureListFileProvider = FutureProvider.autoDispose.family<List<FileModel>?, String>((ref, soHD) async {
   final List<FileModel> list = [];
   final response = await _bangiaoRepository.getListFileBySoHD(soHD: soHD);
-  print(soHD);
   if (response != null) {
     for (var json in response['data']) {
       list.add(FileModel.fromJson(json));

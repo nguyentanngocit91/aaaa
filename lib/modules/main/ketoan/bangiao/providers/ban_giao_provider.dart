@@ -72,7 +72,7 @@ class BanGiaoNotifier extends Notifier<BanGiaoState> {
     final List<BanGiaoModel> list = [];
     final response = await _banGiaoRepository.getListHopDongBySoHD(soHD: soHD);
     if(response!=null){
-      for (var json in response['data']) {
+      for (var json in response['hopdongs']) {
         list.add(BanGiaoModel.fromJson(json));
       }
       return list;

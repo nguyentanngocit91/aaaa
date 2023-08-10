@@ -86,6 +86,33 @@ class DioClient {
     }
   }
 
+  // Post:----------------------------------------------------------------------
+  Future<Response> download(
+      String uri,String urlPath, {
+        data,
+        Map<String, dynamic>? queryParameters,
+        CancelToken? cancelToken,
+        ProgressCallback? onSendProgress,
+        ProgressCallback? onReceiveProgress,
+      }) async {
+    try {
+      final Response response = await _dio.download(
+        uri,
+        urlPath,
+        data: data,
+        queryParameters: queryParameters,
+        options: _options,
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } on DioException catch (e) {
+      print(e.toString());
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw errorMessage;
+    }
+  }
+
   // Put:-----------------------------------------------------------------------
   Future<Response> put(
     String uri, {

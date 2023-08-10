@@ -12,15 +12,16 @@ import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 
 class RowHopDong extends StatelessWidget {
-  const RowHopDong({Key? key,required this.index, required this.item}) : super(key: key);
+  const RowHopDong({Key? key, required this.index, required this.item})
+      : super(key: key);
   final int index;
   final BanGiaoModel item;
 
   @override
   Widget build(BuildContext context) {
-
     String? maKH = item.khachhangId?.makhachhang;
     String? maHD = item.mahopdong;
+    String? soHD = item.sohopdong;
     String? tenHD = item.tenhopdong;
     double? giaTri = item.tongtien;
     String? ngayKyHopDong = item.ngaykyhd;
@@ -28,15 +29,17 @@ class RowHopDong extends StatelessWidget {
 
     return Column(
       children: [
-         RowInfoHopDong(
+        RowInfoHopDong(
           stt: index,
-          maKH: (maKH!=null)?maKH:'',
-          maHD: (maHD!=null)?maHD:'',
-          tenHD: (tenHD!=null)?tenHD:'',
-          giaTri: (giaTri!=null)?giaTri:0.0,
+          maKH: (maKH != null) ? maKH : '',
+          maHD: (maHD != null) ? maHD : '',
+          tenHD: (tenHD != null) ? tenHD : '',
+          giaTri: (giaTri != null) ? giaTri : 0.0,
           giaTriWeb: 0,
           congNo: 0,
-          ngayKhoiTao: (ngayKyHopDong!=null)?DateFormat('dd-MM-yyyy').format(DateTime.parse(ngayKyHopDong)):'-',
+          ngayKhoiTao: (ngayKyHopDong != null)
+              ? DateFormat('dd-MM-yyyy').format(DateTime.parse(ngayKyHopDong))
+              : '-',
         ),
         Container(
           padding: const EdgeInsets.all(5),
@@ -63,47 +66,83 @@ class RowHopDong extends StatelessWidget {
                     onPressed: () {
                       showDialog<void>(
                         context: context,
-                        barrierDismissible: false, // user must tap button!
+
+                        barrierDismissible: true, // user must tap button!
                         builder: (BuildContext context) {
-                          return Center(child: const ListFileOfHopDong());
+                          return AlertDialog(
+                            title: Text(
+                              'Danh sách file'.toUpperCase(),
+                              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                            ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.all(10),
+                                      backgroundColor: Colors.grey),
+                                  child: const Text(
+                                    'Thoát',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                              content: ListFileOfHopDong(soHopDong: (soHD!=null)?soHD:'',));
                         },
                       );
                     },
                     style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFF03a9f4)),
-                    child: const SelectionContainer.disabled(child: Text(
-                      'Xem file HĐ',
-                      style: TextStyle(color: Colors.white),
-                    ),),
+                    child: const SelectionContainer.disabled(
+                      child: Text(
+                        'Xem file HĐ',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   )
                 ],
               ),
               ndGapH8(),
-              (loaiHopDong!=null && loaiHopDong == 'hosting')?const RowHosting(
-                stt: 1,
-                dungLuong: '5GB',
-                ngayDangKy: '07/06/2023',
-                ngayHetHan: '07/06/2024',
-                trangThai: 'Ký mới',
-              ):const SizedBox(),
+              (loaiHopDong != null && loaiHopDong == 'hosting')
+                  ? const RowHosting(
+                      stt: 1,
+                      dungLuong: '5GB',
+                      ngayDangKy: '07/06/2023',
+                      ngayHetHan: '07/06/2024',
+                      trangThai: 'Ký mới',
+                    )
+                  : const SizedBox(),
               ndGapH8(),
-              (loaiHopDong!=null && loaiHopDong == 'web')?const RowWebsite(
-                  stt: 1,
-                  chucNang:
-                      'CB-MOBILE- GIỎ HÀNG CB- SSL- ĐĂNG KÝ ĐĂNG NHẬP ĐÁNH GIÁ SAO- TÍNH PHI SHIP THEO GIA TỰ NHẬP- SẢN PHẨM SĂP RA MẮT BẢO VỀ EMAIL',
-                  ngayKy: '07/06/2023'):const SizedBox(),
+              (loaiHopDong != null && loaiHopDong == 'web')
+                  ? const RowWebsite(
+                      stt: 1,
+                      chucNang:
+                          'CB-MOBILE- GIỎ HÀNG CB- SSL- ĐĂNG KÝ ĐĂNG NHẬP ĐÁNH GIÁ SAO- TÍNH PHI SHIP THEO GIA TỰ NHẬP- SẢN PHẨM SĂP RA MẮT BẢO VỀ EMAIL',
+                      ngayKy: '07/06/2023')
+                  : const SizedBox(),
               ndGapH8(),
-              (loaiHopDong!=null && loaiHopDong == 'domain')?const RowDomain(
-                  stt: 1,
-                  domain: 'nina.com.vn',
-                  ngayDangKy: '19/07/2023',
-                  ngayHetHan: '19/07/2024'):const SizedBox(),
+              (loaiHopDong != null && loaiHopDong == 'domain')
+                  ? const RowDomain(
+                      stt: 1,
+                      domain: 'nina.com.vn',
+                      ngayDangKy: '19/07/2023',
+                      ngayHetHan: '19/07/2024')
+                  : const SizedBox(),
               ndGapH8(),
-              (loaiHopDong!=null && loaiHopDong == 'app')?const RowApp(
-                  stt: 1,
-                  chucNang:
-                  'CB-MOBILE- GIỎ HÀNG CB- SSL- ĐĂNG KÝ ĐĂNG NHẬP ĐÁNH GIÁ SAO- TÍNH PHI SHIP THEO GIA TỰ NHẬP- SẢN PHẨM SĂP RA MẮT BẢO VỀ EMAIL',
-                  ngayKy: '07/06/2023'):const SizedBox(),
+              (loaiHopDong != null && loaiHopDong == 'app')
+                  ? const RowApp(
+                      stt: 1,
+                      chucNang:
+                          'CB-MOBILE- GIỎ HÀNG CB- SSL- ĐĂNG KÝ ĐĂNG NHẬP ĐÁNH GIÁ SAO- TÍNH PHI SHIP THEO GIA TỰ NHẬP- SẢN PHẨM SĂP RA MẮT BẢO VỀ EMAIL',
+                      ngayKy: '07/06/2023')
+                  : const SizedBox(),
               ndGapH8(),
               Row(
                 children: [
@@ -159,41 +198,39 @@ class RowHopDong extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Row(
-                 mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
                       onPressed: () {},
                       style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFF018e07),
-                          padding: const EdgeInsets.all(10)
-                      ),
+                          backgroundColor: const Color(0xFF018e07),
+                          padding: const EdgeInsets.all(10)),
                       child: Text(
                         'Đã In BGC'.toUpperCase(),
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     TextButton(
                       onPressed: () {},
                       style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFF018e07),
-                          padding: const EdgeInsets.all(10)
-                      ),
+                          backgroundColor: const Color(0xFF018e07),
+                          padding: const EdgeInsets.all(10)),
                       child: Text(
                         'Đã In BGW'.toUpperCase(),
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     TextButton(
-                      onPressed: () {
-
-
-                      },
+                      onPressed: () {},
                       style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFFff9800),
-                          padding: const EdgeInsets.all(10)
-                      ),
+                          backgroundColor: const Color(0xFFff9800),
+                          padding: const EdgeInsets.all(10)),
                       child: Text(
                         'In phiếu'.toUpperCase(),
                         style: const TextStyle(color: Colors.white),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../../../../_shared/thietlap_url.dart';
 import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
 import '../providers/phieu_thu_provider.dart';
 import 'pt_button_download.dart';
@@ -177,14 +178,14 @@ class BoxSearchPhieuThu extends ConsumerWidget {
           const SizedBox(
             width: 5,
           ),
-          const PTButtonDownload(
+           const PTButtonDownload(
             title: 'Export DS Phiếu Thu',
             icon: Icon(
               Icons.download,
               color: Colors.white,
             ),
-            urlPath: 'http://tools.dauchanviet.com/123.mp4',
-            fileName: '111.mp4',
+            urlPath: '${ApiUrl.danhSachPhieuThu}/export?tungay=2023-1-15&denngay=2023-12-29',
+            fileName: 'export.xls',
           ),
           const SizedBox(
             width: 5,
