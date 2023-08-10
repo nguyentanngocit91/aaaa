@@ -2,34 +2,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../_shared/thietlap_url.dart';
+import '../../../../../_shared/utils/helper.dart';
+import '../../phieuthu/widgets/pt_button_download.dart';
 import '../models/file_model.dart';
 import '../providers/list_file_provider.dart';
 
 
 class ListFileOfHopDong extends ConsumerWidget {
-  const ListFileOfHopDong({Key? key}) : super(key: key);
+  const ListFileOfHopDong({Key? key,required this.soHopDong}) : super(key: key);
 
+  final String soHopDong;
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-    var a = ref.watch(futureListFileProvider('00000001'));
+    var a = ref.watch(futureListFileProvider(soHopDong));
     return Container(
-      width: 800,
-      height: 500,
-      decoration: BoxDecoration(
+      width: MediaQuery.of(context).size.width*0.5,
+      height: 380,
+      decoration: const BoxDecoration(
         color: Colors.white,
       ),
       child: Column(
-
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width*0.5,
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'Danh sách file'.toUpperCase(),
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-            ),
-          ),
-          const Divider(),
           Container(
             padding: const EdgeInsets.all(10),
             child: Column(
@@ -52,14 +46,14 @@ class ListFileOfHopDong extends ConsumerWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 300,
+                height: 300,
                   child: a.when(
                     data: (List<FileModel>? data) {
                       if (data != null) {
                         return ListView.builder(
                             padding: const EdgeInsets.all(0),
                             primary: true,
-                            itemCount: data.length,
+                            itemCount: (data.length),
                             itemBuilder: (BuildContext context, index) {
                               return ItemInfoFile(item:data[index],index: index,);
                             });
@@ -75,31 +69,6 @@ class ListFileOfHopDong extends ConsumerWidget {
                     loading: () => const CircularProgressIndicator(),
                   ),
                 ),
-
-
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(10),
-                          backgroundColor: Colors.grey),
-                      child: const Text(
-                        'Thoát',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
           ),
@@ -134,7 +103,7 @@ class ItemInfoFile extends StatelessWidget {
             flex: 30,
             child: Text('${item?.ghichu}'),
           ),
-          Expanded(flex: 10, child: Text('Xem file')),
+            Expanded(flex: 10, child: PTButtonDownload(urlPath: '${ApiUrl.protocol}${ApiUrl.port}/${item.path!}', fileName: item.filename!, title: 'Tải về', icon: const Icon(Icons.download),)),
         ],
       ),
     );

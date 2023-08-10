@@ -92,34 +92,63 @@ class BanGiaoModel {
 }
 
 class Nhanvien {
+  ParentId? parentId;
   PhongbanId? phongbanId;
   String? manhanvien;
-  String? parentId;
   String? sId;
   String? hoten;
 
   Nhanvien(
-      {this.phongbanId, this.manhanvien, this.parentId, this.sId, this.hoten});
+      {this.parentId, this.phongbanId, this.manhanvien, this.sId, this.hoten});
 
   Nhanvien.fromJson(Map<String, dynamic> json) {
+    parentId = json['parentId'] != null
+        ? ParentId.fromJson(json['parentId'])
+        : null;
     phongbanId = json['phongbanId'] != null
         ? PhongbanId.fromJson(json['phongbanId'])
         : null;
     manhanvien = json['manhanvien'];
-    parentId = json['parentId'];
     sId = json['_id'];
     hoten = json['hoten'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    if (parentId != null) {
+      data['parentId'] = parentId!.toJson();
+    }
     if (phongbanId != null) {
       data['phongbanId'] = phongbanId!.toJson();
     }
     data['manhanvien'] = manhanvien;
-    data['parentId'] = parentId;
     data['_id'] = sId;
     data['hoten'] = hoten;
+    return data;
+  }
+}
+
+class ParentId {
+  String? sId;
+  String? manhanvien;
+  String? hoten;
+  String? manhanh;
+
+  ParentId({this.sId, this.manhanvien, this.hoten, this.manhanh});
+
+  ParentId.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    manhanvien = json['manhanvien'];
+    hoten = json['hoten'];
+    manhanh = json['manhanh'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['manhanvien'] = manhanvien;
+    data['hoten'] = hoten;
+    data['manhanh'] = manhanh;
     return data;
   }
 }
@@ -165,9 +194,9 @@ class Info {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['chucnang'] = this.chucnang;
-    data['dungluong'] = this.dungluong;
-    data['domain'] = this.domain;
+    data['chucnang'] = chucnang;
+    data['dungluong'] = dungluong;
+    data['domain'] = domain;
     return data;
   }
 }

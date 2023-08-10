@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../_shared/app_config/app.dart';
 
  class PTButtonDownload extends StatefulWidget {
    const PTButtonDownload({Key? key,required this.urlPath, required this.fileName,required this.title,this.width=200, required this.icon,this.color=Colors.white}) : super(key: key);
@@ -25,18 +26,17 @@ import 'package:flutter/material.dart';
    Future<void> _downloadFile(BuildContext context) async {
      String? result = await FilePicker.platform.getDirectoryPath();
      if (result != null) {
-       Dio dio = Dio();
        Directory selectedDirectory = Directory(result);
-       String fileName = '111.mp4';
-       var downloadedImagePath = '${selectedDirectory.path}/$fileName';
+       String fileName = widget.fileName;
+       var downloadedPath = '${selectedDirectory.path}/$fileName';
        try {
-         await dio.download(
+         await App.dioClient.download(
              widget.urlPath,
-             downloadedImagePath,
+             downloadedPath,
              onReceiveProgress: (rec, total) {
                setState(() {
                  downloading = true;
-                 progressString = "${((rec / total) * 100).toStringAsFixed(0)}%";
+                 progressString = "...";
                });
              }
          );
@@ -68,7 +68,7 @@ import 'package:flutter/material.dart';
          child: Row(
            mainAxisAlignment:MainAxisAlignment.center,
            children: [
-             Text('Đang tải '+progressString,style: TextStyle(color: widget.color),),
+             Text('Đang tải$progressString',style: TextStyle(color: widget.color),),
            ],
          )):ElevatedButton(
          style: TextButton.styleFrom(
