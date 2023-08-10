@@ -61,7 +61,7 @@ class _FormThongTinDomainWidgetState
                                   .changeData(
                                   type: 'phieuthu',
                                   key: 'tongtiendomain',
-                                  value: value);
+                                  value: value.replaceAll('.', ''));
                             },
                             inputFormatters: [
                               CurrencyTextInputFormatter(symbol: ''),

@@ -255,7 +255,7 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
                       .changeData(
                       type: 'phieuthu',
                       key: 'tongtiendomain',
-                      value: value);
+                      value: value.replaceAll('.', ''));
                 },
                 inputFormatters: [
                   CurrencyTextInputFormatter(symbol: ''),

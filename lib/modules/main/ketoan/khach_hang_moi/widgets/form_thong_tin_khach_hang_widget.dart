@@ -34,7 +34,6 @@ class _FormThongTinKhachHangWidgetState
       }
     });
 
-
     return Wrap(
       runSpacing: 25,
       children: [
@@ -137,7 +136,6 @@ class _FormThongTinKhachHangWidgetState
             ),
           ],
         ),
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -167,23 +165,33 @@ class _FormThongTinKhachHangWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Loại Khách hàng'),
-                  DropdownButtonFormField(
-                    value: thongTinKhachHang['type'] ?? 'ca-nhan',
-                    items: const [
-                      DropdownMenuItem<String>(
-                        value: 'ca-nhan',
-                        child: Text('Cá Nhân'),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: 'cong-ty',
-                        child: Text('Công Ty'),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          key: 'type', value: value, type: _typeData);
-                    },
-                  ),
+                  (thongTinKhachHang.isNotEmpty)
+                      ? TextFormField(
+                          readOnly: true,
+                          controller: TextEditingController(
+                            text: thongTinKhachHang['type'] == 'ca-nhan'
+                                ? 'Cá Nhân'
+                                : 'Công Ty',
+                          ))
+                      : DropdownButtonFormField(
+                          value: thongTinKhachHang['type'] ?? 'ca-nhan',
+                          items: const [
+                            DropdownMenuItem<String>(
+                              value: 'ca-nhan',
+                              child: Text('Cá Nhân'),
+                            ),
+                            DropdownMenuItem<String>(
+                              value: 'cong-ty',
+                              child: Text('Công Ty'),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            ref
+                                .read(formKhachHangMoiProvider.notifier)
+                                .changeData(
+                                    key: 'type', value: value, type: _typeData);
+                          },
+                        ),
                 ],
               ),
             ),
@@ -322,9 +330,7 @@ class _FormThongTinKhachHangWidgetState
                     maxLines: 3,
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          key: 'ghichu',
-                          value: value,
-                          type: _typeData);
+                          key: 'ghichu', value: value, type: _typeData);
                     },
                   ),
                 ],
@@ -332,7 +338,6 @@ class _FormThongTinKhachHangWidgetState
             ),
           ],
         ),
-
       ],
     );
   }

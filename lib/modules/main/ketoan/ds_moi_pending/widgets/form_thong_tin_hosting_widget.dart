@@ -99,7 +99,7 @@ class _FormThongTinHostingWidgetState
                                   .changeData(
                                   type: _typeData,
                                   key: 'tongtien',
-                                  value: value);
+                                  value: value.replaceAll('.', ''));
                             },
                             inputFormatters: [
                               CurrencyTextInputFormatter(symbol: ''),
