@@ -10,7 +10,8 @@ class DSHDState{
   final bool loading;
   final List<ItemPhieuthuResultModel> listPhieuThu;
   final CustomerUpdateModel? customer;
-  final List<MediaCustomerModel>? media;
+  final SearchCustomerContractModel? contract;
+  final List<MediaResultModel>? media;
 
   const DSHDState({
     this.data = null,
@@ -22,6 +23,7 @@ class DSHDState{
     this.loading = false,
     this.listPhieuThu = const [],
     this.customer = null,
+    this.contract = null,
     this.media = null,
   });
 
@@ -36,7 +38,8 @@ class DSHDState{
     bool? loading,
     List<ItemPhieuthuResultModel>? listPhieuThu,
     CustomerUpdateModel? customer,
-    List<MediaCustomerModel>? media,
+    SearchCustomerContractModel? contract,
+    List<MediaResultModel>? media,
   }) {
     return DSHDState(
       data: data ?? this.data,
@@ -48,6 +51,7 @@ class DSHDState{
       loading: loading ?? this.loading,
       listPhieuThu: listPhieuThu ?? this.listPhieuThu,
       customer: customer ?? this.customer,
+      contract: contract ?? this.contract,
       media: media ?? this.media,
     );
   }

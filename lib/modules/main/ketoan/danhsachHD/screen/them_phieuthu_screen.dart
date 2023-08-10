@@ -1,3 +1,6 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:bs_flutter_alert/bs_flutter_alert.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,6 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
+import '../models/media_result_model.dart';
+import '../models/searchcustomercontract_model.dart';
+import '../providers/ds_hd_provider.dart';
 import '../providers/files_hd_provider.dart';
 import '../providers/form_khach_hang_moi_provider.dart';
 import '../providers/kiem_tra_khach_hang_provider.dart';
@@ -27,18 +34,41 @@ part '../widgets/form_them_phieuthu/upload_file_hd_widget.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey();
 
+Map<String, String> _loaiPhiethu = {
+  'chungtu': 'Chứng từ khác'
+};
+
+List<MediaResultModel> _listMedia = [];
+
 class ThemPhieuThuScreen extends ConsumerStatefulWidget {
-  const ThemPhieuThuScreen({super.key});
-  static const String nameRoute = 'them-hop-dong-moi';
-  static const String pathRoute = ':makhachang';
-  //final SearchCustomerModel item;
+
+  const ThemPhieuThuScreen({Key? key, required this.item}) : super(key: key);
+
+  final SearchCustomerContractModel? item;
+
   @override
   ConsumerState createState() => _ThemPhieuThuScreenState();
 }
 
-class _ThemPhieuThuScreenState extends ConsumerState<ThemPhieuThuScreen> with FormUIMixins {
+class _ThemPhieuThuScreenState
+  extends ConsumerState<ThemPhieuThuScreen> with FormUIMixins {
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      print("${widget.item!.id.toString()}+widget.id");
+      await ref.read(dshdProvider.notifier).getContractById(widget.item!.id.toString(),widget.item!.sohopdong.toString());
+      var res = ref.watch(dshdProvider.notifier);
+      setState(() {
+        _listMedia = res.state.media!;
+      });
+
+    });
+
+  }
+
   Widget build(BuildContext context) {
     return  SimpleDialog(
       backgroundColor: Colors.white,
@@ -80,36 +110,34 @@ class _ThemPhieuThuScreenState extends ConsumerState<ThemPhieuThuScreen> with Fo
 
         const Divider(),
 
-        SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child:      SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                titleForm(context, title: 'Thông tin hợp đồng'),
-                bodyForm(
-                  child: const FormThongTinHopDongWidget(),
-                ),
-                ndGapH24(),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              titleForm(context, title: 'Thông tin hợp đồng'),
+              bodyForm(
+                child: FormThongTinHopDongWidget(item: widget.item),
+              ),
+              ndGapH24(),
 
-                titleForm(context, title: 'Upload file HĐ'),
-                bodyForm(
-                  child: const UploadFileHDWidget(),
-                ),
+              titleForm(context, title: 'Upload file HĐ'),
+              bodyForm(
+                child: const UploadFileHDWidget(),
+              ),
+              DataUploadMediaCustomer(),
 
-                ndGapH24(),
-                titleForm(context, title: 'Thông tin phiếu thu'),
-                bodyForm(
-                  child: const FormThongTinPhieuThuWidget(),
-                ),
+              ndGapH24(),
+              titleForm(context, title: 'Thông tin phiếu thu'),
+              bodyForm(
+                child: const FormThongTinPhieuThuWidget(),
+              ),
 
-                ndGapH24(),
-                const _BtnSubmit(),
+              ndGapH24(),
+              const _BtnSubmit(),
 
-              ],),
-          ),
-
+            ],),
         ),
 
 
@@ -180,5 +208,283 @@ _resetForm(WidgetRef ref) {
   ref.refresh(fileHDProvider);
 }
 
+
+
+
+class DataUploadMediaCustomer extends ConsumerWidget {
+  DataUploadMediaCustomer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // var data = ref.watch(capnhatProvider.select((value) => value.result));
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: Color(0xFF105A6C),
+            ),
+            child: const Row(
+              children: [
+                Expanded(flex: 1, child: HeaderRowItem(text: 'STT')),
+                Expanded(
+                  flex: 3,
+                  child: HeaderRowItem(text: 'Ngày tháng'),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: HeaderRowItem(text: 'User cập nhật'),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: HeaderRowItem(text: 'Loại file'),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: HeaderRowItem(text: 'Ghi chú'),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: HeaderRowItem(text: 'Thao tác'),
+                ),
+              ],
+            ),
+          ),
+          //const SizedBox(height: 13.0),
+          if (_listMedia.length > 0) ...[
+            ListView.builder(
+                padding: const EdgeInsets.all(0),
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                primary: true,
+                itemCount: _listMedia.length,
+                itemBuilder: (BuildContext context, index) {
+                  return MediaItem(
+                      item: _listMedia[index],
+                      index: index + 1,
+                      divider: (_listMedia.length - 1 > index));
+                }),
+          ] else ...[
+            const BsAlert(
+              closeButton: false,
+              margin: EdgeInsets.only(bottom: 10.0),
+              style: BsAlertStyle.danger,
+              child: Text('Không có dữ liệu', textAlign: TextAlign.center),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+
+
+class MediaItem extends ConsumerStatefulWidget {
+  MediaItem(
+      {Key? key,
+        required this.item,
+        required this.index,
+        required this.divider})
+      : super(key: key);
+  late MediaResultModel item;
+  final int index;
+  final bool divider;
+
+  @override
+  ConsumerState<MediaItem> createState() => _MediaItemState();
+}
+
+class _MediaItemState extends ConsumerState<MediaItem> {
+  late String note = widget.item!.ghichu!;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: BodyRowItem(Text(widget.index.toString())),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(Helper.dateFormat(widget.item.createdAt.toString()))),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(widget.item!.lichsuKhoitao!.hoten!.toString())),
+          ),
+          Expanded(
+            flex: 4,
+            child: BodyRowItem(
+                Text(_loaiPhiethu[widget.item.loaifile!].toString())),
+          ),
+          Expanded(
+            flex: 3,
+            child: BodyRowItem(Text(widget.item.ghichu!.toString())),
+          ),
+          Expanded(
+            flex: 2,
+            child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFF105A6C),
+                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  ),
+                  padding: EdgeInsets.only(
+                      left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      final _formKey = GlobalKey<FormState>();
+                      String _selected = widget.item.loaifile.toString();
+                      TextEditingController controller =
+                      new TextEditingController();
+                      controller.text = widget.item.ghichu!.toString();
+
+                      Widget _widget = Container(
+                        width: 450,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Loại file'),
+                              ndGapH8(),
+                              DropdownButtonFormField2<String>(
+                                value: _selected,
+                                isExpanded: true,
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                hint: const Text(
+                                  'Chọn loại file',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                items: _loaiPhiethu.entries
+                                    .map((e) => DropdownMenuItem<String>(
+                                  value: e.key,
+                                  child: Text(
+                                    e.value,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ))
+                                    .toList(),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please select.';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selected = value.toString();
+                                  });
+                                },
+
+                                buttonStyleData: const ButtonStyleData(
+                                  padding: EdgeInsets.only(right: 8),
+                                ),
+                                iconStyleData: const IconStyleData(
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.black45,
+                                  ),
+                                  iconSize: 24,
+                                ),
+                                dropdownStyleData: DropdownStyleData(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                                menuItemStyleData: const MenuItemStyleData(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                ),
+                              ),
+                              ndGapH8(),
+                              const Text('Ghi chú'),
+                              ndGapH8(),
+                              TextFormField(
+                                controller: controller,
+                                maxLines: 3,
+                                autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: 'Không bỏ trống.'),
+                                ]),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      TextDialog alert = TextDialog(
+                        "Điều chỉnh file",
+                        "",
+                        _widget,
+                            () async {
+                          if (_formKey.currentState!.validate()) {
+
+
+                            var updateMedia = await ref.read(dshdProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
+
+                            if(updateMedia['status']==true){
+                              Navigator.of(context).pop();
+                              setState(() {
+                                widget.item = MediaResultModel.fromJson(updateMedia['data']);
+
+                              });
+
+                            }
+                            AwesomeDialog(
+                              context: context,
+                              autoHide:Duration(seconds: 2),
+                              width: 400.0,
+                              dialogType:
+                              updateMedia['status'] ? DialogType.success : DialogType.error,
+                              animType: AnimType.scale,
+                              title: updateMedia['message'],
+                              autoDismiss:true,
+
+                              btnOk:Container(),
+                              btnCancel:Container(),
+
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {},
+                            )..show();
+
+
+                          }
+                        },
+                      );
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alert;
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'Cập nhật',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )),
+          ),
+        ],
+      ),
+      widget.divider ? const Divider() : Container()
+    ]);
+  }
+}
 
 

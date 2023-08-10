@@ -294,7 +294,7 @@ class FilterHD extends ConsumerWidget {
                     runSpacing: 10,
                     children: [
                       textForm(
-                          title: 'Mã HĐ',
+                          title: 'Số HĐ',
                           onchange: (value) {
                             ref.read(dshdProvider.notifier).onChangeValue("MAHD", value);
                           },
@@ -672,7 +672,7 @@ class InfoListContract extends StatelessWidget {
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
-                              return ThemPhieuThuScreen();
+                              return ThemPhieuThuScreen(item: item,);
                             },
                           );
                         },
