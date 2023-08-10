@@ -107,8 +107,6 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
           data!.l1_data!.dungluong.toString();
 
 
-
-      listController!['chucnang']!.text = data!.l1_data!.chucnang!=null ? data!.l1_data!.chucnang!.toString():'';
       listController!['ghichu']!.text = data!.l1_data!.ghichu!.toString();
     });
   }
@@ -314,7 +312,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                         ),
                         ResponsiveGridCol(
                           xs: 12,
-                          md: 6,
+                          md: 12,
                           lg: 6,
                           child: Container(
                             padding: Helper.padding(),
@@ -340,7 +338,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                         ),
                         ResponsiveGridCol(
                           xs: 12,
-                          md: 6,
+                          md: 12,
                           lg: 6,
                           child: Container(
                             padding: Helper.padding(),
@@ -357,7 +355,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                                   height: 5,
                                 ),
                                 TextFormField(
-                                
+                                  maxLines: 3,
                                   controller: listController['ghichu'],
                                   focusNode: listFocusNode['ghichu'],
 
@@ -366,68 +364,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                             ),
                           ),
                         ),
-                        ResponsiveGridCol(
-                          xs: 12,
-                          child: Container(
-                            padding: Helper.padding(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Chức năng',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField(
-                                  controller: listController['chucnang'],
-                                  focusNode: listFocusNode['chucnang'],
-                                  maxLines: 3,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(
-                                        errorText: 'Không bỏ trống.'),
-                                  ]),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ResponsiveGridCol(
-                          xs: 12,
-                          child: Container(
-                            padding: Helper.padding(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Ghi chú',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                TextFormField(
-                                  controller: listController['ghichu'],
-                                  focusNode: listFocusNode['mahopdong'],
-                                  maxLines: 3,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(
-                                        errorText: 'Không bỏ trống.'),
-                                  ]),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+
                       ],
                     )),
                 const SizedBox(
