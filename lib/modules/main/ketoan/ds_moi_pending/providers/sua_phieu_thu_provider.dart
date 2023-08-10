@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
+import '../providers/nhan_vien_phu_trach_provider.dart';
 import '../models/phieu_thu_model.dart';
 import '../repositories/phieu_thu_repository.dart';
 
@@ -112,28 +113,26 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
     phieuThuModel = phieuThu!;
     await loadKhachHang();
     await loadHopDong();
+    await loadPhieuThu();
+    await loadNhanVien();
     state = state.copyWith(phieuThuModel: phieuThuModel, isLoading: false);
     return phieuThu;
   }
 
   // Thông tin khách hàng
-  // "KhachHang":{
-  //   "makhachhang": "KH000002",
-  //   "hoten": "Khách Hàng 002",
-  //   "congty": "",
-  //   "masothue": "",
-  //   "cccd": "",
-  //   "phone": "0090123213312",
-  //   "email": "khachhang002@gmail.com",
-  //   "diachi": "",
-  //   "info": {
-  //     "key": "value"
-  //   },
-  //   "ghichu": "",
-  //   "type": "ca-nhan" // 'ca-nhan', 'cong-ty'
-  // },
   loadKhachHang() async {
-    final dataKhachHang = phieuThuModel.l1_khachhangId!.toJson();
+    final dataKhachHang = {
+      "makhachhang": phieuThuModel.l1_khachhangId!.makhachhang,
+      "hoten": phieuThuModel.l1_khachhangId!.hoten,
+      "congty": phieuThuModel.l1_khachhangId!.congty,
+      "masothue": phieuThuModel.l1_khachhangId!.masothue,
+      "cccd": phieuThuModel.l1_khachhangId!.cccd,
+      "phone": phieuThuModel.l1_khachhangId!.phone,
+      "email": phieuThuModel.l1_khachhangId!.email,
+      "diachi": phieuThuModel.l1_khachhangId!.diachi,
+      "info": phieuThuModel.l1_khachhangId!.info,
+      "ghichu": phieuThuModel.l1_khachhangId!.ghichu,
+    };
     state = state.copyWith(dataKhachHang: dataKhachHang);
   }
 
@@ -142,7 +141,38 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
     final dataHopDong = {
       "tenhopdong":phieuThuModel.hopdong![0]['tenhopdong']
     };
-    state = state.copyWith(soHopDong: phieuThuModel.hopdong![0]['sohopdong'],);
+    final isHopDongWebsite = (phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='web')!=-1) ? true : false;
+    final isHopDongHosting = (phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='hosting')!=-1) ? true : false;
+    final isHopDongDomain = (phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='domain')!=-1) ? true : false;
+    final isHopDongApp = (phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='app')!=-1) ? true : false;
+
+    state = state.copyWith(soHopDong: phieuThuModel.hopdong![0]['sohopdong'], dataHopDong: dataHopDong, isHopDongWebsite: isHopDongWebsite, isHopDongApp: isHopDongApp, isHopDongDomain: isHopDongDomain, isHopDongHosting: isHopDongHosting);
+  }
+
+  // Thông tin Phiếu thu
+  loadPhieuThu() async{
+    final dataPhieuThu = {
+      "maphieuthu": phieuThuModel.maphieuthu,
+      "tongtien": phieuThuModel.tongtien,
+      "phiweb": phieuThuModel.phiweb,
+      "phinangcapweb": phieuThuModel.phinangcapweb,
+      "phihosting": phieuThuModel.phihosting,
+      "phinangcaphosting": phieuThuModel.phinangcaphosting,
+      "phitenmien": phieuThuModel.phitenmien,
+      "phiapp": phieuThuModel.phiapp,
+      "vat": phieuThuModel.vat,
+      "ngaynopcty": DateTime.parse(phieuThuModel.ngaynopcty.toString()),
+      "httt": phieuThuModel.httt,
+      "ghichu": phieuThuModel.ghichu,
+      "loaiphieuthu": phieuThuModel.loaiphieuthu,
+      "info": phieuThuModel.info,
+    };
+    state = state.copyWith(dataPhieuThu: dataPhieuThu);
+  }
+
+  // Nhân viên phụ trách
+  loadNhanVien() async{
+    ref.read(nhanVienPhuTrachProvider.notifier).loadDanhSachNhanVien(danhSach: phieuThuModel.nhanvien ?? []);
   }
 
   batDatSubmit() {

@@ -26,8 +26,8 @@ class PhieuThuRepository{
     return null;
   }
 
-  Future<Map?> thongTinKhachHang({required String email, String? type}) async {
-    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email$type');
+  Future<Map?> thongTinKhachHang({required List<String> emails, String? type}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$emails$type');
     if(response.statusCode==200){
       if(response.data['success']==true){
         if(response.data['data']!=null) return response.data['data'];

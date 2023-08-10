@@ -37,6 +37,16 @@ class NhanVienPhuTrachNotifier extends Notifier<NhanVienPhuTrachState> {
     return false;
   }
 
+  loadDanhSachNhanVien({required List<dynamic> danhSach}) async{
+    state = state.copyWith(loading: true, maNhanViens: []);
+    for(Map item in danhSach){
+      if(item.isNotEmpty){
+        state = state.copyWith(maNhanViens: [...state.maNhanViens ?? [], item], daNhap: true);
+      }
+    }
+    state = state.copyWith(loading: false);
+  }
+
   Future<bool> themMaNhanVien(String maNhanVien) async {
     state = state.copyWith(loading: true);
     final Map? data = await layThongTinNhanVien(maNhanVien);

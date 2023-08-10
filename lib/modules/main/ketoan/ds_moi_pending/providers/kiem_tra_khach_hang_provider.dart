@@ -32,10 +32,9 @@ class KiemTraKhachHangNotifier extends Notifier<KhachHangCuState> {
     return KhachHangCuState();
   }
 
-  Future<void> kiemTraThongTinKhachHang({required String email}) async {
+  Future<void> kiemTraThongTinKhachHang({required List<String> emails}) async {
     state = state.copyWith(loading: true, data: null);
-    final Map? result =
-        await _phieuThuRepository.thongTinKhachHang(email: email, type: '&type=single');
+    final Map? result = await _phieuThuRepository.thongTinKhachHang(emails: emails, type: '&type=single');
     if(result!=null){
       result.forEach((key, value) {
         ref.read(formPhieuThuProvider.notifier).changeData(type: 'khachhang', key: key, value: value);

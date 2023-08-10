@@ -9,10 +9,12 @@ class FormThongTinKhachHangWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinKhachHangWidgetState
     extends ConsumerState<FormThongTinKhachHangWidget> with FormUIMixins {
+
+  final Debouncer onSearchDebouncer = Debouncer(delay: const Duration(seconds: 2));
+
   final String _typeData = 'khachhang';
 
   Map thongTinKhachHang = {};
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +105,7 @@ class _FormThongTinKhachHangWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Điện thoại di động'),
-                  TextFormField(
+                  TextFormField (
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     initialValue: thongTinKhachHang['phone'],
                     validator: FormBuilderValidators.compose([

@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
-import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../_shared/mixins/form_ui_mixins.dart';

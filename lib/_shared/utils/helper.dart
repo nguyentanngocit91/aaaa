@@ -46,9 +46,9 @@ class Helper {
     print(prettyprint);
   }
 
-  static String numberFormat(double num, {String? symbol = "đ"}) {
+  static String numberFormat(double num, {String? symbol = ""}) {
     var numFormat = NumberFormat.currency(locale: "vi_VN", symbol: symbol);
-    return numFormat.format(num);
+    return numFormat.format(num ?? 0);
   }
 
   static Future<DateTime?> onSelectDate(BuildContext context,
