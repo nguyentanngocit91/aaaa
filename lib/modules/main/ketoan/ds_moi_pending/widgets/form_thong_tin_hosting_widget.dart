@@ -19,6 +19,9 @@ class _FormThongTinHostingWidgetState
   Widget build(BuildContext context) {
     final formState = ref.watch(formPhieuThuProvider);
 
+    ngayDangKy = formState.dataHosting!['ngaykyhd'] ?? DateTime.now();
+    ngayHetHan = formState.dataHosting!['ngayhethan'];
+
     return Visibility(
       visible: formState.isHopDongHosting,
       child: Column(
@@ -61,6 +64,7 @@ class _FormThongTinHostingWidgetState
                             ],
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
+                            initialValue: Helper.numberFormat(double.parse(formState.dataHosting!['dungluong'].toString())),
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)
@@ -93,6 +97,7 @@ class _FormThongTinHostingWidgetState
                           lableTextForm('Tổng giá trị Hosting'),
                           TextFormField(
                             autovalidateMode: AutovalidateMode.onUserInteraction,
+                            initialValue: Helper.numberFormat(double.parse(formState.dataHosting!['tongtien'].toString())),
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)
@@ -123,9 +128,7 @@ class _FormThongTinHostingWidgetState
                             controller: TextEditingController(text: ngayDangKy.formatDateTime()),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayDangKy);
-                              String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime();
                                 ref.read(formPhieuThuProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
@@ -154,9 +157,7 @@ class _FormThongTinHostingWidgetState
                             controller: TextEditingController(text: (ngayHetHan!=null) ? ngayHetHan!.formatDateTime() : ''),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayHetHan);
-                              String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime();
                                 ref.read(formPhieuThuProvider.notifier).changeData(
                                     type: _typeData, key: 'ngayhethan', value: selDate);
                               }
@@ -195,6 +196,12 @@ class _TrangThaiHostingWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final formState = ref.watch(formPhieuThuProvider);
+    final dataHosting = formState.dataHosting!;
+
+    _trangThaiHosting = formState.dataHosting!['trangthaihosting'];
+    print(_trangThaiHosting);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -277,6 +284,7 @@ class _TrangThaiHostingWidgetState
                         key: 'sohopdongcu',
                         value: value);
                   },
+                  initialValue: formState.dataHopDong!['sohopdongcu'],
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(
                         errorText: 'Không bỏ trống.'),
@@ -297,6 +305,7 @@ class _TrangThaiHostingWidgetState
                   hintText:
                   'Ghi chú nội dung hosting nếu hosting phục hồi ghi mã HĐ và domain cũ',
                 ),
+                initialValue: dataHosting!['ghichu'],
                 onChanged: (value) {
                   ref
                       .read(formPhieuThuProvider.notifier)

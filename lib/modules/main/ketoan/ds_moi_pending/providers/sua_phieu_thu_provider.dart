@@ -6,6 +6,7 @@ import '../../../../../_shared/utils/form_status.dart';
 import '../providers/nhan_vien_phu_trach_provider.dart';
 import '../models/phieu_thu_model.dart';
 import '../repositories/phieu_thu_repository.dart';
+import 'danh_sach_domain_provider.dart';
 
 class FormPhieuThuState {
   final FormStatus? formStatus;
@@ -90,6 +91,8 @@ final formPhieuThuProvider = NotifierProvider.autoDispose<PhieuThuNotifier, Form
 class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
   final PhieuThuRepository _phieuThuRepository = PhieuThuRepository();
   late final PhieuThuModel phieuThuModel;
+  Map _res = {};
+
 
   @override
   FormPhieuThuState build() {
@@ -109,14 +112,18 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
   }
 
   Future<PhieuThuModel?> initData({required String id}) async{
-    final phieuThu = await _phieuThuRepository.chiTietPhieuThu(id: id);
-    phieuThuModel = phieuThu!;
-    await loadKhachHang();
-    await loadHopDong();
-    await loadPhieuThu();
-    await loadNhanVien();
-    state = state.copyWith(phieuThuModel: phieuThuModel, isLoading: false);
-    return phieuThu;
+    final Map result = await _phieuThuRepository.chiTietPhieuThu(id: id);
+    if(result['success']==true){
+      _res = result;
+      phieuThuModel = PhieuThuModel.fromJson(result['PhieuThu']);
+      await loadKhachHang();
+      await loadHopDong();
+      await loadPhieuThu();
+      await loadNhanVien();
+      state = state.copyWith(phieuThuModel: phieuThuModel, isLoading: false);
+      return phieuThuModel;
+    }
+    return null;
   }
 
   // Thông tin khách hàng
@@ -138,13 +145,34 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
 
   // Hợp đồng
   loadHopDong() async{
+    final jsonHd = _res['HopDong'];
     final dataHopDong = {
-      "tenhopdong":phieuThuModel.hopdong![0]['tenhopdong']
+      "tenhopdong":phieuThuModel.hopdong![0]['tenhopdong'],
+      'sohopdongcu':jsonHd['sohopdongcu']
     };
-    final isHopDongWebsite = (phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='web')!=-1) ? true : false;
-    final isHopDongHosting = (phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='hosting')!=-1) ? true : false;
-    final isHopDongDomain = (phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='domain')!=-1) ? true : false;
-    final isHopDongApp = (phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='app')!=-1) ? true : false;
+    bool isHopDongWebsite = false;
+    bool isHopDongHosting = false;
+    bool isHopDongDomain = false;
+    bool isHopDongApp = false;
+
+    if(phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='web')!=-1){
+      isHopDongWebsite = true;
+      loadDataWeb();
+    }
+    if(phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='hosting')!=-1){
+      isHopDongHosting = true;
+      loadDataHosting();
+    }
+
+    int indexHDDomain = phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='domain');
+    if(indexHDDomain!=-1){
+      isHopDongDomain = true;
+      loadDataDomain();
+    }
+    if(phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='app')!=-1){
+      isHopDongApp = true;
+      loadDataApp();
+    }
 
     state = state.copyWith(soHopDong: phieuThuModel.hopdong![0]['sohopdong'], dataHopDong: dataHopDong, isHopDongWebsite: isHopDongWebsite, isHopDongApp: isHopDongApp, isHopDongDomain: isHopDongDomain, isHopDongHosting: isHopDongHosting);
   }
@@ -154,6 +182,7 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
     final dataPhieuThu = {
       "maphieuthu": phieuThuModel.maphieuthu,
       "tongtien": phieuThuModel.tongtien,
+      "tongtiendomain": tongTienDomain(),
       "phiweb": phieuThuModel.phiweb,
       "phinangcapweb": phieuThuModel.phinangcapweb,
       "phihosting": phieuThuModel.phihosting,
@@ -174,6 +203,60 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
   loadNhanVien() async{
     ref.read(nhanVienPhuTrachProvider.notifier).loadDanhSachNhanVien(danhSach: phieuThuModel.nhanvien ?? []);
   }
+
+  // Thông tin hợp đồng Web
+  loadDataWeb() {
+    final json = _res['Web'];
+    final dataWeb = {
+      "chucnang": json['chucnang'],
+      "mota": json['mota'],
+      "tongtien": json['tongtien'],
+      "ngaykyhd": (json['ngaykyhd']!=null) ? DateTime.parse(json['ngaykyhd']) : DateTime.now(),
+      "ngaybangiao": DateTime.parse(json['ngaybangiao']),
+      "ghichu": json['ghichu'],
+    };
+    state = state.copyWith(dataWebsite: dataWeb);
+  }
+
+  // Thông tin hợp đồng Domain
+  loadDataDomain() {
+    ref.read(danhSachDomainProvider.notifier).loadDanhSachDomain(danhSach: _res['Domain']);
+  }
+
+  int tongTienDomain(){
+    int indexHDDomain = phieuThuModel.hopdong!.indexWhere((element) => element['loaihopdong']=='domain');
+    if(indexHDDomain!=-1){
+      return phieuThuModel.hopdong![indexHDDomain]['tongtien'];
+    }
+    return 0;
+  }
+
+  // Thông tin hợp đồng Hosting
+  loadDataHosting() {
+    final json = _res['Hosting'];
+    final jsonHd = _res['HopDong'];
+    final dataHosting = {
+      "dungluong": json['dungluong'],
+      "sonamdangky": json['sonamdangky'],
+      "tongtien": json['tongtien'],
+      "ngaykyhd": DateTime.parse(json['ngaykyhd']),
+      "ngaykichhoat": (json['ngaykichhoat']!=null) ? DateTime.parse(json['ngaykichhoat']) : DateTime.now(),
+      "ngayhethan": (json['ngayhethan']!=null) ? DateTime.parse(json['ngayhethan']) : null,
+      "ghichu": json['ghichu'],
+      "trangthaihosting":jsonHd['trangthai_hosting'],
+    };
+    state = state.copyWith(dataHosting: dataHosting);
+  }
+
+  // Thông tin hợp đồng App
+  loadDataApp() {
+    final dataApp = {
+
+    };
+    state = state.copyWith(dataApp: dataApp);
+  }
+
+
 
   batDatSubmit() {
     state = state.copyWith(formStatus: FormStatus.submissionInProgress);

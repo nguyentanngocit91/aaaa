@@ -17,10 +17,6 @@ class _FormThongTinHopDongWidgetState
     final formState = ref.watch(formPhieuThuProvider);
     String soHopDong = formState.soHopDong.toString();
 
-    if(formState.isHopDongApp){
-      soHopDong = '${soHopDong}A';
-    }
-
     return Wrap(
       runSpacing: 25,
       children: [

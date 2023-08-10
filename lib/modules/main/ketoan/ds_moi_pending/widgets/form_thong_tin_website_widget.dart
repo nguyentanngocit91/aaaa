@@ -12,11 +12,14 @@ class _FormThongTinWebsiteWidgetState
   
   final String _typeData = 'website';
   DateTime ngayDangKy = DateTime.now();
-  DateTime? ngayBanGiao = null;
+  DateTime? ngayBanGiao;
 
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formPhieuThuProvider);
+
+    ngayDangKy = formState.dataWebsite?['ngaykyhd'] ?? DateTime.now();
+    ngayBanGiao = formState.dataWebsite?['ngaybangiao'];
 
     return Visibility(
       visible: formState.isHopDongWebsite,
@@ -56,6 +59,7 @@ class _FormThongTinWebsiteWidgetState
                           lableTextForm('Chức năng'),
                           TextFormField(
                             autovalidateMode: AutovalidateMode.onUserInteraction,
+                            initialValue: formState.dataWebsite?['chucnang'],
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)
@@ -77,6 +81,7 @@ class _FormThongTinWebsiteWidgetState
                           lableTextForm('Tổng giá trị Website'),
                           TextFormField(
                             autovalidateMode: AutovalidateMode.onUserInteraction,
+                            initialValue: Helper.numberFormat(double.parse(formState.dataWebsite!['tongtien'].toString())),
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)
@@ -110,7 +115,6 @@ class _FormThongTinWebsiteWidgetState
                               String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
                                 txtDate = selDate.formatDateTime();
-                                print(selDate);
                                 ref.read(formPhieuThuProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
@@ -190,6 +194,7 @@ class _FormThongTinWebsiteWidgetState
                           TextFormField(
                             minLines: 3,
                             maxLines: 3,
+                            initialValue: formState.dataWebsite?['ghichu'],
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)

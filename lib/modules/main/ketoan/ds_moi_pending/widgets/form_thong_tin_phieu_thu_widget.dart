@@ -14,32 +14,12 @@ class FormThongTinPhieuThuWidget extends ConsumerStatefulWidget {
 class _FormThongTinPhieuThuWidgetState
     extends ConsumerState<FormThongTinPhieuThuWidget> with FormUIMixins {
   final String _typeData = 'phieuthu';
-  HinhThucThanhToan _httt = HinhThucThanhToan.cod;
-  LoaiPhieuThu _loaiPhieuThu = LoaiPhieuThu.phieuthu;
+  late HinhThucThanhToan _httt;
+  late LoaiPhieuThu _loaiPhieuThu;
   DateTime ngayNop = DateTime.now();
 
-  @override
-  initState() {
-    super.initState();
-    // set dữ liệu mặt định
-    Future.delayed(const Duration(milliseconds: 100), () {
-      ref
-          .read(formPhieuThuProvider.notifier)
-          .changeData(type: _typeData, key: 'mahopdong', value: null);
-      ref
-          .read(formPhieuThuProvider.notifier)
-          .changeData(type: _typeData, key: 'httt', value: 'cod');
-      ref
-          .read(formPhieuThuProvider.notifier)
-          .changeData(type: _typeData, key: 'loaiphieuthu', value: 'phieuthu');
-      ref
-          .read(formPhieuThuProvider.notifier)
-          .changeData(type: _typeData, key: 'is_pending', value: false);
-    });
-  }
-
   HinhThucThanhToan getHTTT(String hinhThucThanhToan) {
-    HinhThucThanhToan kq = HinhThucThanhToan.cod;
+    HinhThucThanhToan kq;
     switch (hinhThucThanhToan) {
       case 'bank':
         kq = HinhThucThanhToan.bank;
@@ -50,7 +30,7 @@ class _FormThongTinPhieuThuWidgetState
   }
 
   LoaiPhieuThu getLoaiPhieuThu(String loaiPhieuThu) {
-    LoaiPhieuThu kq = LoaiPhieuThu.phieuthu;
+    LoaiPhieuThu kq;
     switch (loaiPhieuThu) {
       case 'phieuthubg':
         kq = LoaiPhieuThu.phieuthuBG;
@@ -66,12 +46,12 @@ class _FormThongTinPhieuThuWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final formState = ref.watch(formPhieuThuProvider);
-    final dataPhieuThu = formState.dataPhieuThu!;
+    final dataPhieuThu = ref.watch(formPhieuThuProvider.select((value) => value.dataPhieuThu!));
     // print(dataPhieuThu);
     _httt = getHTTT(dataPhieuThu['httt']);
     _loaiPhieuThu = getLoaiPhieuThu(dataPhieuThu['loaiphieuthu']);
     ngayNop = dataPhieuThu['ngaynopcty'] ?? DateTime.now();
+
 
     return Wrap(
       runSpacing: 25,

@@ -2,18 +2,17 @@ import 'package:dio/dio.dart';
 
 import '../../../../../_shared/app_config/app.dart';
 import '../../../../../_shared/thietlap_url.dart';
-import '../models/phieu_thu_model.dart';
 import '../providers/files_hd_provider.dart';
 
 class PhieuThuRepository{
-  Future<PhieuThuModel?> chiTietPhieuThu({required String id}) async {
+  Future<Map> chiTietPhieuThu({required String id}) async {
     final response = await App.dioClient.get('${ApiUrl.danhSachPhieuThu}/$id');
     if(response.statusCode==200){
       if(response.data['success']==true){
-        return PhieuThuModel.fromJson(response.data['PhieuThu']);
+        return response.data;
       }
     }
-    return null;
+    return {};
   }
 
   Future<String?> capMaKhachhang() async {
