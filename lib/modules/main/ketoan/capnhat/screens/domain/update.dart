@@ -20,7 +20,6 @@ Map<String, String> _loaiPhiethu = {
   'chungtu': 'Chứng từ'
 };
 GlobalKey<FormState> _formKey = GlobalKey();
-String _updateType = 'web';
 List<Map> _resultFile = [];
 List<MediaModel> _listMedia = [];
 
