@@ -13,7 +13,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
 
   final TextEditingController textEditingController = TextEditingController();
 
-  String _loaiFileHD = 'hopdong';
+  String _loaiFileHD = 'chungtukhac';
 
   @override
   dispose(){
@@ -34,7 +34,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                 'Chọn loại file:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              ndGapW8(),
+             /* ndGapW8(),
               Radio<String>(
                 value: 'hopdong',
                 groupValue: _loaiFileHD,
@@ -45,12 +45,12 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                   });
                 },
               ),
-              const Text('Hợp đồng'),
+              const Text('Hợp đồng'),*/
               ndGapW16(),
               Radio<String>(
                 value: 'chungtukhac',
                 groupValue: _loaiFileHD,
-                onChanged: (value) {
+                onChanged: (String? value) {
                   ref.read(fileHDProvider.notifier).changeLoai(value ?? '');
                   setState(() {
                     _loaiFileHD = value!;

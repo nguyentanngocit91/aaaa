@@ -13,8 +13,7 @@ import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
 import '../models/customerupdate_model.dart';
-import '../models/mediacustomer_model.dart';
-import '../models/searchcustomer_model.dart';
+import '../models/media_result_model.dart';
 import '../providers/ds_hd_provider.dart';
 import '../providers/form_update_provider.dart';
 
@@ -26,7 +25,7 @@ String _loaiFileHD = 'chungtu';
 
 GlobalKey<FormState> _formKey = GlobalKey();
 List<Map> _resultFile = [];
-List<MediaCustomerModel> _listMedia = [];
+List<MediaResultModel> _listMedia = [];
 enum HinhThucThanhToan { cod, bank }
 
 class UpdateThongTinKHScreen extends ConsumerStatefulWidget {
@@ -66,24 +65,24 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
         _listMedia = res.state.media!;
       });
 
-      typeKH = data!.type!;
-      print("${data?.makhachhang!.toString()}+makhachhang");
+      typeKH = data!.type.toString();
+      print("${data?.ghichu!.toString()}+ghichu");
 
       listController!['makhachhang']!.text = data!.makhachhang!.toString();
       listController!['email']!.text = data!.email!.toString();
       listController!['email_phu']!.text = data!.info!.emailPhu.toString();
-      listController!['hoten']!.text = data!.hoten!;
-      listController!['phone']!.text = data!.phone!;
+      listController!['hoten']!.text = data!.hoten.toString();
+      listController!['phone']!.text = data!.phone.toString();
 
 
-      listController!['congty']!.text = data!.congty!;
-      listController!['nguoidaidienmoi']!.text = data!.info!.nguoidaidienmoi!;
-      listController!['dienthoaicoquan']!.text = data!.info!.dienthoaicoquan!;
+      listController!['congty']!.text = data!.congty.toString();
+      listController!['nguoidaidienmoi']!.text = data!.info!.nguoidaidienmoi.toString();
+      listController!['dienthoaicoquan']!.text = data!.info!.dienthoaicoquan.toString();
 
-      listController!['masothue']!.text = data!.masothue!;
-      listController!['cccd']!.text = data!.cccd!;
-      listController!['diachi']!.text = data!.diachi!;
-      listController!['ghichu']!.text = data!.ghichu!;
+      listController!['masothue']!.text = data!.masothue.toString();
+      listController!['cccd']!.text = data!.cccd.toString();
+      listController!['diachi']!.text = data!.diachi.toString();
+      listController!['ghichu']!.text = data!.ghichu.toString();
 
     });
   }
@@ -996,7 +995,7 @@ class MediaItem extends ConsumerStatefulWidget {
         required this.index,
         required this.divider})
       : super(key: key);
-  late MediaCustomerModel item;
+  late MediaResultModel item;
   final int index;
   final bool divider;
 
@@ -1022,7 +1021,7 @@ class _MediaItemState extends ConsumerState<MediaItem> {
           ),
           Expanded(
             flex: 3,
-            child: BodyRowItem(Text(widget.item!.l1_lichsu_khoitao!.hoten!)),
+            child: BodyRowItem(Text(widget.item!.lichsuKhoitao!.hoten!)),
           ),
           Expanded(
             flex: 4,
@@ -1147,7 +1146,7 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                             if(updateMedia['status']==true){
                               Navigator.of(context).pop();
                               setState(() {
-                                widget.item = MediaCustomerModel.fromJson(updateMedia['data']);
+                                widget.item = MediaResultModel.fromJson(updateMedia['data']);
 
                               });
 

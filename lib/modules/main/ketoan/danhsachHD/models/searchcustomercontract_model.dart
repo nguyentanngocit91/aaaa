@@ -23,23 +23,9 @@ class SearchCustomerContractModel {
   String? tenapp;
   String? tenmien;
 
-  /*
-  List<dynamic>? dichvuIds;
-  List<dynamic>? files;
-  List<dynamic>? danhsachtenmien;
-  List<dynamic>? lichsuThanhtoan;
-  List<dynamic>? ngayupstore;
-  List<LichsuCapnhat>? lichsuCapnhat;
-  List<Nhanvien>? nhanvien;
-    Nhanvien? lichsuKhoitao;
-      Info? info;
-  */
-
   SearchCustomerContractModel(
       {this.sohopdongcu,
-
         this.trangthaiHosting,
-
         this.id,
         this.sohopdong,
         this.namhopdong,
@@ -47,14 +33,10 @@ class SearchCustomerContractModel {
         this.loaihopdong,
         this.mahopdongcu,
         this.mahopdong,
-
         this.ghichu,
-
         this.khachhangId,
         this.tenhopdong,
-
         this.tongtien,
-
         this.chucnang,
         this.dungluong,
         this.mota,
@@ -62,23 +44,9 @@ class SearchCustomerContractModel {
         this.ngaydangky,
         this.ngayhethan,
         this.ngaykichhoat,
-
         this.sonamdangky,
         this.tenapp,
         this.tenmien
-
-      /*
-        this.ngayupstore,
-       this.lichsuCapnhat,
-      this.dichvuIds,
-        this.files,
-        this.danhsachtenmien,
-        this.lichsuThanhtoan,
-
-        this.lichsuKhoitao,
-        this.info,
-                this.nhanvien,
-       */
 
       });
 
@@ -93,19 +61,9 @@ class SearchCustomerContractModel {
     loaihopdong = json['loaihopdong'];
     mahopdongcu = json['mahopdongcu'];
     mahopdong = json['mahopdong'];
-   /* if (json['nhanvien'] != null) {
-      nhanvien = <Nhanvien>[];
-      json['nhanvien'].forEach((v) {
-        nhanvien!.add(Nhanvien.fromJson(v));
-      });
-    }*/
     ghichu = json['ghichu'];
-   // info = json['info'] != null ?  Info.fromJson(json['info']) : null;
     khachhangId = json['khachhangId'];
     tenhopdong = json['tenhopdong'];
-   /* lichsuKhoitao = json['lichsu_khoitao'] != null
-        ?  Nhanvien.fromJson(json['lichsu_khoitao'])
-        : null;*/
     tongtien = json['tongtien'];
 
 
@@ -127,8 +85,6 @@ class SearchCustomerContractModel {
       final Map<String, dynamic> data = <String, dynamic>{};
 
     data['sohopdongcu'] = this.sohopdongcu;
-
-
     data['trangthai_hosting'] = this.trangthaiHosting;
     data['_id'] = this.id;
     data['sohopdong'] = this.sohopdong;
@@ -137,20 +93,10 @@ class SearchCustomerContractModel {
     data['loaihopdong'] = this.loaihopdong;
     data['mahopdongcu'] = this.mahopdongcu;
     data['mahopdong'] = this.mahopdong;
-    /*if (this.nhanvien != null) {
-      data['nhanvien'] = this.nhanvien!.map((v) => v.toJson()).toList();
-    }*/
     data['ghichu'] = this.ghichu;
-   /* if (this.info != null) {
-      data['info'] = this.info!.toJson();
-    }*/
     data['khachhangId'] = this.khachhangId;
     data['tenhopdong'] = this.tenhopdong;
-    /*if (this.lichsuKhoitao != null) {
-      data['lichsu_khoitao'] = this.lichsuKhoitao!.toJson();
-    }*/
     data['tongtien'] = this.tongtien;
-
     data['chucnang'] = this.chucnang;
     data['dungluong'] = this.dungluong;
     data['mota'] = this.mota;

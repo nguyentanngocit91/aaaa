@@ -6,7 +6,7 @@ import '../../../../../_shared/thietlap_url.dart';
 import '../models/customerupdate_model.dart';
 import '../models/inforesponse_phieuthu_model.dart';
 import '../models/item_phieuthu_result_model.dart';
-import '../models/mediacustomer_model.dart';
+import '../models/media_result_model.dart';
 import '../models/searchcustomer_model.dart';
 import '../models/searchcustomercontract_model.dart';
 
@@ -54,6 +54,57 @@ class DSHDRepository{
 
    //print("$result+SEARCH HD");
 
+    return result;
+  }
+
+
+
+  getInfoContractId(String id,String sohopdong) async {
+    List<MediaResultModel> listMedia = [];
+    final response =
+    await App.dioClient.get("${ApiUrl.infoContract}${id}");
+
+    var result = {
+      "status": false,
+      "message": "Lỗi",
+      "data": {},
+      "media": [],
+    };
+    if (response.statusCode == 200) {
+      final res = response.data;
+      // print("${res}+ load SearchCustomerContractModel");
+      if (res['success'] == false) {
+        result['status'] = true;
+        result['message'] = "Không tìm thấy dữ liệu";
+      } else {
+        result['status'] = true;
+        result['message'] = "Success";
+        result['data'] = SearchCustomerContractModel.fromJson(res["data"]);
+
+         print("${result['data'] }+ load SearchCustomerContractModel");
+      }
+    }
+
+    final Response medias = await App.dioClient.get(
+        "${ApiUrl.listFile}", queryParameters: {
+      "limit":100,
+      "loaimedia":"hopdong",
+      "loaifile":"chungtu",
+      "sohopdong":sohopdong
+    });
+    print("${medias}+ load medias000");
+
+    if(medias.statusCode == 200){
+      final mediaRes  = medias.data;
+      if(mediaRes['success']==true){
+        for(var item in mediaRes['data']){
+          listMedia.add(MediaResultModel.fromJson(item));
+        }
+      }
+    }
+
+    result['media'] = listMedia;
+    print("${result['media']}+ load result['media']");
     return result;
   }
 
@@ -125,7 +176,7 @@ class DSHDRepository{
 
 
   getInfoCustomer(String id) async {
-    List<MediaCustomerModel> listMedia = [];
+    List<MediaResultModel> listMedia = [];
     final response =
     await App.dioClient.get("${ApiUrl.infoUpdateCustomer}${id}");
     
@@ -166,7 +217,7 @@ class DSHDRepository{
       final mediaRes  = medias.data;
       if(mediaRes['success']==true){
         for(var item in mediaRes['data']){
-          listMedia.add(MediaCustomerModel.fromJson(item));
+          listMedia.add(MediaResultModel.fromJson(item));
         }
       }
     }
