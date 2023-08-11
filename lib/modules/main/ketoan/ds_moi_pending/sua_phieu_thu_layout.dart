@@ -15,6 +15,7 @@ import '../../../../_shared/utils/form_status.dart';
 import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/ndgap.dart';
 import '../../../../packages/textfield_tags/textfield_tags.dart';
+import './models/file_model.dart';
 import 'providers/kiem_tra_khach_hang_provider.dart';
 import 'providers/nhan_vien_phu_trach_provider.dart';
 import 'providers/files_hd_provider.dart';

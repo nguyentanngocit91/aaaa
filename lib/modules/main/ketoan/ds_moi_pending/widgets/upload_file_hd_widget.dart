@@ -8,7 +8,7 @@ class UploadFileHDWidget extends ConsumerStatefulWidget {
 }
 
 class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
-    with FormUIMixins, DataTableMixins {
+    with FormUIMixins {
   final TextEditingController textEditingController = TextEditingController();
 
   String _loaiFileHD = 'hopdong';
@@ -21,6 +21,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
 
   @override
   Widget build(BuildContext context) {
+    final String soHopDong = ref.watch(formPhieuThuProvider.select((value) => value.soHopDong.toString()));
     return Column(
       children: [
         Row(
@@ -126,22 +127,81 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
         ndGapH32(),
         SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: dataTableWidget(
-            context: context,
-            columns: [
-              DataColumn(label: Text('STT'.toUpperCase())),
-              DataColumn(label: Text('Ngày tháng'.toUpperCase())),
-              DataColumn(label: Text('User Cập nhật'.toUpperCase())),
-              DataColumn(label: Text('Loại file'.toUpperCase())),
-              DataColumn(label: Text('ghi chú'.toUpperCase())),
-              DataColumn(label: Text('Xoá'.toUpperCase())),
-            ],
-            rows: [
-
-            ],
-          ),
+          child: TableFiles(soHopDong: soHopDong,),
         )
       ],
+    );
+  }
+}
+
+class TableFiles extends ConsumerStatefulWidget {
+  const TableFiles({super.key, required this.soHopDong});
+
+  final String soHopDong;
+
+  @override
+  ConsumerState createState() => _TableFilesState();
+}
+
+class _TableFilesState extends ConsumerState<TableFiles> with DataTableMixins {
+  @override
+  initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 0), (){
+      ref.read(fileHDProvider.notifier).layDanhSachFile(
+          soHopDong: widget.soHopDong);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<FileModel> danhSach =
+        ref.watch(fileHDProvider.select((value) => value.danhSachFile));
+    return dataTableWidget(
+      context: context,
+      columns: [
+        DataColumn(label: Text('STT'.toUpperCase())),
+        DataColumn(label: Text('Ngày tháng'.toUpperCase())),
+        DataColumn(label: Text('User Cập nhật'.toUpperCase())),
+        DataColumn(label: Text('Loại file'.toUpperCase())),
+        DataColumn(label: Text('ghi chú'.toUpperCase())),
+        DataColumn(label: Text('Xoá'.toUpperCase())),
+      ],
+      rows: (danhSach.isNotEmpty)
+          ? List.generate(danhSach.length, (index) {
+              final item = danhSach[index];
+              return DataRow.byIndex(
+                  index: index,
+                  color: MaterialStateColor.resolveWith(
+                    (states) {
+                      if (index % 2 == 0) {
+                        return Colors.white;
+                      } else {
+                        return Colors.grey.shade100;
+                      }
+                    },
+                  ),
+                  cells: [
+                    DataCell(Text((index+1).toString())),
+                    DataCell(Text((item.createdAt as DateTime).formatDateTime(formatString: 'dd-MM-yyyy'))),
+                    DataCell(Text(item.l1_lichsu_khoitao!.hoten.toString())),
+                    DataCell(Text((item.loaifile.toString()=='hopdong') ? 'Hợp đồng' : 'Chứng từ khác')),
+                    DataCell(Text(item.ghichu.toString())),
+                    DataCell(
+                      IconButton(
+                        onPressed: () {
+
+                        },
+                        icon: const FaIcon(
+                          FontAwesomeIcons.trash,
+                          color: Colors.redAccent,
+                          size: 17,
+                        ),
+                      ),
+                    ),
+                  ]);
+            })
+          : [],
     );
   }
 }
