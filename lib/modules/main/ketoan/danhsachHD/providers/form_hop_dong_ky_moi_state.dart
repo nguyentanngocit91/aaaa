@@ -1,6 +1,6 @@
-part of 'form_khach_hang_moi_provider.dart';
+part of 'form_hop_dong_ky_moi_provider.dart';
 
-class FormKhachHangMoiState {
+class FormHopDongKyMoiState {
   final FormStatus? formStatus;
   final String? soHopDong;
   final String? maKhachHang;
@@ -16,8 +16,9 @@ class FormKhachHangMoiState {
   final bool isHopDongHosting;
   final bool isHopDongApp;
   final CustomerUpdateModel? customer;
+  final bool isLoading;
 
-  FormKhachHangMoiState({
+  FormHopDongKyMoiState({
     this.formStatus = FormStatus.pure,
     this.soHopDong,
     this.maKhachHang,
@@ -33,6 +34,7 @@ class FormKhachHangMoiState {
     this.isHopDongDomain = false,
     this.isHopDongHosting = false,
     this.customer,
+    this.isLoading = true,
   });
 
   copyWith(
@@ -49,8 +51,9 @@ class FormKhachHangMoiState {
       bool? isHopDongWebsite,
       bool? isHopDongApp,
       bool? isHopDongDomain,
-      bool? isHopDongHosting, CustomerUpdateModel? customer}) {
-    return FormKhachHangMoiState(
+      bool? isHopDongHosting, CustomerUpdateModel? customer,
+        bool? isLoading}) {
+    return FormHopDongKyMoiState(
       formStatus: formStatus ?? this.formStatus,
       soHopDong: soHopDong ?? this.soHopDong,
       maKhachHang: maKhachHang ?? this.maKhachHang,
@@ -66,6 +69,7 @@ class FormKhachHangMoiState {
       isHopDongDomain: isHopDongDomain ?? this.isHopDongDomain,
       isHopDongHosting: isHopDongHosting ?? this.isHopDongHosting,
       customer: customer ?? this.customer,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }

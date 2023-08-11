@@ -4,10 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
-import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../../_shared/extensions/date_time_extention.dart';
-import '../../../../../_shared/extensions/string.dart';
 import '../../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../../_shared/utils/debouncer.dart';
@@ -17,11 +15,8 @@ import '../../../../../_shared/utils/ndgap.dart';
 import '../../../../../packages/textfield_tags/src/models.dart';
 
 import '../danh_sach_hd_layout.dart';
-import '../models/customerupdate_model.dart';
-import '../models/searchcustomer_model.dart';
-import '../providers/ds_hd_provider.dart';
 import '../providers/files_hd_provider.dart';
-import '../providers/form_khach_hang_moi_provider.dart';
+import '../providers/form_hop_dong_ky_moi_provider.dart';
 import '../providers/kiem_tra_khach_hang_provider.dart';
 import '../providers/nhan_vien_phu_trach_provider.dart';
 import '../providers/danh_sach_domain_provider.dart';
@@ -47,32 +42,44 @@ part '../widgets/form_them_hopdong_moi/upload_file_hd_widget.dart';
 final GlobalKey<FormState> _formKey = GlobalKey();
 
 class ThemHopDongKyMoi extends ConsumerStatefulWidget {
-  const ThemHopDongKyMoi({Key? key}) : super(key: const Key(nameRoute));
-  static const String nameRoute = 'them-hop-dong-moi';
-  static const String pathRoute = ':makhachang';
-  //final SearchCustomerModel item;
+  const ThemHopDongKyMoi() : super(key: const Key(nameRoute));
+  static const String nameRoute = 'them-hop-dong-ky-moi';
+  static const String pathRoute = ':id';
   @override
   ConsumerState createState() => _ThemHopDongKyMoiState();
 }
 
-class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUIMixins {
 
+  class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> {
 
   @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 0),(){
-      //ref.read(formPhieuThuProvider.notifier).initData( maPhieuThu: GoRouterState.of(context).pathParameters['makhachang'] ?? '');
+      print(GoRouterState.of(context).pathParameters['id']);
+      ref.read(formHopDongKyMoiProvider.notifier).initData( id: GoRouterState.of(context).pathParameters['id'] ?? '');
     });
   }
-
+  @override
 
   Widget build(BuildContext context) {
 
-    final String id= GoRouterState.of(context).pathParameters.values.single.toString();
+    final loading = ref.watch(formHopDongKyMoiProvider.select((value) => value.isLoading));
+    return Scaffold(
+      body: (loading==false) ? const FormThemHopDongKyMoi() : const Center(child: CircularProgressIndicator.adaptive(),),
+    );
+
+    }
+  }
+
+class FormThemHopDongKyMoi extends ConsumerWidget with FormUIMixins{
+    const FormThemHopDongKyMoi({super.key});
+
+    @override
+    Widget build(BuildContext context, WidgetRef ref) {
 
 
-    ref.listen(formKhachHangMoiProvider.select((value) => value.formStatus),
+    ref.listen(formHopDongKyMoiProvider.select((value) => value.formStatus),
             (previous, next) {
           if (next == FormStatus.submissionInProgress) {
             Loading(context).start();
@@ -131,23 +138,9 @@ class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUI
           child: Column(
             children: [
 
-              Container(
-                alignment: Alignment.topLeft,
-                padding: const EdgeInsets.all(0.0),
-                child: Text(
-                  'Thêm hợp đồng mới cho khách hàng'.toUpperCase(),
-                  textAlign: TextAlign.left,
-                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-                ),
-              ),
-
-              const Divider(),
-
-              ndGapH24(),
-
               titleForm(context, title: 'Thông tin khách hàng'),
               bodyForm(
-                child: FormThongTinKhachHangWidget(id: id.toString()),
+                child: const FormThongTinKhachHangWidget(),
               ),
               ndGapH40(),
               titleForm(context, title: 'Thông tin hợp đồng'),
@@ -177,11 +170,13 @@ class _ThemHopDongKyMoiState extends ConsumerState<ThemHopDongKyMoi> with FormUI
     );
   }
 
-  @override
-  void didChangeDependencies() {
+
+ /*
+ @override
+ void didChangeDependencies() {
     super.didChangeDependencies();
     _resetForm(ref);
-  }
+  }*/
 }
 
 class _BtnSubmit extends ConsumerWidget {
@@ -203,7 +198,7 @@ class _BtnSubmit extends ConsumerWidget {
           label: const Text('Lưu Thông Tin'),
         ),
         ndGapW16(),
-        FilledButton.icon(
+        /*FilledButton.icon(
           onPressed: () {
             _resetForm(ref);
           },
@@ -212,24 +207,37 @@ class _BtnSubmit extends ConsumerWidget {
             size: 16,
           ),
           label: const Text('Nhập lại'),
+        ),*/
+
+        FilledButton.icon(
+          onPressed: () {
+            context.pop();
+          },
+          icon: const FaIcon(
+            FontAwesomeIcons.arrowLeft,
+            size: 16,
+          ),
+          label: const Text('Quay lại danh sách'),
         ),
+
+
       ],
     );
   }
 }
 
 _submitForm(WidgetRef ref) {
-  ref.read(formKhachHangMoiProvider.notifier).batDatSubmit();
+  ref.read(formHopDongKyMoiProvider.notifier).batDatSubmit();
   if (_formKey.currentState!.validate()) {
-    ref.read(formKhachHangMoiProvider.notifier).saveForm();
+    ref.read(formHopDongKyMoiProvider.notifier).saveForm();
   } else {
-    ref.read(formKhachHangMoiProvider.notifier).ketThucSubmit();
+    ref.read(formHopDongKyMoiProvider.notifier).ketThucSubmit();
   }
 }
 
 _resetForm(WidgetRef ref) {
   _formKey.currentState?.reset();
-  ref.refresh(formKhachHangMoiProvider); // reset dữ liệu toàn Form
+  ref.refresh(formHopDongKyMoiProvider); // reset dữ liệu toàn Form
   ref.refresh(
       kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
   ref.refresh(nhanVienPhuTrachProvider); // reset dữ liệu nhân viên phụ trách

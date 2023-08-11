@@ -14,10 +14,10 @@ class _FormThongTinHostingWidgetState
   final String _typeData = 'hosting';
   DateTime ngayDangKy = DateTime.now();
   DateTime? ngayHetHan;
-  
+
   @override
   Widget build(BuildContext context) {
-    final formState = ref.watch(formKhachHangMoiProvider);
+    final formState = ref.watch(formHopDongKyMoiProvider);
 
     return Visibility(
       visible: formState.isHopDongHosting,
@@ -60,19 +60,19 @@ class _FormThongTinHostingWidgetState
                               CurrencyTextInputFormatter(symbol: 'MB')
                             ],
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               ref
-                                  .read(formKhachHangMoiProvider.notifier)
+                                  .read(formHopDongKyMoiProvider.notifier)
                                   .changeData(
-                                      type: _typeData,
-                                      key: 'dungluong',
-                                      value: value.toString().replaceAll('.', '').replaceAll('MB', '').trim());
+                                  type: _typeData,
+                                  key: 'dungluong',
+                                  value: value.toString().replaceAll('.', '').replaceAll('MB', '').trim());
                             },
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(
                                   errorText: 'Không bỏ trống.'),
-                              (value) {
+                                  (value) {
                                 if(value!=null){
                                   int number = int.parse(value.replaceAll('.','').replaceAll('MB',''));
                                   if (number<500){
@@ -90,16 +90,41 @@ class _FormThongTinHostingWidgetState
                       flex: 1,
                       child: Wrap(
                         children: [
+                          lableTextForm('Tổng giá trị Hosting'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formHopDongKyMoiProvider.notifier)
+                                  .changeData(
+                                  type: _typeData,
+                                  key: 'tongtien',
+                                  value: value.replaceAll('.', ''));
+                            },
+                            inputFormatters: [
+                              CurrencyTextInputFormatter(symbol: ''),
+                            ],
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 1,
+                      child: Wrap(
+                        children: [
                           lableTextForm('Ngày ký'),
                           TextFormField(
                             readOnly: true,
                             controller: TextEditingController(text: ngayDangKy.formatDateTime()),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayDangKy);
-                              String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime();
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                ref.read(formHopDongKyMoiProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
                               setState(() {
@@ -127,10 +152,8 @@ class _FormThongTinHostingWidgetState
                             controller: TextEditingController(text: (ngayHetHan!=null) ? ngayHetHan!.formatDateTime() : ''),
                             onTap: () async {
                               final DateTime? selDate = await Helper.onSelectDate(context, initialDate: ngayHetHan);
-                              String txtDate = DateTime.now().formatDateTime();
                               if(selDate!=null){
-                                txtDate = selDate.formatDateTime();
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                ref.read(formHopDongKyMoiProvider.notifier).changeData(
                                     type: _typeData, key: 'ngayhethan', value: selDate);
                               }
                               setState(() {
@@ -185,7 +208,7 @@ class _TrangThaiHostingWidgetState
                     value: 'kymoi',
                     groupValue: _trangThaiHosting,
                     onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -197,7 +220,7 @@ class _TrangThaiHostingWidgetState
                     value: 'phuchoi',
                     groupValue: _trangThaiHosting,
                     onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -209,7 +232,7 @@ class _TrangThaiHostingWidgetState
                     value: 'nangcap',
                     groupValue: _trangThaiHosting,
                     onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -221,7 +244,7 @@ class _TrangThaiHostingWidgetState
                     value: 'chuyendoi',
                     groupValue: _trangThaiHosting,
                     onChanged: (String? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(type: 'hopdong', key: 'trangthaihosting', value: value);
                       setState(() {
                         _trangThaiHosting = value!;
                       });
@@ -244,7 +267,7 @@ class _TrangThaiHostingWidgetState
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   onChanged: (value) {
-                    ref.read(formKhachHangMoiProvider.notifier)
+                    ref.read(formHopDongKyMoiProvider.notifier)
                         .changeData(
                         type: 'hopdong',
                         key: 'sohopdongcu',
@@ -272,7 +295,7 @@ class _TrangThaiHostingWidgetState
                 ),
                 onChanged: (value) {
                   ref
-                      .read(formKhachHangMoiProvider.notifier)
+                      .read(formHopDongKyMoiProvider.notifier)
                       .changeData(
                       type: _typeData,
                       key: 'ghichu',

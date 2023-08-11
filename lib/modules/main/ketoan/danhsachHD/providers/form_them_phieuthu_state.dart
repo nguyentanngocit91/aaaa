@@ -1,69 +1,45 @@
 part of 'form_them_phieuthu_provider.dart';
 
-class FormThemPhieuThuState {
-  final FormStatus? formStatus;
-  final String? soHopDong;
-  final String? maKhachHang;
-  final Map? dataKhachHang;
-  final Map? dataHopDong;
-  final Map? dataPhieuThu;
-  final Map? dataWebsite;
-  final Map? dataDomain;
-  final Map? dataHosting;
-  final Map? dataApp;
-  final bool isHopDongWebsite;
-  final bool isHopDongDomain;
-  final bool isHopDongHosting;
-  final bool isHopDongApp;
 
-  FormThemPhieuThuState({
-    this.formStatus = FormStatus.pure,
-    this.soHopDong,
-    this.maKhachHang,
-    this.dataKhachHang,
-    this.dataHopDong,
+class FormThemPhieuThuState {
+  final Map<String, String>? data;
+  final Map? dataPhieuThu;
+  final FormStatus status;
+  final String? message;
+  final Map<String, dynamic>? result;
+  final loadingStatus loading;
+  final bool success;
+  final List? uploadList;
+
+  const FormThemPhieuThuState({
+    this.data = null,
     this.dataPhieuThu,
-    this.dataWebsite,
-    this.dataDomain,
-    this.dataHosting,
-    this.dataApp,
-    this.isHopDongWebsite = true,
-    this.isHopDongApp = false,
-    this.isHopDongDomain = false,
-    this.isHopDongHosting = false,
+    this.status = FormStatus.pure,
+    this.message = '',
+    this.result = null,
+    this.loading = loadingStatus.NONE,
+    this.success = false,
+    this.uploadList = null,
   });
 
-  copyWith(
-      {FormStatus? formStatus,
-        String? soHopDong,
-        String? maKhachHang,
-        Map? dataKhachHang,
-        Map? dataHopDong,
-        Map? dataPhieuThu,
-        Map? dataWebsite,
-        Map? dataDomain,
-        Map? dataHosting,
-        Map? dataApp,
-        bool? isHopDongWebsite,
-        bool? isHopDongApp,
-        bool? isHopDongDomain,
-        bool? isHopDongHosting
-      }) {
+  FormThemPhieuThuState copyWith({
+    Map<String, String>? data,
+    Map? dataPhieuThu,
+    FormStatus? status,
+    String? message,
+    Map<String, dynamic>? result,
+    loadingStatus? loading,
+    bool? success,
+    List? uploadList,
+  }) {
     return FormThemPhieuThuState(
-      formStatus: formStatus ?? this.formStatus,
-      soHopDong: soHopDong ?? this.soHopDong,
-      maKhachHang: maKhachHang ?? this.maKhachHang,
-      dataKhachHang: dataKhachHang ?? this.dataKhachHang,
-      dataHopDong: dataHopDong ?? this.dataHopDong,
-      dataPhieuThu: dataPhieuThu ?? this.dataPhieuThu,
-      dataWebsite: dataWebsite ?? this.dataWebsite,
-      dataDomain: dataDomain ?? this.dataDomain,
-      dataHosting: dataHosting ?? this.dataHosting,
-      dataApp: dataApp ?? this.dataApp,
-      isHopDongApp: isHopDongApp ?? this.isHopDongApp,
-      isHopDongWebsite: isHopDongWebsite ?? this.isHopDongWebsite,
-      isHopDongDomain: isHopDongDomain ?? this.isHopDongDomain,
-      isHopDongHosting: isHopDongHosting ?? this.isHopDongHosting,
-    );
+        data: data ?? this.data,
+        dataPhieuThu: dataPhieuThu ?? this.dataPhieuThu,
+        result: result ?? this.result,
+        status: status ?? this.status,
+        message: message ?? this.message,
+        loading: loading ?? this.loading,
+        success: success ?? this.success,
+        uploadList: uploadList ?? this.uploadList);
   }
 }

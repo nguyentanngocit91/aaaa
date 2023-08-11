@@ -16,7 +16,7 @@ class _FormThongTinWebsiteWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final formState = ref.watch(formKhachHangMoiProvider);
+    final formState = ref.watch(formHopDongKyMoiProvider);
 
     return Visibility(
       visible: formState.isHopDongWebsite,
@@ -58,7 +58,7 @@ class _FormThongTinWebsiteWidgetState
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               ref
-                                  .read(formKhachHangMoiProvider.notifier)
+                                  .read(formHopDongKyMoiProvider.notifier)
                                   .changeData(type: _typeData ,key: 'chucnang', value: value);
                             },
                             validator: FormBuilderValidators.compose([
@@ -84,7 +84,7 @@ class _FormThongTinWebsiteWidgetState
                               if(selDate!=null){
                                 txtDate = selDate.formatDateTime();
                                 print(selDate);
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                ref.read(formHopDongKyMoiProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaykyhd', value: selDate);
                               }
                               setState(() {
@@ -110,7 +110,7 @@ class _FormThongTinWebsiteWidgetState
                               String txtDate = '';
                               if(selDate!=null){
                                 txtDate = selDate.formatDateTime();
-                                ref.read(formKhachHangMoiProvider.notifier).changeData(
+                                ref.read(formHopDongKyMoiProvider.notifier).changeData(
                                     type: _typeData, key: 'ngaybangiao', value: selDate);
                               }
                               setState(() {
@@ -165,7 +165,7 @@ class _FormThongTinWebsiteWidgetState
                             maxLines: 3,
                             onChanged: (value) {
                               ref
-                                  .read(formKhachHangMoiProvider.notifier)
+                                  .read(formHopDongKyMoiProvider.notifier)
                                   .changeData(type: _typeData ,key: 'ghichu', value: value);
                             },
                           ),

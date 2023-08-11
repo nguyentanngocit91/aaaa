@@ -15,7 +15,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
 
   @override
   Widget build(BuildContext context) {
-    final formState = ref.watch(formKhachHangMoiProvider);
+    final formState = ref.watch(formHopDongKyMoiProvider);
     return Visibility(
       visible: formState.isHopDongApp,
       child: Column(
@@ -49,21 +49,48 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Wrap(
                         children: [
                           lableTextForm('Chức năng'),
                           TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               ref
-                                  .read(formKhachHangMoiProvider.notifier)
+                                  .read(formHopDongKyMoiProvider.notifier)
                                   .changeData(
-                                      type: _typeData,
-                                      key: 'chucnang',
-                                      value: value);
+                                  type: _typeData,
+                                  key: 'chucnang',
+                                  value: value);
                             },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 1,
+                      child: Wrap(
+                        children: [
+                          lableTextForm('Tổng giá trị App'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formHopDongKyMoiProvider.notifier)
+                                  .changeData(
+                                  type: _typeData,
+                                  key: 'tongtien',
+                                  value: value.replaceAll('.', ''));
+                            },
+                            inputFormatters: [
+                              CurrencyTextInputFormatter(symbol: ''),
+                            ],
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(
                                   errorText: 'Không bỏ trống.'),
@@ -84,14 +111,14 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                                 text: ngayDangKy.formatDateTime()),
                             onTap: () async {
                               final DateTime? selDate =
-                                  await Helper.onSelectDate(context,
-                                      initialDate: ngayDangKy);
+                              await Helper.onSelectDate(context,
+                                  initialDate: ngayDangKy);
                               String txtDate =
-                                  DateTime.now().formatDateTime();
+                              DateTime.now().formatDateTime();
                               if (selDate != null) {
                                 txtDate = selDate.formatDateTime();
                                 ref
-                                    .read(formKhachHangMoiProvider.notifier)
+                                    .read(formHopDongKyMoiProvider.notifier)
                                     .changeData(
                                     type: _typeData,
                                     key: 'ngaykyhd',
@@ -113,29 +140,29 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                           lableTextForm('Ngày bàn giao'),
                           TextFormField(
                               decoration:
-                                  const InputDecoration(hintText: 'dd-mm-yyyy'),
+                              const InputDecoration(hintText: 'dd-mm-yyyy'),
                               readOnly: true,
                               controller: TextEditingController(
                                   text: (ngayBanGiao != null)
                                       ? ngayBanGiao!
-                                          .formatDateTime()
+                                      .formatDateTime()
                                       : null),
                               onTap: () async {
                                 final DateTime? selDate =
-                                    await Helper.onSelectDate(context,
-                                        initialDate: ngayBanGiao);
+                                await Helper.onSelectDate(context,
+                                    initialDate: ngayBanGiao);
                                 String txtDate = '';
                                 if (selDate != null) {
                                   txtDate =
                                       selDate.formatDateTime();
                                   ref
-                                      .read(formKhachHangMoiProvider.notifier)
+                                      .read(formHopDongKyMoiProvider.notifier)
                                       .changeData(
                                       type: _typeData,
                                       key: 'ngaybangiao',
                                       value: selDate);
                                 }
-                                 setState(() {
+                                setState(() {
                                   ngayBanGiao = selDate ?? ngayBanGiao;
                                 });
                               }),
@@ -186,11 +213,11 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                             maxLines: 3,
                             onChanged: (value) {
                               ref
-                                  .read(formKhachHangMoiProvider.notifier)
+                                  .read(formHopDongKyMoiProvider.notifier)
                                   .changeData(
-                                      type: _typeData,
-                                      key: 'ghichu',
-                                      value: value);
+                                  type: _typeData,
+                                  key: 'ghichu',
+                                  value: value);
                             },
                           ),
                         ],
