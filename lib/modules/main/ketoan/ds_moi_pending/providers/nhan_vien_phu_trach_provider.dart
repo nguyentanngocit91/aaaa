@@ -83,7 +83,7 @@ class NhanVienPhuTrachNotifier extends Notifier<NhanVienPhuTrachState> {
     switch(field){
       case 'maphongban':
         for(var nv in state.maNhanViens ?? []){
-          list.add(nv['phongbanId'][field]);
+          list.add(nv['phongbanId'][field] ?? '');
         }
       case 'parentId_hoten':
         for(var nv in state.maNhanViens ?? []){

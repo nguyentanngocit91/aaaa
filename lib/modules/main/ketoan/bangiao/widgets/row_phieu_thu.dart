@@ -76,7 +76,7 @@ class RowPhieuThu extends StatelessWidget {
                   colorBG: Colors.black.withOpacity(0.05),
                   child: RichTextInfo(
                     title: 'Ngày nộp',
-                    content: ngayNop,
+                    content: ngayNop.toString(),
                   ),
                 ),
               ),
@@ -86,7 +86,7 @@ class RowPhieuThu extends StatelessWidget {
                   lastColum: true,
                   child: RichTextInfo(
                     title: 'Loại phiếu',
-                    content: loaiPhieuThu,
+                    content: loaiPhieuThu.toString(),
                   ),
                 ),
               ),
@@ -98,7 +98,7 @@ class RowPhieuThu extends StatelessWidget {
                 child: ItemRowInfo(
                   child: RichTextInfo(
                     title: 'Phí web',
-                    content: Helper.numberFormat(phiWeb),
+                    content: Helper.numberFormat(phiWeb!),
                   ),
                 ),
               ),
@@ -106,7 +106,7 @@ class RowPhieuThu extends StatelessWidget {
                 child: ItemRowInfo(
                   child: RichTextInfo(
                     title: 'Phí NC web',
-                    content: Helper.numberFormat(phiNCWeb),
+                    content: Helper.numberFormat(phiNCWeb!),
                   ),
                 ),
               ),
@@ -114,7 +114,7 @@ class RowPhieuThu extends StatelessWidget {
                 child: ItemRowInfo(
                   child: RichTextInfo(
                     title: 'Phí hosting',
-                    content: Helper.numberFormat(phiHosting),
+                    content: Helper.numberFormat(phiHosting!),
                   ),
                 ),
               ),
@@ -122,7 +122,7 @@ class RowPhieuThu extends StatelessWidget {
                 child: ItemRowInfo(
                   child: RichTextInfo(
                     title: 'Phí NC hosting',
-                    content: Helper.numberFormat(phiNCHosting),
+                    content: Helper.numberFormat(phiNCHosting!),
                   ),
                 ),
               ),
@@ -131,7 +131,7 @@ class RowPhieuThu extends StatelessWidget {
                   lastColum: true,
                   child: RichTextInfo(
                     title: 'Phí domain',
-                    content: Helper.numberFormat(phiDomain),
+                    content: Helper.numberFormat(phiDomain!),
                   ),
                 ),
               ),
@@ -147,7 +147,7 @@ class RowPhieuThu extends StatelessWidget {
                     lastRow: true,
                     child: RichTextInfo(
                       title: 'Phí App',
-                      content: Helper.numberFormat(phiApp),
+                      content: Helper.numberFormat(phiApp!),
                     ),
                   ),
                 ),
@@ -202,7 +202,7 @@ class RowPhieuThu extends StatelessWidget {
                     lastRow: true,
                     child: RichTextInfo(
                       title: 'Tổng thu',
-                      content: Helper.numberFormat(tongThu),
+                      content: Helper.numberFormat(tongThu!),
                     ),
                   ),
                 ),
@@ -213,7 +213,7 @@ class RowPhieuThu extends StatelessWidget {
                     lastRow: true,
                     child: RichTextInfo(
                       title: 'Ghi chú',
-                      content: ghiChu,
+                      content: ghiChu.toString(),
                     ),
                   ),
                 ),

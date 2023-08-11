@@ -148,7 +148,8 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
     final jsonHd = _res['HopDong'];
     final dataHopDong = {
       "tenhopdong":phieuThuModel.hopdong![0]['tenhopdong'],
-      'sohopdongcu':jsonHd['sohopdongcu']
+      "trangthaihosting":jsonHd?['trangthai_hosting'] ?? 'kymoi',
+      'sohopdongcu':jsonHd?['sohopdongcu'] ?? ''
     };
     bool isHopDongWebsite = false;
     bool isHopDongHosting = false;
@@ -190,7 +191,7 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
       "phitenmien": phieuThuModel.phitenmien,
       "phiapp": phieuThuModel.phiapp,
       "vat": phieuThuModel.vat,
-      "ngaynopcty": DateTime.parse(phieuThuModel.ngaynopcty.toString()),
+      "ngaynopcty": (phieuThuModel.ngaynopcty!=null) ? DateTime.parse(phieuThuModel.ngaynopcty.toString()) : null,
       "httt": phieuThuModel.httt,
       "ghichu": phieuThuModel.ghichu,
       "loaiphieuthu": phieuThuModel.loaiphieuthu,
@@ -212,7 +213,7 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
       "mota": json['mota'],
       "tongtien": json['tongtien'],
       "ngaykyhd": (json['ngaykyhd']!=null) ? DateTime.parse(json['ngaykyhd']) : DateTime.now(),
-      "ngaybangiao": DateTime.parse(json['ngaybangiao']),
+      "ngaybangiao": (json['ngaybangiao']!=null) ? DateTime.parse(json['ngaybangiao']) : null,
       "ghichu": json['ghichu'],
     };
     state = state.copyWith(dataWebsite: dataWeb);
@@ -243,7 +244,6 @@ class PhieuThuNotifier extends AutoDisposeNotifier<FormPhieuThuState> {
       "ngaykichhoat": (json['ngaykichhoat']!=null) ? DateTime.parse(json['ngaykichhoat']) : DateTime.now(),
       "ngayhethan": (json['ngayhethan']!=null) ? DateTime.parse(json['ngayhethan']) : null,
       "ghichu": json['ghichu'],
-      "trangthaihosting":jsonHd['trangthai_hosting'],
     };
     state = state.copyWith(dataHosting: dataHosting);
   }

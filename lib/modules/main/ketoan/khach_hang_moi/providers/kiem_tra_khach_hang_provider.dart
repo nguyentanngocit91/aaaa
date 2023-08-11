@@ -6,14 +6,16 @@ import 'form_khach_hang_moi_provider.dart';
 class KhachHangCuState {
   final bool? loading;
   final Map? data;
+  final String errEmail;
 
-  KhachHangCuState({this.loading = false, this.data});
+  KhachHangCuState({this.loading = false, this.data, this.errEmail = ''});
 
 
-  KhachHangCuState copyWith({bool? loading, Map? data}){
+  KhachHangCuState copyWith({bool? loading, Map? data, String? errEmail}){
     return KhachHangCuState(
       loading: loading ?? this.loading,
       data: data ?? this.data,
+        errEmail: errEmail ?? this.errEmail
     );
   }
 }
@@ -43,6 +45,16 @@ class KiemTraKhachHangNotifier extends Notifier<KhachHangCuState> {
       state = state.copyWith(loading: false, data: result);
     }else{
       state = state.copyWith(loading: false, data: {});
+    }
+  }
+
+
+  Future<void> kiemTraEmail({required String email}) async {
+    final bool result = await _khachHangMoiRepository.kiemTraEmail(email: email);
+    if(result==false){
+      state = state.copyWith(errEmail: 'Email này bị trùng với khách hàng khác');
+    }else{
+      state = state.copyWith(errEmail: '');
     }
   }
 }
