@@ -158,36 +158,6 @@ class UpdateThongTinHopDongWidget extends ConsumerWidget with FormUIMixins {
 
                 TextButton(
                   onPressed: () {
-                    /* Dialogs.materialDialog(
-                      context: context,
-
-                      title: 'Bạn muốn xoá sản phẩm này ?',
-                      actions: [
-                        Consumer(
-                          builder: (context, ref, child) {
-                            return IconsButton(
-                              onPressed: () {
-
-                                Navigator.of(context).pop();
-                              },
-                              text: 'Xoá',
-                              iconData: Icons.delete,
-                              color: Colors.red,
-                              textStyle: TextStyle(color: Colors.white),
-                              iconColor: Colors.white,
-                            );
-                          },
-                        ),
-                        IconsOutlineButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          text: 'Huỷ',
-                          iconData: Icons.cancel_outlined,
-                          textStyle: TextStyle(color: Colors.grey),
-                          iconColor: Colors.grey,
-                        ),
-                      ]);*/
 
                     bool isError = false;
                     String tenHD = controllerTenHD.text;

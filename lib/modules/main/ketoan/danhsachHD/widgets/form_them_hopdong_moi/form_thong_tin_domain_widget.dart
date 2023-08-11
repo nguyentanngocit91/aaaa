@@ -1,5 +1,6 @@
 part of '../../screen/them_hopdong_moi.dart';
 
+
 class FormThongTinDomainWidget extends ConsumerStatefulWidget {
   const FormThongTinDomainWidget({super.key});
 
@@ -14,7 +15,7 @@ class _FormThongTinDomainWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final formState = ref.watch(formKhachHangMoiProvider);
+    final formState = ref.watch(formHopDongKyMoiProvider);
     List<DomainModel> listDomain = ref.watch(danhSachDomainProvider);
 
     return Visibility(
@@ -49,7 +50,34 @@ class _FormThongTinDomainWidgetState
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 5,
+                      flex: 1,
+                      child: Wrap(
+                        children: [
+                          lableTextForm('Tổng giá trị Domain'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formHopDongKyMoiProvider.notifier)
+                                  .changeData(
+                                  type: 'phieuthu',
+                                  key: 'tongtiendomain',
+                                  value: value.replaceAll('.', ''));
+                            },
+                            inputFormatters: [
+                              CurrencyTextInputFormatter(symbol: ''),
+                            ],
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 4,
                       child: Wrap(
                         children: [
                           lableTextForm(' '),
@@ -141,9 +169,9 @@ class _RowDomainWidgetState extends ConsumerState<RowDomainWidget>
   void didUpdateWidget(covariant RowDomainWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     Future.delayed(const Duration(milliseconds: 0),(){
-        _nameController.text = widget.domainModel.domainName ?? '';
-        _ghiChuController.text = widget.domainModel.ghiChu ?? '';
-        _soNamDangkyController.text = (widget.domainModel.soNamDangKy!=null) ? widget.domainModel.soNamDangKy.toString() : '';
+      _nameController.text = widget.domainModel.domainName ?? '';
+      _ghiChuController.text = widget.domainModel.ghiChu ?? '';
+      _soNamDangkyController.text = (widget.domainModel.soNamDangKy!=null) ? widget.domainModel.soNamDangKy.toString() : '';
     });
   }
 

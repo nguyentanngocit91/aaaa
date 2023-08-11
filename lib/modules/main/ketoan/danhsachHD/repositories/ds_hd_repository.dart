@@ -228,6 +228,30 @@ class DSHDRepository{
   }
 
 
+  addPhieuThuContract({required String id, Map<String, dynamic>? data}) async {
+
+    print("${data?["PhieuThu"]}+4444 data");
+
+    final response =
+    await App.dioClient.post("${ApiUrl.phieuThuMoiHD}${id}", data: data?["PhieuThu"]);
+    var result = {
+      "status": false,
+      "data": null,
+      "message": "Error"
+    };
+
+    if (response.statusCode == 200) {
+      final res = response.data;
+      result['status'] = res['success'];
+      result['message'] = res['message'];
+      if (res['success'] == true) {
+        result['data'] = data;
+      }
+    }
+    return result;
+  }
+
+
   updateInfoCustomer({required String id, Map<String, dynamic>? data}) async {
 
     print("${data?["data"]}+4444 data");
@@ -262,6 +286,35 @@ class DSHDRepository{
       'makhachhang': makhachhang,
       'khachhangId': khachhangId,
       'loaifile': loaifile,
+      'ghichu': ghichu,
+    });
+    final response =
+    await App.dioClient.post("${ApiUrl.uploadFile}", data: formData);
+    var result = {
+      "status": false,
+      "message": "Server error"
+    };
+
+    if (response.statusCode == 200) {
+      final res = response.data;
+      result['status'] = res['success'];
+      result['message'] = res['message'];
+    }
+    return result;
+  }
+
+
+
+  uploadFileNumberContract(
+      {required String sohopdong, required String loaifile, required String ghichu, required PlatformFile file}) async {
+    String fileName = file.path!.split('/').last;
+    FormData formData = FormData.fromMap({
+      "files": [
+        await MultipartFile.fromFile(file.path!, filename: fileName),
+      ],
+      'sohopdong': sohopdong,
+      'loaifile': loaifile,
+      'loaimedia':'hopdong',
       'ghichu': ghichu,
     });
     final response =

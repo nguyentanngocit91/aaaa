@@ -26,16 +26,16 @@ class _FormThongTinPhieuThuWidgetState
     // set dữ liệu mặt định
     Future.delayed(const Duration(milliseconds: 100), () {
       ref
-          .read(formKhachHangMoiProvider.notifier)
+          .read(formHopDongKyMoiProvider.notifier)
           .changeData(type: _typeData, key: 'mahopdong', value: null);
       ref
-          .read(formKhachHangMoiProvider.notifier)
+          .read(formHopDongKyMoiProvider.notifier)
           .changeData(type: _typeData, key: 'httt', value: 'cod');
       ref
-          .read(formKhachHangMoiProvider.notifier)
+          .read(formHopDongKyMoiProvider.notifier)
           .changeData(type: _typeData, key: 'loaiphieuthu', value: 'phieuthu');
       ref
-          .read(formKhachHangMoiProvider.notifier)
+          .read(formHopDongKyMoiProvider.notifier)
           .changeData(type: _typeData, key: 'is_pending', value: false);
     });
   }
@@ -62,7 +62,7 @@ class _FormThongTinPhieuThuWidgetState
                     value: HinhThucThanhToan.cod,
                     groupValue: _httt,
                     onChanged: (HinhThucThanhToan? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'httt', value: 'cod');
                       if (mounted) {
                         setState(() {
@@ -77,7 +77,7 @@ class _FormThongTinPhieuThuWidgetState
                     value: HinhThucThanhToan.bank,
                     groupValue: _httt,
                     onChanged: (HinhThucThanhToan? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'httt', value: 'bank');
                       if (mounted) {
                         setState(() {
@@ -102,7 +102,7 @@ class _FormThongTinPhieuThuWidgetState
                     value: LoaiPhieuThu.phieuthu,
                     groupValue: _loaiPhieuThu,
                     onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: _typeData);
@@ -119,7 +119,7 @@ class _FormThongTinPhieuThuWidgetState
                     value: LoaiPhieuThu.phieuthuBG,
                     groupValue: _loaiPhieuThu,
                     onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthubg');
@@ -136,7 +136,7 @@ class _FormThongTinPhieuThuWidgetState
                     value: LoaiPhieuThu.phieuthuApp,
                     groupValue: _loaiPhieuThu,
                     onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthuapp');
@@ -153,7 +153,7 @@ class _FormThongTinPhieuThuWidgetState
                     value: LoaiPhieuThu.phieuthuBGApp,
                     groupValue: _loaiPhieuThu,
                     onChanged: (LoaiPhieuThu? value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData,
                           key: 'loaiphieuthu',
                           value: 'phieuthuappbg');
@@ -193,7 +193,7 @@ class _FormThongTinPhieuThuWidgetState
                       String txtDate = ngayNop.formatDateTime();
                       if (selDate != null) {
                         txtDate = selDate.formatDateTime();
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formHopDongKyMoiProvider.notifier).changeData(
                             type: _typeData, key: 'ngaynopcty', value: selDate);
                       }
                       setState(() {
@@ -216,7 +216,7 @@ class _FormThongTinPhieuThuWidgetState
                           errorText: 'Không bỏ trống.'),
                     ]),
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'maphieuthu', value: value);
                     },
                   ),
@@ -317,7 +317,7 @@ class _FormThongTinPhieuThuWidgetState
                           errorText: 'Không bỏ trống.'),
                     ]),
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'tongtien', value: value.toString().replaceAll('.', ''));
                     },
                   ),
@@ -334,7 +334,7 @@ class _FormThongTinPhieuThuWidgetState
                       CurrencyTextInputFormatter(symbol: ''),
                     ],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'phiweb', value: value.toString().replaceAll('.', ''));
                     },
                   ),
@@ -351,7 +351,7 @@ class _FormThongTinPhieuThuWidgetState
                       CurrencyTextInputFormatter(symbol: ''),
                     ],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'phinangcapweb', value: value.toString().replaceAll('.', ''));
                     },
                   ),
@@ -368,7 +368,7 @@ class _FormThongTinPhieuThuWidgetState
                       CurrencyTextInputFormatter(symbol: ''),
                     ],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'phihosting', value: value.toString().replaceAll('.', ''));
                     },
                   ),
@@ -385,7 +385,7 @@ class _FormThongTinPhieuThuWidgetState
                       CurrencyTextInputFormatter(symbol: ''),
                     ],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'phinangcaphosting', value: value.toString().replaceAll('.', ''));
                     },
                   ),
@@ -402,7 +402,7 @@ class _FormThongTinPhieuThuWidgetState
                       CurrencyTextInputFormatter(symbol: ''),
                     ],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'phitenmien', value: value.toString().replaceAll('.', ''));
                     },
                   ),
@@ -424,7 +424,7 @@ class _FormThongTinPhieuThuWidgetState
                       CurrencyTextInputFormatter(symbol: ''),
                     ],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'phiapp', value: value.toString().replaceAll('.', ''));
                     },
                   ),
@@ -442,7 +442,7 @@ class _FormThongTinPhieuThuWidgetState
                       CurrencyTextInputFormatter(symbol: ''),
                     ],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'vat', value: value.toString().replaceAll('.', ''));
                     },
                   ),
@@ -457,7 +457,7 @@ class _FormThongTinPhieuThuWidgetState
                   lableTextForm('Ghi chú'),
                   TextFormField(
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           type: _typeData, key: 'ghichu', value: value);
                     },
                   ),
@@ -477,8 +477,8 @@ class LoaiHopDongWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final FormKhachHangMoiState formKhachHangMoiState =
-        ref.watch(formKhachHangMoiProvider);
+    final FormHopDongKyMoiState formHopDongKyMoiState =
+        ref.watch(formHopDongKyMoiProvider);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -491,10 +491,10 @@ class LoaiHopDongWidget extends ConsumerWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Checkbox(
-              value: formKhachHangMoiState.isHopDongWebsite,
+              value: formHopDongKyMoiState.isHopDongWebsite,
               onChanged: (bool? value) {
                 ref
-                    .read(formKhachHangMoiProvider.notifier)
+                    .read(formHopDongKyMoiProvider.notifier)
                     .checkLoaiHopDong(isHopDongWebsite: value ?? false);
               },
             ),
@@ -507,10 +507,10 @@ class LoaiHopDongWidget extends ConsumerWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Checkbox(
-              value: formKhachHangMoiState.isHopDongDomain,
+              value: formHopDongKyMoiState.isHopDongDomain,
               onChanged: (bool? value) {
                 ref
-                    .read(formKhachHangMoiProvider.notifier)
+                    .read(formHopDongKyMoiProvider.notifier)
                     .checkLoaiHopDong(isHopDongDomain: value ?? false);
               },
             ),
@@ -523,10 +523,10 @@ class LoaiHopDongWidget extends ConsumerWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Checkbox(
-              value: formKhachHangMoiState.isHopDongHosting,
+              value: formHopDongKyMoiState.isHopDongHosting,
               onChanged: (bool? value) {
                 ref
-                    .read(formKhachHangMoiProvider.notifier)
+                    .read(formHopDongKyMoiProvider.notifier)
                     .checkLoaiHopDong(isHopDongHosting: value ?? false);
               },
             ),
@@ -539,10 +539,10 @@ class LoaiHopDongWidget extends ConsumerWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Checkbox(
-              value: formKhachHangMoiState.isHopDongApp,
+              value: formHopDongKyMoiState.isHopDongApp,
               onChanged: (bool? value) {
                 ref
-                    .read(formKhachHangMoiProvider.notifier)
+                    .read(formHopDongKyMoiProvider.notifier)
                     .checkLoaiHopDong(isHopDongApp: value ?? false);
               },
             ),
@@ -566,7 +566,7 @@ class _MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final FormStatus? formStatus = ref.watch(formKhachHangMoiProvider.select((value) => value.formStatus));
+    final FormStatus? formStatus = ref.watch(formHopDongKyMoiProvider.select((value) => value.formStatus));
     final dsNhanvien = ref.watch(
             nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ??
         [];

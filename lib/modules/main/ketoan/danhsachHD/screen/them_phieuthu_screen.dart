@@ -13,7 +13,8 @@ import '../models/media_result_model.dart';
 import '../models/searchcustomercontract_model.dart';
 import '../providers/ds_hd_provider.dart';
 import '../providers/files_hd_provider.dart';
-import '../providers/form_khach_hang_moi_provider.dart';
+import '../providers/form_hop_dong_ky_moi_provider.dart';
+import '../providers/form_them_phieuthu_provider.dart';
 import '../providers/kiem_tra_khach_hang_provider.dart';
 import '../providers/nhan_vien_phu_trach_provider.dart';
 import '../providers/danh_sach_domain_provider.dart';
@@ -32,12 +33,13 @@ part '../widgets/form_them_phieuthu/form_thong_tin_hop_dong_widget.dart';
 part '../widgets/form_them_phieuthu/form_thong_tin_phieu_thu_widget.dart';
 part '../widgets/form_them_phieuthu/upload_file_hd_widget.dart';
 
-final GlobalKey<FormState> _formKey = GlobalKey();
+
 
 Map<String, String> _loaiPhiethu = {
   'chungtu': 'Chứng từ khác'
 };
-
+final GlobalKey<FormState> _formKey = GlobalKey();
+List<Map> _resultFile = [];
 List<MediaResultModel> _listMedia = [];
 
 class ThemPhieuThuScreen extends ConsumerStatefulWidget {
@@ -70,6 +72,75 @@ class _ThemPhieuThuScreenState
   }
 
   Widget build(BuildContext context) {
+
+
+
+    FormThemPhieuThuNotifier data = ref.read(formThemPhieuThuProvider.notifier);
+    ref.listen(formThemPhieuThuProvider.select((value) => value.loading),
+            (previous, next) {
+          if (next == loadingStatus.START) {
+            Loading(context).start();
+          }
+
+          if (next == loadingStatus.STOP) {
+            Future.delayed(Duration(seconds: 1), () {
+              ref.read(dshdProvider.notifier).reload();
+              Loading(context).stop();
+              if (data.state.success == true) {
+                setState(() {
+                  _resultFile = [];
+                });
+
+                showDialog(
+                  //barrierDismissible:false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('THÀNH CÔNG'),
+                      content: Text('Dữ liệu đã được thêm thành công.'),
+                      actions: [
+                        FilledButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+              }
+              else{
+
+                Loading(context).stop();
+                showDialog(
+                  //barrierDismissible:false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('XIN LỖI'),
+                      content: Text('Đã có lỗi trong quá trình thêm dữ liệu...'),
+                      actions: [
+                        FilledButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+              }
+
+            });
+          }
+        });
+
+
+
     return  SimpleDialog(
       backgroundColor: Colors.white,
       contentPadding: EdgeInsets.all(0),
@@ -110,35 +181,77 @@ class _ThemPhieuThuScreenState
 
         const Divider(),
 
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              titleForm(context, title: 'Thông tin hợp đồng'),
-              bodyForm(
-                child: FormThongTinHopDongWidget(item: widget.item),
-              ),
-              ndGapH24(),
+        Form(
+        key: _formKey,
+          child:Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                titleForm(context, title: 'Thông tin hợp đồng'),
+                bodyForm(
+                  child: FormThongTinHopDongWidget(item: widget.item),
+                ),
+                ndGapH24(),
 
-              titleForm(context, title: 'Upload file HĐ'),
-              bodyForm(
-                child: const UploadFileHDWidget(),
-              ),
-              DataUploadMediaCustomer(),
+                titleForm(context, title: 'Upload file HĐ'),
+                bodyForm(
+                  child: const UploadFileHDWidget(),
+                ),
+                DataUploadMediaCustomer(),
 
-              ndGapH24(),
-              titleForm(context, title: 'Thông tin phiếu thu'),
-              bodyForm(
-                child: const FormThongTinPhieuThuWidget(),
-              ),
+                ndGapH24(),
+                titleForm(context, title: 'Thông tin phiếu thu'),
+                bodyForm(
+                  child: const FormThongTinPhieuThuWidget(),
+                ),
 
-              ndGapH24(),
-              const _BtnSubmit(),
+                ndGapH24(),
 
-            ],),
-        ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    FilledButton.icon(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          ref.read(formThemPhieuThuProvider.notifier).onSubmit(widget.item!.id.toString(), widget.item!.sohopdong.toString());
+                        }
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.download,
+                        size: 16,
+                      ),
+                      label: const Text('Lưu Thông Tin'),
+                    ),
+                    ndGapW16(),
+
+                    FilledButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.outdent,
+                        size: 16,
+                      ),
+                      label: const Text('Thoát'),
+                    ),
+
+
+                  ],
+                )
+
+
+
+                //const _BtnSubmit(),
+
+              ],),
+          ),
+        )
+
+
 
 
 
@@ -188,17 +301,19 @@ class _BtnSubmit extends ConsumerWidget {
 }
 
 _submitForm(WidgetRef ref) {
-  ref.read(formKhachHangMoiProvider.notifier).batDatSubmit();
+  ref.read(formHopDongKyMoiProvider.notifier).batDatSubmit();
   if (_formKey.currentState!.validate()) {
-    ref.read(formKhachHangMoiProvider.notifier).saveForm();
+    ref.read(formHopDongKyMoiProvider.notifier).saveForm();
   } else {
-    ref.read(formKhachHangMoiProvider.notifier).ketThucSubmit();
+    ref.read(formHopDongKyMoiProvider.notifier).ketThucSubmit();
   }
+
+
 }
 
 _resetForm(WidgetRef ref) {
   _formKey.currentState?.reset();
-  ref.refresh(formKhachHangMoiProvider); // reset dữ liệu toàn Form
+  ref.refresh(formHopDongKyMoiProvider); // reset dữ liệu toàn Form
   ref.refresh(
       kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
   ref.refresh(nhanVienPhuTrachProvider); // reset dữ liệu nhân viên phụ trách

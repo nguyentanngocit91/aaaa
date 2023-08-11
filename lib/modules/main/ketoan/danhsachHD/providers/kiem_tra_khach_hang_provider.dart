@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../repositories/khach_hang_moi_repository.dart';
-import 'form_khach_hang_moi_provider.dart';
+import '../repositories/hop_dong_ky_moi_repository.dart';
+import 'form_hop_dong_ky_moi_provider.dart';
 
 class KhachHangCuState {
   final bool? loading;
@@ -24,8 +24,8 @@ final kiemTraKhachHangProvider =
 });
 
 class KiemTraKhachHangNotifier extends Notifier<KhachHangCuState> {
-  final KhachHangMoiRepository _khachHangMoiRepository =
-      KhachHangMoiRepository();
+  final HopDongKyMoiRepository _hopDongKyMoiRepository =
+  HopDongKyMoiRepository();
 
   @override
   KhachHangCuState build() {
@@ -34,13 +34,13 @@ class KiemTraKhachHangNotifier extends Notifier<KhachHangCuState> {
 
   Future<void> kiemTraThongTinKhachHang({required String id}) async {
     state = state.copyWith(loading: true, data: null);
-    final Map? result = await _khachHangMoiRepository.thongTinKhachHang(id: id);
+    final Map? result = await _hopDongKyMoiRepository.thongTinKhachHang(id: id);
 
     print("${result}+result----");
 
     if(result!=null){
       result.forEach((key, value) {
-        ref.read(formKhachHangMoiProvider.notifier).changeData(type: 'khachhang', key: key, value: value);
+        ref.read(formHopDongKyMoiProvider.notifier).changeData(type: 'khachhang', key: key, value: value);
       });
 
       print("${result}+ data result----");

@@ -1,5 +1,3 @@
-
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bs_flutter_alert/bs_flutter_alert.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
@@ -15,7 +13,7 @@ import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
 import '../models/customerupdate_model.dart';
 import '../models/media_result_model.dart';
 import '../providers/ds_hd_provider.dart';
-import '../providers/form_update_provider.dart';
+import '../providers/form_capnhat_khachhang_provider.dart';
 
 Map<String, String> _loaiPhiethu = {
   'chungtu': 'Chứng từ khác'
@@ -90,12 +88,13 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
 
   Widget build(BuildContext context) {
 
-    FormUpdateNotifier data = ref.read(formUpdateProvider.notifier);
-    ref.listen(formUpdateProvider.select((value) => value.loading),
+    FormCapNhatKhachHangNotifier data = ref.read(formCapNhatKhachHangProvider.notifier);
+    ref.listen(formCapNhatKhachHangProvider.select((value) => value.loading),
             (previous, next) {
           if (next == loadingStatus.START) {
             Loading(context).start();
           }
+
           if (next == loadingStatus.STOP) {
             Future.delayed(Duration(seconds: 1), () {
               ref.read(dshdProvider.notifier).reload();
@@ -104,18 +103,51 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                 setState(() {
                   _resultFile = [];
                 });
+
+                showDialog(
+                  //barrierDismissible:false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('THÀNH CÔNG'),
+                      content: Text('Dữ liệu đã được thêm thành công.'),
+                      actions: [
+                        FilledButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
               }
-              AwesomeDialog(
-                context: context,
-                width: 400.0,
-                dialogType:
-                data.state.success ? DialogType.success : DialogType.error,
-                animType: AnimType.scale,
-                title: 'Thông báo',
-                desc: data.state.message,
-                btnCancelOnPress: () {},
-                btnOkOnPress: () {},
-              )..show();
+              else{
+
+                Loading(context).stop();
+                showDialog(
+                  //barrierDismissible:false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('XIN LỖI'),
+                      content: Text('Đã có lỗi trong quá trình thêm dữ liệu...'),
+                      actions: [
+                        FilledButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+              }
+
             });
           }
         });
@@ -303,7 +335,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                               ),
                             ],
                             onChanged: (value) {
-                              ref.read(formUpdateProvider.notifier).changeData(
+                              ref.read(formCapNhatKhachHangProvider.notifier).changeData(
                                   key: 'type', value: value, type: _typeData);
 
 
@@ -485,13 +517,13 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
 
                           listController.forEach((key, value) {
                              if(key=="email_phu" ||  key=="nguoidaidienmoi" ||  key=="dienthoaicoquan"){
-                               ref.read(formUpdateProvider.notifier).changeData(key: 'info', value: _typeInfo, type: _typeData);
+                               ref.read(formCapNhatKhachHangProvider.notifier).changeData(key: 'info', value: _typeInfo, type: _typeData);
                              } else{
-                               ref.read(formUpdateProvider.notifier).changeData(key: key, value: value.text, type: _typeData);
+                               ref.read(formCapNhatKhachHangProvider.notifier).changeData(key: key, value: value.text, type: _typeData);
                              }
 
                           });
-                          ref.read(formUpdateProvider.notifier).onSubmit(widget.id, widget.customerNumber);
+                          ref.read(formCapNhatKhachHangProvider.notifier).onSubmit(widget.id, widget.customerNumber);
                         } else {
                           listFocusNode.forEach((key, value) {
                             value.requestFocus();
@@ -759,7 +791,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                 _radioValue = '';
                               });
                             // print("${_resultFile}+_resultFile");
-                              ref.read(formUpdateProvider.notifier).setFile(_resultFile);
+                              ref.read(formCapNhatKhachHangProvider.notifier).setFile(_resultFile);
                             }
                           },
                           style: TextButton.styleFrom(
@@ -1147,11 +1179,55 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                               Navigator.of(context).pop();
                               setState(() {
                                 widget.item = MediaResultModel.fromJson(updateMedia['data']);
-
                               });
 
+                              showDialog(
+                                //barrierDismissible:false,
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title:  Text('THÀNH CÔNG'),
+                                    content: Text('Dữ liệu đã được cập nhật thành công.'),
+                                    actions: [
+                                      FilledButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
                             }
-                            AwesomeDialog(
+                            else{
+
+
+                              showDialog(
+                                //barrierDismissible:false,
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('XIN LỖI'),
+                                    content: Text('Đã có lỗi trong quá trình cập nhật dữ liệu...'),
+                                    actions: [
+                                      FilledButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+
+                            }
+
+
+                            /*AwesomeDialog(
                               context: context,
                               autoHide:Duration(seconds: 2),
                               width: 400.0,
@@ -1166,7 +1242,7 @@ class _MediaItemState extends ConsumerState<MediaItem> {
 
                               btnCancelOnPress: () {},
                               btnOkOnPress: () {},
-                            )..show();
+                            )..show();*/
 
 
                           }

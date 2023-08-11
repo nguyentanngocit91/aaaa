@@ -80,7 +80,8 @@ class Info {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['fax'] = this.fax;
     data['email_phu'] = this.emailPhu;
     data['nguoidaidienmoi'] = this.nguoidaidienmoi;

@@ -1,6 +1,6 @@
-part of 'form_update_provider.dart';
+part of 'form_capnhat_khachhang_provider.dart';
 
-class FormUpdateState {
+class FormCapNhatKhachHangState {
   final Map<String, String>? data;
   final Map? dataKhachHang;
   final FormStatus status;
@@ -10,7 +10,7 @@ class FormUpdateState {
   final bool success;
   final List? uploadList;
 
-  const FormUpdateState({
+  const FormCapNhatKhachHangState({
     this.data = null,
     this.dataKhachHang,
     this.status = FormStatus.pure,
@@ -21,7 +21,7 @@ class FormUpdateState {
     this.uploadList = null,
   });
 
-  FormUpdateState copyWith({
+  FormCapNhatKhachHangState copyWith({
     Map<String, String>? data,
     Map? dataKhachHang,
     FormStatus? status,
@@ -31,7 +31,7 @@ class FormUpdateState {
     bool? success,
     List? uploadList,
   }) {
-    return FormUpdateState(
+    return FormCapNhatKhachHangState(
         data: data ?? this.data,
         dataKhachHang: dataKhachHang ?? this.dataKhachHang,
         result: result ?? this.result,
