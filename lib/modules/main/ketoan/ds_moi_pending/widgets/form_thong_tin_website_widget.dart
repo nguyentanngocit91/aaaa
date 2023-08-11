@@ -81,7 +81,7 @@ class _FormThongTinWebsiteWidgetState
                           lableTextForm('Tổng giá trị Website'),
                           TextFormField(
                             autovalidateMode: AutovalidateMode.onUserInteraction,
-                            initialValue: Helper.numberFormat(double.parse(formState.dataWebsite!['tongtien'].toString())),
+                            initialValue: (formState.dataWebsite!=null) ? Helper.numberFormat(double.parse(formState.dataWebsite!['tongtien'].toString())) : null,
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)

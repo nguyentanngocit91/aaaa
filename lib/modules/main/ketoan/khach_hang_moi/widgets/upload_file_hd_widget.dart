@@ -95,7 +95,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
         ),
         ndGapW32(),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: Wrap(
             children: [
               TextFormField(

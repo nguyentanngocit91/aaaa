@@ -19,8 +19,8 @@ class _FormThongTinHostingWidgetState
   Widget build(BuildContext context) {
     final formState = ref.watch(formPhieuThuProvider);
 
-    ngayDangKy = formState.dataHosting!['ngaykyhd'] ?? DateTime.now();
-    ngayHetHan = formState.dataHosting!['ngayhethan'];
+    ngayDangKy = formState.dataHosting?['ngaykyhd'] ?? DateTime.now();
+    ngayHetHan = formState.dataHosting?['ngayhethan'];
 
     return Visibility(
       visible: formState.isHopDongHosting,
@@ -64,7 +64,7 @@ class _FormThongTinHostingWidgetState
                             ],
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            initialValue: Helper.numberFormat(double.parse(formState.dataHosting!['dungluong'].toString())),
+                            initialValue: (formState.dataHosting?['dungluong']!=null) ? Helper.numberFormat(double.parse(formState.dataHosting!['dungluong'].toString())) : null,
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)
@@ -97,7 +97,7 @@ class _FormThongTinHostingWidgetState
                           lableTextForm('Tổng giá trị Hosting'),
                           TextFormField(
                             autovalidateMode: AutovalidateMode.onUserInteraction,
-                            initialValue: Helper.numberFormat(double.parse(formState.dataHosting!['tongtien'].toString())),
+                            initialValue: (formState.dataHosting!=null) ? Helper.numberFormat(double.parse(formState.dataHosting!['tongtien'].toString())) : null,
                             onChanged: (value) {
                               ref
                                   .read(formPhieuThuProvider.notifier)
@@ -191,7 +191,7 @@ class _TrangThaiHostingWidget extends ConsumerStatefulWidget {
 class _TrangThaiHostingWidgetState
     extends ConsumerState<_TrangThaiHostingWidget> with FormUIMixins {
 
-  String _trangThaiHosting = 'kymoi';
+  late String _trangThaiHosting;
   final String _typeData = 'hosting';
 
   @override
@@ -199,8 +199,7 @@ class _TrangThaiHostingWidgetState
     final formState = ref.watch(formPhieuThuProvider);
     final dataHosting = formState.dataHosting!;
 
-    _trangThaiHosting = formState.dataHosting!['trangthaihosting'];
-    print(_trangThaiHosting);
+    _trangThaiHosting = formState.dataHopDong!['trangthaihosting'] ?? 'kymoi';
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

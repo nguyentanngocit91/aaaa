@@ -28,15 +28,15 @@ mixin _$PhieuThuModel {
   List<dynamic>? get nhanvien => throw _privateConstructorUsedError;
   List<dynamic>? get hopdong => throw _privateConstructorUsedError;
   List<dynamic>? get files => throw _privateConstructorUsedError;
-  int? get tongtien => throw _privateConstructorUsedError;
-  int? get phiweb => throw _privateConstructorUsedError;
-  int? get phinangcapweb => throw _privateConstructorUsedError;
-  int? get phihosting => throw _privateConstructorUsedError;
-  int? get phinangcaphosting => throw _privateConstructorUsedError;
-  int? get phitenmien => throw _privateConstructorUsedError;
-  int? get phiapp => throw _privateConstructorUsedError;
-  int? get phinangcapapp => throw _privateConstructorUsedError;
-  int? get vat => throw _privateConstructorUsedError;
+  double? get tongtien => throw _privateConstructorUsedError;
+  double? get phiweb => throw _privateConstructorUsedError;
+  double? get phinangcapweb => throw _privateConstructorUsedError;
+  double? get phihosting => throw _privateConstructorUsedError;
+  double? get phinangcaphosting => throw _privateConstructorUsedError;
+  double? get phitenmien => throw _privateConstructorUsedError;
+  double? get phiapp => throw _privateConstructorUsedError;
+  double? get phinangcapapp => throw _privateConstructorUsedError;
+  double? get vat => throw _privateConstructorUsedError;
   String? get ngaytao => throw _privateConstructorUsedError;
   String? get ngaynopcty => throw _privateConstructorUsedError;
   String? get httt => throw _privateConstructorUsedError;
@@ -66,15 +66,15 @@ abstract class $PhieuThuModelCopyWith<$Res> {
       List<dynamic>? nhanvien,
       List<dynamic>? hopdong,
       List<dynamic>? files,
-      int? tongtien,
-      int? phiweb,
-      int? phinangcapweb,
-      int? phihosting,
-      int? phinangcaphosting,
-      int? phitenmien,
-      int? phiapp,
-      int? phinangcapapp,
-      int? vat,
+      double? tongtien,
+      double? phiweb,
+      double? phinangcapweb,
+      double? phihosting,
+      double? phinangcaphosting,
+      double? phitenmien,
+      double? phiapp,
+      double? phinangcapapp,
+      double? vat,
       String? ngaytao,
       String? ngaynopcty,
       String? httt,
@@ -154,39 +154,39 @@ class _$PhieuThuModelCopyWithImpl<$Res, $Val extends PhieuThuModel>
       tongtien: freezed == tongtien
           ? _value.tongtien
           : tongtien // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phiweb: freezed == phiweb
           ? _value.phiweb
           : phiweb // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phinangcapweb: freezed == phinangcapweb
           ? _value.phinangcapweb
           : phinangcapweb // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phihosting: freezed == phihosting
           ? _value.phihosting
           : phihosting // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phinangcaphosting: freezed == phinangcaphosting
           ? _value.phinangcaphosting
           : phinangcaphosting // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phitenmien: freezed == phitenmien
           ? _value.phitenmien
           : phitenmien // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phiapp: freezed == phiapp
           ? _value.phiapp
           : phiapp // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phinangcapapp: freezed == phinangcapapp
           ? _value.phinangcapapp
           : phinangcapapp // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       ngaytao: freezed == ngaytao
           ? _value.ngaytao
           : ngaytao // ignore: cast_nullable_to_non_nullable
@@ -254,15 +254,15 @@ abstract class _$$_PhieuThuModelCopyWith<$Res>
       List<dynamic>? nhanvien,
       List<dynamic>? hopdong,
       List<dynamic>? files,
-      int? tongtien,
-      int? phiweb,
-      int? phinangcapweb,
-      int? phihosting,
-      int? phinangcaphosting,
-      int? phitenmien,
-      int? phiapp,
-      int? phinangcapapp,
-      int? vat,
+      double? tongtien,
+      double? phiweb,
+      double? phinangcapweb,
+      double? phihosting,
+      double? phinangcaphosting,
+      double? phitenmien,
+      double? phiapp,
+      double? phinangcapapp,
+      double? vat,
       String? ngaytao,
       String? ngaynopcty,
       String? httt,
@@ -341,39 +341,39 @@ class __$$_PhieuThuModelCopyWithImpl<$Res>
       tongtien: freezed == tongtien
           ? _value.tongtien
           : tongtien // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phiweb: freezed == phiweb
           ? _value.phiweb
           : phiweb // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phinangcapweb: freezed == phinangcapweb
           ? _value.phinangcapweb
           : phinangcapweb // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phihosting: freezed == phihosting
           ? _value.phihosting
           : phihosting // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phinangcaphosting: freezed == phinangcaphosting
           ? _value.phinangcaphosting
           : phinangcaphosting // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phitenmien: freezed == phitenmien
           ? _value.phitenmien
           : phitenmien // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phiapp: freezed == phiapp
           ? _value.phiapp
           : phiapp // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       phinangcapapp: freezed == phinangcapapp
           ? _value.phinangcapapp
           : phinangcapapp // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       ngaytao: freezed == ngaytao
           ? _value.ngaytao
           : ngaytao // ignore: cast_nullable_to_non_nullable
@@ -491,23 +491,23 @@ class _$_PhieuThuModel with DiagnosticableTreeMixin implements _PhieuThuModel {
   }
 
   @override
-  final int? tongtien;
+  final double? tongtien;
   @override
-  final int? phiweb;
+  final double? phiweb;
   @override
-  final int? phinangcapweb;
+  final double? phinangcapweb;
   @override
-  final int? phihosting;
+  final double? phihosting;
   @override
-  final int? phinangcaphosting;
+  final double? phinangcaphosting;
   @override
-  final int? phitenmien;
+  final double? phitenmien;
   @override
-  final int? phiapp;
+  final double? phiapp;
   @override
-  final int? phinangcapapp;
+  final double? phinangcapapp;
   @override
-  final int? vat;
+  final double? vat;
   @override
   final String? ngaytao;
   @override
@@ -682,15 +682,15 @@ abstract class _PhieuThuModel implements PhieuThuModel {
       final List<dynamic>? nhanvien,
       final List<dynamic>? hopdong,
       final List<dynamic>? files,
-      final int? tongtien,
-      final int? phiweb,
-      final int? phinangcapweb,
-      final int? phihosting,
-      final int? phinangcaphosting,
-      final int? phitenmien,
-      final int? phiapp,
-      final int? phinangcapapp,
-      final int? vat,
+      final double? tongtien,
+      final double? phiweb,
+      final double? phinangcapweb,
+      final double? phihosting,
+      final double? phinangcaphosting,
+      final double? phitenmien,
+      final double? phiapp,
+      final double? phinangcapapp,
+      final double? vat,
       final String? ngaytao,
       final String? ngaynopcty,
       final String? httt,
@@ -719,23 +719,23 @@ abstract class _PhieuThuModel implements PhieuThuModel {
   @override
   List<dynamic>? get files;
   @override
-  int? get tongtien;
+  double? get tongtien;
   @override
-  int? get phiweb;
+  double? get phiweb;
   @override
-  int? get phinangcapweb;
+  double? get phinangcapweb;
   @override
-  int? get phihosting;
+  double? get phihosting;
   @override
-  int? get phinangcaphosting;
+  double? get phinangcaphosting;
   @override
-  int? get phitenmien;
+  double? get phitenmien;
   @override
-  int? get phiapp;
+  double? get phiapp;
   @override
-  int? get phinangcapapp;
+  double? get phinangcapapp;
   @override
-  int? get vat;
+  double? get vat;
   @override
   String? get ngaytao;
   @override

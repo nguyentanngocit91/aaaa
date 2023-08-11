@@ -16,6 +16,7 @@ class _FormThongTinKhachHangWidgetState
 
   Map thongTinKhachHang = {};
 
+
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(formPhieuThuProvider);
@@ -24,16 +25,8 @@ class _FormThongTinKhachHangWidgetState
 
     // print('Khách hàng: $thongTinKhachHang');
 
-    ref.listen(kiemTraKhachHangProvider.select((value) => value.loading),
-        (previous, next) {
-      if (next == true) {
-        Loading(context).start();
-      } else {
-        Future.delayed(const Duration(seconds: 1), () {
-          Loading(context).stop();
-        });
-      }
-    });
+    final errEmail = ref.watch(kiemTraKhachHangProvider.select((value) => value.err));
+    final errEmailPhu = ref.watch(kiemTraKhachHangProvider.select((value) => value.errPhu));
 
     return Wrap(
       runSpacing: 25,
@@ -53,12 +46,24 @@ class _FormThongTinKhachHangWidgetState
                       FormBuilderValidators.required(
                           errorText: 'Không bỏ trống.'),
                       FormBuilderValidators.email(
-                          errorText: 'Email không đúng định dạng.')
+                          errorText: 'Email không đúng định dạng.'),
+                      (value) {
+                        if(errEmail.isNotEmpty || errEmail!='') {
+                          return errEmail;
+                        }
+                        return null;
+                      }
                     ]),
                     initialValue: thongTinKhachHang['email'],
                     onChanged: (value) {
                       ref.read(formPhieuThuProvider.notifier).changeData(
                           key: 'email', value: value, type: _typeData);
+                      if (value.isEmail()) {
+                        onSearchDebouncer.debounce(() {
+                          ref.read(kiemTraKhachHangProvider.notifier)
+                              .kiemTraThongTinKhachHang(email: value, maKhachHang: thongTinKhachHang['makhachhang'], typeErr: 'email');
+                        });
+                      }
                     },
                   ),
                 ],
@@ -132,13 +137,28 @@ class _FormThongTinKhachHangWidgetState
                   lableTextForm('Email khách hàng (email phụ)'),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-
                     initialValue: thongTinKhachHang['info']?['email_phu'],
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.email(
+                          errorText: 'Email không đúng định dạng.'),
+                          (value) {
+                        if (errEmailPhu.isNotEmpty || errEmailPhu != '') {
+                          return errEmailPhu;
+                        }
+                        return null;
+                      }
+                    ]),
                     onChanged: (value) {
                       ref.read(formPhieuThuProvider.notifier).changeData(
                           key: 'info',
                           value: {"email_phu": value},
                           type: _typeData);
+                      if (value.isEmail()) {
+                        onSearchDebouncer.debounce(() {
+                          ref.read(kiemTraKhachHangProvider.notifier)
+                              .kiemTraThongTinKhachHang(email: value, maKhachHang: thongTinKhachHang['makhachhang'], typeErr: 'email_phu');
+                        });
+                      }
                     },
                   ),
                 ],

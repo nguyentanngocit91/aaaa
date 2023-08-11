@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../_shared/extensions/date_time_extention.dart';
+import '../../../../_shared/mixins/data_table_mixins.dart';
 import '../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../_shared/utils/debouncer.dart';
@@ -151,6 +153,7 @@ class _BtnSubmit extends ConsumerWidget {
 _submitForm(WidgetRef ref) {
   ref.read(formPhieuThuProvider.notifier).batDatSubmit();
   if (_formKey.currentState!.validate()) {
+    print('submit...');
     ref.read(formPhieuThuProvider.notifier).saveForm();
   } else {
     ref.read(formPhieuThuProvider.notifier).ketThucSubmit();

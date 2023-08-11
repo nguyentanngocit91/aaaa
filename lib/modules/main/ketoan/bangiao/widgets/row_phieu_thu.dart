@@ -76,7 +76,7 @@ class RowPhieuThu extends StatelessWidget {
                   colorBG: Colors.black.withOpacity(0.05),
                   child: RichTextInfo(
                     title: 'Ngày nộp',
-                    content: (ngayNop!=null)?ngayNop:'',
+                    content: ngayNop.toString(),
                   ),
                 ),
               ),

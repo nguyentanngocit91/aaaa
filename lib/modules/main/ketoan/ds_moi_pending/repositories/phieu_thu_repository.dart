@@ -25,15 +25,14 @@ class PhieuThuRepository{
     return null;
   }
 
-  Future<Map?> thongTinKhachHang({required List<String> emails, String? type}) async {
-    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$emails$type');
+  Future<bool> kiemTraEmailKhachHang({required String email, required String maKhachHang, String type = ''}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email&makhachhang=$maKhachHang');
     if(response.statusCode==200){
       if(response.data['success']==true){
-        if(response.data['data']!=null) return response.data['data'];
-        return null;
+        if(int.parse(response.data['total'].toString()) == 0) return true;
       }
     }
-    return null;
+    return false;
   }
 
   Future<Map?> thongTinNhanVien({required String maNhanVien}) async {
