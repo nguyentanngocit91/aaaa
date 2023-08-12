@@ -16,10 +16,10 @@ import '../providers/ds_hd_provider.dart';
 import '../providers/form_capnhat_khachhang_provider.dart';
 
 Map<String, String> _loaiPhiethu = {
-  'chungtu': 'Chứng từ khác'
+  'chungtukhac': 'Chứng từ khác'
 };
 
-String _loaiFileHD = 'chungtu';
+String _loaiFileHD = 'chungtukhac';
 
 GlobalKey<FormState> _formKey = GlobalKey();
 List<Map> _resultFile = [];
@@ -655,7 +655,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                       ),
 
                       Radio<String>(
-                        value: 'chungtu',
+                        value: 'chungtukhac',
                         groupValue: _loaiFileHD,
                         onChanged: (value) {
                           setState(() {
@@ -779,7 +779,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                   Map tmp = {
                                     /*'type': _radioValue,
                                     'typeName': _loaiPhiethu[_radioValue],*/
-                                    'type': "chungtu",
+                                    'type': "chungtukhac",
                                     'typeName': "chứng từ khác",
                                     'note': _noteController.text,
                                     'file': file

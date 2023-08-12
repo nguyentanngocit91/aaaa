@@ -36,7 +36,7 @@ part '../widgets/form_them_phieuthu/upload_file_hd_widget.dart';
 
 
 Map<String, String> _loaiPhiethu = {
-  'chungtu': 'Chứng từ khác'
+  'chungtukhac': 'Chứng từ khác'
 };
 final GlobalKey<FormState> _formKey = GlobalKey();
 List<Map> _resultFile = [];
@@ -73,16 +73,104 @@ class _ThemPhieuThuScreenState
 
   Widget build(BuildContext context) {
 
-
-
     FormThemPhieuThuNotifier data = ref.read(formThemPhieuThuProvider.notifier);
-    ref.listen(formThemPhieuThuProvider.select((value) => value.loading),
+    //ref.listen(formThemPhieuThuProvider.select((value) => value.loading),
+    ref.listen(formThemPhieuThuProvider.select((value) => value.status),
             (previous, next) {
-          if (next == loadingStatus.START) {
-            Loading(context).start();
+
+      if (next == FormStatus.submissionInProgress) {
+                Loading(context).start();
+       }
+
+      if (next == FormStatus.submissionCanceled) {
+        Loading(context).stop();
+      }
+
+      if (next == FormStatus.submissionFailure) {
+        Loading(context).stop();
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('XIN LỖI'),
+              content: Text('Đã có lỗi trong quá trình thêm dữ liệu...'),
+              actions: [
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+
+      if (next == FormStatus.submissionSuccess) {
+        //_resetForm(ref);
+       // Loading(context).stop();
+        Future.delayed(Duration(seconds: 1), () {
+          ref.read(dshdProvider.notifier).reload();
+          Loading(context).stop();
+          if (data.state.success == true) {
+            setState(() {
+              _resultFile = [];
+            });
+
+            showDialog(
+              //barrierDismissible:false,
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('THÀNH CÔNG'),
+                  content: Text('Dữ liệu đã được thêm thành công.'),
+                  actions: [
+                    FilledButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Ok'),
+                    ),
+                  ],
+                );
+              },
+            );
+
+          }
+          else{
+
+            Loading(context).stop();
+            showDialog(
+              //barrierDismissible:false,
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('XIN LỖI'),
+                  content: Text('Đã có lỗi trong quá trình thêm dữ liệu...'),
+                  actions: [
+                    FilledButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Ok'),
+                    ),
+                  ],
+                );
+              },
+            );
+
           }
 
-          if (next == loadingStatus.STOP) {
+        });
+
+      }
+
+         /*if (next == loadingStatus.START) {
+            Loading(context).start();
+          }*/
+
+         /* if (next == loadingStatus.STOP) {
             Future.delayed(Duration(seconds: 1), () {
               ref.read(dshdProvider.notifier).reload();
               Loading(context).stop();
@@ -136,7 +224,7 @@ class _ThemPhieuThuScreenState
               }
 
             });
-          }
+          }*/
         });
 
 
@@ -216,9 +304,14 @@ class _ThemPhieuThuScreenState
 
                     FilledButton.icon(
                       onPressed: () {
+                        ref.read(formThemPhieuThuProvider.notifier).batDatSubmit();
                         if (_formKey.currentState!.validate()) {
                           ref.read(formThemPhieuThuProvider.notifier).onSubmit(widget.item!.id.toString(), widget.item!.sohopdong.toString());
+                        } else {
+                          ref.read(formThemPhieuThuProvider.notifier).ketThucSubmit();
                         }
+
+
                       },
                       icon: const FaIcon(
                         FontAwesomeIcons.download,

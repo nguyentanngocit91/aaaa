@@ -89,7 +89,7 @@ class DSHDRepository{
         "${ApiUrl.listFile}", queryParameters: {
       "limit":100,
       "loaimedia":"hopdong",
-      "loaifile":"chungtu",
+      "loaifile":"chungtukhac",
       "sohopdong":sohopdong
     });
     print("${medias}+ load medias000");
@@ -109,12 +109,11 @@ class DSHDRepository{
   }
 
 
-
   getInfoPhieuThu(String id) async {
 
     final response =
     await App.dioClient.get("${ApiUrl.danhSachPhieuThu}?hopdongId=${id}");
-
+ print("${id}+444444");
     List<ItemPhieuthuResultModel> list = [];
 
     var result = {

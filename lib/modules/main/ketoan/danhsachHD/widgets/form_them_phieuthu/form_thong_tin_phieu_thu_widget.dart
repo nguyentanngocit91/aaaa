@@ -497,10 +497,11 @@ class _MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
   @override
   Widget build(BuildContext context) {
     final FormStatus? formStatus = ref.watch(formThemPhieuThuProvider.select((value) => value.status));
+   // final formStatus = ref.watch(formThemPhieuThuProvider.select((value) => value.status));
+   // print("${formStatus}+ formStatusformStatusformStatus+${FormStatus.pure}");
     final dsNhanvien = ref.watch(
         nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ??
         [];
-
     if (dsNhanvien == [] || dsNhanvien.isEmpty) {
       _textFieldTagsController.clearTextFieldTags();
     }
