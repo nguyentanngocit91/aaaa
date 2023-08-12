@@ -2,7 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../_shared/utils/form_status.dart';
 import '../models/customerupdate_model.dart';
 import '../models/item_phieuthu_result_model.dart';
-import '../models/mediacustomer_model.dart';
+import '../models/media_result_model.dart';
+import '../models/searchcustomercontract_model.dart';
 import '../repositories/ds_hd_repository.dart';
 part 'ds_hd_state.dart';
 
@@ -48,8 +49,9 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     //print("data: ${data}");
     Map<String, dynamic> params = {
       'makhachhang': (data!=null && data['MAKH']!='')?data['MAKH']:'',
-      'mahopdong': (data!=null && data['MAHD']!='')?data['MAHD']:'',
+      'sohopdong': (data!=null && data['MAHD']!='')?data['MAHD']:'',
       'tenhopdong': (data!=null && data['TENHD']!='')?data['TENHD']:'',
+      'phone': (data!=null && data['DIENTHOAI']!='')?data['DIENTHOAI']:'',
       'email': (data!=null && data['EMAIL']!='')?data['EMAIL']:'',
     };
 
@@ -60,6 +62,8 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
     //print("${state.result}+000000");
     return;
   }
+
+
 
 
   getDSPhieuThuById(String id) async {
@@ -88,22 +92,24 @@ class DSHDNotifier extends StateNotifier<DSHDState> {
   }
 
 
-
-
   getCustomerById(String id) async {
     state = state.copyWith(customer: null);
     final jsonResult = await _dsHDRepository.getInfoCustomer(id);
     print("${jsonResult['data']}+ customer");
-
-
     //print("${jsonResult['media']}+ media");
     state = state.copyWith(customer: jsonResult['data'],media:jsonResult['media']);
 
   // print("${state.customer}+state.customer");
 
-   // print("${state.media}+state.media");
+
   }
 
+  getContractById(String id, String sohopdong) async {
+    state = state.copyWith(contract: null);
+    final jsonResult = await _dsHDRepository.getInfoContractId(id,sohopdong);
+    state = state.copyWith(contract: jsonResult['data'],media:jsonResult['media'],status: FormStatus.submissionSuccess);
+     print("${state.media?.length}+state.media getContractById");
+  }
 
   updateMedia(Map<dynamic, String?> map) async {
     return await _dsHDRepository.updateMedia(map);

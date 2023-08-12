@@ -1,32 +1,42 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'dart:async';
 import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
 import '../models/customerupdate_model.dart';
-import '../repositories/khach_hang_moi_repository.dart';
+import '../repositories/hop_dong_ky_moi_repository.dart';
 import 'danh_sach_domain_provider.dart';
 import 'files_hd_provider.dart';
 import 'kiem_tra_khach_hang_provider.dart';
 import 'nhan_vien_phu_trach_provider.dart';
 
-part 'form_khach_hang_moi_state.dart';
+part 'form_hop_dong_ky_moi_state.dart';
 
-final formKhachHangMoiProvider =
-    NotifierProvider<FormKhachHangMoiNotifier, FormKhachHangMoiState>(() {
-  return FormKhachHangMoiNotifier();
+final formHopDongKyMoiProvider = NotifierProvider.autoDispose<FormHopDongKyMoiNotifier, FormHopDongKyMoiState>(() {
+  return FormHopDongKyMoiNotifier();
 });
 
-class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
-  final KhachHangMoiRepository _khachHangMoiRepository = KhachHangMoiRepository();
+/*final formHopDongKyMoiProvider =
+    NotifierProvider<FormHopDongKyMoiNotifier, FormHopDongKyMoiState>(() {
+  return FormHopDongKyMoiNotifier();
+});*/
+
+/*class FormHopDongKyMoiNotifier extends Notifier<FormHopDongKyMoiState> {
+  final HopDongKyMoiRepository _hopDongKyMoiRepository = HopDongKyMoiRepository();*/
+
+class FormHopDongKyMoiNotifier extends AutoDisposeNotifier<FormHopDongKyMoiState> {
+  final HopDongKyMoiRepository _hopDongKyMoiRepository = HopDongKyMoiRepository();
+
+  late final CustomerUpdateModel customerUpdateModel;
+  Map _res = {};
 
   @override
-  FormKhachHangMoiState build() {
+  FormHopDongKyMoiState build() {
     init();
-    return FormKhachHangMoiState();
+    return FormHopDongKyMoiState();
   }
 
   init() async {
-    await taoMaKhachHang();
+   //await taoMaKhachHang();
     await taoMaHopDong();
   }
 
@@ -38,23 +48,64 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     state = state.copyWith(formStatus: FormStatus.submissionCanceled);
   }
 
+
   Future<String?> taoMaKhachHang() async {
-    String? maKhachHang = await _khachHangMoiRepository.capMaKhachhang();
+    String? maKhachHang = await _hopDongKyMoiRepository.capMaKhachhang();
     maKhachHang =
-        'NN$maKhachHang${DateTime.now().formatDateTime(formatString: 'yy')}';
+    'NN$maKhachHang${DateTime.now().formatDateTime(formatString: 'yy')}';
     state = state.copyWith(maKhachHang: maKhachHang);
   }
 
   Future<String?> taoMaHopDong() async {
-    final soHopDong = await _khachHangMoiRepository.capSoHopDong();
+    final soHopDong = await _hopDongKyMoiRepository.capSoHopDong();
     state = state.copyWith(soHopDong: soHopDong);
   }
 
+
+  Future<CustomerUpdateModel?> initData({required String id}) async{
+    final Map result = await _hopDongKyMoiRepository.chiTietKhachHang(id: id);
+    if(result['success']==true){
+      _res = result;
+
+      //print("${result['data']}+ data kh");
+      customerUpdateModel = CustomerUpdateModel.fromJson(result['data']);
+      await loadKhachHang();
+      state = state.copyWith(customer: customerUpdateModel, isLoading: false);
+      return customerUpdateModel;
+    }
+    return null;
+  }
+
+  // Thông tin khách hàng
+  loadKhachHang() async {
+
+    Map<String, String> _typeInfo = {
+      'email_phu': customerUpdateModel.info!.emailPhu!.toString(),
+      'nguoidaidienmoi': customerUpdateModel.info!.nguoidaidienmoi!.toString(),
+      'dienthoaicoquan':customerUpdateModel.info!.dienthoaicoquan!.toString(),
+    };
+
+    final dataKhachHang = {
+      "makhachhang": customerUpdateModel.makhachhang.toString(),
+      "hoten": customerUpdateModel.hoten.toString(),
+      "congty": customerUpdateModel.congty.toString(),
+      "masothue": customerUpdateModel.masothue.toString(),
+      "cccd": customerUpdateModel.cccd.toString(),
+      "phone": customerUpdateModel.phone.toString(),
+      "email": customerUpdateModel.email.toString(),
+      "diachi": customerUpdateModel.diachi.toString(),
+      "info": _typeInfo,
+      "ghichu": customerUpdateModel.ghichu.toString(),
+    };
+    state = state.copyWith(dataKhachHang: dataKhachHang);
+  }
+
+
   checkLoaiHopDong(
       {bool? isHopDongWebsite,
-      bool? isHopDongApp,
-      bool? isHopDongDomain,
-      bool? isHopDongHosting}) {
+        bool? isHopDongApp,
+        bool? isHopDongDomain,
+        bool? isHopDongHosting}) {
     if (isHopDongApp == true) {
       isHopDongWebsite = false;
       isHopDongDomain = false;
@@ -78,10 +129,10 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   changeData(
       {required String type, required String key, required dynamic value}) {
     switch (type) {
-      case 'khachhang':
+      /*case 'khachhang':
         Map newDataKhachHang = state.dataKhachHang ?? {};
         newDataKhachHang.update(key, (item) => value, ifAbsent: () => value);
-        state = state.copyWith(dataKhachHang: newDataKhachHang);
+        state = state.copyWith(dataKhachHang: newDataKhachHang);*/
       case 'hopdong':
         Map newDataHopDong = state.dataHopDong ?? {};
         newDataHopDong.update(key, (item) => value, ifAbsent: () => value);
@@ -117,23 +168,20 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     const String formatDate = 'yyyy-MM-dd';
 
     // Thông tin Khách hàng
-    final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
-
-    print("${thongTinKhachHangCu}++thongTinKhachHangCu--000");
-
+    /*  final thongTinKhachHangCu = ref.read(kiemTraKhachHangProvider).data;
     if (thongTinKhachHangCu!.isEmpty) {
-      //state.dataKhachHang?['makhachhang'] = state.maKhachHang;
-      data["KhachHang"] = state.customer;
+      state.dataKhachHang?['makhachhang'] = state.maKhachHang;
+      data["KhachHang"] = state.dataKhachHang;
     } else {
       data["KhachHang"] = thongTinKhachHangCu;
-    }
-    print("${data["KhachHang"]}++data KHACH HANG--000");
+    }*/
+    data["KhachHang"] = state.dataKhachHang;
+    print('data KhachHang: $data["KhachHang"]');
     // Danh sách nhân viên phụ trách
     final nhanViens = ref.read(nhanVienPhuTrachProvider).maNhanViens;
     final dsNhanVienPhuTrach =
-        (nhanViens != null) ? [for (var nv in nhanViens) nv['manhanvien']] : [];
+    (nhanViens != null) ? [for (var nv in nhanViens) nv['manhanvien']] : [];
 
-    print("${dsNhanVienPhuTrach}++dsNhanVienPhuTrach--000");
     // Thông tin Hợp đồng
     state.dataHopDong?['sohopdong'] = state.soHopDong;
     state.dataHopDong?['manhanvien'] = dsNhanVienPhuTrach;
@@ -148,7 +196,6 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
               .formatDateTime(formatString: formatDate);
     }
     state.dataPhieuThu?['manhanvien'] = dsNhanVienPhuTrach;
-
 
     // thông tin hợp đồng website
     if (state.isHopDongWebsite) {
@@ -168,11 +215,6 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
       data["Web"] = state.dataWebsite;
     }
 
-
-    print("${data["Web"]}++DATA WEB--000");
-
-
-
     // Thông tin hợp đồng Domain
     if (state.isHopDongDomain) {
       final dsDomain = ref.read(danhSachDomainProvider);
@@ -183,7 +225,6 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
       }
       data["Domain"] = dataDomain;
     }
-
 
     // Thông tin hợp đồng Hosting
     if (state.isHopDongHosting) {
@@ -226,23 +267,26 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     data["HopDong"] = state.dataHopDong;
     data["PhieuThu"] = state.dataPhieuThu;
 
-    print("${data}++data form all--000");
+     print('data: $data');
 
-    final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
+    final result = await _hopDongKyMoiRepository.luuHopDongMoi(data: data);
 
-    if(result){
+    if (result) {
       final uploadedFile = await _saveFileHD();
       state = state.copyWith(formStatus: FormStatus.submissionSuccess);
-    }else {
+    } else {
       state = state.copyWith(formStatus: FormStatus.submissionFailure);
     }
+
 
   }
 
   Future<bool> _saveFileHD() async {
     final infoFile = ref.read(fileHDProvider);
     if (infoFile.fileUpload?.path != null) {
-      return await _khachHangMoiRepository.updateFile(fileHDModel: infoFile, soHopDong: state.soHopDong.toString() ?? '011111');
+      return await _hopDongKyMoiRepository.updateFile(
+          fileHDModel: infoFile,
+          soHopDong: state.soHopDong.toString() ?? '011111');
     }
     return false;
   }
@@ -250,7 +294,7 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
   Future<void> getInfoCustomerById(String id) async {
     state = state.copyWith(customer: null,);
 
-    final jsonResult = await _khachHangMoiRepository.getInfoCustomerByID(id);
+    final jsonResult = await _hopDongKyMoiRepository.getInfoCustomerByID(id);
     print("${jsonResult['data']}+ customer");
 
     //print("${jsonResult['media']}+ media");

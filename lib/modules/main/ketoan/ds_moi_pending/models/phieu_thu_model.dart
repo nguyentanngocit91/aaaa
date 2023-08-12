@@ -1,3 +1,4 @@
+
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -26,28 +27,30 @@ part 'phieu_thu_model.g.dart';
 @freezed
 class PhieuThuModel with _$PhieuThuModel {
   const factory PhieuThuModel({
-    String? info,
     @JsonKey(name: '_id') @required String? id,
     String? maphieuthu,
     @JsonKey(name: 'khachhangId') L1_khachhangId? l1_khachhangId,
     List<dynamic>? nhanvien,
     List<dynamic>? hopdong,
     List<dynamic>? files,
-    int? tongtien,
-    int? phiweb,
-    int? phinangcapweb,
-    int? phihosting,
-    int? phinangcaphosting,
-    int? phitenmien,
-    int? phiapp,
-    int? phinangcapapp,
-    int? vat,
+    double? tongtien,
+    double? phiweb,
+    double? phinangcapweb,
+    double? phihosting,
+    double? phinangcaphosting,
+    double? phitenmien,
+    double? phiapp,
+    double? phinangcapapp,
+    double? vat,
     String? ngaytao,
     String? ngaynopcty,
     String? httt,
     String? ghichu,
     String? loaiphieuthu,
-    bool? is_pending,}) = _PhieuThuModel;
+    bool? is_pending,
+    List<dynamic>? lichsu_pending,
+    Map? info,
+    List<dynamic>? lichsu_capnhat}) = _PhieuThuModel;
 
   factory PhieuThuModel.fromJson(Map<String, dynamic> json) => _$PhieuThuModelFromJson(json);
 }
@@ -56,8 +59,17 @@ class PhieuThuModel with _$PhieuThuModel {
 class L1_khachhangId with _$L1_khachhangId {
   const factory L1_khachhangId({
     @JsonKey(name: '_id') @required String? id,
-    String? makhachhang}) = _L1_khachhangId;
+    String? makhachhang,
+    String? type,
+    String? hoten,
+    String? phone,
+    String? email,
+    String? congty,
+    String? masothue,
+    String? diachi,
+    String? cccd,
+    Map? info,
+    String? ghichu}) = _L1_khachhangId;
 
   factory L1_khachhangId.fromJson(Map<String, dynamic> json) => _$L1_khachhangIdFromJson(json);
 }
-

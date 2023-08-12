@@ -215,6 +215,8 @@ class FormKhachHangMoiNotifier extends Notifier<FormKhachHangMoiState> {
     data["HopDong"] = state.dataHopDong;
     data["PhieuThu"] = state.dataPhieuThu;
 
+    // print('data: $data');
+
     final result = await _khachHangMoiRepository.luuHopDongMoi(data: data);
 
     if (result) {

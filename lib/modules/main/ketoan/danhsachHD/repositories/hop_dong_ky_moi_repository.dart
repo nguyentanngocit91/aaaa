@@ -5,7 +5,20 @@ import '../../../../../_shared/thietlap_url.dart';
 import '../models/customerupdate_model.dart';
 import '../providers/files_hd_provider.dart';
 
-class KhachHangMoiRepository {
+class HopDongKyMoiRepository {
+
+
+  Future<Map> chiTietKhachHang({required String id}) async {
+    final response = await App.dioClient.get('${ApiUrl.infoUpdateCustomer}${id.toString()}');
+
+    print("${response}+ chiTietKhachHang");
+    if(response.statusCode==200){
+      if(response.data['success']==true){
+        return response.data;
+      }
+    }
+    return {};
+  }
 
   Future<String?> capMaKhachhang() async {
     final Response response = await App.dioClient.get(ApiUrl.capMaKhachHang);
@@ -60,6 +73,8 @@ class KhachHangMoiRepository {
     return null;
   }
 
+
+
   Future<bool> luuThongTinKhachHang({required Map? data}) async {
     final Response response = await App.dioClient.post(ApiUrl.danhSachKhachHang, data: data);
     if(response.statusCode==200){
@@ -75,7 +90,6 @@ class KhachHangMoiRepository {
     }
     return false;
   }
-
 
   Future<bool> updateFile({required FileHDModel fileHDModel, required String soHopDong}) async {
     FormData formData = FormData.fromMap({

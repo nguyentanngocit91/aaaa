@@ -49,7 +49,7 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                     ),
                     ndGapW16(),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Wrap(
                         children: [
                           lableTextForm('Chức năng'),
@@ -64,6 +64,33 @@ class _FormThongTinAppWidgetState extends ConsumerState<FormThongTinAppWidget>
                                       key: 'chucnang',
                                       value: value);
                             },
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Không bỏ trống.'),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ndGapW16(),
+                    Expanded(
+                      flex: 1,
+                      child: Wrap(
+                        children: [
+                          lableTextForm('Tổng giá trị App'),
+                          TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (value) {
+                              ref
+                                  .read(formPhieuThuProvider.notifier)
+                                  .changeData(
+                                  type: _typeData,
+                                  key: 'tongtien',
+                                  value: value.replaceAll('.', ''));
+                            },
+                            inputFormatters: [
+                              CurrencyTextInputFormatter(symbol: ''),
+                            ],
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(
                                   errorText: 'Không bỏ trống.'),

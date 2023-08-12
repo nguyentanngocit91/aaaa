@@ -26,6 +26,16 @@ class KhachHangMoiRepository {
     return null;
   }
 
+  Future<bool> kiemTraEmail({required String email}) async {
+    final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email');
+    if(response.statusCode==200){
+      if(response.data['success']==true){
+        if(int.parse(response.data['total'].toString()) == 0) return true;
+      }
+    }
+    return false;
+  }
+
   Future<Map?> thongTinKhachHang({required String email, String? type}) async {
     final Response response = await App.dioClient.get('${ApiUrl.danhSachKhachHang}?email=$email$type');
     if(response.statusCode==200){

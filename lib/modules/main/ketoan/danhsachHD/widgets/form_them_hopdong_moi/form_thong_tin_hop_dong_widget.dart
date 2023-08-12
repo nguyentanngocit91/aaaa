@@ -10,12 +10,12 @@ class FormThongTinHopDongWidget extends ConsumerStatefulWidget {
 
 class _FormThongTinHopDongWidgetState
     extends ConsumerState<FormThongTinHopDongWidget> with FormUIMixins {
-  
+
   final String _typeData = 'hopdong';
-  
+
   @override
   Widget build(BuildContext context) {
-    final formState = ref.watch(formKhachHangMoiProvider);
+    final formState = ref.watch(formHopDongKyMoiProvider);
     String soHopDong = formState.soHopDong.toString();
     if(formState.isHopDongApp){
       soHopDong = '${soHopDong}A';
@@ -44,7 +44,7 @@ class _FormThongTinHopDongWidgetState
             ),
             ndGapW16(),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Wrap(
                 children: [
                   lableTextForm('Tên hợp đồng'),
@@ -52,7 +52,7 @@ class _FormThongTinHopDongWidgetState
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     onChanged: (value) {
                       ref
-                          .read(formKhachHangMoiProvider.notifier)
+                          .read(formHopDongKyMoiProvider.notifier)
                           .changeData(type: _typeData ,key: 'tenhopdong', value: value);
                     },
                     validator: FormBuilderValidators.compose([
@@ -63,68 +63,7 @@ class _FormThongTinHopDongWidgetState
                 ],
               ),
             ),
-            ndGapW16(),
-            Expanded(
-              flex: 1,
-              child: Wrap(
-                children: [
-                  lableTextForm('Tổng giá trị'),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    inputFormatters: [
-                      CurrencyTextInputFormatter(symbol: ''),
-                    ],
-                    onChanged: (value) {
-                      ref
-                          .read(formKhachHangMoiProvider.notifier)
-                          .changeData(type: _typeData ,key: 'tongtien', value: value.toString().replaceAll('.', ''));
-                    },
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),
-                  ),
-                ],
-              ),
-            ),
-            // ndGapW16(),
-            // Expanded(
-            //   flex: 1,
-            //   child: Wrap(
-            //     children: [
-            //       lableTextForm('Tổng giá trị thu'),
-            //       TextFormField(
-            //         inputFormatters: [
-            //           CurrencyTextInputFormatter(symbol: ''),
-            //         ],
-            //         onChanged: (value) {
-            //           ref
-            //               .read(formKhachHangMoiProvider.notifier)
-            //               .changeData(type: _typeData ,key: 'tongtien', value: value);
-            //         },
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // ndGapW16(),
-            // Expanded(
-            //   flex: 1,
-            //   child: Wrap(
-            //     children: [
-            //       lableTextForm('Tổng nợ'),
-            //       TextFormField(
-            //         inputFormatters: [
-            //           CurrencyTextInputFormatter(symbol: ''),
-            //         ],
-            //         onChanged: (value) {
-            //           ref
-            //               .read(formKhachHangMoiProvider.notifier)
-            //               .changeData(type: _typeData ,key: 'tongtien', value: value);
-            //         },
-            //       ),
-            //     ],
-            //   ),
-            // ),
+
           ],
         )
       ],

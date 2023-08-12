@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:regexpattern/regexpattern.dart';
 
 import '../../../../_shared/extensions/date_time_extention.dart';
+import '../../../../_shared/mixins/data_table_mixins.dart';
 import '../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../_shared/utils/currency_text_input_formatter.dart';
 import '../../../../_shared/utils/debouncer.dart';
@@ -14,6 +15,7 @@ import '../../../../_shared/utils/form_status.dart';
 import '../../../../_shared/utils/helper.dart';
 import '../../../../_shared/utils/ndgap.dart';
 import '../../../../packages/textfield_tags/textfield_tags.dart';
+import './models/file_model.dart';
 import 'providers/kiem_tra_khach_hang_provider.dart';
 import 'providers/nhan_vien_phu_trach_provider.dart';
 import 'providers/files_hd_provider.dart';
@@ -47,7 +49,7 @@ class SuaPhieuThuLayout extends ConsumerStatefulWidget {
   const SuaPhieuThuLayout() : super(key: const Key(nameRoute));
 
   static const String nameRoute = 'sua-phieu-thu';
-  static const String pathRoute = ':maphieuthu';
+  static const String pathRoute = ':id';
 
   @override
   ConsumerState createState() => _SuaPhieuThuLayoutState();
@@ -59,7 +61,8 @@ class _SuaPhieuThuLayoutState extends ConsumerState<SuaPhieuThuLayout> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 0),(){
-      ref.read(formPhieuThuProvider.notifier).initData( maPhieuThu: GoRouterState.of(context).pathParameters['maphieuthu'] ?? '');
+      print(GoRouterState.of(context).pathParameters['id']);
+      ref.read(formPhieuThuProvider.notifier).initData( id: GoRouterState.of(context).pathParameters['id'] ?? '');
     });
   }
 
@@ -151,6 +154,7 @@ class _BtnSubmit extends ConsumerWidget {
 _submitForm(WidgetRef ref) {
   ref.read(formPhieuThuProvider.notifier).batDatSubmit();
   if (_formKey.currentState!.validate()) {
+    print('submit...');
     ref.read(formPhieuThuProvider.notifier).saveForm();
   } else {
     ref.read(formPhieuThuProvider.notifier).ketThucSubmit();

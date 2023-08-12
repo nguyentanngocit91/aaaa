@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../repositories/khach_hang_moi_repository.dart';
+import '../repositories/hop_dong_ky_moi_repository.dart';
 
 class NhanVienPhuTrachState {
   final List<Map>? maNhanViens;
@@ -24,8 +24,8 @@ final nhanVienPhuTrachProvider =
 });
 
 class NhanVienPhuTrachNotifier extends Notifier<NhanVienPhuTrachState> {
-  final KhachHangMoiRepository _khachHangMoiRepository =
-      KhachHangMoiRepository();
+  final HopDongKyMoiRepository _hopDongKyMoiRepository =
+  HopDongKyMoiRepository();
 
   @override
   NhanVienPhuTrachState build() {
@@ -61,7 +61,7 @@ class NhanVienPhuTrachNotifier extends Notifier<NhanVienPhuTrachState> {
   }
 
   Future<Map?> layThongTinNhanVien(String maNhanVien) async {
-    return await _khachHangMoiRepository.thongTinNhanVien(
+    return await _hopDongKyMoiRepository.thongTinNhanVien(
         maNhanVien: maNhanVien.toUpperCase());
   }
 

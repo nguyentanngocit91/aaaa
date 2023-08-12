@@ -1,18 +1,18 @@
 part of '../../screen/them_hopdong_moi.dart';
 
 class FormThongTinKhachHangWidget extends ConsumerStatefulWidget {
-  const FormThongTinKhachHangWidget({super.key,required this.id});
-  final String id;
+  const FormThongTinKhachHangWidget({super.key});
   @override
   ConsumerState createState() => _FormThongTinKhachHangWidgetState();
 }
 
 class _FormThongTinKhachHangWidgetState
     extends ConsumerState<FormThongTinKhachHangWidget> with FormUIMixins {
-  final Debouncer onSearchDebouncer =
-      Debouncer(delay: const Duration(seconds: 2));
-
+  final Debouncer onSearchDebouncer = Debouncer(delay: const Duration(seconds: 2));
   final String _typeData = 'khachhang';
+  Map thongTinKhachHang = {};
+
+ /* final String _typeData = 'khachhang';
   final TextEditingController _emailController = TextEditingController();
 
   bool isLoading = true;
@@ -32,9 +32,9 @@ class _FormThongTinKhachHangWidgetState
     Future.delayed(Duration.zero, () async {
       print("${widget.id}+widget.id");
 
-      await ref.read(formKhachHangMoiProvider.notifier).getInfoCustomerById(widget.id.toString());
+      await ref.read(formHopDongKyMoiProvider.notifier).getInfoCustomerById(widget.id.toString());
       await ref.read(kiemTraKhachHangProvider.notifier).kiemTraThongTinKhachHang(id: widget.id.toString());
-      var res = ref.watch(formKhachHangMoiProvider.notifier);
+      var res = ref.watch(formHopDongKyMoiProvider.notifier);
       data = res.state.customer;
 
       typeKH = data!.type!;
@@ -56,17 +56,30 @@ class _FormThongTinKhachHangWidgetState
       listController!['diachi']!.text = data!.diachi.toString();
       listController!['ghichu']!.text = data!.ghichu.toString();
     });
-  }
+  }*/
 
 
 
   @override
   Widget build(BuildContext context) {
-   ref.watch(formKhachHangMoiProvider.select((value) => value.maKhachHang  ));
-   /* Map thongTinKhachHang = {};
-    thongTinKhachHang =
-        ref.watch(kiemTraKhachHangProvider.select((value) => value.data ?? {}));
-    */
+
+    final formState = ref.watch(formHopDongKyMoiProvider);
+
+    Map thongTinKhachHang = formState.dataKhachHang!;
+
+    ref.listen(kiemTraKhachHangProvider.select((value) => value.loading),
+            (previous, next) {
+          if (next == true) {
+            Loading(context).start();
+          } else {
+            Future.delayed(const Duration(seconds: 1), () {
+              Loading(context).stop();
+            });
+          }
+        });
+
+
+   /*ref.watch(formHopDongKyMoiProvider.select((value) => value.maKhachHang  ));
     ref.listen(kiemTraKhachHangProvider.select((value) => value.loading),
         (previous, next) {
       if (next == true) {
@@ -76,7 +89,7 @@ class _FormThongTinKhachHangWidgetState
           Loading(context).stop();
         });
       }
-    });
+    });*/
 
 
     return Wrap(
@@ -104,8 +117,13 @@ class _FormThongTinKhachHangWidgetState
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['email'],
-                    focusNode: listFocusNode['email'],
+                    initialValue: thongTinKhachHang['email'],
+                    onChanged: (value) {
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
+                          key: 'email', value: value, type: _typeData);
+                    },
+                  //  controller: listController['email'],
+                   // focusNode: listFocusNode['email'],
                     /*onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'email', value: value, type: _typeData);
@@ -134,9 +152,7 @@ class _FormThongTinKhachHangWidgetState
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                   controller: listController['makhachhang'],
-                    focusNode: listFocusNode['makhachhang'],
-                   //controller: TextEditingController(text: data?.makhachhang.toString()?? maKhachHang),
+                    initialValue: thongTinKhachHang['makhachhang'],
                   ),
                 ],
               ),
@@ -155,11 +171,9 @@ class _FormThongTinKhachHangWidgetState
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['hoten'],
-                    focusNode: listFocusNode['hoten'],
-
+                    initialValue: thongTinKhachHang['hoten'],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           key: 'hoten', value: value, type: _typeData);
                     },
                     /*validator: FormBuilderValidators.compose([
@@ -185,17 +199,19 @@ class _FormThongTinKhachHangWidgetState
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['phone'],
-                    focusNode: listFocusNode['phone'],
+                    initialValue: thongTinKhachHang['phone'],
+                    onChanged: (value) {
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
+                          key: 'phone', value: value, type: _typeData);
+                    },
+                    /*controller: listController['phone'],
+                    focusNode: listFocusNode['phone'],*/
 
                    /* validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
                           errorText: 'Không bỏ trống.'),
                     ]),*/
-                    onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          key: 'phone', value: value, type: _typeData);
-                    },
+
                   ),
                 ],
               ),
@@ -214,22 +230,22 @@ class _FormThongTinKhachHangWidgetState
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     //readOnly: thongTinKhachHang.isNotEmpty ? true : false,
-                    //controller: TextEditingController(text: thongTinKhachHang['info']?['email_phu']),
-
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['email_phu'],
-                    focusNode: listFocusNode['email_phu'],
-
+                    /*controller: listController['email_phu'],
+                    focusNode: listFocusNode['email_phu'],*/
+                    initialValue: thongTinKhachHang['info']?['email_phu'].toString(),
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           key: 'info',
                           value: {"email_phu": value},
                           type: _typeData);
                     },
+
+
                   ),
                 ],
               ),
@@ -241,9 +257,7 @@ class _FormThongTinKhachHangWidgetState
                 children: [
                   lableTextForm('Loại Khách hàng'),
                   DropdownButtonFormField(
-                    //value: thongTinKhachHang['type'] ?? 'ca-nhan',
-                    value: typeKH,
-
+                    value: thongTinKhachHang['type'] ?? 'ca-nhan',
                     onChanged: null,
                    enableFeedback:false,
                     decoration: const InputDecoration(
@@ -262,10 +276,11 @@ class _FormThongTinKhachHangWidgetState
                         child: Text('Công Ty'),
                       ),
                     ],
-                  /*  onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                    /*onChanged: (value) {
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           key: 'type', value: value, type: _typeData);
                     },*/
+
                   ),
                 ],
               ),
@@ -285,13 +300,15 @@ class _FormThongTinKhachHangWidgetState
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['congty'],
-                    focusNode: listFocusNode['congty'],
+                    /*controller: listController['congty'],
+                    focusNode: listFocusNode['congty'],*/
 
+                    initialValue: thongTinKhachHang['congty'],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           key: 'congty', value: value, type: _typeData);
                     },
+
                   ),
                 ],
               ),
@@ -307,18 +324,17 @@ class _FormThongTinKhachHangWidgetState
                   lableTextForm('Người đại diện mới'),
                   TextFormField(
                     //readOnly: thongTinKhachHang.isNotEmpty ? true : false,
-                    //controller: TextEditingController(text: thongTinKhachHang['info']?['nguoidaidienmoi']),
-
-                    decoration: const InputDecoration(
+                   decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['nguoidaidienmoi'],
-                    focusNode: listFocusNode['nguoidaidienmoi'],
+                    /*controller: listController['nguoidaidienmoi'],
+                    focusNode: listFocusNode['nguoidaidienmoi'],*/
 
+                    initialValue: thongTinKhachHang['info']?['nguoidaidienmoi'].toString(),
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           key: 'info',
                           value: {"nguoidaidienmoi": value},
                           type: _typeData);
@@ -334,18 +350,16 @@ class _FormThongTinKhachHangWidgetState
                   lableTextForm('Điện thoại cơ quan'),
                   TextFormField(
                     //readOnly: thongTinKhachHang.isNotEmpty ? true : false,
-                   // controller: TextEditingController(text: thongTinKhachHang['info']?['dienthoaicoquan']),
-
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['dienthoaicoquan'],
-                    focusNode: listFocusNode['dienthoaicoquan'],
-
+                    /*controller: listController['dienthoaicoquan'],
+                    focusNode: listFocusNode['dienthoaicoquan'],*/
+                    initialValue: thongTinKhachHang['info']?['dienthoaicoquan'].toString(),
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           key: 'info',
                           value: {"dienthoaicoquan": value},
                           type: _typeData);
@@ -361,19 +375,16 @@ class _FormThongTinKhachHangWidgetState
                   lableTextForm('Mã số thuế'),
                   TextFormField(
                     //readOnly: thongTinKhachHang.isNotEmpty ? true : false,
-                    //controller: TextEditingController(text: thongTinKhachHang['masothue']),
-
-
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['masothue'],
-                    focusNode: listFocusNode['masothue'],
-
+                    /*controller: listController['masothue'],
+                    focusNode: listFocusNode['masothue'],*/
+                    initialValue: thongTinKhachHang['masothue'],
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           key: 'masothue', value: value, type: _typeData);
                     },
                   ),
@@ -386,18 +397,18 @@ class _FormThongTinKhachHangWidgetState
                 children: [
                   lableTextForm('CCCD / CMND'),
                   TextFormField(
-
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['cccd'],
-                    focusNode: listFocusNode['cccd'],
-
-                    //readOnly: thongTinKhachHang.isNotEmpty ? true : false,
-                   // controller: TextEditingController(text: thongTinKhachHang['cccd']),
-                    //onChanged: (value) {ref.read(formKhachHangMoiProvider.notifier).changeData(key: 'cccd', value: value, type: _typeData);},
+                    /*controller: listController['cccd'],
+                    focusNode: listFocusNode['cccd'],*/
+                    initialValue: thongTinKhachHang['cccd'],
+                    onChanged: (value) {
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
+                          key: 'cccd', value: value, type: _typeData);
+                    },
                   ),
                 ],
               ),
@@ -413,23 +424,19 @@ class _FormThongTinKhachHangWidgetState
                   lableTextForm('Địa chỉ'),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                   // controller: TextEditingController(text: thongTinKhachHang['diachi']),
                     //readOnly: thongTinKhachHang.isNotEmpty ? true : false,
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['diachi'],
-                    focusNode: listFocusNode['diachi'],
+                    /*controller: listController['diachi'],
+                    focusNode: listFocusNode['diachi'],*/
+                    initialValue: thongTinKhachHang['diachi'],
                     minLines: 3,
                     maxLines: 3,
-                   /* validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Không bỏ trống.'),
-                    ]),*/
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
                           key: 'diachi', value: value, type: _typeData);
                     },
                   ),
@@ -443,23 +450,19 @@ class _FormThongTinKhachHangWidgetState
                   lableTextForm('Ghi chú'),
                   TextFormField(
                   //  readOnly: thongTinKhachHang.isNotEmpty ? true : false,
-                    //controller: TextEditingController(text: thongTinKhachHang['ghichu']),
-
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.black12,
                     ),
                     readOnly: true,
-                    controller: listController['ghichu'],
-                    focusNode: listFocusNode['ghichu'],
-
+                    /*controller: listController['ghichu'],
+                    focusNode: listFocusNode['ghichu'],*/
+                    initialValue: thongTinKhachHang['ghichu'],
                     minLines: 3,
                     maxLines: 3,
                     onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          key: 'ghichu',
-                          value: value,
-                          type: _typeData);
+                      ref.read(formHopDongKyMoiProvider.notifier).changeData(
+                          key: 'ghichu', value: value, type: _typeData);
                     },
                   ),
                 ],
@@ -475,8 +478,6 @@ class _FormThongTinKhachHangWidgetState
   @override
   dispose() {
     super.dispose();
-    _emailController.dispose();
-
-     ref.invalidate(kiemTraKhachHangProvider);
+    ref.invalidate(kiemTraKhachHangProvider);
   }
 }

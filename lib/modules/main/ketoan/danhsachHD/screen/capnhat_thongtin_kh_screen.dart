@@ -1,5 +1,3 @@
-
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bs_flutter_alert/bs_flutter_alert.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
@@ -13,20 +11,19 @@ import '../../../../../_shared/utils/helper.dart';
 import '../../../../../_shared/utils/ndgap.dart';
 import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
 import '../models/customerupdate_model.dart';
-import '../models/mediacustomer_model.dart';
-import '../models/searchcustomer_model.dart';
+import '../models/media_result_model.dart';
 import '../providers/ds_hd_provider.dart';
-import '../providers/form_update_provider.dart';
+import '../providers/form_capnhat_khachhang_provider.dart';
 
 Map<String, String> _loaiPhiethu = {
-  'chungtu': 'Chứng từ khác'
+  'chungtukhac': 'Chứng từ khác'
 };
 
-String _loaiFileHD = 'chungtu';
+String _loaiFileHD = 'chungtukhac';
 
 GlobalKey<FormState> _formKey = GlobalKey();
 List<Map> _resultFile = [];
-List<MediaCustomerModel> _listMedia = [];
+List<MediaResultModel> _listMedia = [];
 enum HinhThucThanhToan { cod, bank }
 
 class UpdateThongTinKHScreen extends ConsumerStatefulWidget {
@@ -66,24 +63,24 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
         _listMedia = res.state.media!;
       });
 
-      typeKH = data!.type!;
-      print("${data?.makhachhang!.toString()}+makhachhang");
+      typeKH = data!.type.toString();
+      print("${data?.ghichu!.toString()}+ghichu");
 
       listController!['makhachhang']!.text = data!.makhachhang!.toString();
       listController!['email']!.text = data!.email!.toString();
       listController!['email_phu']!.text = data!.info!.emailPhu.toString();
-      listController!['hoten']!.text = data!.hoten!;
-      listController!['phone']!.text = data!.phone!;
+      listController!['hoten']!.text = data!.hoten.toString();
+      listController!['phone']!.text = data!.phone.toString();
 
 
-      listController!['congty']!.text = data!.congty!;
-      listController!['nguoidaidienmoi']!.text = data!.info!.nguoidaidienmoi!;
-      listController!['dienthoaicoquan']!.text = data!.info!.dienthoaicoquan!;
+      listController!['congty']!.text = data!.congty.toString();
+      listController!['nguoidaidienmoi']!.text = data!.info!.nguoidaidienmoi.toString();
+      listController!['dienthoaicoquan']!.text = data!.info!.dienthoaicoquan.toString();
 
-      listController!['masothue']!.text = data!.masothue!;
-      listController!['cccd']!.text = data!.cccd!;
-      listController!['diachi']!.text = data!.diachi!;
-      listController!['ghichu']!.text = data!.ghichu!;
+      listController!['masothue']!.text = data!.masothue.toString();
+      listController!['cccd']!.text = data!.cccd.toString();
+      listController!['diachi']!.text = data!.diachi.toString();
+      listController!['ghichu']!.text = data!.ghichu.toString();
 
     });
   }
@@ -91,12 +88,13 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
 
   Widget build(BuildContext context) {
 
-    FormUpdateNotifier data = ref.read(formUpdateProvider.notifier);
-    ref.listen(formUpdateProvider.select((value) => value.loading),
+    FormCapNhatKhachHangNotifier data = ref.read(formCapNhatKhachHangProvider.notifier);
+    ref.listen(formCapNhatKhachHangProvider.select((value) => value.loading),
             (previous, next) {
           if (next == loadingStatus.START) {
             Loading(context).start();
           }
+
           if (next == loadingStatus.STOP) {
             Future.delayed(Duration(seconds: 1), () {
               ref.read(dshdProvider.notifier).reload();
@@ -105,18 +103,51 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                 setState(() {
                   _resultFile = [];
                 });
+
+                showDialog(
+                  //barrierDismissible:false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('THÀNH CÔNG'),
+                      content: Text('Dữ liệu đã được thêm thành công.'),
+                      actions: [
+                        FilledButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
               }
-              AwesomeDialog(
-                context: context,
-                width: 400.0,
-                dialogType:
-                data.state.success ? DialogType.success : DialogType.error,
-                animType: AnimType.scale,
-                title: 'Thông báo',
-                desc: data.state.message,
-                btnCancelOnPress: () {},
-                btnOkOnPress: () {},
-              )..show();
+              else{
+
+                Loading(context).stop();
+                showDialog(
+                  //barrierDismissible:false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('XIN LỖI'),
+                      content: Text('Đã có lỗi trong quá trình thêm dữ liệu...'),
+                      actions: [
+                        FilledButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+              }
+
             });
           }
         });
@@ -304,7 +335,7 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
                               ),
                             ],
                             onChanged: (value) {
-                              ref.read(formUpdateProvider.notifier).changeData(
+                              ref.read(formCapNhatKhachHangProvider.notifier).changeData(
                                   key: 'type', value: value, type: _typeData);
 
 
@@ -486,13 +517,13 @@ class _UpdateThongTinKHScreenState extends ConsumerState<UpdateThongTinKHScreen>
 
                           listController.forEach((key, value) {
                              if(key=="email_phu" ||  key=="nguoidaidienmoi" ||  key=="dienthoaicoquan"){
-                               ref.read(formUpdateProvider.notifier).changeData(key: 'info', value: _typeInfo, type: _typeData);
+                               ref.read(formCapNhatKhachHangProvider.notifier).changeData(key: 'info', value: _typeInfo, type: _typeData);
                              } else{
-                               ref.read(formUpdateProvider.notifier).changeData(key: key, value: value.text, type: _typeData);
+                               ref.read(formCapNhatKhachHangProvider.notifier).changeData(key: key, value: value.text, type: _typeData);
                              }
 
                           });
-                          ref.read(formUpdateProvider.notifier).onSubmit(widget.id, widget.customerNumber);
+                          ref.read(formCapNhatKhachHangProvider.notifier).onSubmit(widget.id, widget.customerNumber);
                         } else {
                           listFocusNode.forEach((key, value) {
                             value.requestFocus();
@@ -624,7 +655,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                       ),
 
                       Radio<String>(
-                        value: 'chungtu',
+                        value: 'chungtukhac',
                         groupValue: _loaiFileHD,
                         onChanged: (value) {
                           setState(() {
@@ -748,7 +779,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                   Map tmp = {
                                     /*'type': _radioValue,
                                     'typeName': _loaiPhiethu[_radioValue],*/
-                                    'type': "chungtu",
+                                    'type': "chungtukhac",
                                     'typeName': "chứng từ khác",
                                     'note': _noteController.text,
                                     'file': file
@@ -760,7 +791,7 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                 _radioValue = '';
                               });
                             // print("${_resultFile}+_resultFile");
-                              ref.read(formUpdateProvider.notifier).setFile(_resultFile);
+                              ref.read(formCapNhatKhachHangProvider.notifier).setFile(_resultFile);
                             }
                           },
                           style: TextButton.styleFrom(
@@ -996,7 +1027,7 @@ class MediaItem extends ConsumerStatefulWidget {
         required this.index,
         required this.divider})
       : super(key: key);
-  late MediaCustomerModel item;
+  late MediaResultModel item;
   final int index;
   final bool divider;
 
@@ -1022,7 +1053,7 @@ class _MediaItemState extends ConsumerState<MediaItem> {
           ),
           Expanded(
             flex: 3,
-            child: BodyRowItem(Text(widget.item!.l1_lichsu_khoitao!.hoten!)),
+            child: BodyRowItem(Text(widget.item!.lichsuKhoitao!.hoten!)),
           ),
           Expanded(
             flex: 4,
@@ -1147,12 +1178,56 @@ class _MediaItemState extends ConsumerState<MediaItem> {
                             if(updateMedia['status']==true){
                               Navigator.of(context).pop();
                               setState(() {
-                                widget.item = MediaCustomerModel.fromJson(updateMedia['data']);
-
+                                widget.item = MediaResultModel.fromJson(updateMedia['data']);
                               });
 
+                              showDialog(
+                                //barrierDismissible:false,
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title:  Text('THÀNH CÔNG'),
+                                    content: Text('Dữ liệu đã được cập nhật thành công.'),
+                                    actions: [
+                                      FilledButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
                             }
-                            AwesomeDialog(
+                            else{
+
+
+                              showDialog(
+                                //barrierDismissible:false,
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('XIN LỖI'),
+                                    content: Text('Đã có lỗi trong quá trình cập nhật dữ liệu...'),
+                                    actions: [
+                                      FilledButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+
+                            }
+
+
+                            /*AwesomeDialog(
                               context: context,
                               autoHide:Duration(seconds: 2),
                               width: 400.0,
@@ -1167,7 +1242,7 @@ class _MediaItemState extends ConsumerState<MediaItem> {
 
                               btnCancelOnPress: () {},
                               btnOkOnPress: () {},
-                            )..show();
+                            )..show();*/
 
 
                           }

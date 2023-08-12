@@ -6,7 +6,7 @@ import '../../../../../_shared/thietlap_url.dart';
 import '../models/customerupdate_model.dart';
 import '../models/inforesponse_phieuthu_model.dart';
 import '../models/item_phieuthu_result_model.dart';
-import '../models/mediacustomer_model.dart';
+import '../models/media_result_model.dart';
 import '../models/searchcustomer_model.dart';
 import '../models/searchcustomercontract_model.dart';
 
@@ -59,11 +59,61 @@ class DSHDRepository{
 
 
 
+  getInfoContractId(String id,String sohopdong) async {
+    List<MediaResultModel> listMedia = [];
+    final response =
+    await App.dioClient.get("${ApiUrl.infoContract}${id}");
+
+    var result = {
+      "status": false,
+      "message": "Lỗi",
+      "data": {},
+      "media": [],
+    };
+    if (response.statusCode == 200) {
+      final res = response.data;
+      // print("${res}+ load SearchCustomerContractModel");
+      if (res['success'] == false) {
+        result['status'] = true;
+        result['message'] = "Không tìm thấy dữ liệu";
+      } else {
+        result['status'] = true;
+        result['message'] = "Success";
+        result['data'] = SearchCustomerContractModel.fromJson(res["data"]);
+
+         print("${result['data'] }+ load SearchCustomerContractModel");
+      }
+    }
+
+    final Response medias = await App.dioClient.get(
+        "${ApiUrl.listFile}", queryParameters: {
+      "limit":100,
+      "loaimedia":"hopdong",
+      "loaifile":"chungtukhac",
+      "sohopdong":sohopdong
+    });
+    print("${medias}+ load medias000");
+
+    if(medias.statusCode == 200){
+      final mediaRes  = medias.data;
+      if(mediaRes['success']==true){
+        for(var item in mediaRes['data']){
+          listMedia.add(MediaResultModel.fromJson(item));
+        }
+      }
+    }
+
+    result['media'] = listMedia;
+    print("${result['media']}+ load result['media']");
+    return result;
+  }
+
+
   getInfoPhieuThu(String id) async {
 
     final response =
     await App.dioClient.get("${ApiUrl.danhSachPhieuThu}?hopdongId=${id}");
-
+ print("${id}+444444");
     List<ItemPhieuthuResultModel> list = [];
 
     var result = {
@@ -125,7 +175,7 @@ class DSHDRepository{
 
 
   getInfoCustomer(String id) async {
-    List<MediaCustomerModel> listMedia = [];
+    List<MediaResultModel> listMedia = [];
     final response =
     await App.dioClient.get("${ApiUrl.infoUpdateCustomer}${id}");
     
@@ -166,13 +216,37 @@ class DSHDRepository{
       final mediaRes  = medias.data;
       if(mediaRes['success']==true){
         for(var item in mediaRes['data']){
-          listMedia.add(MediaCustomerModel.fromJson(item));
+          listMedia.add(MediaResultModel.fromJson(item));
         }
       }
     }
 
     result['media'] = listMedia;
     print("${result['media']}+ load result['media']");
+    return result;
+  }
+
+
+  addPhieuThuContract({required String id, Map<String, dynamic>? data}) async {
+
+    print("${data?["PhieuThu"]}+4444 data");
+
+    final response =
+    await App.dioClient.post("${ApiUrl.phieuThuMoiHD}${id}", data: data?["PhieuThu"]);
+    var result = {
+      "status": false,
+      "data": null,
+      "message": "Error"
+    };
+
+    if (response.statusCode == 200) {
+      final res = response.data;
+      result['status'] = res['success'];
+      result['message'] = res['message'];
+      if (res['success'] == true) {
+        result['data'] = data;
+      }
+    }
     return result;
   }
 
@@ -211,6 +285,35 @@ class DSHDRepository{
       'makhachhang': makhachhang,
       'khachhangId': khachhangId,
       'loaifile': loaifile,
+      'ghichu': ghichu,
+    });
+    final response =
+    await App.dioClient.post("${ApiUrl.uploadFile}", data: formData);
+    var result = {
+      "status": false,
+      "message": "Server error"
+    };
+
+    if (response.statusCode == 200) {
+      final res = response.data;
+      result['status'] = res['success'];
+      result['message'] = res['message'];
+    }
+    return result;
+  }
+
+
+
+  uploadFileNumberContract(
+      {required String sohopdong, required String loaifile, required String ghichu, required PlatformFile file}) async {
+    String fileName = file.path!.split('/').last;
+    FormData formData = FormData.fromMap({
+      "files": [
+        await MultipartFile.fromFile(file.path!, filename: fileName),
+      ],
+      'sohopdong': sohopdong,
+      'loaifile': loaifile,
+      'loaimedia':'hopdong',
       'ghichu': ghichu,
     });
     final response =

@@ -1,19 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repositories/phieu_thu_repository.dart';
-import 'sua_phieu_thu_provider.dart';
+
 
 class KhachHangCuState {
   final bool? loading;
   final Map? data;
+  final String err;
+  final String errPhu;
 
-  KhachHangCuState({this.loading = false, this.data});
+  KhachHangCuState({this.loading = false, this.data, this.err = '', this.errPhu = ''});
 
 
-  KhachHangCuState copyWith({bool? loading, Map? data}){
+  KhachHangCuState copyWith({bool? loading, Map? data, String? err, String? errPhu}){
     return KhachHangCuState(
       loading: loading ?? this.loading,
       data: data ?? this.data,
+      err: err ?? this.err,
+      errPhu: errPhu ?? this.errPhu
     );
   }
 }
@@ -32,17 +36,22 @@ class KiemTraKhachHangNotifier extends Notifier<KhachHangCuState> {
     return KhachHangCuState();
   }
 
-  Future<void> kiemTraThongTinKhachHang({required String email}) async {
-    state = state.copyWith(loading: true, data: null);
-    final Map? result =
-        await _phieuThuRepository.thongTinKhachHang(email: email, type: '&type=single');
-    if(result!=null){
-      result.forEach((key, value) {
-        ref.read(formPhieuThuProvider.notifier).changeData(type: 'khachhang', key: key, value: value);
-      });
-      state = state.copyWith(loading: false, data: result);
+  Future<void> kiemTraThongTinKhachHang({required String email, required String maKhachHang,required String typeErr}) async {
+    state = state.copyWith(loading: true);
+    final bool result = await _phieuThuRepository.kiemTraEmailKhachHang(email: email, maKhachHang: maKhachHang);
+    if(typeErr == 'email'){
+      if(result==false){
+        state = state.copyWith(err: 'Email này bị trùng với khách hàng khác');
+      }else{
+        state = state.copyWith(err: '');
+      }
     }else{
-      state = state.copyWith(loading: false, data: {});
+      if(result==false){
+        state = state.copyWith(errPhu: 'Email này bị trùng với khách hàng khác');
+      }else{
+        state = state.copyWith(errPhu: '');
+      }
     }
+    state = state.copyWith(loading: false);
   }
 }

@@ -24,11 +24,10 @@ class ApiUrl {
       '$baseUrl/tim-kiem/hop-dong-theo-khach-hang';
   static const String updateContract = '$baseUrl/hop-dong';
   static const String infoUpdateCustomer = '$baseUrl/khach-hang/';
-
   static const String searchContract = '$baseUrl/hop-dong';
   static const String infoContract = '$baseUrl/hop-dong/';
-
   static const String updateFile = '$baseUrl/media/update/';
+  static const String phieuThuMoiHD = '$baseUrl/phieu-thu-hop-dong/';
 
   // Cấp mã HĐ, KH tự động
   static const String capMaKhachHang = '$baseUrl/cap-ma/khach-hang';

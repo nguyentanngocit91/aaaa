@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../_shared/utils/form_status.dart';
 import 'models/ban_giao_model.dart';
+import 'models/khach_hang_model.dart';
 import 'providers/ban_giao_provider.dart';
 import 'widgets/header_list_hop_dong.dart';
 import 'widgets/box_info_customer.dart';
@@ -15,6 +16,7 @@ class BanGiaoLayout extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<BanGiaoModel> listHD = ref.watch(banGiaoProvider).listHD;
+    KhachHangModel? khachHang = ref.watch(banGiaoProvider).khachHang;
     var statusForm = ref.watch(banGiaoProvider).status;
 
     return SingleChildScrollView(
@@ -40,31 +42,33 @@ class BanGiaoLayout extends ConsumerWidget {
                         tenHD: (listHD[0].tenhopdong != null)
                             ? listHD[0].tenhopdong!
                             : '',
-                        maKH: (listHD[0].khachhangId?.makhachhang != null)
-                            ? listHD[0].khachhangId!.makhachhang!
+                        maKH: (khachHang?.makhachhang != null)
+                            ? khachHang!.makhachhang!
                             : '',
-                        nguoiDaiDien: (listHD[0].khachhangId?.hoten != null)
-                            ? listHD[0].khachhangId!.hoten!
+                        nguoiDaiDien: (khachHang?.hoten != null)
+                            ? khachHang!.hoten!
                             : '',
-                        dienThoaiDiDong: (listHD[0].khachhangId?.phone != null)
-                            ? listHD[0].khachhangId!.phone!
+                        dienThoaiDiDong: (khachHang?.phone != null)
+                            ? khachHang!.phone!
                             : '',
                         dienThoaiCoQuan: '',
-                        email: (listHD[0].khachhangId?.email != null)
-                            ? listHD[0].khachhangId!.email!
+                        email: (khachHang?.email != null)
+                            ? khachHang!.email!
                             : '',
                         emailPhu: '',
                         daiDienMoi: '',
-                        maSoThue: (listHD[0].khachhangId?.masothue != null)
-                            ? listHD[0].khachhangId!.masothue!
+                        maSoThue: (khachHang?.masothue != null)
+                            ? khachHang!.masothue!
                             : '',
-                        cmnd: (listHD[0].khachhangId?.cccd != null)
-                            ? listHD[0].khachhangId!.cccd!
+                        cmnd: (khachHang?.cccd != null)
+                            ? khachHang!.cccd!
                             : '',
-                        diaChi: (listHD[0].khachhangId?.diachi != null)
-                            ? listHD[0].khachhangId!.diachi!
+                        diaChi: (khachHang?.diachi != null)
+                            ? khachHang!.diachi!
                             : '',
-                        ghiChu: '',
+                        ghiChu: (khachHang?.ghichu != null)
+                            ? khachHang!.ghichu!
+                            : '',
                       ),
                       const SizedBox(
                         height: 20,
@@ -87,6 +91,9 @@ class BanGiaoLayout extends ConsumerWidget {
                                 itemCount: listHD.length,
                                 itemBuilder: (context, index) {
                                   return RowHopDong(
+                                    maKH: (khachHang?.makhachhang != null)
+                                        ? khachHang!.makhachhang!
+                                        : '',
                                     index: index + 1,
                                     item: listHD[index],
                                   );

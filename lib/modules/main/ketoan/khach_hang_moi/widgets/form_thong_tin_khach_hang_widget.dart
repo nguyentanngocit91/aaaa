@@ -13,7 +13,7 @@ class _FormThongTinKhachHangWidgetState
       Debouncer(delay: const Duration(seconds: 2));
 
   final String _typeData = 'khachhang';
-  final TextEditingController _emailController = TextEditingController();
+  String email_phu = '';
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +35,7 @@ class _FormThongTinKhachHangWidgetState
       }
     });
 
+    final errEmailPhu = ref.watch(kiemTraKhachHangProvider.select((value) => value.errEmail));
 
     return Wrap(
       runSpacing: 25,
@@ -138,7 +139,6 @@ class _FormThongTinKhachHangWidgetState
             ),
           ],
         ),
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -150,13 +150,30 @@ class _FormThongTinKhachHangWidgetState
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     readOnly: thongTinKhachHang.isNotEmpty ? true : false,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.email(
+                          errorText: 'Email không đúng định dạng.'),
+                          (value) {
+                        if (errEmailPhu.isNotEmpty || errEmailPhu != '') {
+                          return errEmailPhu;
+                        }
+                        return null;
+                      }
+                    ]),
                     controller: TextEditingController(
-                        text: thongTinKhachHang['info']?['email_phu']),
+                        text: thongTinKhachHang['info']?['email_phu'] ?? email_phu),
                     onChanged: (value) {
+                      email_phu = value;
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
                           key: 'info',
                           value: {"email_phu": value},
                           type: _typeData);
+                      if (value.isEmail()) {
+                        onSearchDebouncer.debounce(() {
+                          ref.read(kiemTraKhachHangProvider.notifier)
+                              .kiemTraEmail(email: value);
+                        });
+                      }
                     },
                   ),
                 ],
@@ -168,23 +185,33 @@ class _FormThongTinKhachHangWidgetState
               child: Wrap(
                 children: [
                   lableTextForm('Loại Khách hàng'),
-                  DropdownButtonFormField(
-                    value: thongTinKhachHang['type'] ?? 'ca-nhan',
-                    items: const [
-                      DropdownMenuItem<String>(
-                        value: 'ca-nhan',
-                        child: Text('Cá Nhân'),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: 'cong-ty',
-                        child: Text('Công Ty'),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          key: 'type', value: value, type: _typeData);
-                    },
-                  ),
+                  (thongTinKhachHang.isNotEmpty)
+                      ? TextFormField(
+                          readOnly: true,
+                          controller: TextEditingController(
+                            text: thongTinKhachHang['type'] == 'ca-nhan'
+                                ? 'Cá Nhân'
+                                : 'Công Ty',
+                          ))
+                      : DropdownButtonFormField(
+                          value: thongTinKhachHang['type'] ?? 'ca-nhan',
+                          items: const [
+                            DropdownMenuItem<String>(
+                              value: 'ca-nhan',
+                              child: Text('Cá Nhân'),
+                            ),
+                            DropdownMenuItem<String>(
+                              value: 'cong-ty',
+                              child: Text('Công Ty'),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            ref
+                                .read(formKhachHangMoiProvider.notifier)
+                                .changeData(
+                                    key: 'type', value: value, type: _typeData);
+                          },
+                        ),
                 ],
               ),
             ),
@@ -323,9 +350,7 @@ class _FormThongTinKhachHangWidgetState
                     maxLines: 3,
                     onChanged: (value) {
                       ref.read(formKhachHangMoiProvider.notifier).changeData(
-                          key: 'ghichu',
-                          value: value,
-                          type: _typeData);
+                          key: 'ghichu', value: value, type: _typeData);
                     },
                   ),
                 ],
@@ -333,7 +358,6 @@ class _FormThongTinKhachHangWidgetState
             ),
           ],
         ),
-
       ],
     );
   }
@@ -341,7 +365,6 @@ class _FormThongTinKhachHangWidgetState
   @override
   dispose() {
     super.dispose();
-    _emailController.dispose();
     ref.invalidate(kiemTraKhachHangProvider);
   }
 }

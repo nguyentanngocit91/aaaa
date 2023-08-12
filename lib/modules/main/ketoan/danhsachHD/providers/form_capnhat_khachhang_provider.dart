@@ -5,18 +5,18 @@ import '../../../../../_shared/utils/form_status.dart';
 import '../../../../../_shared/utils/helper.dart';
 import '../repositories/ds_hd_repository.dart';
 
-part 'form_update_state.dart';
+part 'form_capnhat_khachhang_state.dart';
 
-final formUpdateProvider =
-StateNotifierProvider.autoDispose<FormUpdateNotifier, FormUpdateState>(
+final formCapNhatKhachHangProvider =
+StateNotifierProvider.autoDispose<FormCapNhatKhachHangNotifier, FormCapNhatKhachHangState>(
       (ref) {
-    return FormUpdateNotifier();
+    return FormCapNhatKhachHangNotifier();
   },
 );
-class FormUpdateNotifier extends StateNotifier<FormUpdateState> {
+class FormCapNhatKhachHangNotifier extends StateNotifier<FormCapNhatKhachHangState> {
   final DSHDRepository _dsHDRepository = DSHDRepository();
 
-  FormUpdateNotifier() : super(const FormUpdateState());
+  FormCapNhatKhachHangNotifier() : super(const FormCapNhatKhachHangState());
 
   void onChangeValue(String type, String value) {
     Map<String, String> data = state.data ?? {};

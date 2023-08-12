@@ -19,23 +19,22 @@ class _FormThongTinPhieuThuWidgetState
   DateTime ngayNop = DateTime.now();
 
 
-
   @override
   initState() {
     super.initState();
     // set dữ liệu mặt định
     Future.delayed(const Duration(milliseconds: 100), () {
+     /* ref
+          .read(formThemPhieuThuProvider.notifier)
+          .changeData(type: _typeData, key: 'mahopdong', value: null);*/
       ref
-          .read(formKhachHangMoiProvider.notifier)
-          .changeData(type: _typeData, key: 'mahopdong', value: null);
-      ref
-          .read(formKhachHangMoiProvider.notifier)
+          .read(formThemPhieuThuProvider.notifier)
           .changeData(type: _typeData, key: 'httt', value: 'cod');
       ref
-          .read(formKhachHangMoiProvider.notifier)
+          .read(formThemPhieuThuProvider.notifier)
           .changeData(type: _typeData, key: 'loaiphieuthu', value: 'phieuthu');
       ref
-          .read(formKhachHangMoiProvider.notifier)
+          .read(formThemPhieuThuProvider.notifier)
           .changeData(type: _typeData, key: 'is_pending', value: false);
     });
   }
@@ -65,7 +64,7 @@ class _FormThongTinPhieuThuWidgetState
                       value: HinhThucThanhToan.cod,
                       groupValue: _httt,
                       onChanged: (HinhThucThanhToan? value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'httt', value: 'cod');
                         if (mounted) {
                           setState(() {
@@ -80,7 +79,7 @@ class _FormThongTinPhieuThuWidgetState
                       value: HinhThucThanhToan.bank,
                       groupValue: _httt,
                       onChanged: (HinhThucThanhToan? value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'httt', value: 'bank');
                         if (mounted) {
                           setState(() {
@@ -105,7 +104,7 @@ class _FormThongTinPhieuThuWidgetState
                       value: LoaiPhieuThu.phieuthu,
                       groupValue: _loaiPhieuThu,
                       onChanged: (LoaiPhieuThu? value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData,
                             key: 'loaiphieuthu',
                             value: _typeData);
@@ -122,7 +121,7 @@ class _FormThongTinPhieuThuWidgetState
                       value: LoaiPhieuThu.phieuthuBG,
                       groupValue: _loaiPhieuThu,
                       onChanged: (LoaiPhieuThu? value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData,
                             key: 'loaiphieuthu',
                             value: 'phieuthubg');
@@ -134,12 +133,12 @@ class _FormThongTinPhieuThuWidgetState
                       },
                     ),
                     const Text('Phiếu thu bàn giao'),
-                    ndGapW16(),
+                    /*ndGapW16(),
                     Radio<LoaiPhieuThu>(
                       value: LoaiPhieuThu.phieuthuApp,
                       groupValue: _loaiPhieuThu,
                       onChanged: (LoaiPhieuThu? value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData,
                             key: 'loaiphieuthu',
                             value: 'phieuthuapp');
@@ -156,7 +155,7 @@ class _FormThongTinPhieuThuWidgetState
                       value: LoaiPhieuThu.phieuthuBGApp,
                       groupValue: _loaiPhieuThu,
                       onChanged: (LoaiPhieuThu? value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData,
                             key: 'loaiphieuthu',
                             value: 'phieuthuappbg');
@@ -167,7 +166,7 @@ class _FormThongTinPhieuThuWidgetState
                         }
                       },
                     ),
-                    const Text('Phiếu thu bàn giao App'),
+                    const Text('Phiếu thu bàn giao App'),*/
                   ],
                 ),
               ],
@@ -198,7 +197,7 @@ class _FormThongTinPhieuThuWidgetState
                         String txtDate = ngayNop.formatDateTime();
                         if (selDate != null) {
                           txtDate = selDate.formatDateTime();
-                          ref.read(formKhachHangMoiProvider.notifier).changeData(
+                          ref.read(formThemPhieuThuProvider.notifier).changeData(
                               type: _typeData, key: 'ngaynopcty', value: selDate);
                         }
                         setState(() {
@@ -221,7 +220,7 @@ class _FormThongTinPhieuThuWidgetState
                             errorText: 'Không bỏ trống.'),
                       ]),
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'maphieuthu', value: value);
                       },
                     ),
@@ -305,6 +304,7 @@ class _FormThongTinPhieuThuWidgetState
               ),
             ],
           ),
+          ndGapH8(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -322,7 +322,7 @@ class _FormThongTinPhieuThuWidgetState
                             errorText: 'Không bỏ trống.'),
                       ]),
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'tongtien', value: value.toString().replaceAll('.', ''));
                       },
                     ),
@@ -339,7 +339,7 @@ class _FormThongTinPhieuThuWidgetState
                         CurrencyTextInputFormatter(symbol: ''),
                       ],
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'phiweb', value: value.toString().replaceAll('.', ''));
                       },
                     ),
@@ -356,7 +356,7 @@ class _FormThongTinPhieuThuWidgetState
                         CurrencyTextInputFormatter(symbol: ''),
                       ],
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'phinangcapweb', value: value.toString().replaceAll('.', ''));
                       },
                     ),
@@ -373,7 +373,7 @@ class _FormThongTinPhieuThuWidgetState
                         CurrencyTextInputFormatter(symbol: ''),
                       ],
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'phihosting', value: value.toString().replaceAll('.', ''));
                       },
                     ),
@@ -390,7 +390,7 @@ class _FormThongTinPhieuThuWidgetState
                         CurrencyTextInputFormatter(symbol: ''),
                       ],
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'phinangcaphosting', value: value.toString().replaceAll('.', ''));
                       },
                     ),
@@ -407,7 +407,7 @@ class _FormThongTinPhieuThuWidgetState
                         CurrencyTextInputFormatter(symbol: ''),
                       ],
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'phitenmien', value: value.toString().replaceAll('.', ''));
                       },
                     ),
@@ -416,6 +416,7 @@ class _FormThongTinPhieuThuWidgetState
               ),
             ],
           ),
+          ndGapH8(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -429,7 +430,7 @@ class _FormThongTinPhieuThuWidgetState
                         CurrencyTextInputFormatter(symbol: ''),
                       ],
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'phiapp', value: value.toString().replaceAll('.', ''));
                       },
                     ),
@@ -447,7 +448,7 @@ class _FormThongTinPhieuThuWidgetState
                         CurrencyTextInputFormatter(symbol: ''),
                       ],
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'vat', value: value.toString().replaceAll('.', ''));
                       },
                     ),
@@ -462,7 +463,7 @@ class _FormThongTinPhieuThuWidgetState
                     lableTextForm('Ghi chú'),
                     TextFormField(
                       onChanged: (value) {
-                        ref.read(formKhachHangMoiProvider.notifier).changeData(
+                        ref.read(formThemPhieuThuProvider.notifier).changeData(
                             type: _typeData, key: 'ghichu', value: value);
                       },
                     ),
@@ -495,11 +496,12 @@ class _MaNhaVienWidgetState extends ConsumerState<_MaNhaVienWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final FormStatus? formStatus = ref.watch(formKhachHangMoiProvider.select((value) => value.formStatus));
+    final FormStatus? formStatus = ref.watch(formThemPhieuThuProvider.select((value) => value.status));
+   // final formStatus = ref.watch(formThemPhieuThuProvider.select((value) => value.status));
+   // print("${formStatus}+ formStatusformStatusformStatus+${FormStatus.pure}");
     final dsNhanvien = ref.watch(
         nhanVienPhuTrachProvider.select((value) => value.maNhanViens)) ??
         [];
-
     if (dsNhanvien == [] || dsNhanvien.isEmpty) {
       _textFieldTagsController.clearTextFieldTags();
     }
