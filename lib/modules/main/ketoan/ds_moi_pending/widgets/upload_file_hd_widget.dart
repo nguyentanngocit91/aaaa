@@ -10,6 +10,7 @@ class UploadFileHDWidget extends ConsumerStatefulWidget {
 class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
     with FormUIMixins {
   final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController ghiChuController = TextEditingController();
 
   String _loaiFileHD = 'hopdong';
 
@@ -17,6 +18,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
   dispose() {
     super.dispose();
     textEditingController.dispose();
+    ghiChuController.dispose();
   }
 
   @override
@@ -40,7 +42,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                     value: 'hopdong',
                     groupValue: _loaiFileHD,
                     onChanged: (String? value) {
-                      ref.read(fileHDProvider.notifier).changeLoai(value ?? '');
+                      ref.read(danhSachHDProvider.notifier).changeLoai(value ?? '');
                       setState(() {
                         _loaiFileHD = value!;
                       });
@@ -52,7 +54,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                     value: 'chungtukhac',
                     groupValue: _loaiFileHD,
                     onChanged: (value) {
-                      ref.read(fileHDProvider.notifier).changeLoai(value ?? '');
+                      ref.read(danhSachHDProvider.notifier).changeLoai(value ?? '');
                       setState(() {
                         _loaiFileHD = value!;
                       });
@@ -77,7 +79,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                   );
                   if (result != null) {
                     for (PlatformFile file in result.files) {
-                      ref.read(fileHDProvider.notifier).changeFile(file: file);
+                      ref.read(danhSachHDProvider.notifier).changeFile(file: file);
                     }
                     if (result.files.length > 1) {
                       textEditingController.text =
@@ -86,7 +88,7 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
                       textEditingController.text = result.files.first.name;
                     }
                   } else {
-                    ref.read(fileHDProvider.notifier).clear();
+                    ref.read(danhSachHDProvider.notifier).clear();
                     textEditingController.clear();
                   }
                 }),
@@ -98,13 +100,14 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
               child: Wrap(
                 children: [
                   TextFormField(
+                    controller: ghiChuController,
                     decoration: const InputDecoration(
                       hintText: 'Nội dung ghi chú cho file',
                     ),
                     minLines: 3,
                     maxLines: 3,
                     onChanged: (value) {
-                      ref.read(fileHDProvider.notifier).changeGhiChu(value);
+                      ref.read(danhSachHDProvider.notifier).changeGhiChu(value);
                     },
                   ),
                 ],
@@ -114,7 +117,28 @@ class _UploadFileHDWidgetState extends ConsumerState<UploadFileHDWidget>
             SizedBox(
               width: 150,
               child: FilledButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  final kq = await ref.read(danhSachHDProvider.notifier).luuFile(soHopDong: soHopDong);
+                  if(kq==true){
+                    if(context.mounted){
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Thông báo'),
+                          content: const Text('File đã được upload thành công'),
+                          actions: [
+                            FilledButton(onPressed: () => context.pop(), child: const Text('OK')),
+                          ],
+                        );
+                      },);
+                    }
+                    ref.read(danhSachHDProvider.notifier).clear();
+                    textEditingController.clear();
+                    ghiChuController.clear();
+                    setState(() {
+                      _loaiFileHD = 'hopdong';
+                    });
+                  }
+                },
                 icon: const FaIcon(
                   FontAwesomeIcons.plus,
                   size: 15,
@@ -148,15 +172,14 @@ class _TableFilesState extends ConsumerState<TableFiles> with DataTableMixins {
   initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 0), (){
-      ref.read(fileHDProvider.notifier).layDanhSachFile(
+      ref.read(danhSachHDProvider.notifier).layDanhSachFile(
           soHopDong: widget.soHopDong);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<FileModel> danhSach =
-        ref.watch(fileHDProvider.select((value) => value.danhSachFile));
+    final List<FileModel> danhSach = ref.watch(danhSachHDProvider.select((value) => value.danhSachFile));
     return dataTableWidget(
       context: context,
       columns: [
@@ -189,8 +212,24 @@ class _TableFilesState extends ConsumerState<TableFiles> with DataTableMixins {
                     DataCell(Text(item.ghichu.toString())),
                     DataCell(
                       IconButton(
-                        onPressed: () {
-
+                        onPressed: () async{
+                          if(context.mounted){
+                            await showDialog(context: context, builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Thông Báo'),
+                                content: const Text('Bạn có chắc muốn xoá file này ?'),
+                                actions: [
+                                  OutlinedButton(onPressed: (){
+                                    context.pop();
+                                  }, child: const Text('Huỷ')),
+                                  FilledButton(onPressed: (){
+                                    ref.read(danhSachHDProvider.notifier).xoaFile(id: item.id.toString());
+                                    context.pop();
+                                  }, child: const Text('Xác nhận')),
+                                ],
+                              );
+                            },);
+                          }
                         },
                         icon: const FaIcon(
                           FontAwesomeIcons.trash,
