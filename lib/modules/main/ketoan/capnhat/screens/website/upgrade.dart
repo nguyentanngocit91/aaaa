@@ -40,7 +40,7 @@ part 'form_element/upload_file_hd_widget.dart';
 
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
-  'chungtu': 'Chứng từ'
+  'chungtu': 'Chứng từ khác'
 };
 GlobalKey<FormState> _formKey = GlobalKey();
 final String _typeData = 'website';

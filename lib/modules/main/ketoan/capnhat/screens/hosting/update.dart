@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import '../../../../../../_shared/mixins/form_ui_mixins.dart';
 import '../../../../../../_shared/utils/helper.dart';
@@ -14,11 +15,13 @@ import '../../models/contract_model.dart';
 import '../../models/media_model.dart';
 import '../../providers/capnhat_provider.dart';
 import '../../providers/form_capnhat_provider.dart';
+
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
-  'chungtu': 'Chứng từ'
+  'chungtu': 'Chứng từ khác'
 };
-// enum TrangThaiHosting { kyMoi, phucHoi, nangCap, chuyenDoi }
+String _updateType = 'hosting';
+
 Map<String, String> _trangThaiHosting = {
   'kymoi': 'Ký mới',
   'phuchoi': 'Phục hồi',
@@ -46,7 +49,6 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
   Map<String, TextEditingController> listController = {};
   Map<String, FocusNode> listFocusNode = {};
 
-
   List<Widget> _hostingAttribute() {
     List<Widget> radioButtons = [];
     _trangThaiHosting.forEach((key, value) {
@@ -63,10 +65,16 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
               },
             ),
             GestureDetector(
-                child: Text(value),
-                onTap: () => setState(() {
+              child: Text(value),
+              onTap: () {
+                ref
+                    .read(formcapnhatProvider.notifier)
+                    .onChangeValue('trangthai_hosting', key);
+                setState(() {
                   _hostType = key;
-                }))
+                });
+              },
+            )
           ],
         ),
       );
@@ -74,16 +82,14 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
     return radioButtons;
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    ['mahopdong', 'ngaydangky', 'ngayhethan', 'chucnang', 'ghichu','dungluong']
+    ['mahopdong', 'ngaydangky', 'ngayhethan', 'chucnang', 'ghichu', 'dungluong']
         .forEach((item) {
       listController[item] = TextEditingController();
       listFocusNode[item] = FocusNode();
-
     });
     Future.delayed(Duration.zero, () async {
       await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
@@ -94,18 +100,13 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
         _hostType = data!.l1_data!.trangthai_hosting.toString();
       });
 
-
-
-
       listController!['mahopdong']!.text = data!.l1_data!.mahopdong.toString();
       listController!['ngaydangky']!.text =
           Helper.dateFormat(data!.l1_data!.ngaydangky.toString());
       listController!['ngayhethan']!.text =
           Helper.dateFormat(data!.l1_data!.ngayhethan.toString());
 
-      listController!['dungluong']!.text =
-          data!.l1_data!.dungluong.toString();
-
+      listController!['dungluong']!.text = data!.l1_data!.dungluong.toString();
 
       listController!['ghichu']!.text = data!.l1_data!.ghichu!.toString();
     });
@@ -135,7 +136,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
           }
           AwesomeDialog(
             context: context,
-            autoHide: Duration(seconds: 2),
+            autoHide: Duration(milliseconds: 1900),
             width: 400.0,
             dialogType:
                 data.state.success ? DialogType.success : DialogType.error,
@@ -147,6 +148,17 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
             btnCancelOnPress: () {},
             btnOkOnPress: () {},
           )..show();
+
+          if (data.state.success == true) {
+            setState(() {
+              _resultFile = [];
+            });
+            ref.read(capnhatProvider.notifier).reload();
+            Future.delayed(Duration(seconds: 2),()
+            {
+              context.pop();
+            });
+          }
         });
       }
     });
@@ -248,7 +260,6 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                                 TextField(
                                   controller: listController['dungluong'],
                                   focusNode: listFocusNode['dungluong'],
-
                                 ),
                               ],
                             ),
@@ -273,10 +284,41 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                                   height: 5,
                                 ),
                                 TextFormField(
-                                  readOnly: true,
                                   controller: listController['ngaydangky'],
                                   focusNode: listFocusNode['ngaydangky'],
-                                  decoration: Helper().disabledInput(),
+                                  onTap: () async {
+                                    final DateTime? selDate =
+                                        await Helper.onSelectDate(context,
+                                            initialDate: Helper.parseDate(
+                                                listController['ngaydangky']!
+                                                    .value
+                                                    .text,
+                                                'dd-MM-yyyy'));
+                                    if (selDate != null) {
+                                      listController['ngaydangky']!.text =
+                                          Helper.dateFormat(selDate);
+                                      DateTime date1 = Helper.parseDate(
+                                          listController['ngaydangky']!
+                                              .value
+                                              .text,
+                                          'dd-MM-yyyy');
+                                      var t = listController['ngayhethan']!
+                                          .value
+                                          .text;
+                                      if (t != null && t != '') {
+                                        DateTime date2 = Helper.parseDate(
+                                            listController['ngayhethan']!
+                                                .value
+                                                .text,
+                                            'dd-MM-yyyy');
+
+                                        if (date1.compareTo(date2) > 0) {
+                                          listController['ngayhethan']!.text =
+                                              Helper.dateFormat(selDate);
+                                        }
+                                      }
+                                    }
+                                  },
                                 ),
                               ],
                             ),
@@ -301,10 +343,81 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                                   height: 5,
                                 ),
                                 TextFormField(
-                                  readOnly: true,
                                   controller: listController['ngayhethan'],
                                   focusNode: listFocusNode['ngayhethan'],
-                                  decoration: Helper().disabledInput(),
+                                  onTap: () async {
+                                    if (listController['ngaydangky']!
+                                                .value
+                                                .text !=
+                                            null &&
+                                        listController['ngaydangky']!
+                                                .value
+                                                .text !=
+                                            '') {
+                                      DateTime date1 = Helper.parseDate(
+                                          listController['ngaydangky']!
+                                              .value
+                                              .text,
+                                          'dd-MM-yyyy');
+                                      var t = listController['ngayhethan']!
+                                          .value
+                                          .text;
+                                      if (t != null && t != '') {
+                                        DateTime date2 = Helper.parseDate(
+                                            listController['ngayhethan']!
+                                                .value
+                                                .text,
+                                            'dd-MM-yyyy');
+
+                                        if (date1.compareTo(date2) > 0) {
+                                          listController['ngayhethan']!.text =
+                                              Helper.dateFormat(date1);
+                                        }
+                                      } else {
+                                        listController['ngayhethan']!.text =
+                                            Helper.dateFormat(date1);
+                                      }
+
+                                      var t2 = listController['ngaydangky']!
+                                          .value
+                                          .text;
+                                      final DateTime? selDate =
+                                          await Helper.onSelectDate(context,
+                                              initialDate: Helper.parseDate(
+                                                  listController['ngayhethan']!
+                                                      .value
+                                                      .text,
+                                                  'dd-MM-yyyy'),
+                                              firstDate:
+                                                  (t2 != null && t2 != '')
+                                                      ? Helper.parseDate(
+                                                          listController[
+                                                                  'ngaydangky']!
+                                                              .value
+                                                              .text,
+                                                          'dd-MM-yyyy')
+                                                      : null);
+                                      if (selDate != null) {
+                                        listController['ngayhethan']!.text =
+                                            Helper.dateFormat(selDate);
+                                      }
+                                    } else {
+                                      final DateTime? selDate =
+                                          await Helper.onSelectDate(
+                                        context,
+                                        initialDate: Helper.parseDate(
+                                            listController['ngayhethan']!
+                                                .value
+                                                .text,
+                                            'dd-MM-yyyy'),
+                                      );
+
+                                      if (selDate != null) {
+                                        listController['ngayhethan']!.text =
+                                            Helper.dateFormat(selDate);
+                                      }
+                                    }
+                                  },
                                 ),
                               ],
                             ),
@@ -331,7 +444,6 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                                 Row(
                                   children: _hostingAttribute(),
                                 )
-
                               ],
                             ),
                           ),
@@ -358,13 +470,11 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                                   maxLines: 3,
                                   controller: listController['ghichu'],
                                   focusNode: listFocusNode['ghichu'],
-
                                 ),
                               ],
                             ),
                           ),
                         ),
-
                       ],
                     )),
                 const SizedBox(
@@ -416,9 +526,8 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateHosting>
                                 .onChangeValue(key, value.text);
                           });
 
-                          ref
-                              .read(formcapnhatProvider.notifier)
-                              .onSubmit(widget.id, widget.contractNumber);
+                          ref.read(formcapnhatProvider.notifier).onSubmit(
+                              widget.id, widget.contractNumber, _updateType);
                         } else {
                           listFocusNode.forEach((key, value) {
                             value.requestFocus();
@@ -622,7 +731,6 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                               List<PlatformFile> _tmpFile = [];
                               List<String> fileSelected = [];
                               List<String> pathFiles = [];
-                              // print(result);
 
                               if (_resultFile.length > 0) {
                                 _resultFile.forEach((element) {
@@ -630,21 +738,20 @@ class _UploadFileWidgetState extends ConsumerState<UploadFileWidget>
                                       .add(element['file'].path.toString());
                                 });
                               }
-                                print('1');
+
                               _files.forEach((element) {
-                                print(element);
                                 if (pathFiles.indexOf(element.path!) == -1) {
                                   _tmpFile.add(element);
                                 }
                               });
-                              print(_tmpFile);
+
                               if (_tmpFile.length == 0) {
                                 Helper.toast(
                                     messenge: 'Vui lòng chọn file tải lên',
                                     context: context);
                                 return;
                               }
-print('2');
+
                               setState(() {
                                 for (PlatformFile file in _tmpFile) {
                                   Map tmp = {
@@ -653,7 +760,7 @@ print('2');
                                     'note': _noteController.text,
                                     'file': file
                                   };
-                                  print(tmp);
+
                                   _resultFile.add(tmp);
                                 }
                                 _noteController.text = '';

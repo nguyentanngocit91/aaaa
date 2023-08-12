@@ -16,7 +16,7 @@ import '../../providers/capnhat_provider.dart';
 import '../../providers/form_capnhat_provider.dart';
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
-  'chungtu': 'Chứng từ'
+  'chungtu': 'Chứng từ khác'
 };
 GlobalKey<FormState> _formKey = GlobalKey();
 String _updateType = 'web';
@@ -444,7 +444,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
 
                           ref
                               .read(formcapnhatProvider.notifier)
-                              .onSubmit(widget.id, widget.contractNumber);
+                              .onSubmit(widget.id, widget.contractNumber,_updateType);
                         } else {
                           listFocusNode.forEach((key, value) {
                             value.requestFocus();

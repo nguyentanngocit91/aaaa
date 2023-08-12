@@ -27,11 +27,13 @@ part 'media_model.g.dart';
 @freezed
 class MediaModel with _$MediaModel {
   const factory MediaModel({
+    @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
     @JsonKey(name: '_id') @required String? id,
     String? folderId,
     String? sohopdong,
-    String? hopdongId,
+    String? khachhangId,
     String? loaifile,
+    String? loaimedia,
     String? ghichu,
     String? originalname,
     String? filename,
@@ -41,7 +43,6 @@ class MediaModel with _$MediaModel {
     String? folder,
     String? mimetype,
     String? ext,
-    @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
     List<dynamic>? lichsu_capnhat,
     String? createdAt,
     String? updatedAt}) = _MediaModel;
@@ -52,12 +53,22 @@ class MediaModel with _$MediaModel {
 @freezed
 class L1_lichsu_khoitao with _$L1_lichsu_khoitao {
   const factory L1_lichsu_khoitao({
+    @JsonKey(name: 'phongbanId') L2_phongbanId? l2_phongbanId,
     @JsonKey(name: '_id') @required String? id,
     String? manhanvien,
-    String? hoten,
-    String? phongbanId,
-    String? ngaykhoitao}) = _L1_lichsu_khoitao;
+    String? hoten}) = _L1_lichsu_khoitao;
 
   factory L1_lichsu_khoitao.fromJson(Map<String, dynamic> json) => _$L1_lichsu_khoitaoFromJson(json);
+}
+
+@freezed
+class L2_phongbanId with _$L2_phongbanId {
+  const factory L2_phongbanId({
+    @JsonKey(name: '_id') @required String? id,
+    String? maphongban,
+    String? manhanh,
+    String? tenphongban}) = _L2_phongbanId;
+
+  factory L2_phongbanId.fromJson(Map<String, dynamic> json) => _$L2_phongbanIdFromJson(json);
 }
 

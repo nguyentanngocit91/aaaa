@@ -27,23 +27,20 @@ import '../../providers/form_capnhat_provider.dart';
 import '../../providers/form_khach_hang_moi_provider.dart';
 import '../../providers/nhan_vien_phu_trach_provider.dart';
 
-// part 'form_element/form_thong_tin_khach_hang_widget.dart';
-//
-// part 'form_element/form_thong_tin_hop_dong_widget.dart';
-//
-// part 'form_element/form_thong_tin_phieu_thu_widget.dart';
-// part 'form_element/form_thong_tin_website_widget.dart';
-// // part 'form_element/form_thong_tin_domain_widget.dart';
-// // part 'form_element/form_thong_tin_hosting_widget.dart';
-// // part 'form_element/form_thong_tin_app_widget.dart';
-// part 'form_element/upload_file_hd_widget.dart';
+part 'form_element/form_thong_tin_khach_hang_widget.dart';
+
+part 'form_element/form_thong_tin_hop_dong_widget.dart';
+
+part 'form_element/form_thong_tin_phieu_thu_widget.dart';
+part 'form_element/form_thong_tin_hosting_widget.dart';
+part 'form_element/upload_file_hd_widget.dart';
 
 Map<String, String> _loaiPhiethu = {
   'hopdong': 'Hợp đồng',
-  'chungtu': 'Chứng từ'
+  'chungtu': 'Chứng từ khác'
 };
 GlobalKey<FormState> _formKey = GlobalKey();
-final String _typeData = 'website';
+final String _typeData = 'hosting';
 List<Map> _resultFile = [];
 List<PlatformFile> _files = [];
 List<MediaModel> _listMedia = [];
@@ -88,6 +85,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpgradeHosting>
     Future.delayed(Duration.zero, () async {
       await ref.read(capnhatProvider.notifier).getConstractById(widget.id);
       var res = ref.watch(capnhatProvider.notifier);
+      ref.read(formKhachHangMoiProvider.notifier).changeType(isHost: true);
 
       ContractModel? data = await res.state.contract;
 
@@ -102,28 +100,31 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpgradeHosting>
       ref.read(formKhachHangMoiProvider.notifier).changeData(
           type: _typeData,
           key: 'tenhopdong',
-          value: '${data!.l1_data!.tenhopdong} (Nâng cấp/ Phụ lục)');
+          value: '${data!.l1_data!.tenhopdong} (Nâng cấp hosting)');
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData,
+          key: 'dungluongcu',
+          value: '${data!.l1_data!.dungluong}');
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData,
+          key: 'dungluong',
+          value: '');
       ref.read(formKhachHangMoiProvider.notifier).changeData(
           type: _typeData,
           key: 'idkhachhang',
           value: data!.l1_data!.khachhangId);
 
-
-
-      // _listController!['ngaykyhd']!.text =
-      //     Helper.dateFormat(data!.l1_data!.ngaykyhd.toString());
-      // _listController!['ngaybangiao']!.text =
-      //     Helper.dateFormat(data!.l1_data!.ngaybangiao!);
-      // _listController!['chucnang']!.text = data!.l1_data!.chucnang!;
-      // _listController!['ghichu']!.text = data!.l1_data!.ghichu!;
+      ref.read(formKhachHangMoiProvider.notifier).changeData(
+          type: _typeData, key: 'ngaydangky', value: DateTime.now().formatDateTime(formatString: 'dd-MM-yyyy'));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    FormKhachHangMoiState data = ref.read(formKhachHangMoiProvider);
+
     ref.listen(formKhachHangMoiProvider.select((value) => value.loading),
             (previous, next) {
+          FormKhachHangMoiState data = ref.read(formKhachHangMoiProvider);
           if (next == loadingStatus.START) {
             Loading(context).start();
           }
@@ -136,7 +137,6 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpgradeHosting>
 
               Loading(context).stop();
 
-
               List<Widget> _msg = [];
 
               for(String item in data.response!['msg']){
@@ -144,7 +144,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpgradeHosting>
               }
               AwesomeDialog(
                 context: context,
-                autoHide:Duration(seconds: 2),
+                autoHide:Duration(milliseconds: 1900),
                 width: 400.0,
                 dialogType:
                 data.response!['status']==true ? DialogType.success : DialogType.error,
@@ -159,14 +159,17 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpgradeHosting>
                 btnOkOnPress: () {},
               )..show();
 
+              if(data.response!['status']==true){
+                Future.delayed(Duration(seconds: 1),() {
+                  _resetForm(ref);
+                  Future.delayed(Duration(seconds: 1),()
+                  {
+                    context.pop();
+                  });
+                },);
+              }
             });
-            if(data.response!['status']==true){
 
-              Future.delayed(Duration(seconds: 2),() {
-                _resetForm(ref);
-                context.pop();
-              },);
-            }
           }
         });
 
@@ -180,7 +183,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpgradeHosting>
         const Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'NÂNG CẤP WEBSITE',
+            'NÂNG CẤP HOSTING',
             style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
           ),
         ),
@@ -194,21 +197,21 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpgradeHosting>
               mainAxisSize: MainAxisSize.max,
               children: [
 
-                // titleForm(context, title: 'Thông tin hợp đồng'),
-                // bodyForm(
-                //   child: const FormThongTinHopDongWidget(),
-                // ),
-                // ndGapH40(),
-                // titleForm(context, title: 'Upload file HĐ'),
-                // bodyForm(
-                //   child: const UploadFileWidget(),
-                // ),
-                // ndGapH40(),
-                // titleForm(context, title: 'Thông tin phiếu thu'),
-                // bodyForm(
-                //   child: const FormThongTinPhieuThuWidget(),
-                // ),
-                // const FormThongTinWebsiteWidget(),
+                titleForm(context, title: 'Thông tin hợp đồng'),
+                bodyForm(
+                  child: const FormThongTinHopDongWidget(),
+                ),
+                ndGapH40(),
+                titleForm(context, title: 'Upload file HĐ'),
+                bodyForm(
+                  child: const UploadFileWidget(),
+                ),
+                ndGapH40(),
+                titleForm(context, title: 'Thông tin phiếu thu'),
+                bodyForm(
+                  child: const FormThongTinPhieuThuWidget(),
+                ),
+                const FormThongTinHostingWidget(),
 
 
                 ndGapH24(),

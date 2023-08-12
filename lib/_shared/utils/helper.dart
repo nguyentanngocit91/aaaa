@@ -35,7 +35,9 @@ class Helper {
 
 
   static dateFormat(var data){
-    if(data!=null) {
+
+    if(data!=null && data!='null') {
+
       DateTime date = DateTime.parse(data.toString());
       return "${date.day}-${date.month}-${date.year}";
     }
@@ -75,8 +77,17 @@ class Helper {
   }
 
   static saveDate(value) {
-    return DateFormat("yyyy-MM-dd").format(DateFormat('dd-MM-yyyy').parse(value));
+    String format = "yyyy-MM-dd";
+    List t = value.toString().split("-");
+    if(t.length < 3){
+      return '';
+    }
+    if(t[2].toString().length==4){
+      format = "dd-MM-yyyy";
+    }
+    return DateFormat('yyyy-MM-dd').format(DateFormat(format).parse(value));
   }
+
 }
 
 class Loading {

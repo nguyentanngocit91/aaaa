@@ -412,7 +412,7 @@ class _UpdateWebsiteScreenState extends ConsumerState<UpdateWebsite>
 
                           ref
                               .read(formcapnhatProvider.notifier)
-                              .onSubmit(widget.id, widget.contractNumber);
+                              .onSubmit(widget.id, widget.contractNumber,_updateType);
                         } else {
                           listFocusNode.forEach((key, value) {
                             value.requestFocus();
