@@ -23,6 +23,12 @@ class FormThemPhieuThuNotifier extends AutoDisposeNotifier<FormThemPhieuThuState
     return FormThemPhieuThuState();
   }
 
+  batDatSubmit() {
+    state = state.copyWith(status: FormStatus.submissionInProgress);
+  }
+  ketThucSubmit() {
+    state = state.copyWith(status: FormStatus.submissionCanceled);
+  }
 
   changeData(
       {required String type, required String key, required dynamic value}) {
@@ -99,13 +105,33 @@ class FormThemPhieuThuNotifier extends AutoDisposeNotifier<FormThemPhieuThuState
       file = [];
     }
 
-    state = state.copyWith(
-        uploadList: file,
-        loading: loadingStatus.STOP,
-        success: jsonResult['status'],
-        message: jsonResult['message'],
-        result: jsonResult['data']);
-  }
+      if (jsonResult['status']==true) {
+       // final uploadedFile = await _saveFileHD();
+       // state = state.copyWith(formStatus: FormStatus.submissionSuccess);
+
+        state = state.copyWith(
+            uploadList: file,
+            loading: loadingStatus.STOP,
+            success: jsonResult['status'],
+            message: jsonResult['message'],
+            status: FormStatus.submissionSuccess,
+            result: jsonResult['data']);
+
+      } else {
+        //state = state.copyWith(formStatus: FormStatus.submissionFailure);
+
+        state = state.copyWith(
+            uploadList: file,
+            loading: loadingStatus.STOP,
+            success: jsonResult['status'],
+            message: jsonResult['message'],
+            status: FormStatus.submissionFailure,
+            result: jsonResult['data']);
+      }
+
+    }
+
+
 
   void reset() {
     state = state.copyWith(

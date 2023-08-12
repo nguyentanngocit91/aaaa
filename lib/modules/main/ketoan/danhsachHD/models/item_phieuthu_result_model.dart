@@ -1,4 +1,11 @@
 class ItemPhieuthuResultModel {
+  String? sId;
+  String? maphieuthu;
+  KhachhangId? khachhangId;
+  List<Nhanvien>? nhanvien;
+  List<Hopdong>? hopdong;
+  List<String>? files;
+  double? tongtien;
   double? phiweb;
   double? phinangcapweb;
   double? phihosting;
@@ -6,55 +13,64 @@ class ItemPhieuthuResultModel {
   double? phitenmien;
   double? phiapp;
   double? phinangcapapp;
-  String? loaiphieuthu;
-  bool? isPending;
-  String? sId;
-  String? maphieuthu;
-  List<Hopdong>? hopdong;
-  KhachhangId? khachhangId;
-  List<Nhanvien>? nhanvien;
-  List<String>? files;
-  double? tongtien;
+  double? vat;
   String? ngaytao;
   String? ngaynopcty;
   String? httt;
   String? ghichu;
+  String? loaiphieuthu;
+  bool? isPending;
 
   ItemPhieuthuResultModel(
-      {this.phiweb,
+      {
+        this.sId,
+        this.maphieuthu,
+        this.khachhangId,
+        this.nhanvien,
+        this.hopdong,
+        this.files,
+        this.tongtien,
+        this.phiweb,
         this.phinangcapweb,
         this.phihosting,
         this.phinangcaphosting,
         this.phitenmien,
         this.phiapp,
         this.phinangcapapp,
-        this.loaiphieuthu,
-        this.isPending,
-        this.sId,
-        this.maphieuthu,
-        this.hopdong,
-        this.khachhangId,
-        this.nhanvien,
-        this.files,
-        this.tongtien,
+        this.vat,
         this.ngaytao,
-        //this.ngaynopcty,
+        this.ngaynopcty,
         this.httt,
         this.ghichu,
+        this.loaiphieuthu,
+        this.isPending,
       });
 
   ItemPhieuthuResultModel.fromJson(Map<String, dynamic> json) {
-    phiweb = json['phiweb'].toDouble();
-    phinangcapweb = json['phinangcapweb'].toDouble();
-    phihosting = json['phihosting'].toDouble();
+    sId = json['_id'];
+    maphieuthu = json['maphieuthu'];
+
+   // phiweb = json['phiweb'].toDouble();
+    phiweb = (json['phiweb']!=null)?json['phiweb'].toDouble():0;
+    phinangcapweb = (json['phinangcapweb']!=null)?json['phinangcapweb'].toDouble():0;
+    phihosting = (json['phihosting']!=null)?json['phihosting'].toDouble():0;
+    phinangcaphosting = (json['phinangcaphosting']!=null)?json['phinangcaphosting'].toDouble():0;
+    phitenmien = (json['phitenmien']!=null)?json['phitenmien'].toDouble():0;
+    phiapp = (json['phiapp']!=null)?json['phiapp'].toDouble():0;
+    phinangcapapp = (json['phinangcapapp']!=null)?json['phinangcapapp'].toDouble():0;
+    vat = (json['vat']!=null)?json['vat'].toDouble():0;
+
+    /*phihosting = json['phihosting'].toDouble();
     phinangcaphosting = json['phinangcaphosting'].toDouble();
     phitenmien = json['phitenmien'].toDouble();
     phiapp = json['phiapp'].toDouble();
     phinangcapapp = json['phinangcapapp'].toDouble();
+    vat = json['vat'];
+    */
+
     loaiphieuthu = json['loaiphieuthu'];
     isPending = json['is_pending'];
-    sId = json['_id'];
-    maphieuthu = json['maphieuthu'];
+
     if (json['hopdong'] != null) {
       hopdong = <Hopdong>[];
       json['hopdong'].forEach((v) {
@@ -71,7 +87,7 @@ class ItemPhieuthuResultModel {
       });
     }
     files = json['files'].cast<String>();
-    tongtien = json['tongtien'].toDouble();
+    tongtien = json['tongtien'];
     ngaytao = json['ngaytao'];
     ngaynopcty = json['ngaynopcty'];
     httt = json['httt'];
@@ -88,6 +104,7 @@ class ItemPhieuthuResultModel {
     data['phitenmien'] = phitenmien;
     data['phiapp'] = phiapp;
     data['phinangcapapp'] = phinangcapapp;
+    data['vat'] = vat;
 
     data['loaiphieuthu'] = loaiphieuthu;
     data['is_pending'] = isPending;
