@@ -20,12 +20,16 @@ MediaModel _$MediaModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MediaModel {
+  @JsonKey(name: 'lichsu_khoitao')
+  L1_lichsu_khoitao? get l1_lichsu_khoitao =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
   String? get folderId => throw _privateConstructorUsedError;
   String? get sohopdong => throw _privateConstructorUsedError;
-  String? get hopdongId => throw _privateConstructorUsedError;
+  String? get khachhangId => throw _privateConstructorUsedError;
   String? get loaifile => throw _privateConstructorUsedError;
+  String? get loaimedia => throw _privateConstructorUsedError;
   String? get ghichu => throw _privateConstructorUsedError;
   String? get originalname => throw _privateConstructorUsedError;
   String? get filename => throw _privateConstructorUsedError;
@@ -35,9 +39,6 @@ mixin _$MediaModel {
   String? get folder => throw _privateConstructorUsedError;
   String? get mimetype => throw _privateConstructorUsedError;
   String? get ext => throw _privateConstructorUsedError;
-  @JsonKey(name: 'lichsu_khoitao')
-  L1_lichsu_khoitao? get l1_lichsu_khoitao =>
-      throw _privateConstructorUsedError;
   List<dynamic>? get lichsu_capnhat => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
@@ -55,11 +56,13 @@ abstract class $MediaModelCopyWith<$Res> {
       _$MediaModelCopyWithImpl<$Res, MediaModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: '_id') String? id,
+      {@JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
+      @JsonKey(name: '_id') String? id,
       String? folderId,
       String? sohopdong,
-      String? hopdongId,
+      String? khachhangId,
       String? loaifile,
+      String? loaimedia,
       String? ghichu,
       String? originalname,
       String? filename,
@@ -69,7 +72,6 @@ abstract class $MediaModelCopyWith<$Res> {
       String? folder,
       String? mimetype,
       String? ext,
-      @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
       List<dynamic>? lichsu_capnhat,
       String? createdAt,
       String? updatedAt});
@@ -90,11 +92,13 @@ class _$MediaModelCopyWithImpl<$Res, $Val extends MediaModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? l1_lichsu_khoitao = freezed,
     Object? id = freezed,
     Object? folderId = freezed,
     Object? sohopdong = freezed,
-    Object? hopdongId = freezed,
+    Object? khachhangId = freezed,
     Object? loaifile = freezed,
+    Object? loaimedia = freezed,
     Object? ghichu = freezed,
     Object? originalname = freezed,
     Object? filename = freezed,
@@ -104,12 +108,15 @@ class _$MediaModelCopyWithImpl<$Res, $Val extends MediaModel>
     Object? folder = freezed,
     Object? mimetype = freezed,
     Object? ext = freezed,
-    Object? l1_lichsu_khoitao = freezed,
     Object? lichsu_capnhat = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
+      l1_lichsu_khoitao: freezed == l1_lichsu_khoitao
+          ? _value.l1_lichsu_khoitao
+          : l1_lichsu_khoitao // ignore: cast_nullable_to_non_nullable
+              as L1_lichsu_khoitao?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -122,13 +129,17 @@ class _$MediaModelCopyWithImpl<$Res, $Val extends MediaModel>
           ? _value.sohopdong
           : sohopdong // ignore: cast_nullable_to_non_nullable
               as String?,
-      hopdongId: freezed == hopdongId
-          ? _value.hopdongId
-          : hopdongId // ignore: cast_nullable_to_non_nullable
+      khachhangId: freezed == khachhangId
+          ? _value.khachhangId
+          : khachhangId // ignore: cast_nullable_to_non_nullable
               as String?,
       loaifile: freezed == loaifile
           ? _value.loaifile
           : loaifile // ignore: cast_nullable_to_non_nullable
+              as String?,
+      loaimedia: freezed == loaimedia
+          ? _value.loaimedia
+          : loaimedia // ignore: cast_nullable_to_non_nullable
               as String?,
       ghichu: freezed == ghichu
           ? _value.ghichu
@@ -166,10 +177,6 @@ class _$MediaModelCopyWithImpl<$Res, $Val extends MediaModel>
           ? _value.ext
           : ext // ignore: cast_nullable_to_non_nullable
               as String?,
-      l1_lichsu_khoitao: freezed == l1_lichsu_khoitao
-          ? _value.l1_lichsu_khoitao
-          : l1_lichsu_khoitao // ignore: cast_nullable_to_non_nullable
-              as L1_lichsu_khoitao?,
       lichsu_capnhat: freezed == lichsu_capnhat
           ? _value.lichsu_capnhat
           : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
@@ -207,11 +214,13 @@ abstract class _$$_MediaModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: '_id') String? id,
+      {@JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
+      @JsonKey(name: '_id') String? id,
       String? folderId,
       String? sohopdong,
-      String? hopdongId,
+      String? khachhangId,
       String? loaifile,
+      String? loaimedia,
       String? ghichu,
       String? originalname,
       String? filename,
@@ -221,7 +230,6 @@ abstract class _$$_MediaModelCopyWith<$Res>
       String? folder,
       String? mimetype,
       String? ext,
-      @JsonKey(name: 'lichsu_khoitao') L1_lichsu_khoitao? l1_lichsu_khoitao,
       List<dynamic>? lichsu_capnhat,
       String? createdAt,
       String? updatedAt});
@@ -241,11 +249,13 @@ class __$$_MediaModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? l1_lichsu_khoitao = freezed,
     Object? id = freezed,
     Object? folderId = freezed,
     Object? sohopdong = freezed,
-    Object? hopdongId = freezed,
+    Object? khachhangId = freezed,
     Object? loaifile = freezed,
+    Object? loaimedia = freezed,
     Object? ghichu = freezed,
     Object? originalname = freezed,
     Object? filename = freezed,
@@ -255,12 +265,15 @@ class __$$_MediaModelCopyWithImpl<$Res>
     Object? folder = freezed,
     Object? mimetype = freezed,
     Object? ext = freezed,
-    Object? l1_lichsu_khoitao = freezed,
     Object? lichsu_capnhat = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_$_MediaModel(
+      l1_lichsu_khoitao: freezed == l1_lichsu_khoitao
+          ? _value.l1_lichsu_khoitao
+          : l1_lichsu_khoitao // ignore: cast_nullable_to_non_nullable
+              as L1_lichsu_khoitao?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -273,13 +286,17 @@ class __$$_MediaModelCopyWithImpl<$Res>
           ? _value.sohopdong
           : sohopdong // ignore: cast_nullable_to_non_nullable
               as String?,
-      hopdongId: freezed == hopdongId
-          ? _value.hopdongId
-          : hopdongId // ignore: cast_nullable_to_non_nullable
+      khachhangId: freezed == khachhangId
+          ? _value.khachhangId
+          : khachhangId // ignore: cast_nullable_to_non_nullable
               as String?,
       loaifile: freezed == loaifile
           ? _value.loaifile
           : loaifile // ignore: cast_nullable_to_non_nullable
+              as String?,
+      loaimedia: freezed == loaimedia
+          ? _value.loaimedia
+          : loaimedia // ignore: cast_nullable_to_non_nullable
               as String?,
       ghichu: freezed == ghichu
           ? _value.ghichu
@@ -317,10 +334,6 @@ class __$$_MediaModelCopyWithImpl<$Res>
           ? _value.ext
           : ext // ignore: cast_nullable_to_non_nullable
               as String?,
-      l1_lichsu_khoitao: freezed == l1_lichsu_khoitao
-          ? _value.l1_lichsu_khoitao
-          : l1_lichsu_khoitao // ignore: cast_nullable_to_non_nullable
-              as L1_lichsu_khoitao?,
       lichsu_capnhat: freezed == lichsu_capnhat
           ? _value._lichsu_capnhat
           : lichsu_capnhat // ignore: cast_nullable_to_non_nullable
@@ -341,11 +354,13 @@ class __$$_MediaModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
   const _$_MediaModel(
-      {@JsonKey(name: '_id') this.id,
+      {@JsonKey(name: 'lichsu_khoitao') this.l1_lichsu_khoitao,
+      @JsonKey(name: '_id') this.id,
       this.folderId,
       this.sohopdong,
-      this.hopdongId,
+      this.khachhangId,
       this.loaifile,
+      this.loaimedia,
       this.ghichu,
       this.originalname,
       this.filename,
@@ -355,7 +370,6 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
       this.folder,
       this.mimetype,
       this.ext,
-      @JsonKey(name: 'lichsu_khoitao') this.l1_lichsu_khoitao,
       final List<dynamic>? lichsu_capnhat,
       this.createdAt,
       this.updatedAt})
@@ -365,6 +379,9 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
       _$$_MediaModelFromJson(json);
 
   @override
+  @JsonKey(name: 'lichsu_khoitao')
+  final L1_lichsu_khoitao? l1_lichsu_khoitao;
+  @override
   @JsonKey(name: '_id')
   final String? id;
   @override
@@ -372,9 +389,11 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
   @override
   final String? sohopdong;
   @override
-  final String? hopdongId;
+  final String? khachhangId;
   @override
   final String? loaifile;
+  @override
+  final String? loaimedia;
   @override
   final String? ghichu;
   @override
@@ -393,9 +412,6 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
   final String? mimetype;
   @override
   final String? ext;
-  @override
-  @JsonKey(name: 'lichsu_khoitao')
-  final L1_lichsu_khoitao? l1_lichsu_khoitao;
   final List<dynamic>? _lichsu_capnhat;
   @override
   List<dynamic>? get lichsu_capnhat {
@@ -413,7 +429,7 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MediaModel(id: $id, folderId: $folderId, sohopdong: $sohopdong, hopdongId: $hopdongId, loaifile: $loaifile, ghichu: $ghichu, originalname: $originalname, filename: $filename, path: $path, destination: $destination, size: $size, folder: $folder, mimetype: $mimetype, ext: $ext, l1_lichsu_khoitao: $l1_lichsu_khoitao, lichsu_capnhat: $lichsu_capnhat, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'MediaModel(l1_lichsu_khoitao: $l1_lichsu_khoitao, id: $id, folderId: $folderId, sohopdong: $sohopdong, khachhangId: $khachhangId, loaifile: $loaifile, loaimedia: $loaimedia, ghichu: $ghichu, originalname: $originalname, filename: $filename, path: $path, destination: $destination, size: $size, folder: $folder, mimetype: $mimetype, ext: $ext, lichsu_capnhat: $lichsu_capnhat, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -421,11 +437,13 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'MediaModel'))
+      ..add(DiagnosticsProperty('l1_lichsu_khoitao', l1_lichsu_khoitao))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('folderId', folderId))
       ..add(DiagnosticsProperty('sohopdong', sohopdong))
-      ..add(DiagnosticsProperty('hopdongId', hopdongId))
+      ..add(DiagnosticsProperty('khachhangId', khachhangId))
       ..add(DiagnosticsProperty('loaifile', loaifile))
+      ..add(DiagnosticsProperty('loaimedia', loaimedia))
       ..add(DiagnosticsProperty('ghichu', ghichu))
       ..add(DiagnosticsProperty('originalname', originalname))
       ..add(DiagnosticsProperty('filename', filename))
@@ -435,7 +453,6 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
       ..add(DiagnosticsProperty('folder', folder))
       ..add(DiagnosticsProperty('mimetype', mimetype))
       ..add(DiagnosticsProperty('ext', ext))
-      ..add(DiagnosticsProperty('l1_lichsu_khoitao', l1_lichsu_khoitao))
       ..add(DiagnosticsProperty('lichsu_capnhat', lichsu_capnhat))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
@@ -446,15 +463,19 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MediaModel &&
+            (identical(other.l1_lichsu_khoitao, l1_lichsu_khoitao) ||
+                other.l1_lichsu_khoitao == l1_lichsu_khoitao) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.folderId, folderId) ||
                 other.folderId == folderId) &&
             (identical(other.sohopdong, sohopdong) ||
                 other.sohopdong == sohopdong) &&
-            (identical(other.hopdongId, hopdongId) ||
-                other.hopdongId == hopdongId) &&
+            (identical(other.khachhangId, khachhangId) ||
+                other.khachhangId == khachhangId) &&
             (identical(other.loaifile, loaifile) ||
                 other.loaifile == loaifile) &&
+            (identical(other.loaimedia, loaimedia) ||
+                other.loaimedia == loaimedia) &&
             (identical(other.ghichu, ghichu) || other.ghichu == ghichu) &&
             (identical(other.originalname, originalname) ||
                 other.originalname == originalname) &&
@@ -468,8 +489,6 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
             (identical(other.mimetype, mimetype) ||
                 other.mimetype == mimetype) &&
             (identical(other.ext, ext) || other.ext == ext) &&
-            (identical(other.l1_lichsu_khoitao, l1_lichsu_khoitao) ||
-                other.l1_lichsu_khoitao == l1_lichsu_khoitao) &&
             const DeepCollectionEquality()
                 .equals(other._lichsu_capnhat, _lichsu_capnhat) &&
             (identical(other.createdAt, createdAt) ||
@@ -480,26 +499,28 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      folderId,
-      sohopdong,
-      hopdongId,
-      loaifile,
-      ghichu,
-      originalname,
-      filename,
-      path,
-      destination,
-      size,
-      folder,
-      mimetype,
-      ext,
-      l1_lichsu_khoitao,
-      const DeepCollectionEquality().hash(_lichsu_capnhat),
-      createdAt,
-      updatedAt);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        l1_lichsu_khoitao,
+        id,
+        folderId,
+        sohopdong,
+        khachhangId,
+        loaifile,
+        loaimedia,
+        ghichu,
+        originalname,
+        filename,
+        path,
+        destination,
+        size,
+        folder,
+        mimetype,
+        ext,
+        const DeepCollectionEquality().hash(_lichsu_capnhat),
+        createdAt,
+        updatedAt
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -517,11 +538,14 @@ class _$_MediaModel with DiagnosticableTreeMixin implements _MediaModel {
 
 abstract class _MediaModel implements MediaModel {
   const factory _MediaModel(
-      {@JsonKey(name: '_id') final String? id,
+      {@JsonKey(name: 'lichsu_khoitao')
+      final L1_lichsu_khoitao? l1_lichsu_khoitao,
+      @JsonKey(name: '_id') final String? id,
       final String? folderId,
       final String? sohopdong,
-      final String? hopdongId,
+      final String? khachhangId,
       final String? loaifile,
+      final String? loaimedia,
       final String? ghichu,
       final String? originalname,
       final String? filename,
@@ -531,8 +555,6 @@ abstract class _MediaModel implements MediaModel {
       final String? folder,
       final String? mimetype,
       final String? ext,
-      @JsonKey(name: 'lichsu_khoitao')
-      final L1_lichsu_khoitao? l1_lichsu_khoitao,
       final List<dynamic>? lichsu_capnhat,
       final String? createdAt,
       final String? updatedAt}) = _$_MediaModel;
@@ -541,6 +563,9 @@ abstract class _MediaModel implements MediaModel {
       _$_MediaModel.fromJson;
 
   @override
+  @JsonKey(name: 'lichsu_khoitao')
+  L1_lichsu_khoitao? get l1_lichsu_khoitao;
+  @override
   @JsonKey(name: '_id')
   String? get id;
   @override
@@ -548,9 +573,11 @@ abstract class _MediaModel implements MediaModel {
   @override
   String? get sohopdong;
   @override
-  String? get hopdongId;
+  String? get khachhangId;
   @override
   String? get loaifile;
+  @override
+  String? get loaimedia;
   @override
   String? get ghichu;
   @override
@@ -570,9 +597,6 @@ abstract class _MediaModel implements MediaModel {
   @override
   String? get ext;
   @override
-  @JsonKey(name: 'lichsu_khoitao')
-  L1_lichsu_khoitao? get l1_lichsu_khoitao;
-  @override
   List<dynamic>? get lichsu_capnhat;
   @override
   String? get createdAt;
@@ -590,12 +614,12 @@ L1_lichsu_khoitao _$L1_lichsu_khoitaoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$L1_lichsu_khoitao {
+  @JsonKey(name: 'phongbanId')
+  L2_phongbanId? get l2_phongbanId => throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
   String? get manhanvien => throw _privateConstructorUsedError;
   String? get hoten => throw _privateConstructorUsedError;
-  String? get phongbanId => throw _privateConstructorUsedError;
-  String? get ngaykhoitao => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -610,11 +634,12 @@ abstract class $L1_lichsu_khoitaoCopyWith<$Res> {
       _$L1_lichsu_khoitaoCopyWithImpl<$Res, L1_lichsu_khoitao>;
   @useResult
   $Res call(
-      {@JsonKey(name: '_id') String? id,
+      {@JsonKey(name: 'phongbanId') L2_phongbanId? l2_phongbanId,
+      @JsonKey(name: '_id') String? id,
       String? manhanvien,
-      String? hoten,
-      String? phongbanId,
-      String? ngaykhoitao});
+      String? hoten});
+
+  $L2_phongbanIdCopyWith<$Res>? get l2_phongbanId;
 }
 
 /// @nodoc
@@ -630,13 +655,16 @@ class _$L1_lichsu_khoitaoCopyWithImpl<$Res, $Val extends L1_lichsu_khoitao>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? l2_phongbanId = freezed,
     Object? id = freezed,
     Object? manhanvien = freezed,
     Object? hoten = freezed,
-    Object? phongbanId = freezed,
-    Object? ngaykhoitao = freezed,
   }) {
     return _then(_value.copyWith(
+      l2_phongbanId: freezed == l2_phongbanId
+          ? _value.l2_phongbanId
+          : l2_phongbanId // ignore: cast_nullable_to_non_nullable
+              as L2_phongbanId?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -649,15 +677,19 @@ class _$L1_lichsu_khoitaoCopyWithImpl<$Res, $Val extends L1_lichsu_khoitao>
           ? _value.hoten
           : hoten // ignore: cast_nullable_to_non_nullable
               as String?,
-      phongbanId: freezed == phongbanId
-          ? _value.phongbanId
-          : phongbanId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngaykhoitao: freezed == ngaykhoitao
-          ? _value.ngaykhoitao
-          : ngaykhoitao // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $L2_phongbanIdCopyWith<$Res>? get l2_phongbanId {
+    if (_value.l2_phongbanId == null) {
+      return null;
+    }
+
+    return $L2_phongbanIdCopyWith<$Res>(_value.l2_phongbanId!, (value) {
+      return _then(_value.copyWith(l2_phongbanId: value) as $Val);
+    });
   }
 }
 
@@ -670,11 +702,13 @@ abstract class _$$_L1_lichsu_khoitaoCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: '_id') String? id,
+      {@JsonKey(name: 'phongbanId') L2_phongbanId? l2_phongbanId,
+      @JsonKey(name: '_id') String? id,
       String? manhanvien,
-      String? hoten,
-      String? phongbanId,
-      String? ngaykhoitao});
+      String? hoten});
+
+  @override
+  $L2_phongbanIdCopyWith<$Res>? get l2_phongbanId;
 }
 
 /// @nodoc
@@ -688,13 +722,16 @@ class __$$_L1_lichsu_khoitaoCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? l2_phongbanId = freezed,
     Object? id = freezed,
     Object? manhanvien = freezed,
     Object? hoten = freezed,
-    Object? phongbanId = freezed,
-    Object? ngaykhoitao = freezed,
   }) {
     return _then(_$_L1_lichsu_khoitao(
+      l2_phongbanId: freezed == l2_phongbanId
+          ? _value.l2_phongbanId
+          : l2_phongbanId // ignore: cast_nullable_to_non_nullable
+              as L2_phongbanId?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -707,14 +744,6 @@ class __$$_L1_lichsu_khoitaoCopyWithImpl<$Res>
           ? _value.hoten
           : hoten // ignore: cast_nullable_to_non_nullable
               as String?,
-      phongbanId: freezed == phongbanId
-          ? _value.phongbanId
-          : phongbanId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ngaykhoitao: freezed == ngaykhoitao
-          ? _value.ngaykhoitao
-          : ngaykhoitao // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -725,15 +754,17 @@ class _$_L1_lichsu_khoitao
     with DiagnosticableTreeMixin
     implements _L1_lichsu_khoitao {
   const _$_L1_lichsu_khoitao(
-      {@JsonKey(name: '_id') this.id,
+      {@JsonKey(name: 'phongbanId') this.l2_phongbanId,
+      @JsonKey(name: '_id') this.id,
       this.manhanvien,
-      this.hoten,
-      this.phongbanId,
-      this.ngaykhoitao});
+      this.hoten});
 
   factory _$_L1_lichsu_khoitao.fromJson(Map<String, dynamic> json) =>
       _$$_L1_lichsu_khoitaoFromJson(json);
 
+  @override
+  @JsonKey(name: 'phongbanId')
+  final L2_phongbanId? l2_phongbanId;
   @override
   @JsonKey(name: '_id')
   final String? id;
@@ -741,14 +772,10 @@ class _$_L1_lichsu_khoitao
   final String? manhanvien;
   @override
   final String? hoten;
-  @override
-  final String? phongbanId;
-  @override
-  final String? ngaykhoitao;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'L1_lichsu_khoitao(id: $id, manhanvien: $manhanvien, hoten: $hoten, phongbanId: $phongbanId, ngaykhoitao: $ngaykhoitao)';
+    return 'L1_lichsu_khoitao(l2_phongbanId: $l2_phongbanId, id: $id, manhanvien: $manhanvien, hoten: $hoten)';
   }
 
   @override
@@ -756,11 +783,10 @@ class _$_L1_lichsu_khoitao
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'L1_lichsu_khoitao'))
+      ..add(DiagnosticsProperty('l2_phongbanId', l2_phongbanId))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('manhanvien', manhanvien))
-      ..add(DiagnosticsProperty('hoten', hoten))
-      ..add(DiagnosticsProperty('phongbanId', phongbanId))
-      ..add(DiagnosticsProperty('ngaykhoitao', ngaykhoitao));
+      ..add(DiagnosticsProperty('hoten', hoten));
   }
 
   @override
@@ -768,20 +794,18 @@ class _$_L1_lichsu_khoitao
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_L1_lichsu_khoitao &&
+            (identical(other.l2_phongbanId, l2_phongbanId) ||
+                other.l2_phongbanId == l2_phongbanId) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.manhanvien, manhanvien) ||
                 other.manhanvien == manhanvien) &&
-            (identical(other.hoten, hoten) || other.hoten == hoten) &&
-            (identical(other.phongbanId, phongbanId) ||
-                other.phongbanId == phongbanId) &&
-            (identical(other.ngaykhoitao, ngaykhoitao) ||
-                other.ngaykhoitao == ngaykhoitao));
+            (identical(other.hoten, hoten) || other.hoten == hoten));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, manhanvien, hoten, phongbanId, ngaykhoitao);
+      Object.hash(runtimeType, l2_phongbanId, id, manhanvien, hoten);
 
   @JsonKey(ignore: true)
   @override
@@ -800,15 +824,17 @@ class _$_L1_lichsu_khoitao
 
 abstract class _L1_lichsu_khoitao implements L1_lichsu_khoitao {
   const factory _L1_lichsu_khoitao(
-      {@JsonKey(name: '_id') final String? id,
+      {@JsonKey(name: 'phongbanId') final L2_phongbanId? l2_phongbanId,
+      @JsonKey(name: '_id') final String? id,
       final String? manhanvien,
-      final String? hoten,
-      final String? phongbanId,
-      final String? ngaykhoitao}) = _$_L1_lichsu_khoitao;
+      final String? hoten}) = _$_L1_lichsu_khoitao;
 
   factory _L1_lichsu_khoitao.fromJson(Map<String, dynamic> json) =
       _$_L1_lichsu_khoitao.fromJson;
 
+  @override
+  @JsonKey(name: 'phongbanId')
+  L2_phongbanId? get l2_phongbanId;
   @override
   @JsonKey(name: '_id')
   String? get id;
@@ -817,11 +843,224 @@ abstract class _L1_lichsu_khoitao implements L1_lichsu_khoitao {
   @override
   String? get hoten;
   @override
-  String? get phongbanId;
-  @override
-  String? get ngaykhoitao;
-  @override
   @JsonKey(ignore: true)
   _$$_L1_lichsu_khoitaoCopyWith<_$_L1_lichsu_khoitao> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+L2_phongbanId _$L2_phongbanIdFromJson(Map<String, dynamic> json) {
+  return _L2_phongbanId.fromJson(json);
+}
+
+/// @nodoc
+mixin _$L2_phongbanId {
+  @JsonKey(name: '_id')
+  String? get id => throw _privateConstructorUsedError;
+  String? get maphongban => throw _privateConstructorUsedError;
+  String? get manhanh => throw _privateConstructorUsedError;
+  String? get tenphongban => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $L2_phongbanIdCopyWith<L2_phongbanId> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $L2_phongbanIdCopyWith<$Res> {
+  factory $L2_phongbanIdCopyWith(
+          L2_phongbanId value, $Res Function(L2_phongbanId) then) =
+      _$L2_phongbanIdCopyWithImpl<$Res, L2_phongbanId>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String? maphongban,
+      String? manhanh,
+      String? tenphongban});
+}
+
+/// @nodoc
+class _$L2_phongbanIdCopyWithImpl<$Res, $Val extends L2_phongbanId>
+    implements $L2_phongbanIdCopyWith<$Res> {
+  _$L2_phongbanIdCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? maphongban = freezed,
+    Object? manhanh = freezed,
+    Object? tenphongban = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      maphongban: freezed == maphongban
+          ? _value.maphongban
+          : maphongban // ignore: cast_nullable_to_non_nullable
+              as String?,
+      manhanh: freezed == manhanh
+          ? _value.manhanh
+          : manhanh // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tenphongban: freezed == tenphongban
+          ? _value.tenphongban
+          : tenphongban // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_L2_phongbanIdCopyWith<$Res>
+    implements $L2_phongbanIdCopyWith<$Res> {
+  factory _$$_L2_phongbanIdCopyWith(
+          _$_L2_phongbanId value, $Res Function(_$_L2_phongbanId) then) =
+      __$$_L2_phongbanIdCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String? maphongban,
+      String? manhanh,
+      String? tenphongban});
+}
+
+/// @nodoc
+class __$$_L2_phongbanIdCopyWithImpl<$Res>
+    extends _$L2_phongbanIdCopyWithImpl<$Res, _$_L2_phongbanId>
+    implements _$$_L2_phongbanIdCopyWith<$Res> {
+  __$$_L2_phongbanIdCopyWithImpl(
+      _$_L2_phongbanId _value, $Res Function(_$_L2_phongbanId) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? maphongban = freezed,
+    Object? manhanh = freezed,
+    Object? tenphongban = freezed,
+  }) {
+    return _then(_$_L2_phongbanId(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      maphongban: freezed == maphongban
+          ? _value.maphongban
+          : maphongban // ignore: cast_nullable_to_non_nullable
+              as String?,
+      manhanh: freezed == manhanh
+          ? _value.manhanh
+          : manhanh // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tenphongban: freezed == tenphongban
+          ? _value.tenphongban
+          : tenphongban // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_L2_phongbanId with DiagnosticableTreeMixin implements _L2_phongbanId {
+  const _$_L2_phongbanId(
+      {@JsonKey(name: '_id') this.id,
+      this.maphongban,
+      this.manhanh,
+      this.tenphongban});
+
+  factory _$_L2_phongbanId.fromJson(Map<String, dynamic> json) =>
+      _$$_L2_phongbanIdFromJson(json);
+
+  @override
+  @JsonKey(name: '_id')
+  final String? id;
+  @override
+  final String? maphongban;
+  @override
+  final String? manhanh;
+  @override
+  final String? tenphongban;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'L2_phongbanId(id: $id, maphongban: $maphongban, manhanh: $manhanh, tenphongban: $tenphongban)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'L2_phongbanId'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('maphongban', maphongban))
+      ..add(DiagnosticsProperty('manhanh', manhanh))
+      ..add(DiagnosticsProperty('tenphongban', tenphongban));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_L2_phongbanId &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.maphongban, maphongban) ||
+                other.maphongban == maphongban) &&
+            (identical(other.manhanh, manhanh) || other.manhanh == manhanh) &&
+            (identical(other.tenphongban, tenphongban) ||
+                other.tenphongban == tenphongban));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, maphongban, manhanh, tenphongban);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_L2_phongbanIdCopyWith<_$_L2_phongbanId> get copyWith =>
+      __$$_L2_phongbanIdCopyWithImpl<_$_L2_phongbanId>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_L2_phongbanIdToJson(
+      this,
+    );
+  }
+}
+
+abstract class _L2_phongbanId implements L2_phongbanId {
+  const factory _L2_phongbanId(
+      {@JsonKey(name: '_id') final String? id,
+      final String? maphongban,
+      final String? manhanh,
+      final String? tenphongban}) = _$_L2_phongbanId;
+
+  factory _L2_phongbanId.fromJson(Map<String, dynamic> json) =
+      _$_L2_phongbanId.fromJson;
+
+  @override
+  @JsonKey(name: '_id')
+  String? get id;
+  @override
+  String? get maphongban;
+  @override
+  String? get manhanh;
+  @override
+  String? get tenphongban;
+  @override
+  @JsonKey(ignore: true)
+  _$$_L2_phongbanIdCopyWith<_$_L2_phongbanId> get copyWith =>
       throw _privateConstructorUsedError;
 }

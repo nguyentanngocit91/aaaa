@@ -7,13 +7,18 @@ class FormThongTinHopDongWidget extends ConsumerStatefulWidget {
   ConsumerState createState() => _FormThongTinHopDongWidgetState();
 }
 
+
 class _FormThongTinHopDongWidgetState
     extends ConsumerState<FormThongTinHopDongWidget> with FormUIMixins {
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
+}
   @override
   Widget build(BuildContext context) {
-
-
+    final formState = ref.watch(formKhachHangMoiProvider);
 
     return ResponsiveGridRow(
       children: [

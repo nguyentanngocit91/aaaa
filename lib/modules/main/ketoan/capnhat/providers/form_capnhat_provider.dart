@@ -34,9 +34,12 @@ class FormCapNhatNotifier extends StateNotifier<CapNhatState> {
     state = state.copyWith(uploadList: data);
   }
 
-  Future<void> onSubmit(String _id, String _contractNumber) async {
+  Future<void> onSubmit(String _id, String _contractNumber,String saveType) async {
+
     state = state.copyWith(loading: loadingStatus.START);
     List? uploadList = state.uploadList;
+    Map data = state.data!;
+
 
     if (uploadList !=null && uploadList.length > 0) {
       for (var item in uploadList) {
@@ -57,16 +60,17 @@ class FormCapNhatNotifier extends StateNotifier<CapNhatState> {
         }
       }
     }
-    Map data = state.data!;
+
+
     data.forEach((key, value) {
-      if (key == "ngaykyhd" || key == "ngaybangiao") {
+      if ( (key == "ngaykyhd" || key == "ngaybangiao" || key=="ngayhethan" || key == "ngaydangky") && value!='') {
         data[key] = Helper.saveDate(value);
       }
     });
     data.removeWhere((key, value) => key == "mahopdong");
 
     final jsonResult =
-        await _capNhatRepository.update(id: _id, data: state.data);
+        await _capNhatRepository.update(id: _id, data: data);
     List? file = state.uploadList;
     if(jsonResult['status']==true){
       file = [];

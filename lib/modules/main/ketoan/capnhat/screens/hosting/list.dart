@@ -108,7 +108,7 @@ class _headerTable extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: HeaderRowItem(text: 'Ngày ký'),
+            child: HeaderRowItem(text: 'Ngày đăng ký'),
           ),
 
           Expanded(
@@ -245,7 +245,7 @@ class InfoUpdate extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: BodyRowItem(Text(Helper.dateFormat(item.ngaykyhd))),
+            child: BodyRowItem(Text(Helper.dateFormat(item.ngaydangky))),
           ),
           Expanded(
             flex: 2,
@@ -257,7 +257,7 @@ class InfoUpdate extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: BodyRowItem(Text("${item.dungluong.toString()} GB")),
+            child: BodyRowItem(Text("${item.tenhosting.toString()}")),
           ),
           Expanded(
             flex: 5,

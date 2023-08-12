@@ -48,6 +48,7 @@ class CapNhatRepository {
     List<MediaModel> listMedia = [];
     final response =
     await App.dioClient.get("${ApiUrl.infoContract}${id}");
+
     var result = {
       "status": false,
       "message": "Lỗi",
@@ -109,7 +110,8 @@ class CapNhatRepository {
     }
     return result;
   }
-  update({required String id, Map<String, String>? data}) async {
+  update({required String id, Map<dynamic, dynamic>? data}) async {
+
     final response =
     await App.dioClient.put("${ApiUrl.infoContract}${id}", data: data);
     var result = {
