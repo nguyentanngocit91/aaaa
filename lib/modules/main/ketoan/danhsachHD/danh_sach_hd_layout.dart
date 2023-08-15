@@ -149,8 +149,8 @@ class DaTaThongTinHD extends ConsumerWidget {
       child: Column(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              color: Color(0xFF105A6C),
+            decoration: BoxDecoration(
+              color:  Theme.of(context).primaryColor,
             ),
             child: const Row(
               children: [
@@ -485,8 +485,8 @@ class HeaderRowItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(15),
-      decoration: const BoxDecoration(
-        color: Color(0xFF105A6C),
+      decoration:  BoxDecoration(
+        color:  Theme.of(context).primaryColor,
       ),
       child: Text(text,textAlign: TextAlign.left,style: const TextStyle(color: Colors.white),),
     );
@@ -565,7 +565,7 @@ class InfoListCustomer extends StatelessWidget {
 
                         child: Container(
                           padding: EdgeInsets.all(5),
-                          color: Color(0xFFF29596a),
+                          color: Theme.of(context).primaryColor,
                           child: Text("Thêm HĐ ký mới",style: TextStyle(color: Colors.white),),
                         ),
                       ),
@@ -583,7 +583,7 @@ class InfoListCustomer extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.all(5),
-                          color: Color(0xFFF29596a),
+                          color:  Theme.of(context).primaryColor,
                           child: Text("Cập nhật KH",style: TextStyle(color: Colors.white),),
                         ),
                       ),
@@ -659,7 +659,7 @@ class InfoListContract extends StatelessWidget {
                         onTap: () {},
                         child: Container(
                           padding: EdgeInsets.all(5),
-                          color: Color(0xFFF29596a),
+                          color: Theme.of(context).primaryColor,
                           child: Text("Mua thêm",style: TextStyle(color: Colors.white),),
                         ),
                       ),
@@ -678,7 +678,7 @@ class InfoListContract extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.all(5),
-                          color: Color(0xFFF29596a),
+                          color: Theme.of(context).primaryColor,
                           child: Text("Thêm PT",style: TextStyle(color: Colors.white),),
                         ),
                       ),
@@ -698,7 +698,7 @@ class InfoListContract extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.all(5),
-                          color: Color(0xFFF29596a),
+                          color: Theme.of(context).primaryColor,
                           child: Text("Ds phiếu thu",style: TextStyle(color: Colors.white),),
                         ),
                       ),
@@ -718,7 +718,7 @@ class InfoListContract extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.all(5),
-                          color: Color(0xFFF29596a),
+                          color: Theme.of(context).primaryColor,
                           child: Text("Cập nhật HĐ",style: TextStyle(color: Colors.white),),
                         ),
                       ),

@@ -194,8 +194,8 @@ class HeaderRowItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(15),
-      decoration: const BoxDecoration(
-        color: Color(0xFF105A6C),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
       ),
       child: Text(text,style: const TextStyle(color: Colors.white),),
     );

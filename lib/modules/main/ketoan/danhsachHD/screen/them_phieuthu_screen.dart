@@ -7,7 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 
+import '../../../../../_shared/mixins/data_table_mixins.dart';
 import '../../../../../_shared/utils/show_ok_alert_dialog.dart';
 import '../models/media_result_model.dart';
 import '../models/searchcustomercontract_model.dart';
@@ -32,8 +34,6 @@ import '../widgets/form_them_phieuthu/tags_input_widget.dart';
 part '../widgets/form_them_phieuthu/form_thong_tin_hop_dong_widget.dart';
 part '../widgets/form_them_phieuthu/form_thong_tin_phieu_thu_widget.dart';
 part '../widgets/form_them_phieuthu/upload_file_hd_widget.dart';
-
-
 
 Map<String, String> _loaiPhiethu = {
   'chungtukhac': 'Chứng từ khác'
@@ -287,7 +287,11 @@ class _ThemPhieuThuScreenState
                 bodyForm(
                   child: const UploadFileHDWidget(),
                 ),
-                DataUploadMediaCustomer(),
+
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: DataUploadMediaCustomer(),
+                ),
 
                 ndGapH24(),
                 titleForm(context, title: 'Thông tin phiếu thu'),
@@ -359,67 +363,7 @@ class _ThemPhieuThuScreenState
 }
 
 
-class _BtnSubmit extends ConsumerWidget {
-  const _BtnSubmit({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FilledButton.icon(
-          onPressed: () {
-            _submitForm(ref);
-          },
-          icon: const FaIcon(
-            FontAwesomeIcons.download,
-            size: 16,
-          ),
-          label: const Text('Lưu Thông Tin'),
-        ),
-        ndGapW16(),
-        FilledButton.icon(
-          onPressed: () {
-            _resetForm(ref);
-          },
-          icon: const FaIcon(
-            FontAwesomeIcons.rotate,
-            size: 16,
-          ),
-          label: const Text('Nhập lại'),
-        ),
-      ],
-    );
-  }
-}
-
-_submitForm(WidgetRef ref) {
-  ref.read(formHopDongKyMoiProvider.notifier).batDatSubmit();
-  if (_formKey.currentState!.validate()) {
-    ref.read(formHopDongKyMoiProvider.notifier).saveForm();
-  } else {
-    ref.read(formHopDongKyMoiProvider.notifier).ketThucSubmit();
-  }
-
-
-}
-
-_resetForm(WidgetRef ref) {
-  _formKey.currentState?.reset();
-  ref.refresh(formHopDongKyMoiProvider); // reset dữ liệu toàn Form
-  ref.refresh(
-      kiemTraKhachHangProvider); // reset dữ liệu thông tin khách hàng cũ
-  ref.refresh(nhanVienPhuTrachProvider); // reset dữ liệu nhân viên phụ trách
-  Future.delayed(const Duration(milliseconds: 100), () {
-    ref.read(danhSachDomainProvider.notifier).lamMoiDanhSach();
-  }); // reset danh sách domain
-  ref.refresh(fileHDProvider);
-}
-
-
-
-
-class DataUploadMediaCustomer extends ConsumerWidget {
+class DataUploadMediaCustomer extends ConsumerWidget with DataTableMixins{
   DataUploadMediaCustomer({Key? key}) : super(key: key);
 
   @override
@@ -430,8 +374,8 @@ class DataUploadMediaCustomer extends ConsumerWidget {
       child: Column(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              color: Color(0xFF105A6C),
+            decoration: BoxDecoration(
+              color:  Theme.of(context).primaryColor,
             ),
             child: const Row(
               children: [
@@ -507,6 +451,7 @@ class MediaItem extends ConsumerStatefulWidget {
 class _MediaItemState extends ConsumerState<MediaItem> {
   late String note = widget.item!.ghichu!;
 
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -535,158 +480,184 @@ class _MediaItemState extends ConsumerState<MediaItem> {
           ),
           Expanded(
             flex: 2,
-            child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xFF105A6C),
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                  ),
-                  padding: EdgeInsets.only(
-                      left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      final _formKey = GlobalKey<FormState>();
-                      String _selected = widget.item.loaifile.toString();
-                      TextEditingController controller =
-                      new TextEditingController();
-                      controller.text = widget.item.ghichu!.toString();
+            child:Row(
+              children: [
 
-                      Widget _widget = Container(
-                        width: 450,
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Loại file'),
-                              ndGapH8(),
-                              DropdownButtonFormField2<String>(
-                                value: _selected,
-                                isExpanded: true,
-                                decoration: InputDecoration(
-                                  contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 16),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                hint: const Text(
-                                  'Chọn loại file',
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                items: _loaiPhiethu.entries
-                                    .map((e) => DropdownMenuItem<String>(
-                                  value: e.key,
-                                  child: Text(
-                                    e.value,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ))
-                                    .toList(),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please select.';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selected = value.toString();
-                                  });
-                                },
+                IconButton(
+                  onPressed: () async{
+                    final _formKey = GlobalKey<FormState>();
+                    String _selected = widget.item.loaifile.toString();
+                    TextEditingController controller = TextEditingController();
+                    controller.text = widget.item.ghichu!.toString();
 
-                                buttonStyleData: const ButtonStyleData(
-                                  padding: EdgeInsets.only(right: 8),
-                                ),
-                                iconStyleData: const IconStyleData(
-                                  icon: Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.black45,
-                                  ),
-                                  iconSize: 24,
-                                ),
-                                dropdownStyleData: DropdownStyleData(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                menuItemStyleData: const MenuItemStyleData(
-                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                    Widget _widget = SizedBox(
+                      width: 450,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Loại file'),
+                            ndGapH8(),
+                            DropdownButtonFormField2<String>(
+                              value: _selected,
+                              isExpanded: true,
+                              decoration: InputDecoration(
+                                contentPadding:
+                                const EdgeInsets.symmetric(vertical: 16),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
-                              ndGapH8(),
-                              const Text('Ghi chú'),
-                              ndGapH8(),
-                              TextFormField(
-                                controller: controller,
-                                maxLines: 3,
-                                autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                                validator: FormBuilderValidators.compose([
-                                  FormBuilderValidators.required(
-                                      errorText: 'Không bỏ trống.'),
-                                ]),
+                              hint: const Text(
+                                'Chọn loại file',
+                                style: TextStyle(fontSize: 14),
                               ),
-                            ],
-                          ),
+                              items: _loaiPhiethu.entries
+                                  .map((e) => DropdownMenuItem<String>(
+                                value: e.key,
+                                child: Text(
+                                  e.value,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ))
+                                  .toList(),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select.';
+                                }
+                                return null;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  _selected = value.toString();
+                                });
+                              },
+
+                              buttonStyleData: const ButtonStyleData(
+                                padding: EdgeInsets.only(right: 8),
+                              ),
+                              iconStyleData: const IconStyleData(
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.black45,
+                                ),
+                                iconSize: 24,
+                              ),
+                              dropdownStyleData: DropdownStyleData(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ),
+                              menuItemStyleData: const MenuItemStyleData(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                              ),
+                            ),
+                            ndGapH8(),
+                            const Text('Ghi chú'),
+                            ndGapH8(),
+                            TextFormField(
+                              controller: controller,
+                              maxLines: 3,
+                              autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                    errorText: 'Không bỏ trống.'),
+                              ]),
+                            ),
+                          ],
                         ),
-                      );
-                      TextDialog alert = TextDialog(
-                        "Điều chỉnh file",
-                        "",
-                        _widget,
-                            () async {
-                          if (_formKey.currentState!.validate()) {
+                      ),
+                    );
+                    TextDialog alert = TextDialog(
+                      "Điều chỉnh file",
+                      "",
+                      _widget,
+                          () async {
+                        if (_formKey.currentState!.validate()) {
 
 
-                            var updateMedia = await ref.read(dshdProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
+                          var updateMedia = await ref.read(dshdProvider.notifier).updateMedia({'id': widget.item.id,'ghichu': controller.text,'loaifile': _selected});
 
-                            if(updateMedia['status']==true){
-                              Navigator.of(context).pop();
-                              setState(() {
-                                widget.item = MediaResultModel.fromJson(updateMedia['data']);
+                          var alertTitle;
 
-                              });
+                          if(updateMedia['status']==true){
+                            Navigator.of(context).pop();
+                            setState(() {
+                              widget.item = MediaResultModel.fromJson(updateMedia['data']);
 
-                            }
-                            AwesomeDialog(
-                              context: context,
-                              autoHide:Duration(seconds: 2),
-                              width: 400.0,
-                              dialogType:
-                              updateMedia['status'] ? DialogType.success : DialogType.error,
-                              animType: AnimType.scale,
-                              title: updateMedia['message'],
-                              autoDismiss:true,
-
-                              btnOk:Container(),
-                              btnCancel:Container(),
-
-                              btnCancelOnPress: () {},
-                              btnOkOnPress: () {},
-                            )..show();
-
-
+                            });
+                            alertTitle="Cập nhật thành công";
                           }
-                        },
-                      );
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return alert;
-                        },
-                      );
-                    },
-                    child: const Text(
-                      'Cập nhật',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white),
-                    ),
+                          else {
+                            alertTitle="Cập nhật thất bại";
+                          }
+                          AwesomeDialog(
+                            context: context,
+                            autoHide:Duration(seconds: 2),
+                            width: 400.0,
+                            dialogType:
+                            updateMedia['status'] ? DialogType.success : DialogType.error,
+                            animType: AnimType.scale,
+                            title: alertTitle.toString(),
+                            autoDismiss:true,
+                            btnOk:Container(),
+                            btnCancel:Container(),
+                            btnCancelOnPress: () {},
+                            btnOkOnPress: () {},
+                          ).show();
+
+
+                        }
+                      },
+                    );
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return alert;
+                      },
+                    );
+                  },
+                  icon: const FaIcon(
+                    FontAwesomeIcons.edit,
+                    color: Colors.redAccent,
+                    size: 17,
                   ),
-                )),
+                ),
+
+                IconButton(
+                  onPressed: () async{
+                    if(context.mounted){
+                      await showDialog(context: context, builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Thông Báo'),
+                          content: const Text('Bạn có chắc muốn xoá file này ?'),
+                          actions: [
+                            OutlinedButton(onPressed: (){
+                              context.pop();
+                            }, child: const Text('Huỷ')),
+                            FilledButton(onPressed: (){
+                              ref.read(formThemPhieuThuProvider.notifier).xoaFile(id: widget.item.id.toString());
+                              context.pop();
+                            }, child: const Text('Xác nhận')),
+                          ],
+                        );
+                      },);
+                    }
+                  },
+                  icon: const FaIcon(
+                    FontAwesomeIcons.trash,
+                    color: Colors.redAccent,
+                    size: 17,
+                  ),
+                ),
+
+              ],
+            ),
+
           ),
         ],
       ),

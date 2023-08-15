@@ -3,6 +3,7 @@ part of 'form_them_phieuthu_provider.dart';
 
 class FormThemPhieuThuState {
   final Map<String, String>? data;
+  final String? soHopDong;
   final Map? dataPhieuThu;
   final FormStatus status;
   final String? message;
@@ -13,6 +14,7 @@ class FormThemPhieuThuState {
 
   const FormThemPhieuThuState({
     this.data = null,
+    this.soHopDong,
     this.dataPhieuThu,
     this.status = FormStatus.pure,
     this.message = '',
@@ -24,6 +26,7 @@ class FormThemPhieuThuState {
 
   FormThemPhieuThuState copyWith({
     Map<String, String>? data,
+    String? soHopDong,
     Map? dataPhieuThu,
     FormStatus? status,
     String? message,
@@ -34,6 +37,7 @@ class FormThemPhieuThuState {
   }) {
     return FormThemPhieuThuState(
         data: data ?? this.data,
+        soHopDong: soHopDong ?? this.soHopDong,
         dataPhieuThu: dataPhieuThu ?? this.dataPhieuThu,
         result: result ?? this.result,
         status: status ?? this.status,

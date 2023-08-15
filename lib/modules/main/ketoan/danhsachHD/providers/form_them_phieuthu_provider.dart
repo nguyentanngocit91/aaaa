@@ -4,6 +4,7 @@ import 'dart:async';
 import '../../../../../_shared/extensions/date_time_extention.dart';
 import '../../../../../_shared/utils/form_status.dart';
 import '../../../../../_shared/utils/helper.dart';
+import '../models/media_result_model.dart';
 import '../repositories/ds_hd_repository.dart';
 import 'nhan_vien_phu_trach_provider.dart';
 
@@ -138,6 +139,16 @@ class FormThemPhieuThuNotifier extends AutoDisposeNotifier<FormThemPhieuThuState
       success: false,
       message: '',
     );
+  }
+
+
+  xoaFile({required String id}){
+    final List? danhSachMoi= state.uploadList?.where((element) => element.id.toString()!=id).toList();
+    print("${danhSachMoi}+delete id");
+    state = state.copyWith(uploadList: danhSachMoi);
+  }
+  clear() {
+    //state = state.copyWith(fileHDModel: FileHDModel());
   }
 
 
