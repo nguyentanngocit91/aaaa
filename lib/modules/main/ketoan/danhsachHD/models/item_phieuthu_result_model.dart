@@ -87,7 +87,8 @@ class ItemPhieuthuResultModel {
       });
     }
     files = json['files'].cast<String>();
-    tongtien = json['tongtien'];
+    //tongtien = json['tongtien'];
+    tongtien = (json['tongtien']!=null)?json['tongtien'].toDouble():0;
     ngaytao = json['ngaytao'];
     ngaynopcty = json['ngaynopcty'];
     httt = json['httt'];
@@ -122,6 +123,7 @@ class ItemPhieuthuResultModel {
     }
     data['files'] = files;
     data['tongtien'] = tongtien;
+
     data['ngaytao'] = ngaytao;
     data['ngaynopcty'] = ngaynopcty;
     data['httt'] = httt;
